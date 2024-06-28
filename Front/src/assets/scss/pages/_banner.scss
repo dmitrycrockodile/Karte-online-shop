@@ -1,0 +1,352 @@
+/*** 
+=====================================================
+	Banner Css
+=====================================================
+***/
+
+
+/*** 
+=====================================================
+	banner_one
+=====================================================
+***/
+.banner-one {
+    display: block;
+    position: relative;
+    background: #faf7f4;
+}
+
+.banner-one__single-slide {
+    background: #faf7f4;
+    position: relative;  
+    overflow: hidden;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500px;
+    min-height: calc(100vh - 150px);  
+} 
+
+.banner-one__single-content {
+    position: relative;
+    display: block;
+}
+
+.banner-one__inner-title {
+    position: relative;
+    display: block;
+
+    .title {
+        position: relative;
+        display: block;
+    }
+
+    .subtitle {
+        text-decoration: underline;
+        color: var(--thm-black);
+        margin-bottom: 19px;
+
+        h4 {
+            font-size: 15px;
+            text-transform: uppercase;
+            color: var(--thm-black);
+            font-weight: 400;
+        }
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 36px;
+        text-transform: uppercase;
+
+        span {
+            color: var(--thm-base);
+        }
+    }
+
+    .banner-one__button-box {
+        a {
+            box-shadow: 0px 2px 20px 0px rgba(218, 220, 221, 0.1);
+        }
+    }
+}
+
+.banner-one__big-title {
+    position: absolute;
+    top: -10px;
+    left: -0px;
+    bottom: 0;
+    max-width: 330px;
+    width: 100%;
+    z-index: -2;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+
+    h2 {
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(241, 236, 233, 0.80);
+        font-size: 90px;
+        line-height: 0.9em;
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
+    h2.right {
+        display: flex;
+        justify-content: end;
+    }
+}
+
+.banner-one__button-box {
+    position: relative;
+    display: block;
+    margin-top: 29px;
+    z-index: 10;
+}
+
+.banner-one {
+
+    .arrow-next,
+    .arrow-back {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .arrow-next {
+        right: 20px;
+    }
+
+    .arrow-back {
+        left: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .banner-one__single-content {
+        text-align: left;
+    }
+}
+
+@media (min-width: 992px) {
+    
+
+    .banner-one__big-title {
+        opacity: 1;
+        visibility: visible;
+        top: 30%;
+        transform: translateY(-50%);
+        left: 0px;
+        max-width: 600px;
+
+        h2 {
+            font-size: 100px;
+        }
+    }
+
+    .banner-one__inner-title h1 {
+        font-size: 48px;
+    }
+
+    .banner-one__button-box {
+        margin-top: 39px;
+    }
+
+}
+
+@media (min-width: 1400px) {  
+    .banner-one__inner-title h1 {
+        font-size: 54px;
+    }
+
+    .banner-one__big-title {
+        h2 {
+            font-size: 135px;
+        }
+    }
+}
+
+@media (min-width: 1500px) {
+    .banner-one {
+
+        .arrow-next,
+        .arrow-back {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+
+
+/*** 
+=====================================================
+	banner-style-2
+=====================================================
+***/
+
+.hometwo {
+    overflow: hidden;
+    overflow-y: auto;
+}
+ 
+
+/*** 
+=====================================================
+	banner-style-3 
+=====================================================
+***/
+.banner-style-3 {
+    position: relative;
+    display: block; 
+}
+
+.banner-slide3 .slide {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    z-index: 1;
+    .subtitle {
+        text-decoration: none;
+    }
+}
+
+.banner-slide3 {
+    .slick-dots {
+        bottom: unset;
+        left: unset;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 3%;
+        height: unset;
+        width: 30px;
+        display: block;
+        text-align: right;
+
+        li {
+            justify-content: end;
+        }
+
+        button {
+            display: block;
+            background: transparent;
+            font-size: 16px;
+            border: 0px;
+            width: 10px;
+            height: 26px;
+            text-align: right;
+            border-bottom: 0px solid #000;
+            transition: 0.6s;
+        }
+
+        li.slick-active {
+            button {
+                width: 20px;
+                border-bottom: 1px solid #000;
+                transform: scale(1);
+            }
+        }
+    }
+}
+
+
+
+.home3c {
+    h6.new {
+        font-size: 16px;
+        color: var(--thm-base);
+        padding-bottom: 20px;
+        font-weight: 600; 
+    }
+
+    h1 {
+        text-transform: capitalize;
+        line-height: 1.6 
+    }
+
+    p { 
+        padding-top: 5px; 
+        margin-top: 10px; 
+        margin-bottom: 10px; 
+        max-width: 500px;
+    }
+    .button{
+        margin-top: 23px;  
+    }
+}
+
+.shoe{
+    overflow-y: auto !important ;
+} 
+
+.slideup {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 2s all 100ms;
+}
+
+.slidedown {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: 2s all 100ms;
+}
+ 
+.slick-active { 
+    .slideup,
+    .slidedown {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.product-grid{
+    .products-three-single{
+        padding: 0px; 
+    }
+} 
+
+.banner-style-3 .bg-img {
+    background-repeat: no-repeat;
+    background-size: cover;    
+    background-position: top center;
+}
+
+@media (min-width: 992px) {
+    .banner-slide3 .slide .bg-img {
+        min-height: calc(100vh - 100px);
+    }
+} 
+
+@media (min-width: 1399px) {
+    .shoe {
+       h1{
+           font-size: 60px;
+       }
+    }
+} 
+
+
+@media (max-width: 991px){  
+    .banner-style-3 {
+        .slick-dots{
+            display: none;  
+        }
+    }
+
+    // .banner-style-3 .bg-img.backgroundone {   
+    //     background-position: right -400px center;       
+    // }
+    // .banner-style-3 .bg-img.backgroundtwo { 
+    //     background-position: left -250px center;          
+    // }
+}
+
+
+
+/*** 
+=====================================================
+	banner-style-3  end 
+=====================================================
+***/

@@ -1,0 +1,348 @@
+/*** 
+=============================================
+    btn--primary  Css
+=============================================
+***/
+.btn--primary {
+    position: relative;
+    display: inline-block;
+    border: 1px solid var(--thm-black);
+    background: transparent;
+    color: var(--thm-black);
+    font-size: 12px;
+    line-height: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0px 20px 0px;
+    border-radius: 0px;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+    overflow: hidden;
+    font-family: var(--font-heading-family);
+    z-index: 1;
+}
+
+.btn--primary::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: var(--thm-base);
+    z-index: -1;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+    transition: -webkit-transform 0.4s ease;
+    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, -webkit-transform 0.4s ease;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+}
+
+.btn--primary:hover:before {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+}
+
+.btn--primary:hover {
+    color: #ffffff;
+    border-color: var(--thm-base);
+}
+
+
+/*** 
+=============================================
+   btn--primary  style 2 Css
+=============================================
+***/
+.btn--primary.style2 {
+    position: relative;
+    display: inline-block;
+    background: var(--thm-black);
+    color: var(--thm-white);
+    font-size: 12px;
+    line-height: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0px 20px 0px;
+    border-radius: 0px;
+    border: 0px;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+    overflow: hidden;
+    font-family: var(--font-heading-family);
+    z-index: 1;
+}
+
+.btn--primary.style2::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: var(--thm-base);
+    z-index: -1;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+    transition: -webkit-transform 0.4s ease;
+    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, -webkit-transform 0.4s ease;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+}
+
+.btn--primary.style2:hover:before {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+}
+
+.btn--primary.style2:hover {
+    color: #ffffff;
+}
+
+
+/*** 
+=============================================
+  btn--secondary Css
+=============================================
+***/
+.btn--secondary {
+    position: relative;
+    display: inline-block;
+    background: #ffffff;
+    color: var(--thm-black);
+    font-size: 12px;
+    line-height: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0px 20px 0px;
+    border-radius: 0px;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+    overflow: hidden;
+    font-family: var(--font-heading-family);
+    z-index: 1;
+}
+
+.btn--secondary::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: var(--thm-base);
+    z-index: -1;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+    transition: -webkit-transform 0.4s ease;
+    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, -webkit-transform 0.4s ease;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+}
+
+.btn--secondary:hover:before {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+}
+
+.btn--secondary:hover {
+    color: #ffffff;
+}
+
+/*** 
+=============================================
+  btn--secondary .style2 Css
+=============================================
+***/
+.btn--secondary.style2 {
+    position: relative;
+    display: inline-block;
+    background: #ffffff;
+    color: var(--thm-black);
+    font-size: 12px;
+    line-height: 40px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0px 20px 0px;
+    border-radius: 0px;
+    transition: all 200ms linear;
+    transition-delay: 0.1s;
+    overflow: hidden;
+    font-family: var(--font-heading-family);
+    z-index: 1;
+}
+
+.btn--secondary.style2::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    background: var(--thm-base);
+    z-index: -1;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1);
+    transition: -webkit-transform 0.4s ease;
+    transition: transform 0.4s ease;
+    transition: transform 0.4s ease, -webkit-transform 0.4s ease;
+    -webkit-transform-origin: right center;
+    transform-origin: right center;
+}
+
+.btn--secondary.style2:hover:before {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+    -webkit-transform-origin: left center;
+    transform-origin: left center;
+}
+
+.btn--secondary.style2:hover {
+    color: #ffffff;
+}
+
+
+@media (min-width: 1800px) {  
+    .btn--primary,
+    .btn--primary.style2,
+    .btn--secondary,
+    .btn--secondary.style2 { 
+        line-height: 50px;
+    }
+}
+
+@media (min-width: 992px) { 
+    .btn--primary,
+    .btn--primary.style2,
+    .btn--secondary,
+    .btn--secondary.style2 {
+        padding: 0px 40px 0px;
+    }
+}
+
+@media (min-width: 768px) { 
+    .btn--primary,
+    .btn--primary.style2,
+    .btn--secondary,
+    .btn--secondary.style2 {
+        padding: 0px 30px 0px;
+    }
+}
+
+
+
+
+/*==============================================
+.btn--primary
+===============================================*/
+.fashon--primary {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    background: #fa323c;
+    color: #ffffff;
+    border: 0;
+    box-shadow: none;
+    padding: 18px 40px;
+    transition: all linear 0.3s;
+    text-transform: uppercase;
+}
+.fashon--primary.style2{
+    background: #fb4862; 
+    border-radius: 3px;
+}
+
+.fashon--primary.green{
+    background: #139227; 
+    border-radius: 5px; 
+}
+
+.fashon--primary:hover,
+.fashon--primary:focus {
+    background: var(--thm-black);
+    color: #ffffff;
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -2px);
+}
+
+.fashon--secondary {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: center;
+    background: #ffffff;
+    color: var(--thm-black);
+    border: 0;
+    box-shadow: none;
+    padding: 18px 40px;
+    transition: all linear 0.3s;
+    text-transform: uppercase;
+}
+
+.fashon--secondary:hover,
+.fashon--secondary:focus {
+    background: #fa323c;
+    color: #ffffff;
+    transition: all linear 300ms;
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -2px);
+}
+
+.fashon--border {
+    display: inline-block;
+    border: 1px solid var(--thm-black);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--thm-black);
+    border-radius: 0px;
+    background: transparent;
+    box-shadow: none;
+    padding: 18px 40px;
+    transition: all linear 0.3s;
+    text-transform: uppercase;
+}
+
+.fashon--border:hover {
+    border: 1px solid #fa323c;
+    background: #fa323c;
+    color: var(--thm-white);
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    transform: translate(0px, -2px);
+}
+
+@media (max-width: 1800px) {
+
+    .fashon--primary,
+    .fashon--border,
+    .fashon--secondary {
+        padding: 15px 40px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .fashon--primary,
+    .fashon--secondary,
+    .fashon--border {
+        padding: 13px 20px;
+    }
+}
