@@ -28,10 +28,10 @@
       <div class="bottom">
          <div class="total-ammount d-flex justify-content-between align-items-center">
             <h6 class="text-uppercase">Total:</h6>
-            <h6 class="ammount text-uppercase">${{ totalPrice }}</h6>
+            <h6 class="ammount text-uppercase">${{ totalProductsPrice }}</h6>
          </div>
          <div class="button-box d-flex justify-content-between"> 
-            <a href="cart.html" class="btn_black"> View Cart </a> 
+            <router-link :to="{ name: 'cart.index'}" class="btn_black"> View Cart </router-link> 
             <a href="cart.html" class="button-2 btn_theme"> Chekout </a> 
          </div>
       </div>
@@ -46,13 +46,13 @@
       computed: {
          ...mapGetters({
             cartItems: 'cart/cartItems',
-            totalPrice: 'cart/totalPrice',
+            totalProductsPrice: 'cart/totalProductsPrice',
          })
       },
       methods: {
          ...mapActions({
             removeFromCart: 'cart/removeFromCart',
-            getTotalPrice: 'cart/getTotalPrice',
+            gettotalProductsPrice: 'cart/gettotalProductsPrice',
          })
       },
    }

@@ -89,9 +89,12 @@
                                                    <li class="d-lg-block d-none"><a href="wishlist.html"
                                                             class="number"><i class="flaticon-heart"></i> <span
                                                                class="count">(2)</span> </a> </li>
-                                                   <li class="cartm"> <a href="#0" class="number cart-icon"> <i
-                                                               class="flaticon-shopping-cart"></i><span
-                                                               class="count">({{ $store.state.cart.cartItems.length }})</span> </a> </li>
+                                                   <li class="cartm"> 
+                                                      <a href="#" class="number cart-icon"> 
+                                                         <i class="flaticon-shopping-cart"></i>
+                                                         <span class="count">({{ $store.state.cart.cartItems.length }})</span> 
+                                                      </a> 
+                                                   </li>
                                                 </ul>
                                              </div>
                                        </div>
@@ -241,7 +244,7 @@
                            <ul class="footer-links">
                                  <li><a href="my-account.html">Account</a></li>
                                  <li><a href="login.html">Sign In</a></li>
-                                 <li><a href="cart.html">View Cart</a></li>
+                                 <li><router-link :to="{ name: 'cart.index' }">View Cart</router-link></li>
                                  <li><a href="wishlist.html">My WishList</a></li>
                                  <li><a href="compare.html">Compare Products</a></li>
                            </ul>

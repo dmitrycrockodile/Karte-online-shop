@@ -3,7 +3,8 @@ const state = {
 };
 
 const mutations = {
-   ADD_TO_CART(state, { product, selectedQuantity }) {
+   ADD_TO_CART(state, { product, selectedQuantity = 1 }) {
+      
       const existingItem = state.cartItems.find(item => item.id === product.id);
 
       if (existingItem) {
@@ -20,6 +21,11 @@ const mutations = {
          state.cartItems.push(formattedProduct);
       }
    },
+   DECREASE_QTY(state, id) {
+      const existingItem = state.cartItems.find(item => item.id === id);
+
+      existingItem.qty -= 1; 
+   },
    REMOVE_FROM_CART(state, id) {
       state.cartItems = state.cartItems.filter(item => item.id !== id);
    },
@@ -28,6 +34,10 @@ const mutations = {
 const actions = {
    addToCart({ commit, dispatch }, payload) {
       commit('ADD_TO_CART', payload);
+      dispatch('updateStorage');
+   },
+   decreaseQty({ commit, dispatch }, id) {
+      commit('DECREASE_QTY', id);
       dispatch('updateStorage');
    },
    removeFromCart({ commit, dispatch }, id) {
@@ -41,7 +51,7 @@ const actions = {
 
 const getters = {
    cartItems: state => state.cartItems,
-   totalPrice: state => {
+   totalProductsPrice: state => {
       const total = state.cartItems.reduce((total, item) => {
          return total + item.price * item.qty;
       }, 0);
