@@ -116,16 +116,9 @@
                                             <td class="selact-box1">
                                                 <ul class="shop-select-option-box-1">
                                                     <li> 
+
                                                         <input type="checkbox" name="free_shipping" id="option_1" checked=""> 
                                                         <label for="option_1"><span></span>FreeShipping</label> 
-                                                    </li>
-                                                    <li> 
-                                                        <input type="checkbox" name="flat_rate" id="option_2"> 
-                                                        <label for="option_2"><span></span>Flat Rate</label> 
-                                                    </li>
-                                                    <li> 
-                                                        <input type="checkbox" name="local_pickup" id="option_3">
-                                                        <label for="option_3"><span></span>Local Pickup</label> 
                                                     </li>
                                                 </ul>
                                                 <div class="inner-text">
@@ -185,8 +178,10 @@
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
+
+    import RadioButton from '@/components/'
     
-    import { FLAT_RATE_PROCENT, FLAT_RATE, FREE_SHIPPING, LOCAL_PICKUP } from '@/utils';
+    import { FLAT_RATE_PROCENT, FLAT_RATE, FREE_SHIPPING, LOCAL_PICKUP } from '@/utils/constants';
 
     export default {
         name: 'Show',
@@ -197,16 +192,18 @@
             }
         },
         mounted() {
-            this.setShippingMethod(FLAT_RATE)
-            this.countShippingPrice(this.shippingMethod)
+            this.setShippingMethod(LOCAL_PICKUP)
         },
         computed: {
             ...mapGetters({
                 'cartItems': 'cart/cartItems',
                 'totalProductsPrice': 'cart/totalProductsPrice',
             }),
-            countShippingPrice(method){
-                switch (method) {
+            totalPrice() {
+                return Number(this.totalProductsPrice) + Number(this.countShippingPrice)
+            },
+            countShippingPrice(){
+                switch (this.shippingMethod) {
                     case FLAT_RATE:
                         return this.totalProductsPrice * FLAT_RATE_PROCENT / 100
                     case FREE_SHIPPING: 
@@ -215,24 +212,16 @@
                         return 0
                 }
             },
-            setShippingMethod(method) {
-                this.shippingMethod = method
-            },
-            totalPrice() {
-                return Number(this.totalProductsPrice) + Number(this.countShippingPrice)
-            }
-        },
-        data() {
-            return {
-                //
-            }
         },
         methods: {
             ...mapActions({
                 addToCart: 'cart/addToCart',
                 decreaseQty: 'cart/decreaseQty',
                 removeFromCart: 'cart/removeFromCart',
-            })
+            }),
+            setShippingMethod(method) {
+                this.shippingMethod = method
+            },
         }
     }
     
