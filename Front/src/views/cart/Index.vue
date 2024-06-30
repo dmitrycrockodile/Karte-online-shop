@@ -1,7 +1,7 @@
 <template>
     <main>
         <!--Start Breadcrumb Style2-->
-        <section class="breadcrumb-area" :style="{ backgroundImage: 'url(assets/images/inner-pages/breadcum-bg.png)' }">
+        <section class="breadcrumb-area" :style="{ 'background-image': 'url(../../assets/images/inner-pages/breadcum-bg.png)' }">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
@@ -157,12 +157,12 @@
                                         <p>${{ totalProductsPrice }}</p>
                                     </div>
                                 </li>
-                                <li>
+                                <li v-if="shippingMethod">
                                     <div class="left">
                                         <p>Shipping</p>
                                     </div>
                                     <div class="right">
-                                        <p><span>Flat rate:</span> ${{ shippingPrice }}</p>
+                                        <p><span>{{ shippingMethod }}:</span> ${{ countShippingPrice }}</p>
                                     </div>
                                 </li>
                                 <li>
@@ -186,23 +186,40 @@
 <script>
     import { mapActions, mapGetters } from 'vuex';
     
+    import { FLAT_RATE_PROCENT, FLAT_RATE, FREE_SHIPPING, LOCAL_PICKUP } from '@/utils';
+
     export default {
         name: 'Show',
         data() {
             return {
                 increaseBy: 1,
+                shippingMethod: null,
             }
+        },
+        mounted() {
+            this.setShippingMethod(FLAT_RATE)
+            this.countShippingPrice(this.shippingMethod)
         },
         computed: {
             ...mapGetters({
                 'cartItems': 'cart/cartItems',
                 'totalProductsPrice': 'cart/totalProductsPrice',
             }),
-            shippingPrice(){
-                return this.totalProductsPrice * 2 / 100
+            countShippingPrice(method){
+                switch (method) {
+                    case FLAT_RATE:
+                        return this.totalProductsPrice * FLAT_RATE_PROCENT / 100
+                    case FREE_SHIPPING: 
+                        return 0
+                    case LOCAL_PICKUP:
+                        return 0
+                }
+            },
+            setShippingMethod(method) {
+                this.shippingMethod = method
             },
             totalPrice() {
-                return Number(this.totalProductsPrice) + Number(this.shippingPrice)
+                return Number(this.totalProductsPrice) + Number(this.countShippingPrice)
             }
         },
         data() {
