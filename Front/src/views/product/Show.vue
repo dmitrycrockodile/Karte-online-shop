@@ -224,34 +224,53 @@
                                     <h4>Guranteed Safe Checkout</h4>
                                     <ul class="shop-details-top-safe-checkout-list">
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-1.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-1.jpg" alt="VISA">
+                                                </a> 
+                                            </div>
                                         </li>
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-2.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-2.jpg" alt="MasterCard">
+                                                </a> 
+                                            </div>
                                         </li>
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-3.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-3.jpg" alt="Skrill">
+                                                </a> 
+                                            </div>
                                         </li>
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-4.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-4.jpg" alt="PayPal">
+                                                </a> 
+                                            </div>
                                         </li>
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-5.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-5.jpg" alt="Maestro">
+                                                </a> 
+                                            </div>
                                         </li>
                                         <li>
-                                            <div class="shop-details-top-safe-checkout-img"> <a href="#0"><img
-                                                        src="../../assets/images/shop/shop-details-top-safe-checkout-img-7.jpg"
-                                                        alt=""></a> </div>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-6.jpg" alt="PayGate">
+                                                </a> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="shop-details-top-safe-checkout-img"> 
+                                                <a href="#0">
+                                                    <img src="../../assets/images/home-four/method-7.jpg" alt="American Express">
+                                                </a> 
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>

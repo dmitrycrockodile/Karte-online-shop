@@ -1,8 +1,9 @@
 <template>
-   <div class="side-cart d-flex flex-column justify-content-between">
+   <div :class="`side-cart ${active ? 'active' : ''} d-flex flex-column justify-content-between`">
       <div class="top">
          <div class="content d-flex justify-content-between align-items-center">
-            <h6 class="text-uppercase">Your Cart ({{ cartItems.length }})</h6> <span class="cart-close text-uppercase">X</span>
+            <h6 class="text-uppercase">Your Cart ({{ cartItems.length }})</h6> 
+            <button @click.prevent="$emit('setActive', false)" class="cart-close text-uppercase">X</button>
          </div>
          <div class="cart_items">
             <div v-for="cartItem in cartItems" class="items d-flex justify-content-between align-items-center">
@@ -54,6 +55,12 @@
             removeFromCart: 'cart/removeFromCart',
             gettotalProductsPrice: 'cart/gettotalProductsPrice',
          })
+      },
+      props: {
+         "active": { type: Boolean, required: true, default: false },
+      },
+      emits: {
+         "setActive": { type: Function, required: true },
       },
    }
 </script>

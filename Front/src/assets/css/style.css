@@ -1523,6 +1523,7 @@ Menu Css
   color: var(--thm-base);
 }
 .main-menu__widge-box li .number {
+  background-color: transparent;
   position: relative;
 }
 .main-menu__widge-box li .number .count {
@@ -1537,6 +1538,12 @@ Menu Css
 }
 .main-menu__widge-box li .number:hover .count {
   color: var(--thm-base);
+}
+
+.cartm:hover button {
+  color: var(--thm-base);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 
 @media (max-width: 992px) {
@@ -1882,6 +1889,7 @@ Menu Css
   font-weight: 600;
   color: var(--thm-black);
   border: 1px solid var(--thm-black);
+  background-color: transparent;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -2958,6 +2966,11 @@ Menu Css
 .slider-arrow:hover {
   background: #f69c63 !important;
   color: #fff !important;
+}
+
+.slider-arrow:disabled {
+  background: #e2e2e2 !important;
+  color: #838383 !important;
 }
 
 .slider-arrow i {
@@ -10526,13 +10539,13 @@ pagination start
   border: 1px solid #eeeeee;
 }
 
-.cart-total-box .cart-table2 tbody {
+.cart-total-box .cart-table2 {
   position: relative;
   border-left: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
 }
 
-.cart-total-box .cart-table2 thead tr th {
+.cart-total-box .cart-table2 tr th {
   color: #555555;
   font-size: 15px;
   font-weight: 400;
@@ -10542,32 +10555,28 @@ pagination start
   border: 0px solid #ededed;
 }
 
-.cart-total-box .cart-table2 tbody tr {
+.cart-total-box .cart-table2 tr {
   border-bottom: 1px solid #eeeeee;
+  border-top: 1px solid #eeeeee;
 }
 
-.cart-total-box .cart-table2 tbody tr td {
+.cart-total-box .cart-table2 tr td {
   min-width: 160px;
   padding: 20px;
   border: 0px solid #ededed;
 }
 
-.cart-total-box .cart-table2 tbody tr td .total {
+.cart-total-box .cart-table2 tr td .total {
   font-size: 15px;
   font-weight: 300;
   color: var(--thm-gray);
   font-family: var(--thm-font);
 }
 
-.cart-total-box .cart-table2 tbody tr td.subtotal {
+.cart-total-box .cart-table2 tr td.subtotal {
   font-size: 16px;
   color: var(--thm-black);
   font-weight: 500;
-}
-
-.shop-select-option-box-1 {
-  position: relative;
-  display: block;
 }
 
 .shop-select-option-box-1 li {
@@ -10580,70 +10589,18 @@ pagination start
   margin-bottom: 0;
 }
 
-.shop-select-option-box-1 li label {
-  position: relative;
-  display: inline-block;
-  padding-left: 40px;
-  margin-right: 0px;
-  margin-bottom: 0;
-  color: #555555;
-  font-size: 16px;
-  line-height: 30px;
-  font-weight: 500;
-  cursor: pointer;
-  font-family: var(--thm-font);
-}
-
-.shop-select-option-box-1 li input[type=checkbox] {
-  display: none;
-}
-
-.shop-select-option-box-1 li input[type=checkbox] + label span {
-  position: absolute;
-  display: block;
-  top: 6px;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  vertical-align: middle;
-  background-color: transparent;
-  border: 1px solid #1a1a1a;
-  cursor: pointer;
-  -webkit-transition: all 300ms ease;
-  transition: all 300ms ease;
-}
-
-.shop-select-option-box-1 li label span:before {
-  content: "";
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  bottom: 4px;
-  right: 4px;
-  background: #1a1a1a;
-  border-radius: 50%;
-  opacity: 0;
-  -webkit-transition: all 300ms ease;
-  transition: all 300ms ease;
-}
-
-.shop-select-option-box-1 li input[type=checkbox]:checked + label span:before {
-  opacity: 1;
-}
-
-.cart-table2 tbody .selact-box1 .inner-text {
+.cart-table2 .selact-box1 .inner-text {
   padding-top: 16px;
   padding-bottom: 10px;
 }
 
-.cart-table2 tbody .selact-box1 .inner-text p {
+.cart-table2 .selact-box1 .inner-text p {
   font-size: 14px;
   font-weight: 300;
   letter-spacing: 0.02em;
 }
 
-.cart-table2 tbody .selact-box1 h4 {
+.cart-table2 .selact-box1 h4 {
   font-size: 16px;
   font-weight: 500;
   font-family: var(--thm-font);
@@ -10717,7 +10674,7 @@ pagination start
   }
 }
 @media (min-width: 768px) {
-  .cart-total-box .cart-table2 thead tr th {
+  .cart-total-box .cart-table2 tr th {
     padding: 27px 40px;
   }
 
@@ -10754,13 +10711,13 @@ pagination start
   border: 1px solid #eeeeee;
 }
 
-.cart-table tbody {
+.cart-table {
   position: relative;
   border-left: 1px solid #eeeeee;
   border-right: 1px solid #eeeeee;
 }
 
-.cart-table thead tr th {
+.cart-table tr th {
   color: #555555;
   font-size: 15px;
   font-weight: 400;
@@ -10769,18 +10726,18 @@ pagination start
   border: 0px solid #ededed;
 }
 
-.cart-table tbody tr {
+.cart-table tr {
   border-bottom: 1px solid #eeeeee;
 }
 
-.cart-table tbody tr td {
+.cart-table tr td {
   padding: 20px;
   border: 0px solid #ededed;
   font-size: 16px;
   color: #555555;
 }
 
-.cart-table tbody tr .thumb-box {
+.cart-table tr .thumb-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -10789,24 +10746,24 @@ pagination start
           align-items: center;
 }
 
-.cart-table tbody tr .title {
+.cart-table tr .title {
   padding-left: 20px;
 }
-.cart-table tbody tr .thumb {
+.cart-table tr .thumb {
   max-width: 100px;
 }
-.cart-table tbody tr .thumb img {
+.cart-table tr .thumb img {
   min-width: 100px;
   width: 100%;
   margin-right: 20px;
 }
 
-.cart-table tbody tr h5 {
+.cart-table tr h5 {
   font-weight: 600;
   font-size: 16px;
 }
 
-.cart-table-box .cart-table tbody tr td .remove {
+.cart-table-box .cart-table tr td .remove {
   color: #555555;
   cursor: pointer;
   font-size: 20px;
@@ -10815,7 +10772,7 @@ pagination start
   transition: all .2s;
 }
 
-.cart-table-box .cart-table tbody tr td .remove:hover {
+.cart-table-box .cart-table tr td .remove:hover {
   color: var(--thm-base);
   transition: all .2s;
 }
@@ -10865,7 +10822,7 @@ pagination start
 }
 
 @media (min-width: 768px) {
-  .cart-table tbody tr td {
+  .cart-table tr td {
     padding: 30px 30px 30px;
   }
 
@@ -10873,7 +10830,7 @@ pagination start
     min-width: 992px;
   }
 
-  .cart-table tbody tr h5 {
+  .cart-table tr h5 {
     font-size: 18px;
   }
 }

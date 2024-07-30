@@ -34,14 +34,6 @@ jQuery(function ($) {
       $(this).parent().parent().find(".subdropdown").toggle(300);
       $(this).parent().parent().toggleClass("active");
     });
-    $(".cart-icon").on("click", function () {
-      $(".side-cart").addClass("active");
-      $(".side-cart-closer").addClass("active");
-    });
-    $(".cart-close").on("click", function () {
-      $(".side-cart").removeClass("active");
-      $(".side-cart-closer").removeClass("active");
-    });
     $(".menubar").on("click", function () {
       $(".sidebar-content").addClass("active");
       $(".sidebar-content-closer").addClass("active");

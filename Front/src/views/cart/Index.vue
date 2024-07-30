@@ -1,6 +1,6 @@
 <template>
     <main>
-        <!--Start Breadcrumb Style2-->
+        <!--Start Breadcrumb Style-->
         <section class="breadcrumb-area" :style="{ 'background-image': 'url(../../assets/images/inner-pages/breadcum-bg.png)' }">
             <div class="container">
                 <div class="row">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </section>
-        <!--End Breadcrumb Style2-->
+        <!--End Breadcrumb Style-->
         <!--Start cart area-->
         <section class="cart-area pt-120 pb-120">
             <div class="container">
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="cart-button-box-right wow fadeInUp animated"> 
-                                <button class="btn--primary mt-30" type="submit">Continue Shopping</button>
+                                <router-link :to="{ name: 'products.index' }" class="btn--primary mt-30">Continue Shopping</router-link>
                                 <button class="btn--primary mt-30" type="submit">Checkout</button> 
                             </div>
                         </div>
@@ -104,36 +104,31 @@
                         <div class="cart-total-box mt-30">
                             <div class="table-outer">
                                 <table class="cart-table2">
-                                    <thead class="cart-header clearfix">
-                                        <tr>
-                                            <th colspan="1" class="shipping-title">Shipping</th>
-                                            <th class="price">${{ totalProductsPrice }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="shipping"> Shipping </td>
-                                            <td class="selact-box1">
-                                                <ul class="shop-select-option-box-1">
-                                                    <li> 
-
-                                                        <input type="checkbox" name="free_shipping" id="option_1" checked=""> 
-                                                        <label for="option_1"><span></span>FreeShipping</label> 
-                                                    </li>
-                                                </ul>
-                                                <div class="inner-text">
-                                                    <p>Shipping options will be updated during checkout</p>
-                                                </div>
-                                                <h4>Calculate Shipping</h4>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h4 class="total">Total</h4>
-                                            </td>
-                                            <td class="subtotal">${{ totalProductsPrice }}</td>
-                                        </tr>
-                                    </tbody>
+                                    <tr>
+                                        <td class="shipping"> Shipping </td>
+                                        <td class="selact-box1">
+                                            <ul class="shop-select-option-box-1">
+                                                <li>
+                                                    <RadioGroup 
+                                                        type="basic" 
+                                                        :setValue="setShippingMethod" 
+                                                        :selectedValue="shippingMethod"
+                                                        :options="options" 
+                                                    />
+                                                </li>
+                                            </ul>
+                                            <div class="inner-text">
+                                                <p>Shipping options will be updated during checkout</p>
+                                            </div>
+                                            <h4>Calculate Shipping</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h4 class="total">Total Shipping price</h4>
+                                        </td>
+                                        <td class="subtotal">${{ shippingPrice }}</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -155,7 +150,7 @@
                                         <p>Shipping</p>
                                     </div>
                                     <div class="right">
-                                        <p><span>{{ shippingMethod }}:</span> ${{ countShippingPrice }}</p>
+                                        <p><span>{{ shippingMethod }}:</span> ${{ shippingPrice }}</p>
                                     </div>
                                 </li>
                                 <li>
@@ -179,20 +174,28 @@
 <script>
     import { mapActions, mapGetters } from 'vuex';
 
-    import RadioButton from '@/components/'
+    import RadioGroup from '@/components/RadioGroup.vue';
     
     import { FLAT_RATE_PROCENT, FLAT_RATE, FREE_SHIPPING, LOCAL_PICKUP } from '@/utils/constants';
 
     export default {
         name: 'Show',
+        components: {
+            RadioGroup
+        },
         data() {
             return {
                 increaseBy: 1,
                 shippingMethod: null,
+                options: [
+                    { label: FREE_SHIPPING },
+                    { label: FLAT_RATE },
+                    { label: LOCAL_PICKUP },
+                ],
             }
         },
         mounted() {
-            this.setShippingMethod(LOCAL_PICKUP)
+            this.setShippingMethod(FREE_SHIPPING)
         },
         computed: {
             ...mapGetters({
@@ -200,9 +203,9 @@
                 'totalProductsPrice': 'cart/totalProductsPrice',
             }),
             totalPrice() {
-                return Number(this.totalProductsPrice) + Number(this.countShippingPrice)
+                return Number(this.totalProductsPrice) + Number(this.shippingPrice)
             },
-            countShippingPrice(){
+            shippingPrice(){
                 switch (this.shippingMethod) {
                     case FLAT_RATE:
                         return this.totalProductsPrice * FLAT_RATE_PROCENT / 100
@@ -211,7 +214,7 @@
                     case LOCAL_PICKUP:
                         return 0
                 }
-            },
+            }
         },
         methods: {
             ...mapActions({
