@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\API\Auth\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,3 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/products', 'App\Http\Controllers\API\Product\IndexController');
 Route::get('/products/filters', 'App\Http\Controllers\API\Product\FilterListController');
 Route::get('/products/{product}', 'App\Http\Controllers\API\Product\ShowController');
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);

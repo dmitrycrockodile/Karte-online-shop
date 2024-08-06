@@ -1,5 +1,5 @@
 <template>
-   <div :class="`side-cart ${active ? 'active' : ''} d-flex flex-column justify-content-between`">
+   <div :class="`side-cart ${active ? 'active' : ''} d-flex flex-column justify-content-between`" >
       <div class="top">
          <div class="content d-flex justify-content-between align-items-center">
             <h6 class="text-uppercase">Your Cart ({{ cartItems.length }})</h6> 
@@ -32,7 +32,7 @@
             <h6 class="ammount text-uppercase">${{ totalProductsPrice }}</h6>
          </div>
          <div class="button-box d-flex justify-content-between"> 
-            <router-link :to="{ name: 'cart.index'}" class="btn_black"> View Cart </router-link> 
+            <router-link :to="{ name: 'cart.index'}" @click.native="$emit('setActive', false)" class="btn_black"> View Cart </router-link> 
             <a href="cart.html" class="button-2 btn_theme"> Chekout </a> 
          </div>
       </div>
@@ -49,7 +49,7 @@
             cartItems: 'cart/cartItems',
             totalProductsPrice: 'cart/totalProductsPrice',
          })
-      },
+      }, 
       methods: {
          ...mapActions({
             removeFromCart: 'cart/removeFromCart',

@@ -4531,7 +4531,6 @@ categories-tab start
 }
 .newsLetter-popup__subscrib-form .form-group label:before {
   content: "";
-  -webkit-appearance: none;
   background-color: transparent;
   border: 2px solid var(--thm-base);
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
@@ -9616,6 +9615,33 @@ pagination start
   margin-bottom: 0;
 }
 
+a.router-link {
+  transition: .2s all ease-in;
+  background: transparent;
+}
+
+a.router-link:hover {
+  transition: .2s all ease-in;
+  color: #f69c63;
+}
+
+button.router-link {
+  transition: .2s all ease-in;
+  background: transparent;
+}
+
+button.router-link:hover {
+  transition: .2s all ease-in;
+  color: #f69c63;
+}
+
+.alert-form-message {
+  color: rgb(255, 46, 46);
+  margin-top: 5px;
+  font-size: 14px;
+  opacity: .8;
+}
+
 .my-account-page__menu .nav-link:hover span,
 .my-account-page__menu .nav-link.active {
   color: var(--thm-base);
@@ -9747,7 +9773,8 @@ pagination start
   height: initial;
   width: initial;
   margin-bottom: 0;
-  display: none;
+  opacity: 0;
+  position: absolute;
   cursor: pointer;
 }
 .login-register-form .checkk label {
@@ -9758,7 +9785,6 @@ pagination start
 }
 .login-register-form .checkk label:before {
   content: "";
-  -webkit-appearance: none;
   background-color: transparent;
   border: 1px solid #888888;
   padding: 7px;
@@ -11168,7 +11194,6 @@ pagination start
 }
 .single-sidebar-box .checkbox-item .form-group label:before {
   content: "";
-  -webkit-appearance: none;
   background-color: transparent;
   border: 1px solid var(--thm-base);
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
@@ -12430,7 +12455,6 @@ pagination start
 }
 .checked-box .form-group label:before {
   content: "";
-  -webkit-appearance: none;
   background-color: transparent;
   border: 1px solid var(--thm-base);
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);

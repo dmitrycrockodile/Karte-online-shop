@@ -72,24 +72,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="cart-button-box">
-                            <div class="apply-coupon wow fadeInUp animated">
-                                <div class="apply-coupon-input-box mt-30 "> 
-                                    <input type="text" name="coupon-code" value="" placeholder="Coupon Code"> 
-                                </div>
-                                <div class="apply-coupon-button mt-30"> 
-                                    <button class="btn--primary style2" type="submit">Apply Coupon</button> 
-                                </div>
-                            </div>
-                            <div class="cart-button-box-right wow fadeInUp animated"> 
-                                <router-link :to="{ name: 'products.index' }" class="btn--primary mt-30">Continue Shopping</router-link>
-                                <button class="btn--primary mt-30" type="submit">Checkout</button> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="row pt-120">
                     <div class="col-xl-6 col-lg-7 wow fadeInUp animated">
                         <div class="cart-total-box">
@@ -165,6 +147,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="cart-button-box">
+                            <div class="apply-coupon wow fadeInUp animated">
+                                <div class="apply-coupon-input-box mt-30 "> 
+                                    <input type="text" name="coupon-code" value="" placeholder="Coupon Code"> 
+                                </div>
+                                <div class="apply-coupon-button mt-30"> 
+                                    <button class="btn--primary style2" type="submit">Apply Coupon</button> 
+                                </div>
+                            </div>
+                            <div class="cart-button-box-right wow fadeInUp animated"> 
+                                <router-link :to="{ name: 'products.index' }" class="btn--primary mt-30">Continue Shopping</router-link>
+                   
+                                <button v-if="user" class="btn--primary mt-30" type="submit">Checkout</button> 
+                                <router-link v-if="!user" class="btn--primary mt-30" style="margin-left: 10px;" to="/login">Please login to order</router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <!--End cart area-->
@@ -172,7 +174,7 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import { mapActions, mapGetters, mapState } from 'vuex';
 
     import RadioGroup from '@/components/RadioGroup.vue';
     
@@ -202,6 +204,7 @@
                 'cartItems': 'cart/cartItems',
                 'totalProductsPrice': 'cart/totalProductsPrice',
             }),
+            ...mapState('auth', ['user']),
             totalPrice() {
                 return Number(this.totalProductsPrice) + Number(this.shippingPrice)
             },

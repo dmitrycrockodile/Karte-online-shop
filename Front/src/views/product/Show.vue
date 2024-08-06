@@ -723,12 +723,12 @@
                                 </div>
                             </div>
                             <div class="products-grid__content"> 
-                                <a href="cart.html" class="products-grid__cart-btn btn--primary"> 
-                                    <span class="one"> Add to Cart </span>
+                                <router-link :to="{name: 'products.show', params: {id: product.id}}"  class="products-grid__cart-btn btn--primary"> 
+                                    <p class="one"> Add to Cart </p>
                                     <span class="two"> 
                                         <i class="flaticon-shopping-cart"> </i> 
                                     </span> 
-                                </a>
+                                </router-link>
                                 <div class="ratting"> 
                                     <i class="flaticon-star"></i> 
                                     <i class="flaticon-star"></i> 
@@ -851,6 +851,9 @@
                 if (newQuantity >= this.minProductQuantity && newQuantity <= this.maxProductQuantity) {
                     this.selectedQuantity = newQuantity
                 }
+            },
+            goToProductPage(productId) {
+                this.$router.push({ name: 'products.show', params: { id: productId } }); 
             },
             ...mapActions({
                 addToCart: 'cart/addToCart'

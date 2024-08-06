@@ -40,7 +40,7 @@ class StoreRequest extends FormRequest
             'name.string' => '"Name" field must be a string',
             'email.required' => 'Please fill the "email" field',
             'email.email' => 'Please enter a valid email address',
-            'email.unique' => 'User with this email exists',
+            'email.unique' => 'User with this email already exists. Please try with another email or login.',
             'password.required' => 'Please enter your password',
             'password.string' => '"Password" field must be a string',
             'password.confirmed' => 'Please confirm your password',
