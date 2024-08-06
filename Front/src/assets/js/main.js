@@ -163,31 +163,5 @@ jQuery(function ($) {
       }
     };
 
-    /* password show hide on form field  */
-    if ($(".eye .icon-2").length) {
-      $(".eye .icon-2").click(function () {
-        var x = document.getElementById("password-field");
-        if (x.type === "password") {
-          x.type = "text";
-        } else {
-          x.type = "password";
-        }
-        $(this).hide();
-        $(".eye .icon-1").css("display", "block");
-      });
-    };
-
-    if ($(".eye .icon-1").length) {
-      $(".eye .icon-1").click(function () {
-        var x = document.getElementById("password-field");
-        if (x.type === "text") {
-          x.type = "password";
-        } else {
-          x.type = "text";
-        }
-        $(this).hide();
-        $(".eye .icon-2").css("display", "block");
-      });
-    };
   })
 }(jQuery));

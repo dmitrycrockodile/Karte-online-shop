@@ -9743,6 +9743,7 @@ button.router-link:hover {
   z-index: 9;
   width: 20px;
   height: 20px;
+  background: transparent;
 }
 .login-register-form .form-group.eye .icon-2 {
   display: none;

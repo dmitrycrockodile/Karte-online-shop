@@ -69,34 +69,11 @@
                   />
                   <p class="alert-form-message" v-if="formErrors && formErrors.email">{{formErrors.email[0]}}</p>
                 </div>
-                <div class="form-group eye">
-                  <div class="icon icon-1"><i class="flaticon-hidden"></i></div>
-                  <input
-                    type="password"
-                    id="password-field"
-                    class="form-control"
-                    placeholder="Password"
-                    v-model="password"
-                    required
-                  />
-                  <div class="icon icon-2">
-                    <i class="flaticon-visibility"></i>
-                  </div>
-                </div>
-                <div class="form-group eye">
-                  <div class="icon icon-1"><i class="flaticon-hidden"></i></div>
-                  <input
-                    type="password"
-                    id="password-confirmation-field"
-                    class="form-control"
-                    placeholder="Confirm your passwod"
-                    v-model="passwordConfirm"
-                    required
-                  />
-                  <div class="icon icon-2">
-                    <i class="flaticon-visibility"></i>
-                  </div>
-                </div>
+
+                <PasswordInput v-model="password" placeholder="Password" :required="true" />
+
+                <PasswordInput v-model="passwordConfirm" placeholder="Confirm your passwod" :required="true" />
+
                 <div class="checkk">
                   <div class="form-check p-0 m-0">
                     <input type="checkbox" name="acceptedTerms" id="remember" v-model="acceptedTerms" required />
@@ -119,13 +96,14 @@
 </template>
 
 <script>
-   import { mapActions, mapState } from "vuex";
+   import { mapActions } from "vuex";
+
+   import PasswordInput from '@/components/PasswordInput.vue';
 
    import formBGImage from '@/assets/images/inner-pages/login-bg.png';
    import breadCrumbsBGImage from '@/assets/images/inner-pages/breadcum-bg.png';
 
    export default {
-
       data() {
          return {
             formBGImage,
@@ -156,6 +134,9 @@
             });
          },
       },
+      components: {
+        PasswordInput
+      }
    };
 </script>
 

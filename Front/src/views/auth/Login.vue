@@ -52,19 +52,9 @@
                     v-model="email"
                   />
                 </div>
-                <div class="form-group eye">
-                  <div class="icon icon-1"><i class="flaticon-hidden"></i></div>
-                  <input
-                    type="password"
-                    id="password-field"
-                    class="form-control"
-                    placeholder="Password"
-                    v-model="password"
-                  />
-                  <div class="icon icon-2">
-                    <i class="flaticon-visibility"></i>
-                  </div>
-                </div>
+
+                <PasswordInput v-model="password" placeholder="Password" :required="true" />
+
                 <div class="checkk">
                   <div class="form-check p-0 m-0">
                     <input type="checkbox" id="remember" />
@@ -84,13 +74,18 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
+
+import PasswordInput from "@/components/PasswordInput.vue";
 
 import breadCrumpsBGImage from "@/assets/images/inner-pages/breadcum-bg.png";
 import loginFormBGImage from "@/assets/images/inner-pages/login-bg.png";
 
 export default {
    name: 'Login',
+   components: {
+    PasswordInput
+   },
    data() {
       return {
          breadCrumpsBGImage,
