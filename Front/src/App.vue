@@ -234,7 +234,7 @@
       <div class="sidebar-content-closer"></div>
     </header>
 
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
 
     <!--  Footer Three start -->
     <footer class="footer-default footer-3">

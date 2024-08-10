@@ -4881,6 +4881,9 @@ products-grid start
   z-index: 2;
   width: 80%;
 }
+.products-grid__cart-btn p.one {
+  margin-right: 5px;
+}
 .products-grid__cart-btn span {
   font-size: 12px;
   line-height: 30px;
@@ -13327,6 +13330,7 @@ button.router-link:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  z-index: 1;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;

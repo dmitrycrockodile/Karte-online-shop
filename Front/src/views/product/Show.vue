@@ -694,9 +694,9 @@
                                     <span class="bg_base badge new ">{{ product.tags.find(tag => tag.title === 'New') ? 'New' : '' }}</span>
                                     <span class="bg_black badge discount">{{this.countDiscountPercentage(product.old_price, product.price)}}</span>
                                 </div> 
-                                <a href="shop-details-1.html" class="d-block products-grid__image_holder"> 
+                                <router-link :to="{ name: 'products.show', params: { id: product.id }}" class="d-block products-grid__image_holder"> 
                                     <img :src="product.preview_image" :alt="product.title"> 
-                                </a>
+                                </router-link>
                                 <div class="products-grid__usefull-links">
                                     <ul>
                                         <li>
