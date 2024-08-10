@@ -3,7 +3,7 @@
     <!--Start Breadcrumb Style2-->
     <section
       class="breadcrumb-area"
-      :style="{ backgroundImage: `url(${breadCrumpsBGImage}) ` }"
+      :style="{ backgroundImage: `url(${authBGImage}) ` }"
     >
       <div class="container">
         <div class="row">
@@ -78,7 +78,7 @@ import { mapActions, mapState } from "vuex";
 
 import PasswordInput from "@/components/PasswordInput.vue";
 
-import breadCrumpsBGImage from "@/assets/images/inner-pages/breadcum-bg.png";
+import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
 import loginFormBGImage from "@/assets/images/inner-pages/login-bg.png";
 
 export default {
@@ -88,7 +88,7 @@ export default {
    },
    data() {
       return {
-         breadCrumpsBGImage,
+         authBGImage,
          loginFormBGImage,
          email: '',
          password: null,

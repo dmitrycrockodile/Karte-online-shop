@@ -420,6 +420,7 @@
 
 <script>
 import CartSideMenu from "@/components/CartSideMenu.vue";
+import { WOW } from 'wowjs';
 
 import { mapState, mapActions } from "vuex";
 
@@ -429,7 +430,6 @@ export default {
       CartSideMenu,
    },
    mounted() {
-      $(document).trigger("init");
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
    },

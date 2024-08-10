@@ -35,6 +35,8 @@ class UpdateRequest extends FormRequest
             'colors.*' => 'required|integer',
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|integer',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'nullable|integer',
         ];
     }
 
@@ -59,6 +61,7 @@ class UpdateRequest extends FormRequest
             'colors.required' => 'Please choose the colors',
             'colors.array' => 'Colors must be an array',
             'tags.array' => 'Tags must be an array',
+            'sizes.array' => 'Sizes must be an array',
         ];
     }
 }

@@ -3,7 +3,7 @@
     <!--Start Breadcrumb Style2-->
     <section
       class="breadcrumb-area"
-      :style="{ backgroundImage: `url(${breadCrumbsBGImage}) `}"
+      :style="{ backgroundImage: `url(${authBGImage}) `}"
     >
       <div class="container">
         <div class="row">
@@ -101,13 +101,13 @@
    import PasswordInput from '@/components/PasswordInput.vue';
 
    import formBGImage from '@/assets/images/inner-pages/login-bg.png';
-   import breadCrumbsBGImage from '@/assets/images/inner-pages/breadcum-bg.png';
+   import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
 
    export default {
       data() {
          return {
             formBGImage,
-            breadCrumbsBGImage,
+            authBGImage,
             name: '',
             surname: '',
             email: '',

@@ -109,14 +109,12 @@
                                 </div>
                                 <p class="shop-details-top-product-sale"><span>20</span> Products sold in last 12 hours
                                 </p>
-                                <div class="shop-details-top-size-box">
-                                    <h4>Size: (XS)</h4>
+                                <div v-if="product.sizes" class="shop-details-top-size-box">
+                                    <h4 v-if="selectedSize">Size: ({{ selectedSize }})</h4>
+                                    <h4 v-else>Choose the size</h4>
                                     <div class="shop-details-top-size-list-box">
                                         <ul class="shop-details-top-size-list">
-                                            <li><a href="#0">XS</a></li>
-                                            <li><a href="#0">S</a></li>
-                                            <li><a href="#0">M</a></li>
-                                            <li><a href="#0">XL</a></li>
+                                            <li v-for="size in product.sizes"><a href="#0">{{ size.title }}</a></li>
                                         </ul>
                                         <p class="shop-details-top-size-guide"><a href="#0">Size Guide</a></p>
                                     </div>

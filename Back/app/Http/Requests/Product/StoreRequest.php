@@ -37,6 +37,8 @@ class StoreRequest extends FormRequest
             'images.*' => 'required|image',
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|integer|exists:tags,id',
+            'sizes' => 'nullable|array',
+            'sizes.*' => 'nullable|integer|exists:sizes,id',
         ];
     }
 
@@ -65,6 +67,7 @@ class StoreRequest extends FormRequest
             'images.array' => 'Images must be an array',
             'images.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
             'tags.array' => 'Tags must be an array',
+            'sizes.array' => 'Sizes must be an array',
         ];
     }
 }

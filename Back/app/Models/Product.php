@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Size;
 
 class Product extends Model
 {
@@ -14,6 +15,10 @@ class Product extends Model
 
     public function tags() {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
+    }
+
+    public function sizes() {
+        return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
     }
 
     public function colors() {

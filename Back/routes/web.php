@@ -35,6 +35,16 @@ Route::group(['prefix' => 'tags', 'namespace' => 'App\Http\Controllers\Tag'], fu
     Route::delete('/{tag}', 'DeleteController')->name('tag.delete');
 });
 
+Route::group(['prefix' => 'sizes', 'namespace' => 'App\Http\Controllers\size'], function() {
+    Route::get('/', 'IndexController')->name('size.index');
+    Route::get('/create', 'CreateController')->name('size.create');
+    Route::post('/', 'StoreController')->name('size.store');
+    Route::get('/{size}/edit', 'EditController')->name('size.edit');
+    Route::get('/{size}', 'ShowController')->name('size.show');
+    Route::patch('/{size}', 'UpdateController')->name('size.update');
+    Route::delete('/{size}', 'DeleteController')->name('size.delete');
+});
+
 Route::group(['prefix' => 'colors', 'namespace' => 'App\Http\Controllers\Color'], function() {
     Route::get('/', 'IndexController')->name('color.index');
     Route::get('/create', 'CreateController')->name('color.create');

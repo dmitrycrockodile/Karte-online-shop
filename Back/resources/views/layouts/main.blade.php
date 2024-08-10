@@ -128,6 +128,12 @@
                   </a>
                </li>
                <li class="nav-item">
+                  <a href="{{ route('size.index') }}" class="nav-link">
+                     <i class="nav-icon fas fa-people-arrows"></i>
+                     <p>Sizes</p>
+                  </a>
+               </li>
+               <li class="nav-item">
                   <a href="{{ route('color.index') }}" class="nav-link">
                     <i class="nav-icon fas fa-paint-brush"></i>
                      <p>Colors</p>
@@ -171,6 +177,7 @@
          //Initialize Select2 Elements
          $('.tags').select2()
          $('.colors').select2()
+         $('.sizes').select2()
          bsCustomFileInput.init()
       })
       $.widget.bridge('uibutton', $.ui.button)

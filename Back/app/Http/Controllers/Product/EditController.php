@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Tag;
 use App\Models\Color;
 use App\Models\Category;
+use App\Models\Size;
 
 class EditController extends BaseController
 {
@@ -14,7 +15,8 @@ class EditController extends BaseController
         $colors = Color::all();
         $tags = Tag::all();
         $categories = Category::all();
+        $sizes = Size::all();
 
-        return view('product.edit', compact('product', 'colors', 'tags', 'categories'));
+        return view('product.edit', compact('product', 'colors', 'tags', 'categories', 'sizes'));
     }
 }

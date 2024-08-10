@@ -28,6 +28,13 @@ class ProductService {
             $tagsIds = [];
          }
 
+         if (isset($data['sizes'])) {
+            $sizesIds = $data['sizes'];
+            unset($data['sizes']);
+         } else {
+            $sizesIds = [];
+         }
+
          if (isset($data['colors'])) {
             $colorsIds = $data['colors'];
             unset($data['colors']);
@@ -63,6 +70,7 @@ class ProductService {
          }
 
          $product->tags()->attach($tagsIds);
+         $product->sizes()->attach($sizesIds);
          $product->colors()->attach($colorsIds);
          
          DB::commit();
@@ -96,6 +104,13 @@ class ProductService {
             $tagsIds = [];
          }
 
+         if (isset($data['sizes'])) {
+            $sizesIds = $data['sizes'];
+            unset($data['sizes']);
+         } else {
+            $sizesIds = [];
+         }
+
          if (isset($data['colors'])) {
             $colorsIds = $data['colors'];
             unset($data['colors']);
@@ -105,6 +120,7 @@ class ProductService {
 
          $product->update($data);
          $product->tags()->sync($tagsIds);
+         $product->sizes()->sync($sizesIds);
          $product->colors()->sync($colorsIds);
 
          DB::commit();

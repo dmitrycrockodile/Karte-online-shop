@@ -6,6 +6,8 @@ import store from './store'
 
 const app = createApp(App)
 
+new WOW().init();
+
 app.use(router)
 app.use(store)
 app.config.globalProperties.axios = axios

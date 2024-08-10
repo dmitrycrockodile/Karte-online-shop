@@ -131,6 +131,21 @@
                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <select name="sizes[]" class="sizes" multiple="multiple" data-placeholder="Select a size" style="width: 100%;">
+                          @foreach ($sizes as $size)
+                            <option
+                                value="{{ $size->id }}"
+                                {{ is_array($product->sizes->pluck('id')->toArray()) && in_array($size->id, $product->sizes->pluck('id')->toArray()) ? ' selected' : '' }}  
+                            >{{ $size->title }}</option>
+                          @endforeach
+                        </select>
+      
+                        @error('sizes')
+                           <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
       
                     <div class="form-group">
                         <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color" style="width: 100%;">
@@ -175,9 +190,11 @@
                               </div>
                            </div>
 
+                           @if (isset($product->images[0]))
                             <div class="w-50 mt-2">
                                 <img src="{{ $product->images[0]->imageUrl }}" alt="Preview image" class="w-50" />
                             </div>
+                           @endif
          
                            @error('images[]')
                               <p class="text-danger">{{ $message }}</p>
@@ -192,9 +209,12 @@
                               </div>
                            </div>
 
+                           @if (isset($product->images[1]))
                             <div class="w-50 mt-2">
                                 <img src="{{ $product->images[1]->imageUrl }}" alt="Preview image" class="w-50" />
                             </div>
+                           @endif
+
          
                            @error('images[]')
                               <p class="text-danger">{{ $message }}</p>
@@ -209,9 +229,11 @@
                               </div>
                            </div>
 
+                           @if (isset($product->images[2]))
                             <div class="w-50 mt-2">
                                 <img src="{{ $product->images[2]->imageUrl }}" alt="Preview image" class="w-50" />
                             </div>
+                           @endif
          
                            @error('images[]')
                               <p class="text-danger">{{ $message }}</p>
