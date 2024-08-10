@@ -16,9 +16,9 @@
                       <div class="menubar">
                         <span></span> <span></span> <span></span>
                       </div>
-                      <a href="index.html" class="logo">
+                      <router-link to="/" class="logo">
                         <img src="./assets/images/logo/logo.png" alt="" />
-                      </a>
+                      </router-link>
                       <div class="cart-holder">
                         <a href="#0" class="cart cart-icon position-relative">
                           <i class="flaticon-shopping-cart"></i>
@@ -67,9 +67,9 @@
                 class="col-lg-3 d-flex align-items-center justify-content-center border-rit"
               >
                 <div class="logo">
-                  <a href="index.html">
+                  <router-link to="/">
                     <img src="./assets/images/logo/logo.png" alt="" />
-                  </a>
+                  </router-link>
                 </div>
               </div>
               <div class="col-lg-9 g-0 p-0">

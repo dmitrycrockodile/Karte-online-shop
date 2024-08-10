@@ -55,10 +55,6 @@ jQuery(function ($) {
     $(".slidebarfilter, .remove-sidebar").on("click", function () {
       $(".shop-grid-sidebar").toggleClass("active");
     });
-    $(".varients li button").on("click", function () {
-      $(".varients li button").removeClass("active");
-      $(this).addClass("active");
-    });
 
     /****======  niceSelect  ======*******/
     if ($("select").length) {

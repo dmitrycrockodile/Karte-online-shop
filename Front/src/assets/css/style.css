@@ -11571,16 +11571,21 @@ button.router-link:hover {
   transition: all 500ms ease;
 }
 
-.shop-details-top-size-list li a {
+.shop-details-top-size-list li button {
   display: block;
   color: #a7a7a7;
+  background-color: transparent;
 }
 
 .shop-details-top-size-list li:hover {
   border: 1px solid var(--thm-black);
 }
 
-.shop-details-top-size-list li a {
+.shop-details-top-size-list li.active {
+  border: 1px solid var(--thm-black);
+}
+
+.shop-details-top-size-list li button {
   color: var(--thm-black);
 }
 
