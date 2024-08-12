@@ -49,11 +49,11 @@
                     type="text"
                     class="form-control"
                     placeholder="Your Email Address"
-                    v-model="email"
+                    v-model.trim.lazy="email"
                   />
                 </div>
 
-                <PasswordInput v-model="password" placeholder="Password" :required="true" />
+                <PasswordInput v-model.lazy="password" placeholder="Password" :required="true" />
 
                 <div class="checkk">
                   <div class="form-check p-0 m-0">

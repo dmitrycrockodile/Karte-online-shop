@@ -61,15 +61,6 @@ jQuery(function ($) {
       $("select").niceSelect();
     };
 
-    /****====== Magnific popup_link ???????? ======*******/
-    if ($(".popup_link").length) {
-      $(".popup_link").magnificPopup({
-        type: "inline",
-        midClick: true,
-        mainClass: "mfp-fade"
-      });
-    };
-
     /****====== Magnific popup video ??????? ======*******/
     if ($(".video-popup").length) {
       $(".video-popup").magnificPopup({

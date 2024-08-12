@@ -47,7 +47,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Your Name"
-                    v-model="name"
+                    v-model.trim.lazy="name"
                     required
                   />
                 </div>
@@ -56,7 +56,7 @@
                     type="text"
                     class="form-control"
                     placeholder="Surname"
-                    v-model="surname"
+                    v-model.trim.lazy="surname"
                   />
                 </div>
                 <div class="form-group">
@@ -64,15 +64,15 @@
                     type="email"
                     class="form-control"
                     placeholder="Your Email"
-                    v-model="email"
+                    v-model.trim.lazy="email"
                     required
                   />
                   <p class="alert-form-message" v-if="formErrors && formErrors.email">{{formErrors.email[0]}}</p>
                 </div>
 
-                <PasswordInput v-model="password" placeholder="Password" :required="true" />
+                <PasswordInput v-model.lazy="password" placeholder="Password" :required="true" />
 
-                <PasswordInput v-model="passwordConfirm" placeholder="Confirm your passwod" :required="true" />
+                <PasswordInput v-model.lazy="passwordConfirm" placeholder="Confirm your passwod" :required="true" />
 
                 <div class="checkk">
                   <div class="form-check p-0 m-0">

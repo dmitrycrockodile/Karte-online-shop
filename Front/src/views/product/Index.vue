@@ -709,7 +709,6 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
-          $(document).trigger("init");
         });
     },
     getPopupProduct(id) {

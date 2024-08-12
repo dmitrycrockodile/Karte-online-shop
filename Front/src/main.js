@@ -6,7 +6,7 @@ import store from './store'
 
 const app = createApp(App)
 
-new WOW().init();
+new WOW().init()
 
 app.use(router)
 app.use(store)
