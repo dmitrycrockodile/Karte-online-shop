@@ -1945,7 +1945,6 @@ Menu Css
   display: block;
 }
 .side-cart .items .left .text p {
-  padding-top: 5px;
   font-size: 14px;
   color: #74787c;
 }
@@ -3371,6 +3370,10 @@ newsLetter-one
 
 .newsLetter-one__content-box.three {
   margin-top: 30px;
+}
+
+.newsLetter-one.style-two .subscrib-btn {
+  top: 0px;
 }
 
 @media (min-width: 768px) {
@@ -10145,8 +10148,9 @@ button.router-link:hover {
           align-items: center;
 }
 
-.cart-table tr .title {
-  padding-left: 20px;
+.thumb-box a.title:hover h5 { 
+  color: var(--thm-base);
+  transition: all .3s ease;
 }
 .cart-table tr .thumb {
   max-width: 100px;
@@ -11357,7 +11361,8 @@ button.router-link:hover {
 .shop-details-top-color-sky-box {
   position: relative;
   display: block;
-  margin-top: 30px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .shop-details-top-color-sky-box h4 {
@@ -11374,7 +11379,7 @@ button.router-link:hover {
       -ms-flex-align: center;
           align-items: center;
   margin-top: 15px;
-  margin-bottom: 24px;
+  margin-bottom: -5px;
 }
 
 .shop-details-top-color-sky-box ul li + li {
@@ -14097,7 +14102,6 @@ blog-four-single
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
-
 
 /*** 
 =============================================

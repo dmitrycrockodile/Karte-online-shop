@@ -3,45 +3,62 @@ const state = {
 };
 
 const mutations = {
-   ADD_TO_CART(state, { product, selectedQuantity = 1 }) {
-      
-      const existingItem = state.cartItems.find(item => item.id === product.id);
+   ADD_TO_CART(state, formattedProduct) {
+      state.cartItems.push(formattedProduct);
+   },
+   INCREASE_QTY(state, { cartItem, qty = 1}) {
+      const existingItem = state.cartItems.find(item => {
+         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
+      });
+
+      existingItem.qty += qty; 
+   },
+   DECREASE_QTY(state, cartItem) {
+      const existingItem = state.cartItems.find(item => {
+         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
+      });
+
+      existingItem.qty -= 1; 
+   },
+   REMOVE_FROM_CART(state, cartItem) {
+      state.cartItems = state.cartItems.filter(item => !(item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id));
+   },
+};
+
+const actions = {
+   addToCart({ commit, dispatch, state }, { product, choosenProductOptions }) {
+      const existingItem = state.cartItems.find(item => {
+         return item.id === product.id && item.color.id === choosenProductOptions.selectedColor.id && item.size.id === choosenProductOptions.selectedSize.id
+      });
 
       if (existingItem) {
-         existingItem.qty += selectedQuantity;
+         commit('INCREASE_QTY', { id: product.id, sizeId: choosenProductOptions.selectedSize.id, colorId: choosenProductOptions.selectedColor.id, qty: choosenProductOptions.selectedQuantity });
       } else {
          const formattedProduct = {
             id: product.id,
             image: product.preview_image,
             title: product.title,
             price: product.price,
-            qty: selectedQuantity,
+            qty: choosenProductOptions.selectedQuantity,
+            color: choosenProductOptions.selectedColor,
+            size: choosenProductOptions.selectedSize,
          }
 
-         state.cartItems.push(formattedProduct);
+         commit('ADD_TO_CART', formattedProduct);
       }
-   },
-   DECREASE_QTY(state, id) {
-      const existingItem = state.cartItems.find(item => item.id === id);
 
-      existingItem.qty -= 1; 
-   },
-   REMOVE_FROM_CART(state, id) {
-      state.cartItems = state.cartItems.filter(item => item.id !== id);
-   },
-};
-
-const actions = {
-   addToCart({ commit, dispatch }, payload) {
-      commit('ADD_TO_CART', payload);
       dispatch('updateStorage');
    },
-   decreaseQty({ commit, dispatch }, id) {
-      commit('DECREASE_QTY', id);
+   decreaseQty({ commit, dispatch }, {cartItem, qty}) {
+      commit('DECREASE_QTY', cartItem);
       dispatch('updateStorage');
    },
-   removeFromCart({ commit, dispatch }, id) {
-      commit('REMOVE_FROM_CART', id);
+   increaseQty({ commit, dispatch }, cartItem) {
+      commit('INCREASE_QTY', cartItem);
+      dispatch('updateStorage');
+   },
+   removeFromCart({ commit, dispatch }, cartItem) {
+      commit('REMOVE_FROM_CART', cartItem);
       dispatch('updateStorage');
    },
    updateStorage({ state }) {

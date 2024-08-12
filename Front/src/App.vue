@@ -431,6 +431,7 @@ export default {
    mounted() {
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
+      $(document).trigger('init')
    },
    beforeDestroy() {
       window.removeEventListener("scroll", this.handleScroll);

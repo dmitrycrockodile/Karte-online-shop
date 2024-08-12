@@ -57,22 +57,29 @@
                           >
                             <img :src="cartItem.image" :alt="cartItem.title" />
                           </router-link>
-                          <router-link
-                            :to="{
-                              name: 'products.show',
-                              params: { id: cartItem.id },
-                            }"
-                            class="title"
-                          >
-                            <h5>{{ cartItem.title }}</h5>
-                          </router-link>
+                          <div class="product__info">
+                            <router-link
+                              :to="{
+                                name: 'products.show',
+                                params: { id: cartItem.id },
+                              }"
+                              class="title"
+                            >
+                              <h5>{{ cartItem.title }}</h5>
+                            </router-link>
+
+                            <div class="d-flex mt-2 align-items-center">
+                              <div class="product__color">Color: <span :style="`background-color: ${cartItem.color.title}`"></span></div>
+                              <div class="product__size">Size: <span>{{ cartItem.size.title }}</span></div>
+                            </div>
+                          </div>
                         </div>
                       </td>
                       <td>${{ cartItem.price.toFixed(2) }}</td>
                       <td class="qty">
                         <div class="qtySelector text-center">
                           <button
-                            @click.prevent="decreaseQty(cartItem.id)"
+                            @click.prevent="decreaseQty({cartItem})"
                             class="decreaseQty"
                           >
                             <i class="flaticon-minus"></i>
@@ -83,12 +90,7 @@
                             v-model="cartItem.qty"
                           />
                           <button
-                            @click.prevent="
-                              addToCart({
-                                product: cartItem,
-                                selectedQuantity: 1,
-                              })
-                            "
+                            @click.prevent="increaseQty({cartItem, qty: 1})"
                             class="increaseQty"
                           >
                             <i class="flaticon-plus"></i>
@@ -293,6 +295,7 @@ export default {
       addToCart: "cart/addToCart",
       decreaseQty: "cart/decreaseQty",
       removeFromCart: "cart/removeFromCart",
+      increaseQty: "cart/increaseQty",
     }),
     setShippingMethod(method) {
       this.shippingMethod = method;
@@ -301,4 +304,27 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .product__info {
+    padding-left: 20px;
+  }
+
+  .product__color {
+    display: flex;
+    align-items: center;
+  }
+
+  .product__color span {
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+  }
+
+  .product__size {
+    font-size: 16px;
+    color: #555555;
+    margin-left: 10px;
+  }
+</style>

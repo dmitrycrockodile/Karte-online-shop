@@ -15,11 +15,15 @@
                      <a href="shop-details-1.html">
                         <h6>{{ cartItem.title }}</h6>
                      </a>
-                     <p>{{ cartItem.qty }} X <span>${{ cartItem.price }}</span> </p>
+                     <div>
+                        <p>{{ cartItem.qty }} X <span>${{ cartItem.price }}</span> </p>
+                        <span class="cart-item__color" :style="`background-color: ${cartItem.color.title}`"></span>
+                        <p>{{ cartItem.size.title }}</p>
+                     </div>
                   </div>
                </div>
                <div class="right">
-                  <button @click.prevent="removeFromCart(cartItem.id)" class="item-remove"> 
+                  <button @click.prevent="removeFromCart(cartItem)" class="item-remove"> 
                      <i class="flaticon-cross"></i> 
                   </button>
                </div>
@@ -65,6 +69,19 @@
    }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+   .text div {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+   }
 
+   .cart-item__color {
+      border: 1px solid #eeeeee;
+      border-radius: 5px;
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+      margin-right: 10px;
+   }
 </style>

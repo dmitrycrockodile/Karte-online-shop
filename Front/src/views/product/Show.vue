@@ -136,12 +136,12 @@
                   <span>20</span> Products sold in last 12 hours
                 </p>
                 <div v-if="product.sizes.length" class="shop-details-top-size-box">
-                  <h4 v-if="selectedSize">Size: ({{ selectedSize.title }})</h4>
+                  <h4 v-if="choosenProductOptions.selectedSize">Size: ({{ choosenProductOptions.selectedSize.title }})</h4>
                   <h4 v-else>Choose the size</h4>
                   <div class="shop-details-top-size-list-box">
                     <ul class="shop-details-top-size-list">
                       <li
-                        :class="{ active: selectedSize && selectedSize.title === size.title}"
+                        :class="{ active: choosenProductOptions.selectedSize && choosenProductOptions.selectedSize.title === size.title}"
                         v-for="size in product.sizes"
                       >
                         <button
@@ -157,14 +157,14 @@
                   </div>
                 </div>
                 <div v-if="product.colors.length" class="shop-details-top-color-sky-box">
-                  <h4 v-if="selectedColor">Color: ({{ selectedColor.title }})</h4>
+                  <h4 v-if="choosenProductOptions.selectedColor">Color: ({{ choosenProductOptions.selectedColor.title }})</h4>
                   <h4 v-else>Choose the color</h4>
                   <ul class="varients">
                     <li v-for="color in product.colors">
                       <button
                         :title="color.title"
                         class="shop-details-top-color-sky-img"
-                        :class="{ active: selectedColor && selectedColor.title === color.title }"
+                        :class="{ active: choosenProductOptions.selectedColor && choosenProductOptions.selectedColor.title === color.title }"
                         :style="`background-color: ${color.title}`"
                         @click.prevent="setSelectedOption('selectedColor', color)"
                       ></button>
@@ -221,7 +221,7 @@
                         <input
                           type="number"
                           class="qtyValue"
-                          v-model="selectedQuantity"
+                          v-model="choosenProductOptions.selectedQuantity"
                         />
 
                         <button @click="changeQuantity(1)" class="increaseQty">
@@ -247,9 +247,10 @@
                 </div>
                 <div class="shop-details-top-cart-box-btn">
                   <button
-                    class="btn--primary style2"
+                    class="btn--primary style2 add-btn"
                     type="submit"
-                    @click.prevent="addToCart({ product, selectedQuantity })"
+                    @click.prevent="this.addToCart({ product, choosenProductOptions })"
+                    :disabled="!choosenProductOptions.selectedSize || !choosenProductOptions.selectedSize"
                   >
                     Add to Cart
                   </button>
@@ -990,9 +991,11 @@ export default {
       isLoading: true,
       minProductQuantity: 1,
       maxProductQuantity: null,
-      selectedQuantity: 1,
-      selectedColor: null,
-      selectedSize: null,
+      choosenProductOptions: {
+        selectedQuantity: 1,
+        selectedColor: null,
+        selectedSize: null,
+      },
     };
   },
   methods: {
@@ -1028,21 +1031,21 @@ export default {
       return `${percentageChange.toFixed()}%`;
     },
     changeQuantity(amount) {
-      const newQuantity = this.selectedQuantity + amount;
+      const newQuantity = this.choosenProductOptions.selectedQuantity + amount;
 
       if (
         newQuantity >= this.minProductQuantity &&
         newQuantity <= this.maxProductQuantity
       ) {
-        this.selectedQuantity = newQuantity;
+        this.choosenProductOptions.selectedQuantity = newQuantity;
       }
     },
     goToProductPage(productId) {
       this.$router.push({ name: "products.show", params: { id: productId } });
     },
     setSelectedOption(option, data) {
-        console.log(option, data)
-      this[option] = data;
+      console.log(option, data)
+      this.choosenProductOptions[option] = data;
     },
     togglePopup() {
       this.popupActive = !this.popupActive
@@ -1054,4 +1057,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.add-btn:disabled {
+  cursor: default;
+  background-color: #ccc;
+}
+.add-btn:disabled:hover:before {
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: none;
+  transform-origin: none;
+}
+</style>
