@@ -1,16 +1,6 @@
 jQuery(function ($) {
   'use strict';
   $(document).on('init', function() {
-    /****======  newsLetter_popup ??????? ======*******/
-    let selector = $(".modal-btn");
-    selector.magnificPopup({
-      type: "inline",
-      closeBtnInside: true,
-      autoFocusLast: true,
-      focus: ".modal-title",
-    });
-    selector.click();
-
     /****======  Active class add Remove  ======*******/
     $(".menubar").on("click", function () {
       $(".mobile-menu__sidebar-menu ").addClass("active");

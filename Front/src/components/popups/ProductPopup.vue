@@ -1,13 +1,9 @@
 <template>
-   <Transition name="modal-overlay">
-      <div
-         v-show="active"
-         class="quick-view-popup--overlay"
-      >
-      <Transition name="modal-content">
+   <BasePopup :active="active" :closePopup="togglePopup">
          <div 
-            v-if="active"
+            v-if="active && product"
             class="quick-view-popup"
+            @click.stop
          >
             <div class="container">
                <button @click.prevent="togglePopup" title="Close (Esc)" type="button" class="popup__close-button">×</button>
@@ -141,69 +137,25 @@
             </div>
             
          </div>
-      </Transition>
-      </div>
-   </Transition>
+      </BasePopup>
 </template>
 
 <script>
+   import BasePopup from './BasePopup.vue';
+
    export default {
       props: {
          product: Object,
          active: Boolean,
          togglePopup: Function,
       },
+      components: {
+         BasePopup
+      }
    };
 </script>
 
 <style> 
-.modal-overlay-enter-to,
-.modal-overlay-leave-from {
-  opacity: 1;
-}
-
-.modal-overlay-enter-active,
-.modal-overlay-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-
-.modal-overlay-enter-from,
-.modal-overlay-leave-to {
-   opacity: 0;
-}
-
-.modal-content-enter-to,
-.modal-content-leave-from {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.modal-content-enter-active{
-   transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02) 0.15s;
-}
-.modal-content-leave-active {
-   transition: all 0.3s cubic-bezier(0.52, 0.02, 0.19, 1.02);
-}
-
-.modal-content-enter-from{
-   opacity: 0;
-   transform: scale(0.8);
-}
-.modal-content-leave-to {
-   transform: scale(0.8);
-}
-
-.quick-view-popup--overlay {
-   position: fixed;
-   top: 0;
-   bottom: 0;
-   right: 0;
-   left: 0;
-   z-index: 10;
-   background-color: #24242483;
-   display: block;
-}
- 
 .quick-view-popup {
    z-index: 100;
    background: #FFF;

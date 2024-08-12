@@ -1,48 +1,7 @@
 <template>
   <main class="overflow-hidden">
     <!-- newsLetter_popup Start -->
-    <button data-mfp-src="#newsLetter-popup" class="modal-btn d-none"></button>
-    <div id="newsLetter-popup" class="mfp-hide p-4" role="dialog">
-      <div class="row align-items-center justify-content-sm-between">
-        <div class="col-lg-5 d-lg-block d-none">
-          <div class="newsLetter-popup__thumb imgenews">
-            <img
-              src="../../assets/images/home-three/products-1.jpg"
-              alt="newsletter"
-            />
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-8 col-sm-10">
-          <div class="newsLetter-popup__content mb-4">
-            <div class="text-center">
-              <a href="index.html" class="logo">
-                <img src="../../assets/images/logo/logo.png" alt="logo" />
-              </a>
-              <h2>Join <span>with us.</span></h2>
-              <p>Subscribe to receive news from Karte In a free hour</p>
-            </div>
-            <form action="#0" class="newsLetter-popup__subscrib-form">
-              <div class="input_box">
-                <input
-                  type="email"
-                  placeholder="Enter your email Address"
-                  name="email"
-                />
-                <button type="submit" class="subscribe_btn">Submit</button>
-              </div>
-              <div class="form-group">
-                <input type="checkbox" id="html" />
-                <label for="html">
-                  By providing my information, I agree to Karte
-                  <a href="#0"> Privacy Policy</a> and
-                  <a href="#0"> Legal Statement</a>
-                </label>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <NewsletterPopup :active="isPopupActive" :closePopup="closePopup" />
 
     <!-- Start Main Slider -->
     <section class="banner overflow-hidden">
@@ -4201,6 +4160,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Autoplay } from "swiper/modules";
+import NewsletterPopup from "@/components/popups/NewsletterPopup.vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -4208,18 +4168,26 @@ import "swiper/css/autoplay";
 
 export default {
   name: "Index",
-  mounted() {
-    $(document).trigger("init");
-  },
   components: {
     Swiper,
     SwiperSlide,
+    NewsletterPopup
   },
   setup() {
     return {
       modules: [Pagination, Autoplay],
     };
   },
+  data() {
+    return {
+      isPopupActive: true,
+    }
+  },
+  methods: {
+    closePopup() {
+      this.isPopupActive = false
+    }
+  }
 };
 </script>
 

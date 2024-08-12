@@ -420,7 +420,6 @@
 
 <script>
 import CartSideMenu from "@/components/CartSideMenu.vue";
-import { WOW } from 'wowjs';
 
 import { mapState, mapActions } from "vuex";
 
@@ -435,6 +434,7 @@ export default {
    },
    beforeDestroy() {
       window.removeEventListener("scroll", this.handleScroll);
+      document.removeEventListener('click', this.handleClickOutsideCart);
    },
    data() {
       return {
@@ -473,12 +473,12 @@ export default {
          this.isCartModalActive = status;
          
          if (status) {
-            document.addEventListener('click', this.handleClickOutside);
+            document.addEventListener('click', this.handleClickOutsideCart);
          } else {
-            document.removeEventListener('click', this.handleClickOutside);
+            document.removeEventListener('click', this.handleClickOutsideCart);
          }
       },
-      handleClickOutside(event) {
+      handleClickOutsideCart(event) {
          const cartMenu = this.$refs.cartMenu.$el;
          const openCartButton = this.$refs.openCartButton;
 
@@ -492,10 +492,7 @@ export default {
          });
       },
       ...mapActions('auth', ['logout']),
-   },
-   beforeDestroy() {
-      document.removeEventListener('click', this.handleClickOutside);
-   },
+   }
 };
 </script>
 

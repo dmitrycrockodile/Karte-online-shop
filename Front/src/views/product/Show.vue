@@ -825,10 +825,7 @@
     <!-- recent-products Start -->
     <section class="recent-products pt-60 pb-120 overflow-hidden wow fadeInUp">
       <div class="container">
-        
-        <Teleport to="body">
-            <ProductModal :product="popupProduct" :active="popupActive" :togglePopup="togglePopup" />
-        </Teleport>
+        <ProductPopup :product="popupProduct" :active="popupActive" :togglePopup="togglePopup" />
 
         <div class="row">
           <div class="col-12 wow fadeInUp animated">
@@ -952,7 +949,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
 
 import CountdownTimer from "@/components/CountdownTimer.vue";
-import ProductModal from "@/components/ProductModal.vue";
+import ProductPopup from "@/components/popups/ProductPopup.vue";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -964,7 +961,7 @@ export default {
     Swiper,
     SwiperSlide,
     CountdownTimer,
-    ProductModal,
+    ProductPopup,
   },
   mounted() {
     this.getRecentProducts();
@@ -1048,7 +1045,7 @@ export default {
       this[option] = data;
     },
     togglePopup() {
-        this.popupActive = !this.popupActive
+      this.popupActive = !this.popupActive
     },
     ...mapActions({
       addToCart: "cart/addToCart",
