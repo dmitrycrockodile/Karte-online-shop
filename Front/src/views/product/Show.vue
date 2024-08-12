@@ -1044,7 +1044,6 @@ export default {
       this.$router.push({ name: "products.show", params: { id: productId } });
     },
     setSelectedOption(option, data) {
-      console.log(option, data)
       this.choosenProductOptions[option] = data;
     },
     togglePopup() {

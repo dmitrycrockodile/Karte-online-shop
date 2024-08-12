@@ -6,9 +6,9 @@ const mutations = {
    ADD_TO_CART(state, formattedProduct) {
       state.cartItems.push(formattedProduct);
    },
-   INCREASE_QTY(state, { cartItem, qty = 1}) {
+   INCREASE_QTY(state, { product, qty = 1}) {
       const existingItem = state.cartItems.find(item => {
-         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
+         return item.id === product.id && item.color.id === product.color.id && item.size.id === product.size.id;
       });
 
       existingItem.qty += qty; 
@@ -32,7 +32,7 @@ const actions = {
       });
 
       if (existingItem) {
-         commit('INCREASE_QTY', { id: product.id, sizeId: choosenProductOptions.selectedSize.id, colorId: choosenProductOptions.selectedColor.id, qty: choosenProductOptions.selectedQuantity });
+         commit('INCREASE_QTY', { product: existingItem, qty: choosenProductOptions.selectedQuantity });
       } else {
          const formattedProduct = {
             id: product.id,
@@ -49,12 +49,12 @@ const actions = {
 
       dispatch('updateStorage');
    },
-   decreaseQty({ commit, dispatch }, {cartItem, qty}) {
+   decreaseQty({ commit, dispatch }, {cartItem}) {
       commit('DECREASE_QTY', cartItem);
       dispatch('updateStorage');
    },
-   increaseQty({ commit, dispatch }, cartItem) {
-      commit('INCREASE_QTY', cartItem);
+   increaseQty({ commit, dispatch }, { product, qty }) {
+      commit('INCREASE_QTY', { product, qty });
       dispatch('updateStorage');
    },
    removeFromCart({ commit, dispatch }, cartItem) {

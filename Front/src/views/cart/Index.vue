@@ -90,7 +90,7 @@
                             v-model="cartItem.qty"
                           />
                           <button
-                            @click.prevent="increaseQty({cartItem, qty: 1})"
+                            @click.prevent="increaseQty({product: cartItem, qty: 1})"
                             class="increaseQty"
                           >
                             <i class="flaticon-plus"></i>
