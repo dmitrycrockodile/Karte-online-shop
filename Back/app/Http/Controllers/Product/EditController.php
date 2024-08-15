@@ -7,6 +7,7 @@ use App\Models\Tag;
 use App\Models\Color;
 use App\Models\Category;
 use App\Models\Size;
+use App\Models\Coupon;
 
 class EditController extends BaseController
 {
@@ -16,7 +17,8 @@ class EditController extends BaseController
         $tags = Tag::all();
         $categories = Category::all();
         $sizes = Size::all();
+        $coupons = Coupon::all();
 
-        return view('product.edit', compact('product', 'colors', 'tags', 'categories', 'sizes'));
+        return view('product.edit', compact('product', 'colors', 'tags', 'categories', 'sizes', 'coupons'));
     }
 }

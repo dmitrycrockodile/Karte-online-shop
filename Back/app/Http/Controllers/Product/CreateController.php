@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Size;
 use App\Models\Tag;
+use App\Models\Coupon;
 
 class CreateController extends BaseController
 {
@@ -16,7 +16,8 @@ class CreateController extends BaseController
         $tags = Tag::all();
         $categories = Category::all();
         $sizes = Size::all();
+        $coupons = Coupon::all();
 
-        return view('product.create', compact('colors', 'tags', 'categories', 'sizes'));
+        return view('product.create', compact('colors', 'tags', 'categories', 'sizes', 'coupons'));
     }
 }

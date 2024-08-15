@@ -170,13 +170,23 @@
                     <p>${{ totalProductsPrice }}</p>
                   </div>
                 </li>
-                <li v-if="shippingMethod">
+                <li>
                   <div class="left">
                     <p>Shipping</p>
                   </div>
                   <div class="right">
                     <p>
                       <span>{{ shippingMethod }}:</span> ${{ shippingPrice }}
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div class="left">
+                    <p>Coupon</p>
+                  </div>
+                  <div class="right">
+                    <p>
+                      <span>Coupon discount:</span> ${{ couponDiscount }}
                     </p>
                   </div>
                 </li>
@@ -195,20 +205,24 @@
         <div class="row">
           <div class="col-xl-12">
             <div class="cart-button-box">
-              <div class="apply-coupon wow fadeInUp animated">
-                <div class="apply-coupon-input-box mt-30">
-                  <input
-                    type="text"
-                    name="coupon-code"
-                    value=""
-                    placeholder="Coupon Code"
-                  />
-                </div>
-                <div class="apply-coupon-button mt-30">
-                  <button class="btn--primary style2" type="submit">
-                    Apply Coupon
-                  </button>
-                </div>
+              <div class="coupon__box">
+                <form v-show="!isCouponActive" class="apply-coupon wow fadeInUp animated" method="post" @submit.prevent="handleCouponSubmit">
+                  <div class="apply-coupon-input-box mt-30">
+                    <input
+                      type="text"
+                      v-model.trim.lazy="usedCoupon"
+                      placeholder="Coupon Code"
+                      ref="couponCode"
+                    />
+                  </div>
+                  <div class="apply-coupon-button mt-30">
+                    <button class="btn--primary style2" type="submit">
+                      Apply Coupon
+                    </button>
+                  </div>
+                </form>
+                <p v-if="isCouponActive" class="success">Your coupon was activated!</p>
+                <p v-if="errorMessage" class="error">Invalid coupon!</p>
               </div>
               <div class="cart-button-box-right wow fadeInUp animated">
                 <router-link
@@ -265,6 +279,10 @@ export default {
         { label: LOCAL_PICKUP },
       ],
       backGroundImage,
+      usedCoupon: '',
+      isCouponActive: false,
+      couponDiscount: 0,
+      errorMessage: '',
     };
   },
   mounted() {
@@ -277,7 +295,7 @@ export default {
     }),
     ...mapState("auth", ["user"]),
     totalPrice() {
-      return Number(this.totalProductsPrice) + Number(this.shippingPrice);
+      return Number(this.totalProductsPrice) + Number(this.shippingPrice) - Number(this.couponDiscount);
     },
     shippingPrice() {
       switch (this.shippingMethod) {
@@ -300,6 +318,35 @@ export default {
     setShippingMethod(method) {
       this.shippingMethod = method;
     },
+    handleCouponSubmit() {
+      let couponCheck = this.checkIfCouponMatch(this.usedCoupon);
+
+      if (couponCheck) {
+        this.isCouponActive = true;
+        this.errorMessage = '';    
+        this.couponDiscount = couponCheck;  
+      } else {
+        this.errorMessage = 'The coupon code is invalid';
+        this.$refs.couponCode.value = '';
+        this.usedCoupon = '';
+      }
+    },
+    checkIfCouponMatch(coupon) {
+      let result;
+
+      this.cartItems.forEach(item => {
+        item.coupons.forEach(producCoupon => {
+          if (coupon === producCoupon.code) {
+            result = ((producCoupon.percentage / 100) * item.price).toFixed(2);
+            return;
+          };
+        })
+      });
+
+      console.log(result)
+
+      return result;
+    }
   },
 };
 </script>
@@ -326,5 +373,20 @@ export default {
     font-size: 16px;
     color: #555555;
     margin-left: 10px;
+  }
+
+  .coupon__box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .coupon__box .error {
+    color: #dd4848;
+    margin-left: 10px;
+    margin-top: 2px;
+  }
+
+  .coupon__box .success {
+    color: #16c216;
   }
 </style>

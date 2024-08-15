@@ -140,6 +140,12 @@
                   </a>
                </li>
                <li class="nav-item">
+                  <a href="{{ route('coupon.index') }}" class="nav-link">
+                    <i class="nav-icon fas fa-ticket-alt"></i>
+                     <p>Coupons</p>
+                  </a>
+               </li>
+               <li class="nav-item">
                   <a href="{{ route('user.index') }}" class="nav-link">
                      <i class="nav-icon fas fa-user-tie"></i>
                      <p>Users</p>
@@ -178,6 +184,7 @@
          $('.tags').select2()
          $('.colors').select2()
          $('.sizes').select2()
+         $('.coupons').select2()
          bsCustomFileInput.init()
       })
       $.widget.bridge('uibutton', $.ui.button)

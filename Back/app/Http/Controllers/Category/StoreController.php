@@ -11,7 +11,17 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request)
     {
         $data = $request->validated();
-        Category::firstOrCreate($data);
+
+        if (isset($data['coupons'])) {
+            $couponsIds = $data['coupons'];
+            unset($data['coupons']);
+        } else {
+            $couponsIds = [];
+        }
+
+        $category = Category::firstOrCreate($data);
+        
+        $category->coupons()->attach($couponsIds);
         
         return redirect()->route('category.index');
     }

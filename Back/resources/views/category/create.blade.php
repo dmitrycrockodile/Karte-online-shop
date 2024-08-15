@@ -21,7 +21,7 @@
    <section class="content">
       <div class="container-fluid">
          <div class="row">
-            <form action="{{ route('category.store') }}" method="post">
+            <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                @csrf
                <div class="form-group">
                   <input 
@@ -32,6 +32,21 @@
                      value="{{ old('title') }}"
                   >
                   @error('title')
+                     <p class="text-danger">{{ $message }}</p>
+                  @enderror
+               </div>
+
+               <div class="form-group">
+                  <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
+                    @foreach ($coupons as $coupon)
+                     <option 
+                        value="{{ $coupon->id }}"
+                        {{ old('coupons') && in_array($coupon->id, old('coupons')) ? ' selected' : '' }}
+                     >{{ $coupon->code }}</option>
+                    @endforeach
+                  </select>
+
+                  @error('coupons')
                      <p class="text-danger">{{ $message }}</p>
                   @enderror
                </div>

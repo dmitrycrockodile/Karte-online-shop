@@ -147,6 +147,21 @@
                </div>
 
                <div class="form-group">
+                  <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
+                    @foreach ($coupons as $coupon)
+                     <option 
+                        value="{{ $coupon->id }}"
+                        {{ old('coupons') && in_array($coupon->id, old('coupons')) ? ' selected' : '' }}
+                     >{{ $coupon->code }}</option>
+                    @endforeach
+                  </select>
+
+                  @error('coupons')
+                     <p class="text-danger">{{ $message }}</p>
+                  @enderror
+               </div>
+
+               <div class="form-group">
                   <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color" style="width: 100%;">
                      @foreach ($colors as $color)
                         <option 

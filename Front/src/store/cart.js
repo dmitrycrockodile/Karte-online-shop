@@ -34,6 +34,7 @@ const actions = {
       if (existingItem) {
          commit('INCREASE_QTY', { product: existingItem, qty: choosenProductOptions.selectedQuantity });
       } else {
+
          const formattedProduct = {
             id: product.id,
             image: product.preview_image,
@@ -42,6 +43,7 @@ const actions = {
             qty: choosenProductOptions.selectedQuantity,
             color: choosenProductOptions.selectedColor,
             size: choosenProductOptions.selectedSize,
+            coupons: product.coupons,
          }
 
          commit('ADD_TO_CART', formattedProduct);

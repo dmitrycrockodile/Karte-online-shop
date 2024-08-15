@@ -37,6 +37,8 @@ class UpdateRequest extends FormRequest
             'tags.*' => 'nullable|integer',
             'sizes' => 'nullable|array',
             'sizes.*' => 'nullable|integer',
+            'coupons' => 'nullable|array',
+            'coupons.*' => 'nullable|integer',
         ];
     }
 
@@ -62,6 +64,7 @@ class UpdateRequest extends FormRequest
             'colors.array' => 'Colors must be an array',
             'tags.array' => 'Tags must be an array',
             'sizes.array' => 'Sizes must be an array',
+            'coupons.array' => 'Sizes must be an array',
         ];
     }
 }

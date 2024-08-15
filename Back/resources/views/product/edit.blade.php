@@ -146,6 +146,21 @@
                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
+                          @foreach ($coupons as $coupon)
+                            <option
+                                value="{{ $coupon->id }}"
+                                {{ is_array($product->coupons->pluck('id')->toArray()) && in_array($coupon->id, $product->coupons->pluck('id')->toArray()) ? ' selected' : '' }}  
+                            >{{ $coupon->code }}</option>
+                          @endforeach
+                        </select>
+      
+                        @error('coupons')
+                           <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
       
                     <div class="form-group">
                         <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color" style="width: 100%;">

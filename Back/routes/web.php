@@ -45,6 +45,16 @@ Route::group(['prefix' => 'sizes', 'namespace' => 'App\Http\Controllers\size'], 
     Route::delete('/{size}', 'DeleteController')->name('size.delete');
 });
 
+Route::group(['prefix' => 'coupons', 'namespace' => 'App\Http\Controllers\coupon'], function() {
+    Route::get('/', 'IndexController')->name('coupon.index');
+    Route::get('/create', 'CreateController')->name('coupon.create');
+    Route::post('/', 'StoreController')->name('coupon.store');
+    Route::get('/{coupon}/edit', 'EditController')->name('coupon.edit');
+    Route::get('/{coupon}', 'ShowController')->name('coupon.show');
+    Route::patch('/{coupon}', 'UpdateController')->name('coupon.update');
+    Route::delete('/{coupon}', 'DeleteController')->name('coupon.delete');
+});
+
 Route::group(['prefix' => 'colors', 'namespace' => 'App\Http\Controllers\Color'], function() {
     Route::get('/', 'IndexController')->name('color.index');
     Route::get('/create', 'CreateController')->name('color.create');

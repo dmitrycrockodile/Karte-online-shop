@@ -39,6 +39,8 @@ class StoreRequest extends FormRequest
             'tags.*' => 'nullable|integer|exists:tags,id',
             'sizes' => 'nullable|array',
             'sizes.*' => 'nullable|integer|exists:sizes,id',
+            'coupons' => 'nullable|array',
+            'coupons.*' => 'nullable|integer|exists:coupons,id'
         ];
     }
 
@@ -68,6 +70,7 @@ class StoreRequest extends FormRequest
             'images.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
             'tags.array' => 'Tags must be an array',
             'sizes.array' => 'Sizes must be an array',
+            'coupons.array' => 'Coupons must be an array',
         ];
     }
 }

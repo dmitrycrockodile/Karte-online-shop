@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Size;
+use App\Models\Coupon;
 
 class Product extends Model
 {
@@ -19,6 +20,10 @@ class Product extends Model
 
     public function sizes() {
         return $this->belongsToMany(Size::class, 'product_sizes', 'product_id', 'size_id');
+    }
+
+    public function coupons() {
+        return $this->belongsToMany(Coupon::class, 'product_coupons', 'product_id', 'coupon_id');
     }
 
     public function colors() {

@@ -101,9 +101,16 @@
                   <tr>
                      <th>Sizes</th>
                      <td>
-                        {{-- @dd($product->sizes) --}}
                         @foreach ($product->sizes as $size)
                            <span class="mr-3">{{ $size->title }}</span>
+                        @endforeach
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Coupons</th>
+                     <td>
+                        @foreach ($product->coupons as $coupon)
+                           <span class="mr-3">{{ $coupon->code }}</span>
                         @endforeach
                      </td>
                   </tr>

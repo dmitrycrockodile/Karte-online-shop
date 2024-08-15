@@ -42,6 +42,13 @@ class ProductService {
             $colorsIds = [];
          }
 
+         if (isset($data['coupons'])) {
+            $couponsIds = $data['coupons'];
+            unset($data['coupons']);
+         } else {
+            $couponsIds = [];
+         }
+
          if (isset($data['images'])) {
             $images = $data['images'];
             unset($data['images']);
@@ -72,6 +79,7 @@ class ProductService {
          $product->tags()->attach($tagsIds);
          $product->sizes()->attach($sizesIds);
          $product->colors()->attach($colorsIds);
+         $product->coupons()->attach($couponsIds);
          
          DB::commit();
      } catch (\Exception $exception) {
@@ -111,6 +119,13 @@ class ProductService {
             $sizesIds = [];
          }
 
+         if (isset($data['coupons'])) {
+            $couponsIds = $data['coupons'];
+            unset($data['coupons']);
+         } else {
+            $couponsIds = [];
+         }
+
          if (isset($data['colors'])) {
             $colorsIds = $data['colors'];
             unset($data['colors']);
@@ -122,6 +137,8 @@ class ProductService {
          $product->tags()->sync($tagsIds);
          $product->sizes()->sync($sizesIds);
          $product->colors()->sync($colorsIds);
+         $product->coupons()->sync($couponsIds);
+
 
          DB::commit();
       } catch (\Exception $exception) {

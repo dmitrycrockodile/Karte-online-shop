@@ -23,6 +23,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
+            'coupons' => 'nullable|array',
+            'coupons.*' => 'nullable|integer|exists:coupons,id'
         ];
     }
 
@@ -31,6 +33,7 @@ class StoreRequest extends FormRequest
         return [
             'title.required' => 'Please write the title',
             'title.string' => 'Title must be a string',
+            'coupons.array' => 'Coupons must be an array',
         ];
     }
 }

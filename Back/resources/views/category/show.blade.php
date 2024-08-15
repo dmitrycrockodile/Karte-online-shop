@@ -42,6 +42,14 @@
                      <th>Title</th>
                      <td>{{ $category->title }}</td>
                   </tr>
+                  @if ($category->coupons)
+                  <tr>
+                     <th>Coupons</th>
+                     @foreach ($category->coupons as $coupon)
+                        <td>{{ $coupon->code }}</td>
+                     @endforeach
+                  </tr>
+                  @endif
                </tbody>
             </table>
          </div>

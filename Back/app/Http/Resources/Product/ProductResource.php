@@ -4,6 +4,7 @@ namespace App\Http\Resources\Product;
 
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Color\ColorResource;
+use App\Http\Resources\Coupon\CouponResource;
 use App\Http\Resources\ProductImage\ProductImageResource;
 use App\Http\Resources\Size\SizeResource;
 use App\Http\Resources\Tag\TagResource;
@@ -34,6 +35,7 @@ class ProductResource extends JsonResource
             'sizes' => SizeResource::collection($this->sizes),
             'colors' => ColorResource::collection($this->colors),
             'product_images' => ProductImageResource::collection($this->images),
+            'coupons' => CouponResource::collection($this->coupons),
         ];
     }
 }
