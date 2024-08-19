@@ -12,15 +12,13 @@
             {{ option.label }}
          </label> 
       </div>
-
-      <span v-show="!selectedValue" class="warning">Please choose the shipping method!</span>
    </div>
 </template>
  
 <script>
 
 export default {
-   name: 'Radio Group',
+   name: 'Basic Radio Group',
    props: {
       "options": { type: Array, required: true },
       "type": { type: String, required: true },

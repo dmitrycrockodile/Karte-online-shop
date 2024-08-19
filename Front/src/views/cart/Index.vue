@@ -79,7 +79,7 @@
                       <td class="qty">
                         <div class="qtySelector text-center">
                           <button
-                            @click.prevent="decreaseQty({cartItem})"
+                            @click.prevent="cartItem.qty > 1 ? decreaseQty({cartItem}) : removeFromCart(cartItem)"
                             class="decreaseQty"
                           >
                             <i class="flaticon-minus"></i>
@@ -102,7 +102,7 @@
                       </td>
                       <td>
                         <button
-                          @click.prevent="removeFromCart(cartItem.id)"
+                          @click.prevent="removeFromCart(cartItem)"
                           class="remove"
                         >
                           <i class="flaticon-cross"></i>
@@ -134,7 +134,7 @@
                     <td class="selact-box1">
                       <ul class="shop-select-option-box-1">
                         <li>
-                          <RadioGroup
+                          <BasicRadioGroup
                             type="basic"
                             :setValue="setShippingMethod"
                             :selectedValue="shippingMethod"
@@ -254,7 +254,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 
-import RadioGroup from "@/components/RadioGroup.vue";
+import BasicRadioGroup from "@/components/radios/BasicRadioGroup.vue";
 
 import {
   FLAT_RATE_PROCENT,
@@ -262,12 +262,13 @@ import {
   FREE_SHIPPING,
   LOCAL_PICKUP,
 } from "@/utils/constants";
+
 import backGroundImage from "@/assets/images/inner-pages/cart_bg.jpg";
 
 export default {
   name: "Show",
   components: {
-    RadioGroup,
+    BasicRadioGroup,
   },
   data() {
     return {

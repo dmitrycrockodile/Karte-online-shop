@@ -31,6 +31,7 @@
       },
       mounted() {
          document.addEventListener('click', this.handleClickOutside);
+         
       },    
       beforeDestroy() {
          document.removeEventListener('click', this.handleClickOutside);

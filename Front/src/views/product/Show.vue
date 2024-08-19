@@ -139,18 +139,8 @@
                   <h4 v-if="choosenProductOptions.selectedSize">Size: ({{ choosenProductOptions.selectedSize.title }})</h4>
                   <h4 v-else>Choose the size</h4>
                   <div class="shop-details-top-size-list-box">
-                    <ul class="shop-details-top-size-list">
-                      <li
-                        :class="{ active: choosenProductOptions.selectedSize && choosenProductOptions.selectedSize.title === size.title}"
-                        v-for="size in product.sizes"
-                      >
-                        <button
-                          @click.prevent="setSelectedOption('selectedSize', size)"
-                        >
-                          {{ size.title }}
-                        </button>
-                      </li>
-                    </ul>
+                    <SizesRadioGroup :setValue="setSelectedSize" :sizes="product.sizes" :selectedValue="choosenProductOptions.selectedSize" />
+                    
                     <p class="shop-details-top-size-guide">
                       <a href="#0">Size Guide</a>
                     </p>
@@ -159,17 +149,14 @@
                 <div v-if="product.colors.length" class="shop-details-top-color-sky-box">
                   <h4 v-if="choosenProductOptions.selectedColor">Color: ({{ choosenProductOptions.selectedColor.title }})</h4>
                   <h4 v-else>Choose the color</h4>
-                  <ul class="varients">
-                    <li v-for="color in product.colors">
-                      <button
-                        :title="color.title"
-                        class="shop-details-top-color-sky-img"
-                        :class="{ active: choosenProductOptions.selectedColor && choosenProductOptions.selectedColor.title === color.title }"
-                        :style="`background-color: ${color.title}`"
-                        @click.prevent="setSelectedOption('selectedColor', color)"
-                      ></button>
-                    </li>
-                  </ul>
+                  
+                  <ColorsRadioGroup 
+                    :colors="product.colors" 
+                    :selectedValue="choosenProductOptions.selectedColor" 
+                    :setValue="setSelectedColor" 
+                    type="regular"
+                  />
+                    
                 </div>
                 <ul class="shop-details-top-ask-question">
                   <li>
@@ -212,23 +199,13 @@
                   <div
                     class="product-quantity-box d-flex align-items-center flex-wrap"
                   >
-                    <div class="qty mr-2">
-                      <div class="qtySelector text-center">
-                        <button @click="changeQuantity(-1)" class="decreaseQty">
-                          <i class="flaticon-minus"></i>
-                        </button>
 
-                        <input
-                          type="number"
-                          class="qtyValue"
-                          v-model="choosenProductOptions.selectedQuantity"
-                        />
+                    <QuantitySelector 
+                      v-model="choosenProductOptions.selectedQuantity" 
+                      :min="1" 
+                      :max="product.count" 
+                    />
 
-                        <button @click="changeQuantity(1)" class="increaseQty">
-                          <i class="flaticon-plus"></i>
-                        </button>
-                      </div>
-                    </div>
                     <div class="product-quantity-check">
                       <template v-if="product.count">
                         <i class="flaticon-select"></i>
@@ -951,6 +928,9 @@ import { Navigation, Thumbs } from "swiper/modules";
 
 import CountdownTimer from "@/components/CountdownTimer.vue";
 import ProductPopup from "@/components/popups/ProductPopup.vue";
+import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
+import ColorsRadioGroup from "@/components/radios/ColorsRadioGroup.vue";
+import QuantitySelector from "@/components/QuantitySelector.vue";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -963,6 +943,9 @@ export default {
     SwiperSlide,
     CountdownTimer,
     ProductPopup,
+    SizesRadioGroup,
+    ColorsRadioGroup,
+    QuantitySelector,
   },
   mounted() {
     this.getRecentProducts();
@@ -1030,21 +1013,14 @@ export default {
       const percentageChange = ((newPrice - oldPrice) / oldPrice) * 100;
       return `${percentageChange.toFixed()}%`;
     },
-    changeQuantity(amount) {
-      const newQuantity = this.choosenProductOptions.selectedQuantity + amount;
-
-      if (
-        newQuantity >= this.minProductQuantity &&
-        newQuantity <= this.maxProductQuantity
-      ) {
-        this.choosenProductOptions.selectedQuantity = newQuantity;
-      }
-    },
     goToProductPage(productId) {
       this.$router.push({ name: "products.show", params: { id: productId } });
     },
-    setSelectedOption(option, data) {
-      this.choosenProductOptions[option] = data;
+    setSelectedSize(data) {
+      this.choosenProductOptions.selectedSize = data;
+    },
+    setSelectedColor(data) {
+      this.choosenProductOptions.selectedColor = data;
     },
     togglePopup() {
       this.popupActive = !this.popupActive
