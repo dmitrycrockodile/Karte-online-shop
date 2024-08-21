@@ -32,7 +32,7 @@
          },
          max: {
             type: Number
-         }
+         },
       },
       computed: {
          quantity: {

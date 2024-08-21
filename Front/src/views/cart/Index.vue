@@ -255,6 +255,7 @@
 import { mapActions, mapGetters, mapState } from "vuex";
 
 import BasicRadioGroup from "@/components/radios/BasicRadioGroup.vue";
+import QuantitySelector from "@/components/QuantitySelector.vue";
 
 import {
   FLAT_RATE_PROCENT,
@@ -269,6 +270,7 @@ export default {
   name: "Show",
   components: {
     BasicRadioGroup,
+    QuantitySelector,
   },
   data() {
     return {
