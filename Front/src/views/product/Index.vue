@@ -137,144 +137,6 @@
     <!--Start product-grid-->
     <div class="product-grid pt-60 pb-120">
       <div class="container">
-        <div
-          :id="`popup${popupId}`"
-          class="product-gird__quick-view-popup mfp-hide"
-        >
-          <div v-if="popupProduct" class="container">
-            <div class="row justify-content-between align-items-center">
-              <div class="col-lg-6">
-                <div
-                  v-if="!popupProduct.product_images.length"
-                  class="popup-product-single-image"
-                >
-                  <img
-                    :src="popupProduct.preview_image"
-                    :alt="popupProduct.title"
-                  />
-                </div>
-
-                <div class="quick-view__left-content">
-                  <div class="tabs">
-                    <div class="popup-product-thumb-box">
-                      <ul>
-                        <li
-                          v-for="productImage in popupProduct.product_images"
-                          class="tab-nav popup-product-thumb"
-                        >
-                          <a :href="`#tabb${productImage.id}`">
-                            <img
-                              :src="productImage.url"
-                              :alt="popupProduct.title"
-                            />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="popup-product-main-image-box">
-                      <div
-                        v-for="productImage in popupProduct.product_images"
-                        :id="`tabb${productImage.id}`"
-                        class="tab-item popup-product-image"
-                      >
-                        <div class="popup-product-single-image">
-                          <img
-                            :src="productImage.url"
-                            :alt="popupProduct.title"
-                          />
-                        </div>
-                      </div>
-                      <template v-if="popupProduct.product_images.length > 1">
-                        <button class="prev">
-                          <i class="flaticon-back"></i>
-                        </button>
-                        <button class="next">
-                          <i class="flaticon-next"></i>
-                        </button>
-                      </template>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="popup-right-content">
-                  <h3>{{ popupProduct.title }}</h3>
-                  <div class="ratting">
-                    <i class="flaticon-star"></i> <i class="flaticon-star"></i>
-                    <i class="flaticon-star"></i> <i class="flaticon-star"></i>
-                    <i class="flaticon-star"></i> <span>(112)</span>
-                  </div>
-                  <p class="text">
-                    {{ popupProduct.description }}
-                  </p>
-                  <div class="price">
-                    <h2>
-                      ${{ popupProduct.price }}
-                      <del v-if="!!popupProduct.old_price">
-                        ${{ popupProduct.old_price }} USD</del
-                      >
-                    </h2>
-                    <h6>
-                      {{ popupProduct.count > 0 ? "In stuck" : "Out of stuck" }}
-                    </h6>
-                  </div>
-                  <div class="color-varient">
-                    <a
-                      v-for="color in popupProduct.colors"
-                      :style="`background: ${color.title};`"
-                      href="#0"
-                      class="color-name"
-                    >
-                      <span>{{ color.title }}</span>
-                    </a>
-                  </div>
-                  <div class="add-product">
-                    <h6>Qty:</h6>
-                    <div class="button-group">
-                      <div class="qtySelector text-center">
-                        <span class="decreaseQty"
-                          ><i class="flaticon-minus"></i>
-                        </span>
-                        <input type="number" class="qtyValue" value="1" />
-                        <span class="increaseQty">
-                          <i class="flaticon-plus"></i>
-                        </span>
-                      </div>
-                      <button class="btn--primary">Add to Cart</button>
-                    </div>
-                  </div>
-                  <div class="payment-method">
-                    <a href="#0">
-                      <img
-                        src="../../assets/images/payment_method/method_1.png"
-                        alt=""
-                      />
-                    </a>
-                    <a href="#0">
-                      <img
-                        src="../../assets/images/payment_method/method_2.png"
-                        alt=""
-                      />
-                    </a>
-                    <a href="#0">
-                      <img
-                        src="../../assets/images/payment_method/method_3.png"
-                        alt=""
-                      />
-                    </a>
-                    <a href="#0">
-                      <img
-                        src="../../assets/images/payment_method/method_4.png"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="row gx-4">
           <div class="col-xl-3 col-lg-4">
             <div class="shop-grid-sidebar">
@@ -451,93 +313,9 @@
                         v-for="product in products"
                         class="col-xl-4 col-lg-6 col-6"
                       >
-                        <div class="products-three-single w-100 mt-30">
-                          <div class="products-three-single-img">
-                            <router-link
-                              :to="{
-                                name: 'products.show',
-                                params: { id: product.id },
-                              }"
-                              class="d-block"
-                            >
-                              <img
-                                :src="product.preview_image"
-                                class="first-img"
-                                :alt="product.title"
-                              />
-                              <img
-                                src="../../assets/images/home-three/productss2-hover-1.png"
-                                alt=""
-                                class="hover-img"
-                              />
-                            </router-link>
-                            <div class="products-grid-one__badge-box">
-                              <span
-                                v-for="tag in product.tags"
-                                class="bg_base badge discount"
-                                >{{ tag.title }}</span
-                              >
-                            </div>
-                            <router-link
-                              :to="{
-                                name: 'products.show',
-                                params: { id: product.id },
-                              }"
-                              class="addcart btn--primary style2"
-                            >
-                              Add To Cart
-                            </router-link>
-                            <div class="products-grid__usefull-links">
-                              <ul>
-                                <li>
-                                  <a href="wishlist.html">
-                                    <i class="flaticon-heart"> </i>
-                                    <span> wishlist</span>
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="compare.html">
-                                    <i
-                                      class="flaticon-left-and-right-arrows"
-                                    ></i>
-                                    <span> compare</span>
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    @click="getPopupProduct(product.id)"
-                                    :href="`#popup${popupId}`"
-                                    class="popup_link"
-                                  >
-                                    <i class="flaticon-visibility"></i>
-                                    <span> quick view</span>
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                          <div
-                            class="products-three-single-content text-center"
-                          >
-                            <span>{{ product.category.title }}</span>
-                            <h5>
-                              <router-link
-                                :to="{
-                                  name: 'products.show',
-                                  params: { id: product.id },
-                                }"
-                              >
-                                {{ product.title }}
-                              </router-link>
-                            </h5>
-                            <p>
-                              <del v-if="!!product.old_price"
-                                >${{ product.old_price }}</del
-                              >
-                              ${{ product.price }}
-                            </p>
-                          </div>
-                        </div>
+
+                      <ProductCard :product="product" />
+                      
                       </div>
                     </div>
                   </div>
@@ -609,6 +387,8 @@
 </template>
 
 <script>
+import ProductCard from "@/components/ProductCard.vue";
+
 import productsBackGroundImage from '@/assets/images/inner-pages/products_bg.jpg';
 
 export default {
@@ -617,11 +397,12 @@ export default {
     this.getProducts();
     this.getFilters();
   },
+  components: {
+    ProductCard,
+  },
   data() {
     return {
       products: [],
-      popupProduct: null,
-      popupId: null,
       productFilters: [],
       categories: [],
       colors: [],
@@ -710,14 +491,6 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-    },
-    getPopupProduct(id) {
-      this.popupProduct = null;
-
-      this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
-        this.popupId = id;
-        this.popupProduct = res.data.data;
-      });
     },
     getFilters() {
       this.axios

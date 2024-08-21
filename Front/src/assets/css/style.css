@@ -7401,7 +7401,7 @@ catagory4
   bottom: 10px;
   opacity: 1;
   visibility: visible;
-  padding: 10px 0px 8px;
+  padding: 5% 2% 5%;
 }
 
 .products-three-single-img .overlay-text {
@@ -7494,7 +7494,7 @@ catagory4
 
   .products-three-single:hover .addcart {
     bottom: 20px;
-    padding: 15px 25px 10px;
+    padding: 5% 2% 5%;
   }
 }
 @media (min-width: 1600px) {
@@ -7542,7 +7542,7 @@ catagory4
 @media (max-width: 575px) {
   .products-three-single-img .addcart,
 .products-three-single:hover .addcart {
-    padding: 8px 0px 6px;
+    padding: 5% 2% 5%;
     font-size: 12px;
   }
 }

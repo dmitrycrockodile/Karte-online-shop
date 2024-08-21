@@ -803,8 +803,6 @@
     <!-- recent-products Start -->
     <section class="recent-products pt-60 pb-120 overflow-hidden wow fadeInUp">
       <div class="container">
-        <ProductPopup :product="popupProduct" :active="popupActive" :togglePopup="togglePopup" />
-
         <div class="row">
           <div class="col-12 wow fadeInUp animated">
             <div class="section-head text-center">
@@ -828,82 +826,9 @@
               class="products-grid-one"
               :key="product.id"
             >
-              <div class="products-grid-one__product-image">
-                <div class="products-grid-one__badge-box">
-                  <span class="bg_base badge new">{{
-                    product.tags.find((tag) => tag.title === "New") ? "New" : ""
-                  }}</span>
-                  <span class="bg_black badge discount">{{
-                    this.countDiscountPercentage(
-                      product.old_price,
-                      product.price
-                    )
-                  }}</span>
-                </div>
-                <router-link
-                  :to="{ name: 'products.show', params: { id: product.id } }"
-                  class="d-block products-grid__image_holder"
-                >
-                  <img :src="product.preview_image" :alt="product.title" />
-                </router-link>
-                <div class="products-grid__usefull-links">
-                  <ul>
-                    <li>
-                      <a href="wishlist.html">
-                        <i class="flaticon-heart"> </i>
-                        <span>wishlist</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="compare.html">
-                        <i class="flaticon-left-and-right-arrows"></i>
-                        <span>compare</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        @click.prevent="getPopupProduct(product.id)"
-                        :href="`#popup${popupId}`"
-                        class="popup_link"
-                      >
-                        <i class="flaticon-visibility"></i>
-                        <span>quick view</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="products-grid__content">
-                <router-link
-                  :to="{ name: 'products.show', params: { id: product.id } }"
-                  class="products-grid__cart-btn btn--primary"
-                >
-                  <p class="one">Add to Cart</p>
-                  <span class="two">
-                    <i class="flaticon-shopping-cart"> </i>
-                  </span>
-                </router-link>
-                <div class="ratting">
-                  <i class="flaticon-star"></i>
-                  <i class="flaticon-star"></i>
-                  <i class="flaticon-star"></i>
-                  <i class="flaticon-star"></i>
-                  <i class="flaticon-star"></i>
-                </div>
-                <h5 class="product_name">
-                  <router-link
-                    :to="{ name: 'products.show', params: { id: product.id } }"
-                    class="d-block"
-                  >
-                    {{ product.title }}
-                  </router-link>
-                </h5>
-                <div
-                  class="price d-flex align-content-center justify-content-center"
-                >
-                  <p>${{ product.price }}</p>
-                </div>
-              </div>
+
+              <ProductCard :product="product" />
+
             </swiper-slide>
 
             <button class="slider-arrow recentPrevArrow" aria-disabled="false">
@@ -931,6 +856,7 @@ import ProductPopup from "@/components/popups/ProductPopup.vue";
 import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
 import ColorsRadioGroup from "@/components/radios/ColorsRadioGroup.vue";
 import QuantitySelector from "@/components/QuantitySelector.vue";
+import ProductCard from "@/components/ProductCard.vue";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -946,6 +872,7 @@ export default {
     SizesRadioGroup,
     ColorsRadioGroup,
     QuantitySelector,
+    ProductCard,
   },
   mounted() {
     this.getRecentProducts();
@@ -967,9 +894,6 @@ export default {
   data() {
     return {
       product: {},
-      popupProduct: null,
-      popupId: null,
-      popupActive: false,
       recentProducts: [],
       isLoading: true,
       minProductQuantity: 1,
@@ -986,13 +910,6 @@ export default {
       this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
         this.product = res.data.data;
         this.maxProductQuantity = res.data.data.count;
-      });
-    },
-    getPopupProduct(id) {
-      this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
-        this.popupId = id;
-        this.popupProduct = res.data.data;
-        this.togglePopup();
       });
     },
     getRecentProducts() {
@@ -1021,9 +938,6 @@ export default {
     },
     setSelectedColor(data) {
       this.choosenProductOptions.selectedColor = data;
-    },
-    togglePopup() {
-      this.popupActive = !this.popupActive
     },
     ...mapActions({
       addToCart: "cart/addToCart",
