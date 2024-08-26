@@ -21,7 +21,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <form action="{{ route('category.update', $category->id) }}" method="POST">
+                <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
@@ -43,6 +43,44 @@
                         </select>
       
                         @error('coupons')
+                           <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Upload preview image</h4>
+                        <div class="input-group d-flex flex-column">
+                            <div class="custom-file w-100">
+                                <label class="custom-file-label" for="exampleInputFile">Choose new file</label>
+                                <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile"">
+                            </div>
+
+                            <div class="w-50 mt-2">
+                                <img src="{{ $category->previewImageUrl }}" alt="Preview image" class="w-50" />
+                            </div>
+                        </div>
+      
+                        @error('preview_image')
+                           <p class="text-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Upload banner image</h4>
+                        <div class="input-group d-flex flex-column">
+                            <div class="custom-file w-100">
+                                <label class="custom-file-label" for="exampleInputFile">Choose new file</label>
+                                <input name="banner" type="file" class="custom-file-input" id="exampleInputFile"">
+                            </div>
+
+                            @if ($category->bannerUrl)
+                                <div class="w-50 mt-2">
+                                    <img src="{{ $category->bannerUrl }}" alt="Banner image" class="w-50" />
+                                </div>
+                            @endif
+                        </div>
+      
+                        @error('banner')
                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>

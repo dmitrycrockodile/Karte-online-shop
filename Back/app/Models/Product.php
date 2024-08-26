@@ -39,6 +39,10 @@ class Product extends Model
     }
 
     public function getPreviewImageUrlAttribute() {
-        return url('storage/' . $this->preview_image);
+        if ($this->preview_image) {
+            return url('storage/' . $this->preview_image);
+        } else {
+            return null;
+        }
     }
 }

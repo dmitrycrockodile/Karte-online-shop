@@ -33,6 +33,11 @@ const router = createRouter({
       name: 'login',
       component: () => import("../views/auth/Login.vue")
     },
+    {
+      path: '/category/:id',
+      name: 'category.index',
+      component: () => import("../views/category/Index.vue")
+    },
   ]
 })
 

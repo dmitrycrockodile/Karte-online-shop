@@ -51,6 +51,34 @@
                   @enderror
                </div>
 
+               <div class="form-group">
+                  <p>Upload preview image</p>
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile" value="{{ old('preview_image') }}">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                     </div>
+                  </div>
+
+                  @error('preview_image')
+                     <p class="text-danger">{{ $message }}</p>
+                  @enderror
+               </div>
+
+               <div class="form-group">
+                  <p>Upload banner image</p>
+                  <div class="input-group">
+                     <div class="custom-file">
+                        <input name="banner" type="file" class="custom-file-input" id="exampleInputFile" value="{{ old('banner') }}">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                     </div>
+                  </div>
+
+                  @error('banner')
+                     <p class="text-danger">{{ $message }}</p>
+                  @enderror
+               </div>
+
                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
          </div>

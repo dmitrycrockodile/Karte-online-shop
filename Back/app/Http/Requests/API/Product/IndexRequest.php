@@ -28,6 +28,7 @@ class IndexRequest extends FormRequest
             'tags' => 'nullable|array',
             'page' => 'nullable|integer',
             'dataPerPage' => 'nullable|integer',
+            'sortby' => 'nullable|string',
         ];
     }
 }

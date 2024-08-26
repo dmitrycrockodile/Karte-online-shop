@@ -419,9 +419,10 @@
 </template>
 
 <script>
-import CartSideMenu from "@/components/CartSideMenu.vue";
+import { mapState, mapActions, mapGetters } from "vuex";
+import axios from "axios";
 
-import { mapState, mapActions } from "vuex";
+import CartSideMenu from "@/components/CartSideMenu.vue";
 
 export default {
    name: "App",
@@ -431,16 +432,17 @@ export default {
    mounted() {
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
-      $(document).trigger('init')
+      $("select").niceSelect();
+
+      this.getCategories()
    },
    beforeDestroy() {
       window.removeEventListener("scroll", this.handleScroll);
-      document.removeEventListener('click', this.handleClickOutsideCart);
    },
    data() {
       return {
-         scrollPosition: 0,
-         isCartModalActive: false,
+        scrollPosition: 0,
+        isCartModalActive: false,
       };
    },
    computed: {
@@ -458,7 +460,7 @@ export default {
             activeScrollToTop: this.scrollPosition >= 150,
          };
       },
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
    },
    methods: {
       scrollToTop() {
@@ -492,7 +494,14 @@ export default {
             this.$router.push({ name: 'login' });
          });
       },
+      getCategories() {
+        axios.get('http://localhost:8876/api/categories')
+          .then(res => {
+            this.setCategories(res.data.data)
+          })
+      },
       ...mapActions('auth', ['logout']),
+      ...mapActions('categories', ['setCategories']),
    }
 };
 </script>

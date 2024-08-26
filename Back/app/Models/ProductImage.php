@@ -10,6 +10,10 @@ class ProductImage extends Model
     protected $guarded = false;
 
     public function getImageUrlAttribute() {
-        return url('storage/' . $this->file_path);
+        if ($this->file_path) {
+            return url('storage/' . $this->file_path);
+        } else {
+            return null;
+        }
     }
 }

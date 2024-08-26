@@ -24,5 +24,9 @@ Route::post('/products', 'App\Http\Controllers\API\Product\IndexController');
 Route::get('/products/filters', 'App\Http\Controllers\API\Product\FilterListController');
 Route::get('/products/{product}', 'App\Http\Controllers\API\Product\ShowController');
 
+Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@getCategories');
+Route::post('/categories/{category}/products', 'App\Http\Controllers\API\Category\CategoryController@getCategoryProducts');
+Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@getCategory');
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

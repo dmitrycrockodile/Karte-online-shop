@@ -42,14 +42,32 @@
                      <th>Title</th>
                      <td>{{ $category->title }}</td>
                   </tr>
-                  @if ($category->coupons)
+                  @if (count($category->coupons))
                   <tr>
                      <th>Coupons</th>
                      @foreach ($category->coupons as $coupon)
-                        <td>{{ $coupon->code }}</td>
+                        <td>
+                           {{ $coupon->code }}
+                        </td>
                      @endforeach
                   </tr>
                   @endif
+                  <tr>
+                     <th>Preview image</th>
+                     <td>
+                        @if ($category->preview_image)
+                        <img class="w-75" src="{{ $category->previewImageUrl }}" alt="{{ $category->title }} preview">
+                        @endif
+                     </td>
+                  </tr>
+                  <tr>
+                     <th>Banner image</th>
+                     <td>
+                        @if ($category->banner)
+                        <img class="w-100" src="{{ $category->bannerUrl }}" alt="{{ $category->title }} banner">
+                        @endif
+                     </td>
+                  </tr>
                </tbody>
             </table>
          </div>

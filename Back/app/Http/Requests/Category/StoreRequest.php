@@ -24,7 +24,9 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|string',
             'coupons' => 'nullable|array',
-            'coupons.*' => 'nullable|integer|exists:coupons,id'
+            'coupons.*' => 'nullable|integer|exists:coupons,id',
+            'preview_image' => 'required|image',
+            'banner' => 'required|image',
         ];
     }
 
@@ -34,6 +36,10 @@ class StoreRequest extends FormRequest
             'title.required' => 'Please write the title',
             'title.string' => 'Title must be a string',
             'coupons.array' => 'Coupons must be an array',
+            'preview_image.required' => 'Please upload the image',
+            'preview_image.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
+            'banner.required' => 'Please upload the banner image',
+            'banner.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
         ];
     }
 }

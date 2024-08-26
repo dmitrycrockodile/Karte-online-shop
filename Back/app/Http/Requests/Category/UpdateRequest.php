@@ -24,7 +24,9 @@ class UpdateRequest extends FormRequest
         return [
             'title' => 'required|string',
             'coupons' => 'nullable|array',
-            'coupons.*' => 'nullable|integer|exists:coupons,id'
+            'coupons.*' => 'nullable|integer|exists:coupons,id',
+            'preview_image' => 'nullable|file',
+            'banner' => 'nullable|file',
         ];
     }
 
@@ -34,6 +36,8 @@ class UpdateRequest extends FormRequest
             'title.required' => 'Please write the title',
             'title.string' => 'Title must be a string',
             'coupons.array' => 'Coupons must be an array',
+            'preview_image.file' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
+            'banner.file' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
         ];
     }
 }

@@ -12,7 +12,7 @@
             <div
               class="breadcrumb-content pb-60 text-center wow fadeInUp animated"
             >
-              <h2>Shop Grid</h2>
+              <h2>Products</h2>
               <div class="breadcrumb-menu">
                 <ul>
                   <li>
@@ -21,7 +21,7 @@
                     >
                   </li>
                   <li><i class="flaticon-next"></i></li>
-                  <li class="active">Shop Grid</li>
+                  <li class="active">Products</li>
                 </ul>
               </div>
             </div>
@@ -37,93 +37,24 @@
           <div class="col-xl-12">
             <div class="product-categories-one__inner">
               <ul>
-                <li>
-                  <a href="#0" class="img-box">
+                <li v-for="category in categories" :key="category.id">
+                  <router-link 
+                    :to="{
+                      name: 'category.index',
+                      params: { id: category.id },
+                    }" 
+                    class="img-box"
+                  >
                     <div class="inner">
                       <img
-                        src="../../assets/images/shop/product-categories-v1-img1.png"
-                        alt=""
+                        :src="category.preview_image"
+                        :alt="category.title"
                       />
                     </div>
-                  </a>
+                  </router-link>
                   <div class="title">
                     <a href="#0">
-                      <h6>Accessories</h6>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <a href="#0" class="img-box">
-                    <div class="inner">
-                      <img
-                        src="../../assets/images/shop/product-categories-v1-img2.png"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <div class="title">
-                    <a href="#0">
-                      <h6>Furnitures</h6>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <a href="#0" class="img-box">
-                    <div class="inner">
-                      <img
-                        src="../../assets/images/shop/product-categories-v1-img3.png"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <div class="title">
-                    <a href="#0">
-                      <h6>Jewellery</h6>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <a href="#0" class="img-box">
-                    <div class="inner">
-                      <img
-                        src="../../assets/images/shop/product-categories-v1-img4.png"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <div class="title">
-                    <a href="#0">
-                      <h6>Shoes</h6>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <a href="#0" class="img-box">
-                    <div class="inner">
-                      <img
-                        src="../../assets/images/shop/product-categories-v1-img5.png"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <div class="title">
-                    <a href="#0">
-                      <h6>Electronics</h6>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <a href="#0" class="img-box">
-                    <div class="inner">
-                      <img
-                        src="../../assets/images/shop/product-categories-v1-img6.png"
-                        alt=""
-                      />
-                    </div>
-                  </a>
-                  <div class="title">
-                    <a href="#0">
-                      <h6>Fashion</h6>
+                      <h6>{{ category.title }}</h6>
                     </a>
                   </div>
                 </li>
@@ -169,7 +100,7 @@
                       >
                         <input
                           :value="category.id"
-                          v-model="categories"
+                          v-model="filterCategories"
                           type="checkbox"
                           :id="category.id"
                         />
@@ -223,7 +154,7 @@
                       <input type="text" id="priceRange" readonly />
                     </div>
                     <button
-                      @click.prevent="filterProducts()"
+                      @click.prevent="getProducts()"
                       class="filterbtn"
                       type="submit"
                     >
@@ -249,8 +180,9 @@
                 >
                   <div class="left-box wow fadeInUp animated">
                     <p>
-                      Showing 1–{{ dataPerPage }} of
-                      {{ products.length }} Results
+                      Showing 
+                      {{ products.length ? `1-${products.length} of ${pagination.total}` : 0 }}
+                      Results
                     </p>
                   </div>
                   <div
@@ -258,43 +190,9 @@
                   >
                     <div class="short-by">
                       <div class="select-box">
-                        <select
-                          @change.prevent="handleSelectChange"
-                          ref="mySelect"
-                          class="wide"
-                        >
-                          <option value="all" active>All</option>
-                          <option value="bestseller">Best selling</option>
-                          <option value="sale">On sale</option>
-                          <option value="title(ASC)">
-                            Alphabetically, A-Z
-                          </option>
-                          <option value="title(DESC)">
-                            Alphabetically, Z-A
-                          </option>
-                          <option value="price(ASC)">Price, low to high</option>
-                          <option value="price(DESC)">
-                            Price, high to low
-                          </option>
-                        </select>
+                        <SortSelect :onChange="getProducts" />
                       </div>
                     </div>
-                    <button
-                      @click.prevent="getProducts(1)"
-                      type="submit"
-                      class="filterbtn"
-                      style="margin-left: 20px; margin-top: 10px"
-                    >
-                      Reset
-                    </button>
-                    <button
-                      @click.prevent="handleSelectChange"
-                      type="submit"
-                      class="filterbtn"
-                      style="margin-left: 20px; margin-top: 10px"
-                    >
-                      Sort
-                    </button>
                   </div>
                 </div>
               </div>
@@ -309,14 +207,7 @@
                     aria-labelledby="pills-grid-tab"
                   >
                     <div class="row">
-                      <div
-                        v-for="product in products"
-                        class="col-xl-4 col-lg-6 col-6"
-                      >
-
-                      <ProductCard :product="product" />
-                      
-                      </div>
+                      <ProductList :products="products" />
                     </div>
                   </div>
                 </div>
@@ -387,7 +278,10 @@
 </template>
 
 <script>
-import ProductCard from "@/components/ProductCard.vue";
+import { mapGetters } from "vuex";
+
+import ProductList from "@/components/ProductList.vue";
+import SortSelect from "@/components/SortSelect.vue";
 
 import productsBackGroundImage from '@/assets/images/inner-pages/products_bg.jpg';
 
@@ -398,73 +292,36 @@ export default {
     this.getFilters();
   },
   components: {
-    ProductCard,
+    ProductList,
+    SortSelect,
   },
   data() {
     return {
       products: [],
       productFilters: [],
-      categories: [],
+      filterCategories: [],
       colors: [],
       prices: [],
       tags: [],
-      sortBy: null,
       pagination: [],
       dataPerPage: 12,
       isLoading: true,
       productsBackGroundImage,
     };
   },
+  computed: {
+    ...mapGetters({
+      categories: 'categories/categories',
+    }),
+  },
   methods: {
-    handleSelectChange() {
-      this.sortBy = $(this.$refs.mySelect).val();
-
-      switch (this.sortBy) {
-        case "bestseller":
-          this.products = this.products.sort((a, b) => a.count - b.count);
-          break;
-        case "sale":
-          this.products = this.products.filter((item) => item.old_price);
-          break;
-        case "title(ASC)":
-          this.products = this.products.sort((a, b) =>
-            a.title.localeCompare(b.title)
-          );
-          break;
-        case "title(DESC)":
-          this.products = this.products.sort((a, b) =>
-            b.title.localeCompare(a.title)
-          );
-          break;
-        case "price(ASC)":
-          this.products = this.products.sort((a, b) => a.price - b.price);
-          break;
-        case "price(DESC)":
-          this.products = this.products.sort((a, b) => b.price - a.price);
-          break;
-      }
-    },
-    filterProducts(page = 1, dataPerPage = 12) {
-      this.axios
-        .post("http://localhost:8876/api/products", {
-          categories: this.categories,
-          colors: this.colors,
-          prices: this.prices,
-          tags: this.tags,
-          page: page,
-          dataPerPage: this.dataPerPage || dataPerPage,
-        })
-        .then((res) => {
-          this.products = res.data.data;
-        });
-    },
     resetFilters() {
-      this.categories = [];
+      this.filterCategories = [];
       this.colors = [];
       this.prices = [];
       this.tags = [];
 
-      this.filterProducts();
+      this.getProducts();
     },
     addAttribute(attr, array) {
       if (!this[array].includes(attr)) {
@@ -473,15 +330,15 @@ export default {
         this[array] = this[array].filter((el) => el !== attr);
       }
     },
-    getProducts(page = 1, dataPerPage = 12) {
-      this.isLoading = true;
+    getProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.axios
         .post("http://localhost:8876/api/products", {
-          categories: this.categories,
+          categories: this.filterCategories,
           colors: this.colors,
           prices: this.prices,
           tags: this.tags,
           page: page,
+          sortby: sortBy,
           dataPerPage: this.dataPerPage || dataPerPage,
         })
         .then((res) => {
@@ -529,4 +386,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.inner img {
+  transform: scale(1.5);
+}
+</style>

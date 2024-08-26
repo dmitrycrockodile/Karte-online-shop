@@ -10,6 +10,7 @@ class ProductFilter extends AbstractFilter {
    const COLORS = 'colors';
    const PRICES = 'prices';
    const TAGS = 'tags';
+   const SORTBY = 'sortby';
 
 
    protected function getCallbacks(): array
@@ -19,11 +20,12 @@ class ProductFilter extends AbstractFilter {
          self::COLORS => [$this, 'colors'],
          self::PRICES => [$this, 'prices'],
          self::TAGS => [$this, 'tags'],
+         self::SORTBY => [$this, 'sortby'],
       ];
    }
 
-   protected function categories(Builder $builder, $value) {
-      $builder->whereIn('category_id', $value);
+   protected function categories(Builder $builder, $values) {
+      $builder->whereIn('category_id', $values);
    }
 
    protected function colors(Builder $builder, $value) {
@@ -40,5 +42,31 @@ class ProductFilter extends AbstractFilter {
       $builder->whereHas('tags', function($b) use ($value) {
          $b->whereIn('title', $value);
       });
+   }
+
+   protected function sortby(Builder $builder, $value) {
+      switch ($value) {
+         case 'bestseller':
+            $builder->orderBy('count', 'desc');
+            break;
+         case 'sale':
+            $builder->whereNotNull('old_price');
+            break;
+         case 'title(ASC)':
+            $builder->orderBy('title', 'asc');
+            break;
+         case 'title(DESC)':
+            $builder->orderBy('title', 'desc');
+            break;
+         case 'price(ASC)':
+            $builder->orderBy('price', 'asc');
+            break;
+         case 'price(DESC)':
+            $builder->orderBy('price', 'desc');
+            break;
+         default:
+            $builder->orderBy('created_at', 'asc');
+            break;
+      }
    }
 }
