@@ -1,6 +1,6 @@
 <template>
-    <div v-if="isLoading" class="loader"><span>Karte...</span></div>
-    <main v-show="!isLoading" class="overflow-hidden ">
+    <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
+    <main v-show="!isPageLoading" class="overflow-hidden ">
       <section class="breadcrumb-area" :style="{'background-image': `url(${category.banner || 'path/to/default/image.jpg'})`}">
           <div class="container">
               <div class="row">
@@ -60,7 +60,7 @@
           <div class="container">
               <div class="row">
                   <div class="col-xl-12">
-                      <div v-if="products.length" class="shop-grid-page-top-info justify-content-md-between justify-content-center">
+                      <div class="shop-grid-page-top-info justify-content-md-between justify-content-center">
                           <div class="left-box wow fadeInUp animated">
                               <p>
                                 Showing 
@@ -69,21 +69,21 @@
                               </p>
                           </div>
                           <div
-                              class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
-                              <div class="short-by">
-                                    <div class="select-box"> 
-                                        <SortSelect :onChange="getProductsByCategory" />
-                                    </div>
+                            class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
+                            <div class="short-by">
+                              <div class="select-box"> 
+                                <SortSelect :onChange="getProductsByCategory" />
                               </div>
+                            </div>
                           </div>
                       </div>
-                      <div v-else>
+                      <div v-if="!products.length && !isProductsLoading">
                         <h4 class="empty-list">Sorry, we do not have products for {{ category.title }} category for now</h4>
                       </div>
                   </div>
               </div>
               <div class="row">
-                <ProductList :products="products" :columns="4"/>
+                <ProductList :products="products" :columns="4" :isLoading="isProductsLoading" />
               </div>
               <div v-if="pagination.last_page > 1" class="row">
                 <div
@@ -160,7 +160,8 @@
       return {
         category: {},
         products: [],
-        isLoading: true,
+        isPageLoading: true,
+        isProductsLoading: true,
         pagination: [],
         dataPerPage: 16,
         page: 1,
@@ -178,25 +179,29 @@
     },
     methods: {
       getCategory(id) {
-          axios.get(`http://localhost:8876/api/categories/${id}`)
-          .then(res => {
-              this.category = res.data.data
-          })
-          .then(() => {
-              this.getProductsByCategory('all', this.pageNumber, this.dataPerPage)
-          })
-          .finally(() => this.isLoading = false)
+        axios.get(`http://localhost:8876/api/categories/${id}`)
+        .then(res => {
+          this.category = res.data.data
+        })
+        .then(() => {
+          this.getProductsByCategory('all', this.pageNumber, this.dataPerPage)
+        })
+        .finally(() => this.isPageLoading = false)
       },
       getProductsByCategory(sortby = 'all', pageNumber = 1, dataPerPage = 16) {
-          axios.post(`http://localhost:8876/api/categories/${this.category.id}/products`, {
-            page: pageNumber,
-            dataPerPage: dataPerPage,
-            sortby: sortby,
-          })
-          .then(res => {
-            this.products = res.data.data;
-            this.pagination = res.data.meta;
-          })
+        this.isProductsLoading = true;
+        this.products = [];
+
+        axios.post(`http://localhost:8876/api/categories/${this.category.id}/products`, {
+          page: pageNumber,
+          dataPerPage: dataPerPage,
+          sortby: sortby,
+        })
+        .then(res => {
+          this.products = res.data.data;
+          this.pagination = res.data.meta;
+        })
+        .finally(() => this.isProductsLoading = false)
       },
     },
     mounted() {
