@@ -5,7 +5,7 @@
       :class="columnsClass"
    >
 
-      <ProductCard :product="product" :key="product.id" />
+      <ProductCard :product="product" :key="product.id" :type="type" />
       
    </div>
    <div v-if="isLoading" class="skeletons">
@@ -31,9 +31,11 @@
          "products": { type: Array },
          "columns": { type: Number, default: 3 },
          "isLoading": { type: Boolean, default: true },
+         "type": { type: String, default: 'basic' },
       },
       computed: {
          columnsClass() {
+            if (this.type === 'advanced') return "product-grid-two list mt-30";
             if (this.columns === 3) return "col-xl-4 col-lg-6 col-6";
             if (this.columns === 4) return "col-xl-3 col-lg-4 col-6";
          }

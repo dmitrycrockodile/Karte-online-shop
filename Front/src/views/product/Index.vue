@@ -194,20 +194,29 @@
                       </div>
                     </div>
                       <div class="product-view-style d-flex justify-content-md-between justify-content-center">  
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-grid-tab"
-                                    data-bs-toggle="pill" data-bs-target="#pills-grid" type="button"
-                                    role="tab"  aria-selected="true">
-                                    <i class="flaticon-grid"></i>
+                                <button 
+                                  class="nav-link active"
+                                  data-bs-toggle="pill" 
+                                  type="button" role="tab"  
+                                  aria-selected="true"
+                                  @click.prevent="handleProductListType('basic')"
+                                >
+                                  <i class="flaticon-grid"></i>
                                 </button> 
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link"  id="pills-list-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-list" type="button" role="tab"
-                                    aria-selected="false">
-                                    <i class="flaticon-list"></i>
-                                </button>
+                              <button 
+                                class="nav-link"  
+                                id="pills-list-tab" 
+                                data-bs-toggle="pill" 
+                                type="button" role="tab"
+                                aria-selected="false"
+                                @click.prevent="handleProductListType('advanced')"
+                              >
+                                <i class="flaticon-list"></i>
+                              </button>
                             </li>
                         </ul>
                         <button class="slidebarfilter d-lg-none d-flex"><i  class="flaticon-edit"></i></button>
@@ -226,7 +235,7 @@
                     aria-labelledby="pills-grid-tab"
                   >
                     <div class="row">
-                      <ProductList :products="products" :isLoading="isProductsLoading" />
+                      <ProductList :products="products" :isLoading="isProductsLoading" :type="type" />
                     </div>
                   </div>
                 </div>
@@ -327,6 +336,7 @@ export default {
       isPageLoading: true,
       isProductsLoading: true,
       productsBackGroundImage,
+      type: 'basic'
     };
   },
   computed: {
@@ -405,6 +415,9 @@ export default {
           }
         });
     },
+    handleProductListType(type) {
+      return this.type = type;
+    }
   },
 };
 </script>
