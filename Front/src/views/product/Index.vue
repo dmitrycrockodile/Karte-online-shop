@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isLoading" class="loader"><span>Karte...</span></div>
-  <main v-if="!isLoading" class="overflow-hidden">
+  <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
+  <main v-if="!isPageLoading" class="overflow-hidden">
     <!--Start Breadcrumb Style2-->
     <div
       class="breadcrumb-area"
@@ -193,6 +193,25 @@
                         <SortSelect :onChange="getProducts" />
                       </div>
                     </div>
+                      <div class="product-view-style d-flex justify-content-md-between justify-content-center">  
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-grid-tab"
+                                    data-bs-toggle="pill" data-bs-target="#pills-grid" type="button"
+                                    role="tab"  aria-selected="true">
+                                    <i class="flaticon-grid"></i>
+                                </button> 
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link"  id="pills-list-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-list" type="button" role="tab"
+                                    aria-selected="false">
+                                    <i class="flaticon-list"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <button class="slidebarfilter d-lg-none d-flex"><i  class="flaticon-edit"></i></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -207,7 +226,7 @@
                     aria-labelledby="pills-grid-tab"
                   >
                     <div class="row">
-                      <ProductList :products="products" />
+                      <ProductList :products="products" :isLoading="isProductsLoading" />
                     </div>
                   </div>
                 </div>
@@ -305,7 +324,8 @@ export default {
       tags: [],
       pagination: [],
       dataPerPage: 12,
-      isLoading: true,
+      isPageLoading: true,
+      isProductsLoading: true,
       productsBackGroundImage,
     };
   },
@@ -331,6 +351,8 @@ export default {
       }
     },
     getProducts(sortBy = '', page = 1, dataPerPage = 12) {
+      this.isProductsLoading = true;
+
       this.axios
         .post("http://localhost:8876/api/products", {
           categories: this.filterCategories,
@@ -346,7 +368,8 @@ export default {
           this.pagination = res.data.meta;
         })
         .finally(() => {
-          this.isLoading = false;
+          this.isPageLoading = false;
+          this.isProductsLoading = false;
         });
     },
     getFilters() {

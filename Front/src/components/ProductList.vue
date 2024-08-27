@@ -1,6 +1,6 @@
 <template>
    <div
-      v-if="products.length"
+      v-if="products.length && !isLoading"
       v-for="product in products"
       :class="columnsClass"
    >
