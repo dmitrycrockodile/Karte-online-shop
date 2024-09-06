@@ -39,11 +39,16 @@
                            <a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a>
                         </td>
                         <td>{{ $user->email }}</td>
-                        {{-- <td>
+                        <td>
                            <a class="text-success" href="{{ route('user.edit', $user->id) }}"><i class="fas fa-pen"></i></a>
-                           <a class="text-danger ml-2" href="{{ route('user.delete', $user->id) }}"><i class="fas fa-trash"></i></a>
-                           <a class="text-primary ml-2" href="{{ route('user.show', $user->id) }}"><i class="fas fa-eye"></i></a>
-                        </td> --}}
+                           <form action="{{ route('user.delete', $user->id) }}" method="POST" class="d-inline">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="text-danger ml-2 mb-1" style="background-color: transparent; border: none;">
+                                 <i class="fas fa-trash"></i>
+                              </button>
+                           </form>
+                        </td>
                      </tr>
                   @endforeach
                </tbody>

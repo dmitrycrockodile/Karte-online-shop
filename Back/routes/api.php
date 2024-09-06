@@ -28,5 +28,11 @@ Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@
 Route::post('/categories/{category}/products', 'App\Http\Controllers\API\Category\CategoryController@getCategoryProducts');
 Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@getCategory');
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/logout',[AuthController::class, 'logout']);
+});
+
+Route::middleware('guest:sanctum')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+});

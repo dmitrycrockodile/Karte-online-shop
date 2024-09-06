@@ -5,35 +5,33 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\IndexRequest;
 use App\Http\Requests\User\StoreRequest;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
     protected function register(StoreRequest $request) {
         $data = $request->validated();
-
-        $remember_token = Str::random(60);
         
         $user = User::firstOrCreate([
             'email' => $data['email']
         ], [
             ...$data,
-            'password' => Hash::make($data['password']),
-            'remember_token' => $remember_token,
+            'password' => Hash::make($data['password'])
         ]);
-        
-        event(new Registered($user));
+   
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         Auth::login($user);
 
         return response()->json([
             'success' => true,
-            'email' => $data['email'],
-            'remember_token' => $remember_token,
-        ]);
+            'user' => $user,
+            'remember_token' => $token,
+        ], Response::HTTP_CREATED);
     }
 
     protected function login(IndexRequest $request) {
@@ -47,11 +45,11 @@ class AuthController extends Controller
                 'message' => 'User not found.',
             ], 404);
         }
-
+        
         if (Hash::check($data['password'], $user->password)) {
-            $remember_token = Str::random(60);
+            $token = $user->createToken('auth_token')->plainTextToken;
 
-            $user->remember_token = $remember_token;
+            $user->remember_token = $token;
             $user->save();
 
             Auth::login($user);
@@ -59,7 +57,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'email' => $user['email'],
-                'remember_token' => $remember_token,
+                'remember_token' => $token,
             ]);
         } else {
             return response()->json([
@@ -68,4 +66,16 @@ class AuthController extends Controller
             ], 401);
         }
     }
+
+    protected function logout(Request $request) {    
+        $request->user()->tokens()->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logged out successfully.',
+        ], Response::HTTP_NO_CONTENT);
+    }   
 }

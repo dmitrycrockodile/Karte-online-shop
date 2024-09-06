@@ -13,6 +13,7 @@ class IndexController extends Controller
     public function __invoke(IndexRequest $request)
     {
         $data = $request->validated();
+        
         $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
         
         $query = Product::filter($filter);

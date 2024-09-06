@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'App\Http\Controllers\Main\IndexController')->name('main.index');
+
+Auth::routes();
 
 Route::group(['prefix' => 'categories', 'namespace' => 'App\Http\Controllers\Category'], function() {
     Route::get('/', 'IndexController')->name('category.index');
