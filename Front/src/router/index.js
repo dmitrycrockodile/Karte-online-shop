@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import authModule from '../store/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,7 +12,8 @@ const router = createRouter({
     {
       path: '/products',
       name: 'products.index',
-      component: () => import("../views/product/Index.vue")
+      component: () => import("../views/product/Index.vue"),
+      // meta: { requiresAuth: true }
     },
     {
       path: '/products/:id',
@@ -26,12 +28,14 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import("../views/auth/Register.vue")
+      component: () => import("../views/auth/Register.vue"),
+      meta: { guest: true }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import("../views/auth/Login.vue")
+      component: () => import("../views/auth/Login.vue"),
+      meta: { guest: true }
     },
     {
       path: '/category/:id',
@@ -40,5 +44,23 @@ const router = createRouter({
     },
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (authModule.getters.isAuthenticated()) {
+      next(); 
+    } else {
+      next({ name: 'login' }); 
+    }
+  } else if (to.matched.some(record => record.meta.guest)) {
+    if (authModule.getters.isAuthenticated()) {
+      next({ name: 'main' });
+    } else {
+      next(); 
+    }
+  } else {
+    next(); 
+  }
+});
 
 export default router

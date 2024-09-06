@@ -45,7 +45,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="cartItem in cartItems">
+                    <tr v-for="cartItem in cartItems" :key="cartItem.id">
                       <td>
                         <div class="thumb-box">
                           <router-link

@@ -3,6 +3,7 @@
       <li
         :class="{ active: selectedValue && selectedValue.title === size.title}"
         v-for="size in sizes"
+        :key="size.id"
       >
         <button
           @click.prevent="setValue(size)"

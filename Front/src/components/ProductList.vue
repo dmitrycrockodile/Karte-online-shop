@@ -3,6 +3,7 @@
       v-if="products.length && !isLoading"
       v-for="product in products"
       :class="columnsClass"
+      :key="product.id"
    >
 
       <ProductCard :product="product" :key="product.id" :type="type" />

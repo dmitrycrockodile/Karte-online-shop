@@ -1,6 +1,6 @@
 <template>
    <div :class="`container ${type}`">
-      <div v-for="(option, i) in options"> 
+      <div v-for="(option, i) in options" :key="`option${i}`"> 
          <input type="radio" 
             :name="option.label" 
             :id="`option_${i}`" 

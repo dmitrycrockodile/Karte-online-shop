@@ -363,7 +363,7 @@
                   </li>
                   <li>
                     Tags:
-                    <span v-for="(tag, i) in product.tags">
+                    <span v-for="(tag, i) in product.tags" :key="tag.id">
                       {{
                         i + 1 === product.tags.length
                           ? tag.title

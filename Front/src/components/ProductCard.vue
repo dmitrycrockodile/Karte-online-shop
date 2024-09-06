@@ -22,6 +22,7 @@
         <div class="products-grid-one__badge-box">
           <span
             v-for="tag in product.tags"
+            :key="tag.id"
             class="bg_base badge discount"
             >{{ tag.title }}</span
           >
@@ -110,6 +111,7 @@
         <div class="products-grid-one__badge-box"> 
           <span
             v-for="tag in product.tags"
+            :key="tag.id"
             class="bg_base badge discount"
             >{{ tag.title }}</span
           >

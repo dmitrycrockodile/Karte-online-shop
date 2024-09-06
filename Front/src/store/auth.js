@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
    user: JSON.parse(localStorage.getItem('user')) || null,
-   token: JSON.parse(localStorage.getItem('remember_token')) || null,
+   token: JSON.parse(localStorage.getItem('token')) || null,
    status: '',
 }
 
@@ -17,7 +17,7 @@ const mutations = {
    },
    LOGOUT_USER(state) {
       state.user = null;
-      state.tokem = null;
+      state.token = null;
    }
 }
 
@@ -29,44 +29,42 @@ const actions = {
             data: payload,
             method: 'POST'
          })
-         .then(res => {
-            dispatch('login', { email: payload.email, password: payload.password })
-               .then(() => {
-                  resolve(res); 
-               })
-               .catch(err => {
-                  commit('AUTH_ERROR');
-                  reject(err); 
-               });
-         })
-         .catch(err => {
-            commit('AUTH_ERROR');
-            reject(err); 
-         });
-      });
+            .then(res => {
+               dispatch('login', { email: payload.email, password: payload.password })
+                  .then(() => {
+                     resolve(res); 
+                  })
+                  .catch(err => {
+                     commit('AUTH_ERROR');
+                     reject(err); 
+                  });
+            })
+            .catch(err => {
+               commit('AUTH_ERROR');
+               reject(err); 
+            });
+      })
    },
    login({ commit }, payload) {
       return new Promise((resolve, reject) => {
-         axios({ url: 'http://localhost:8876/api/login', data: payload, method: 'POST' })
-         .then(res => {
-            const user = res.data.email;
-            const token = res.data.remember_token;
-
-            localStorage.setItem('user', JSON.stringify(user));
-            localStorage.setItem('token', JSON.stringify(token));
-
-            axios.defaults.headers.common['Authorization'] = token;
-
-            commit('AUTH_SUCCESS', user, token);
-
-            resolve(res);
-         })
-         .catch(err => {
-            commit('AUTH_ERROR');
-            
-            reject(err);
-         })
-      })
+         axios.post("http://localhost:8876/api/login", payload)
+            .then(res => {
+               const user = res.data.email;
+               const token = res.data.remember_token;
+   
+               localStorage.setItem('user', JSON.stringify(user));
+               localStorage.setItem('token', JSON.stringify(token));
+   
+               commit('AUTH_SUCCESS', user, token);
+   
+               resolve(res);
+            })
+            .catch(err => {
+               commit('AUTH_ERROR');
+               
+               reject(err);
+            })
+      });
    },
    logout({ commit }) {
       return new Promise(resolve => {
@@ -75,15 +73,13 @@ const actions = {
          localStorage.removeItem('user');
          localStorage.removeItem('token');
 
-         delete axios.defaults.headers.common['Authorization'];
-
          resolve();
       });
    },
 }
 
 const getters = {
-   //user   
+   isAuthenticated: () => !!state.token 
 }
 
 export default {
@@ -91,4 +87,5 @@ export default {
    state, 
    mutations, 
    actions,
+   getters,
 }

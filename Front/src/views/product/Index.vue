@@ -97,6 +97,7 @@
                       <div
                         v-for="category in productFilters.categories"
                         class="form-group"
+                        :key="category.id"
                       >
                         <input
                           :value="category.id"
@@ -112,7 +113,7 @@
                 <div class="single-sidebar-box mt-30 wow fadeInUp animated">
                   <h4>Color Option</h4>
                   <ul class="color-option">
-                    <li v-for="color in productFilters.colors">
+                    <li v-for="color in productFilters.colors" :key="color.id">
                       <a
                         @click.prevent="addAttribute(color.id, 'colors')"
                         :href="`#${color.id}`"
@@ -130,7 +131,7 @@
                 >
                   <h4>Tags</h4>
                   <ul class="popular-tag">
-                    <li v-for="tag in productFilters.tags">
+                    <li v-for="tag in productFilters.tags" :key="tag.id">
                       <a
                         @click.prevent="addAttribute(tag.id, 'tags')"
                         :href="`#${tag.id}`"
@@ -362,7 +363,7 @@ export default {
     },
     getProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.isProductsLoading = true;
-
+  
       this.axios
         .post("http://localhost:8876/api/products", {
           categories: this.filterCategories,
@@ -376,6 +377,9 @@ export default {
         .then((res) => {
           this.products = res.data.data;
           this.pagination = res.data.meta;
+        })
+        .catch(error => {
+          console.log(error);
         })
         .finally(() => {
           this.isPageLoading = false;

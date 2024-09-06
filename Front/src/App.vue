@@ -103,7 +103,9 @@
                            <router-link class="router-link" to="/register"> Register </router-link>
                         </div>
                         <div v-if="user">
-                           <button @click.prevent="handleLogout" class="router-link">Logout</button>
+                          <form method="post" @submit.prevent="handleLogout">
+                            <button type="submit" class="router-link">Logout</button>
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -419,7 +421,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 import axios from "axios";
 
 import CartSideMenu from "@/components/CartSideMenu.vue";
@@ -490,9 +492,15 @@ export default {
          }
       },
       handleLogout() {
-         this.logout().then(() => {
-            this.$router.push({ name: 'login' });
-         });
+        axios.delete('http://localhost:8876/api/logout')
+          .then(() => {
+            this.logout().then(() => {
+              this.$router.push({ name: 'login' });
+            });
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       },
       getCategories() {
         axios.get('http://localhost:8876/api/categories')

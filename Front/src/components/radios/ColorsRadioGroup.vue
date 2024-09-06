@@ -1,6 +1,6 @@
 <template>
    <ul class="group__container">
-      <li v-for="color in colors">
+      <li v-for="color in colors" :key="color.id">
          <button
             :title="color.title"
             :class="{ 
