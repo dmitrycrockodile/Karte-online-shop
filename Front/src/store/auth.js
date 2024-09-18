@@ -24,11 +24,7 @@ const mutations = {
 const actions = {
    register({ commit, dispatch }, payload) {
       return new Promise((resolve, reject) => {
-         axios({
-            url: 'http://localhost:8876/api/register',
-            data: payload,
-            method: 'POST'
-         })
+         axios.post('http://localhost:8876/api/register', payload)
             .then(res => {
                dispatch('login', { email: payload.email, password: payload.password })
                   .then(() => {
@@ -45,36 +41,46 @@ const actions = {
             });
       })
    },
-   login({ commit }, payload) {
-      return new Promise((resolve, reject) => {
+   login({ commit, dispatch }, payload) {
+      
          axios.post("http://localhost:8876/api/login", payload)
             .then(res => {
-               const user = res.data.email;
-               const token = res.data.remember_token;
+               if (res.status === 200) {
+                  const user = {
+                     email: res.data.email,
+                     id: res.data.id,
+                  };
+                  const token = res.data.remember_token;
+      
+                  localStorage.setItem('user', JSON.stringify(user));
+                  localStorage.setItem('token', JSON.stringify(token));
+      
+                  commit('AUTH_SUCCESS', user, token);
    
-               localStorage.setItem('user', JSON.stringify(user));
-               localStorage.setItem('token', JSON.stringify(token));
-   
-               commit('AUTH_SUCCESS', user, token);
-   
-               resolve(res);
+                  dispatch('cart/fetchCartItems', null, { root: true });
+               }
             })
             .catch(err => {
                commit('AUTH_ERROR');
                
-               reject(err);
+               console.error(err)
             })
-      });
+   
    },
-   logout({ commit }) {
-      return new Promise(resolve => {
+   async logout({ commit, dispatch }) {
+      try {
+         const response = await axios.delete('http://localhost:8876/api/logout');
+         
          commit('LOGOUT_USER');
-
+   
          localStorage.removeItem('user');
          localStorage.removeItem('token');
-
-         resolve();
-      });
+         localStorage.removeItem('cart');
+   
+         dispatch('cart/clearCart', null, { root: true });
+      } catch(error) {
+         console.error(error)
+      }
    },
 }
 

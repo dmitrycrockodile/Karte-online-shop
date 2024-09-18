@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Size;
-use App\Models\Coupon;
 
 class Product extends Model
 {

@@ -18,12 +18,18 @@ axios.interceptors.response.use(
    response => response,
    err => {
       if (err.response && err.response.status === 401) {
-         window.location.href = '/login';
+         console.error("Unauthorized: Redirecting to login page.");
+
+         localStorage.removeItem('cart');
+         localStorage.removeItem('token');
+         localStorage.removeItem('user');
+         
+         router.push({ name: 'login' }); 
       }
 
       return err;
    }
 )
-app.config.globalProperties.axios = axios
+app.config.globalProperties.axios = axios;
 
 app.mount('#app')

@@ -226,7 +226,7 @@
                   <button
                     class="btn--primary style2 add-btn"
                     type="submit"
-                    @click.prevent="this.addToCart({ product, choosenProductOptions })"
+                    @click.prevent="addToCart({ product, choosenProductOptions })"
                     :disabled="!choosenProductOptions.selectedSize || !choosenProductOptions.selectedSize"
                   >
                     Add to Cart

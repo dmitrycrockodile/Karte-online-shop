@@ -379,7 +379,7 @@ export default {
           this.pagination = res.data.meta;
         })
         .catch(error => {
-          console.log(error);
+          console.error(error);
         })
         .finally(() => {
           this.isPageLoading = false;

@@ -79,18 +79,19 @@
                       <td class="qty">
                         <div class="qtySelector text-center">
                           <button
-                            @click.prevent="cartItem.qty > 1 ? decreaseQty({cartItem}) : removeFromCart(cartItem)"
+                            @click.prevent="cartItem.quantity > 1 ? decreaseQty(cartItem) : removeFromCart(cartItem)"
                             class="decreaseQty"
                           >
                             <i class="flaticon-minus"></i>
                           </button>
                           <input
                             type="number"
+                            disabled
                             class="qtyValue"
-                            v-model="cartItem.qty"
+                            v-model="cartItem.quantity"
                           />
                           <button
-                            @click.prevent="increaseQty({product: cartItem, qty: 1})"
+                            @click.prevent="increaseQty({cartItem, quantity: 1})"
                             class="increaseQty"
                           >
                             <i class="flaticon-plus"></i>
@@ -98,7 +99,7 @@
                         </div>
                       </td>
                       <td class="sub-total">
-                        ${{ (cartItem.price * cartItem.qty).toFixed(2) }}
+                        ${{ (cartItem.price * cartItem.quantity).toFixed(2) }}
                       </td>
                       <td>
                         <button

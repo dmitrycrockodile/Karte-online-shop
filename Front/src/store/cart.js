@@ -1,24 +1,29 @@
+import axios from "axios";
+
 const state = {
    cartItems: JSON.parse(localStorage.getItem('cart')) || [],
 };
 
 const mutations = {
-   ADD_TO_CART(state, formattedProduct) {
-      state.cartItems.push(formattedProduct);
+   SET_CART_ITEMS(state, items) {
+      state.cartItems = items
    },
-   INCREASE_QTY(state, { product, qty = 1}) {
+   ADD_TO_CART(state, cartItem) {
+      state.cartItems.push(cartItem);
+   },
+   INCREASE_QTY(state, { cartItem, quantity = 1}) {
       const existingItem = state.cartItems.find(item => {
-         return item.id === product.id && item.color.id === product.color.id && item.size.id === product.size.id;
+         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
       });
 
-      existingItem.qty += qty; 
+      existingItem.quantity += quantity; 
    },
    DECREASE_QTY(state, cartItem) {
       const existingItem = state.cartItems.find(item => {
          return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
       });
 
-      existingItem.qty -= 1; 
+      existingItem.quantity -= 1; 
    },
    REMOVE_FROM_CART(state, cartItem) {
       state.cartItems = state.cartItems.filter(item => !(item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id));
@@ -26,42 +31,82 @@ const mutations = {
 };
 
 const actions = {
-   addToCart({ commit, dispatch, state }, { product, choosenProductOptions }) {
-      const existingItem = state.cartItems.find(item => {
-         return item.id === product.id && item.color.id === choosenProductOptions.selectedColor.id && item.size.id === choosenProductOptions.selectedSize.id
-      });
-
-      if (existingItem) {
-         commit('INCREASE_QTY', { product: existingItem, qty: choosenProductOptions.selectedQuantity });
-      } else {
-
-         const formattedProduct = {
-            id: product.id,
-            image: product.preview_image,
-            title: product.title,
-            price: product.price,
-            qty: choosenProductOptions.selectedQuantity,
-            color: choosenProductOptions.selectedColor,
-            size: choosenProductOptions.selectedSize,
-            coupons: product.coupons,
+   async addToCart({ commit, dispatch }, {product, choosenProductOptions}) {
+      try {
+         const response = await axios.post('http://localhost:8876/api/cart', {
+            'product_id': product.id,
+            'quantity': choosenProductOptions.selectedQuantity,
+            'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize},
+         })
+         
+         if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity) {
+            commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
+         } else {
+            commit('ADD_TO_CART', response.data.cartItem);
          }
+      } catch (error) {
+         console.error(error)
+      }   
 
-         commit('ADD_TO_CART', formattedProduct);
+      dispatch('updateStorage');
+   },
+   async removeFromCart({ commit, dispatch }, cartItem) {
+      try {
+         await axios.delete(`http://localhost:8876/api/cart/${cartItem.id}`);
+
+         commit('REMOVE_FROM_CART', cartItem)
+
+         dispatch('updateStorage');
+      } catch (error) {
+         console.error(error);
       }
+   },
+   async decreaseQty({ commit, dispatch }, cartItem) {
+      try {
+         const response = await axios.put(`http://localhost:8876/api/cart/${cartItem.id}`, {
+            'product_id': cartItem.product_id,
+            'quantity': -1,
+            'attributes': { color: cartItem.color, size: cartItem.size},
+         });
 
-      dispatch('updateStorage');
+         if (response.status === 200) {
+            commit('DECREASE_QTY', cartItem);
+            dispatch('updateStorage');
+         }
+      } catch (error) {
+         console.error(error)
+      }
    },
-   decreaseQty({ commit, dispatch }, {cartItem}) {
-      commit('DECREASE_QTY', cartItem);
-      dispatch('updateStorage');
+   async increaseQty({ commit, dispatch }, { cartItem, quantity }) {
+      try {
+         const response = await axios.put(`http://localhost:8876/api/cart/${cartItem.id}`, {
+            'product_id': cartItem.product_id,
+            'quantity': quantity,
+            'attributes': { color: cartItem.color, size: cartItem.size},
+         });
+
+         if (response.status === 200) {
+            commit('INCREASE_QTY', { cartItem, quantity });
+            dispatch('updateStorage');
+         }
+      } catch (error) {
+         console.error(error)
+      } 
    },
-   increaseQty({ commit, dispatch }, { product, qty }) {
-      commit('INCREASE_QTY', { product, qty });
-      dispatch('updateStorage');
+   async fetchCartItems({ commit }) {
+      try {
+         const cartItems = await axios.get('http://localhost:8876/api/cart');
+         
+         if (cartItems.status === 200) {
+            commit('SET_CART_ITEMS', cartItems.data.data);
+         }
+      } catch (error) {
+         console.error(error);
+      }
    },
-   removeFromCart({ commit, dispatch }, cartItem) {
-      commit('REMOVE_FROM_CART', cartItem);
-      dispatch('updateStorage');
+   clearCart({ commit }) {
+      commit('SET_CART_ITEMS', []);
+      localStorage.removeItem('cart');
    },
    updateStorage({ state }) {
       localStorage.setItem('cart', JSON.stringify(state.cartItems));
@@ -72,7 +117,7 @@ const getters = {
    cartItems: state => state.cartItems,
    totalProductsPrice: state => {
       const total = state.cartItems.reduce((total, item) => {
-         return total + item.price * item.qty;
+         return total + item.price * item.quantity;
       }, 0);
 
       return total.toFixed(2);

@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
-    protected function register(StoreRequest $request) {
+    public function register(StoreRequest $request) {
         $data = $request->validated();
         
         $user = User::firstOrCreate([
@@ -34,7 +34,7 @@ class AuthController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    protected function login(IndexRequest $request) {
+    public function login(IndexRequest $request) {
         $data = $request->validated();
 
         $user = User::whereEmail($data['email'])->first();
@@ -57,6 +57,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'email' => $user['email'],
+                'id' => $user['id'],
                 'remember_token' => $token,
             ]);
         } else {
@@ -67,15 +68,22 @@ class AuthController extends Controller
         }
     }
 
-    protected function logout(Request $request) {    
-        $request->user()->tokens()->delete();
+    public function logout(Request $request) {   
+        $user = $request->user();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Logged out successfully.',
-        ], Response::HTTP_NO_CONTENT);
-    }   
+        if ($user) {
+            $user->tokens()->delete();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Logged out successfully.',
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Unauthorized',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
 }

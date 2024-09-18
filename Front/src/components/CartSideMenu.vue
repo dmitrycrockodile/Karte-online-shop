@@ -16,7 +16,7 @@
                         <h6>{{ cartItem.title }}</h6>
                      </a>
                      <div>
-                        <p>{{ cartItem.qty }} X <span>${{ cartItem.price }}</span> </p>
+                        <p>{{ cartItem.quantity }} X <span>${{ cartItem.price }}</span> </p>
                         <span class="cart-item__color" :style="`background-color: ${cartItem.color.title}`"></span>
                         <p>{{ cartItem.size.title }}</p>
                      </div>

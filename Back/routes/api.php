@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\CartItem\CartItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,12 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('guest:sanctum')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+});
+
+Route::get('/cart', [CartItemController::class, 'index']);
+Route::post('/cart', [CartItemController::class, 'store']);
+Route::put('/cart/{cartItem}', [CartItemController::class, 'update']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/cart/{cartItem}', [CartItemController::class, 'destroy']);
 });

@@ -492,15 +492,10 @@ export default {
          }
       },
       handleLogout() {
-        axios.delete('http://localhost:8876/api/logout')
-          .then(() => {
-            this.logout().then(() => {
-              this.$router.push({ name: 'login' });
-            });
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        this.logout()
+        .then(() => {
+          this.$router.push({ name: 'login' });
+        });
       },
       getCategories() {
         axios.get('http://localhost:8876/api/categories')
@@ -510,6 +505,7 @@ export default {
       },
       ...mapActions('auth', ['logout']),
       ...mapActions('categories', ['setCategories']),
+      ...mapActions('cart', ['fetchCartItems']),
    }
 };
 </script>
