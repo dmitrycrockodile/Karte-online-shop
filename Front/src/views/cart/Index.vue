@@ -314,7 +314,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      addToCart: "cart/addToCart",
       decreaseQty: "cart/decreaseQty",
       removeFromCart: "cart/removeFromCart",
       increaseQty: "cart/increaseQty",

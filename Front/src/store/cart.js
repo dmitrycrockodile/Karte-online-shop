@@ -38,8 +38,6 @@ const actions = {
             'quantity': choosenProductOptions.selectedQuantity,
             'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize},
          })
-
-         console.log(response)
          
          if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity) {
             commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
@@ -53,7 +51,6 @@ const actions = {
       }   
    },
    async removeFromCart({ commit, dispatch }, cartItem) {
-      console.log(cartItem)
       try {
          await axios.delete(`http://localhost:8876/api/cart/${cartItem.id}`);
 
