@@ -38,10 +38,10 @@ Route::middleware('guest:sanctum')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-Route::get('/cart', [CartItemController::class, 'index']);
-Route::post('/cart', [CartItemController::class, 'store']);
-Route::put('/cart/{cartItem}', [CartItemController::class, 'update']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/cart', [CartItemController::class, 'index']);
+    Route::post('/cart', [CartItemController::class, 'store']);
+    Route::put('/cart/{cartItem}', [CartItemController::class, 'update']);
     Route::delete('/cart/{cartItem}', [CartItemController::class, 'destroy']);
 });

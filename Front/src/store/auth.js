@@ -42,41 +42,36 @@ const actions = {
       })
    },
    login({ commit, dispatch }, payload) {
-      
-         axios.post("http://localhost:8876/api/login", payload)
-            .then(res => {
-               if (res.status === 200) {
-                  const user = {
-                     email: res.data.email,
-                     id: res.data.id,
-                  };
-                  const token = res.data.remember_token;
-      
-                  localStorage.setItem('user', JSON.stringify(user));
-                  localStorage.setItem('token', JSON.stringify(token));
-      
-                  commit('AUTH_SUCCESS', user, token);
-   
-                  dispatch('cart/fetchCartItems', null, { root: true });
-               }
-            })
-            .catch(err => {
-               commit('AUTH_ERROR');
-               
-               console.error(err)
-            })
-   
+      axios.post("http://localhost:8876/api/login", payload)
+         .then(res => {
+            if (res.status === 200) {
+               const user = {
+                  email: res.data.email,
+                  id: res.data.id,
+               };
+               const token = res.data.remember_token;
+
+               localStorage.setItem('user', JSON.stringify(user));
+               localStorage.setItem('token', JSON.stringify(token));
+
+               commit('AUTH_SUCCESS', user, token);
+               dispatch('cart/fetchCartItems', null, { root: true });
+            }
+         })
+         .catch(err => {
+            commit('AUTH_ERROR');
+            
+            console.error(err)
+         })
    },
    async logout({ commit, dispatch }) {
       try {
-         const response = await axios.delete('http://localhost:8876/api/logout');
+         await axios.delete('http://localhost:8876/api/logout');
          
-         commit('LOGOUT_USER');
-   
          localStorage.removeItem('user');
          localStorage.removeItem('token');
-         localStorage.removeItem('cart');
-   
+
+         commit('LOGOUT_USER');
          dispatch('cart/clearCart', null, { root: true });
       } catch(error) {
          console.error(error)

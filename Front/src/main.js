@@ -18,16 +18,15 @@ axios.interceptors.response.use(
    response => response,
    err => {
       if (err.response && err.response.status === 401) {
-         console.error("Unauthorized: Redirecting to login page.");
+         store.commit('auth/LOGOUT_USER');
+         store.dispatch('cart/clearCart', null, { root: true });
 
-         localStorage.removeItem('cart');
-         localStorage.removeItem('token');
-         localStorage.removeItem('user');
+         router.push({ name: 'login' });
          
-         router.push({ name: 'login' }); 
+         console.error("Unauthorized: Redirecting to login page.");
       }
 
-      return err;
+      return Promise.reject(err);
    }
 )
 app.config.globalProperties.axios = axios;

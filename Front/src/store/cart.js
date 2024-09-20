@@ -38,19 +38,22 @@ const actions = {
             'quantity': choosenProductOptions.selectedQuantity,
             'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize},
          })
+
+         console.log(response)
          
          if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity) {
             commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
          } else {
             commit('ADD_TO_CART', response.data.cartItem);
          }
+
+         dispatch('updateStorage');
       } catch (error) {
          console.error(error)
       }   
-
-      dispatch('updateStorage');
    },
    async removeFromCart({ commit, dispatch }, cartItem) {
+      console.log(cartItem)
       try {
          await axios.delete(`http://localhost:8876/api/cart/${cartItem.id}`);
 
@@ -93,12 +96,14 @@ const actions = {
          console.error(error)
       } 
    },
-   async fetchCartItems({ commit }) {
+   async fetchCartItems({ commit, dispatch }) {
       try {
          const cartItems = await axios.get('http://localhost:8876/api/cart');
          
          if (cartItems.status === 200) {
             commit('SET_CART_ITEMS', cartItems.data.data);
+
+            dispatch('updateStorage');
          }
       } catch (error) {
          console.error(error);
