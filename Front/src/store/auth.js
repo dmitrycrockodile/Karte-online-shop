@@ -7,10 +7,13 @@ const state = {
 }
 
 const mutations = {
-   AUTH_SUCCESS(state, user, token) {
+   AUTH_SUCCESS(state, {user, token}) {
       state.user = user;
       state.token = token;
       state.status = '';
+
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', JSON.stringify(token));
    }, 
    AUTH_ERROR(state) {
       state.status = 'error';
@@ -45,16 +48,10 @@ const actions = {
       axios.post("http://localhost:8876/api/login", payload)
          .then(res => {
             if (res.status === 200) {
-               const user = {
-                  email: res.data.email,
-                  id: res.data.id,
-               };
+               const user = res.data.user;
                const token = res.data.remember_token;
 
-               localStorage.setItem('user', JSON.stringify(user));
-               localStorage.setItem('token', JSON.stringify(token));
-
-               commit('AUTH_SUCCESS', user, token);
+               commit('AUTH_SUCCESS', {user, token});
                dispatch('cart/fetchCartItems', null, { root: true });
             }
          })
@@ -80,7 +77,8 @@ const actions = {
 }
 
 const getters = {
-   isAuthenticated: () => !!state.token 
+   isAuthenticated: () => !!state.token,
+   getUserData: (state) => state.user,
 }
 
 export default {

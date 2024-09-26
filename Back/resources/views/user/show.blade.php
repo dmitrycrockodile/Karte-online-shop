@@ -39,6 +39,10 @@
                </thead>
                <tbody>
                   <tr>
+                     <th>e-Mail</th>
+                     <td>{{ $user->email }}</td>
+                  </tr>
+                  <tr>
                      <th>Username</th>
                      <td>{{ $user->name }}</td>
                   </tr>
@@ -51,10 +55,6 @@
                      <td>{{ $user->patronymic }}</td>
                   </tr>
                   <tr>
-                     <th>Age</th>
-                     <td>{{ $user->age }}</td>
-                  </tr>
-                  <tr>
                      <th>Sex</th>
                      <td>{{ $user->sexTitle }}</td>
                   </tr>
@@ -63,8 +63,32 @@
                      <td>{{ $user->address }}</td>
                   </tr>
                   <tr>
-                     <th>eMail</th>
-                     <td>{{ $user->email }}</td>
+                     <th>Postal Code</th>
+                     <td>{{ $user->postal_code }}</td>
+                  </tr>
+                  <tr>
+                     <th>City</th>
+                     <td>{{ $user->city }}</td>
+                  </tr>
+                  <tr>
+                     <th>Country</th>
+                     <td>{{ $user->country }}</td>
+                  </tr>
+                  <tr>
+                     <th>Date of birth</th>
+                     <td>{{ $user->date_of_birth }}</td>
+                  </tr>
+                  <tr>
+                     <th>Age</th>
+                     <td>{{ $user->age }}</td>
+                  </tr>
+                  <tr>
+                     <th>Phone number</th>
+                     <td>{{ $user->phone_number }}</td>
+                  </tr>
+                  <tr>
+                     <th>Phone number code</th>
+                     <td>{{ $user->phone_number_country }}</td>
                   </tr>
                </tbody>
             </table>

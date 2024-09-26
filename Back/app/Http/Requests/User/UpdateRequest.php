@@ -25,9 +25,15 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string',
             'surname' => 'nullable|string',
             'patronymic' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'address' => 'nullable|string',
             'sex' => 'nullable|integer',
+            'address' => 'nullable|string',
+            'postal_code' => 'nullable|string',
+            'city' => 'nullable|string',
+            'country' => 'nullable|string',
+            'date_of_birth' => 'nullable|date',
+            'age' => 'nullable|integer',
+            'phone_number' => 'nullable|integer',
+            'phone_number_country' => 'nullable|string',
         ];
     }
 
@@ -41,6 +47,7 @@ class UpdateRequest extends FormRequest
             'age.integer' => '"Age" field must be an integer',
             'address' => '"Address" field must be a string',
             'sex' => '"Sex" field must be an integer',
+            'phone_number.integer' => '"Phone number" field must be an integer',
         ];
     }
 }

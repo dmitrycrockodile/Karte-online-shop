@@ -42,6 +42,11 @@ const router = createRouter({
       name: 'category.index',
       component: () => import("../views/category/Index.vue")
     },
+    {
+      path: '/account',
+      name: 'account.index',
+      component: () => import("../views/account/Index.vue")
+    },
   ]
 })
 

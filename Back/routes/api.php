@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
+use App\Http\Controllers\API\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/cart', [CartItemController::class, 'store']);
     Route::put('/cart/{cartItem}', [CartItemController::class, 'update']);
     Route::delete('/cart/{cartItem}', [CartItemController::class, 'destroy']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::patch('/user/update/{user}', [UserController::class, 'update']);
 });

@@ -24,6 +24,11 @@ class User extends Authenticatable
         ];
     }
 
+    public static function getSexValue($title) {
+        $sexes = array_flip(self::getSexes());
+        return $sexes[$title] ?? null;
+    }
+
     public function getSexTitleAttribute() {
         if ($this->sex) {
             return self::getSexes()[$this->sex];

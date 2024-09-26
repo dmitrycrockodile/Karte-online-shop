@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\IndexRequest;
 use App\Http\Requests\User\StoreRequest;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -29,7 +30,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => true,
-            'user' => $user,
+            'user' => new UserResource($user),
             'remember_token' => $token,
         ], Response::HTTP_CREATED);
     }
@@ -56,8 +57,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'email' => $user['email'],
-                'id' => $user['id'],
+                'user' => new UserResource($user),
                 'remember_token' => $token,
             ]);
         } else {

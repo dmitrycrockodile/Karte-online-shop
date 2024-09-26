@@ -142,9 +142,9 @@
                             class="main-menu__widge-box d-flex align-items-center"
                           >
                             <li class="d-lg-block d-none">
-                              <a href="my-account.html"
+                              <router-link :to="{ name: 'account.index'}"
                                 ><i class="flaticon-user"></i>
-                              </a>
+                              </router-link>
                             </li>
                             <li class="d-lg-block d-none">
                               <a href="wishlist.html" class="number"

@@ -1,0 +1,511 @@
+<template>
+   <main class="overflow-hidden">
+      <!--Start Breadcrumb Style2-->
+      <section
+         class="breadcrumb-area"
+         style="background-image: url(assets/images/inner-pages/breadcum-bg.png)"
+      >
+         <div class="container">
+         <div class="row">
+            <div class="col-xl-12">
+               <div class="breadcrumb-content text-center wow fadeInUp animated">
+               <h2>My Account</h2>
+               <div class="breadcrumb-menu">
+                  <ul>
+                     <li>
+                     <a href="index.html"
+                        ><i class="flaticon-home pe-2"></i>Home</a
+                     >
+                     </li>
+                     <li><i class="flaticon-next"></i></li>
+                     <li class="active">My Account</li>
+                  </ul>
+               </div>
+               </div>
+            </div>
+         </div>
+         </div>
+      </section>
+      <!--End Breadcrumb Style2-->
+      <!--Start My Account Page-->
+      <section class="my-account-page pt-120 pb-120">
+         <div class="container">
+         <div class="row wow fadeInUp animated">
+            <!--Start My Account Page Menu-->
+            <div class="col-xl-3 col-lg-4">
+               <div class="d-flex align-items-start">
+               <div
+                  class="nav my-account-page__menu flex-column nav-pills me-3 shadow-sm"
+                  id="v-pills-tab"
+                  role="tablist"
+                  aria-orientation="vertical"
+               >
+                  <button
+                     class="nav-link active"
+                     id="v-pills-orders-tab"
+                     data-bs-toggle="pill"
+                     data-bs-target="#v-pills-orders"
+                     type="button"
+                     role="tab"
+                     aria-controls="v-pills-orders"
+                     aria-selected="true"
+                  >
+                     <span>Orders</span>
+                  </button>
+                  <button
+                     class="nav-link"
+                     id="v-pills-favourite-tab"
+                     data-bs-toggle="pill"
+                     data-bs-target="#v-pills-favourite"
+                     type="button"
+                     role="tab"
+                     aria-controls="v-pills-favourite"
+                     aria-selected="false"
+                  >
+                     <span>Favourite</span>
+                  </button>
+                  <button
+                     class="nav-link"
+                     id="v-pills-profile-tab"
+                     data-bs-toggle="pill"
+                     data-bs-target="#v-pills-profile"
+                     type="button"
+                     role="tab"
+                     aria-controls="v-pills-profile"
+                     aria-selected="false"
+                  >
+                     <span>Profile</span>
+                  </button>
+                  <button
+                     class="nav-link"
+                     id="v-pills-contact-tab"
+                     data-bs-toggle="pill"
+                     data-bs-target="#v-pills-contact"
+                     type="button"
+                     role="tab"
+                     aria-controls="v-pills-contact"
+                     aria-selected="false"
+                  >
+                     <span>Contact Us</span>
+                  </button>
+                  <button class="nav-link"><span> Logout </span></button>
+               </div>
+               </div>
+            </div>
+            <div class="col-lg-7">
+               <div class="tab-content" id="v-pills-tabContent">
+               <div
+                  class="tab-pane fade show active"
+                  id="v-pills-orders"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-orders-tab"
+               >
+                  <div class="tabs-content__single">
+                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
+                     <h5>
+                     From your account dashboard you can view your
+                     <span>Recent Orders, manage your shipping</span> and
+                     <span>billing addresses,</span> and edit your
+                     <span>Password and account details</span>
+                     </h5>
+                  </div>
+               </div>
+               <div
+                  class="tab-pane fade"
+                  id="v-pills-favourite"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-favourite-tab"
+               >
+                  <div class="tabs-content__single">
+                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
+                     <h5>
+                     From your account dashboard you can view your
+                     <span>Recent Orders, manage your shipping</span> and
+                     <span>billing addresses,</span> and edit your
+                     <span>Password and account details</span>
+                     </h5>
+                  </div>
+               </div>
+               <div
+                  class="tab-pane fade"
+                  id="v-pills-profile"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-profile-tab"
+               >
+                  <div class="tabs-content__single">
+                     <div class="card p-4 shadow-sm">
+                     <h2 class="mb-4">Profile information</h2>
+
+                     <!-- Gender Buttons -->
+
+                     <div class="mb-3">
+                        <label class="form-label">Sex :</label>
+                        <div class="row">
+                           <div class="col-6">
+                           <input
+                              type="radio"
+                              class="btn-check"
+                              name="gender"
+                              id="female"
+                              value="Female"
+                              v-model="user.sex"
+                              autocomplete="off"
+                              :checked="user.sex === 'Female'"
+                           />
+                           <label class="btn btn-outline-dark w-100" for="female"
+                              >Female</label
+                           >
+                           </div>
+                           <div class="col-6">
+                           <input
+                              type="radio"
+                              class="btn-check"
+                              name="gender"
+                              id="male"
+                              value="Male"
+                              v-model="user.sex"
+                              autocomplete="off"
+                              :checked="user.sex === 'Male'"
+                           />
+                           <label class="btn btn-outline-dark w-100" for="male"
+                              >Male</label
+                           >
+                           </div>
+                        </div>
+                     </div>
+
+                     <form>
+                        <!-- Name, surname and patronymic -->
+                        <div class="row mb-3">
+                           <div class="col-md-6 mb-3">
+                           <label for="first-name" class="form-label"
+                              >Name*</label
+                           >
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="first-name"
+                              v-model.trim.lazy="user.name"
+                              placeholder="Enter your name"
+                           />
+                           </div>
+                           <div class="col-md-6 mb-3">
+                           <label for="last-name" class="form-label"
+                              >Surname</label
+                           >
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="last-name"
+                              v-model.trim.lazy="user.surname"
+                              placeholder="Enter your surname"
+                           />
+                           </div>
+                           <div class="col-md-6">
+                           <label for="patronymic" class="form-label"
+                              >Patronymic</label
+                           >
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="patronymic"
+                              v-model.trim.lazy="user.patronymic"
+                              placeholder="Enter your patronymic"
+                           />
+                           </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="row mb-3">
+                           <div class="col-md-6 mb-3">
+                           <label for="address" class="form-label">Adress</label>
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="address"
+                              v-model.trim.lazy="user.address"
+                              placeholder="Enter your address"
+                           />
+                           </div>
+                           <div class="col-md-6 mb-3">
+                           <label for="postal-code" class="form-label"
+                              >Postal code</label
+                           >
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="postal-code"
+                              v-model.trim.lazy="user.postalCode"
+                              placeholder="Kod pocztowy"
+                           />
+                           </div>
+                           <div class="col-md-6 mb-3">
+                           <label for="city" class="form-label">City</label>
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="city"
+                              v-model.trim.lazy="user.city"
+                              placeholder="Enter your city"
+                           />
+                           </div>
+                           <div class="col-md-6 mb-3">
+                           <label for="country" class="form-label"
+                              >Country</label
+                           >
+                           <select class="form-select" id="country">
+                              <option selected>Polska</option>
+                              <!-- Other countries can be added here -->
+                           </select>
+                           </div>
+                        </div>
+
+                        <!-- Date of Birth and Age -->
+                        <div class="row mb-3">
+                           <div class="col-md-6">
+                           <label for="dob" class="form-label"
+                              >Date of birth</label
+                           >
+                           <input
+                              type="date"
+                              class="form-control"
+                              id="dob"
+                              v-model="user.birthday"
+                           />
+                           </div>
+
+                           <div class="col-md-6">
+                           <label for="age" class="form-label">Age</label>
+                           <input
+                              type="number"
+                              class="form-control"
+                              id="age"
+                              placeholder="Enter your age"
+                              v-model="user.age"
+                           />
+                           </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="mb-4">
+                           <label for="phone" class="form-label"
+                           >Phone number</label
+                           >
+                           <div class="phone-input">
+                           <div class="phone-code">
+                              <img
+                                 src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
+                                 alt="PL Flag"
+                              />
+                              <span>{{ user.phoneCode }}</span>
+                           </div>
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="phone"
+                              v-model.trim.lazy="user.phone"
+                              placeholder="Enter phone number"
+                           />
+                           </div>
+                        </div>
+
+                        <button :disabled="compareObjects" @click.prevent="handleUserDataChange" type="submit" class="btn btn-dark w-100">
+                           Save changes
+                        </button>
+                     </form>
+                     </div>
+
+                     <div class="card p-4 shadow-sm mt-4">
+                     <h2 class="mb-2">E-mail</h2>
+
+                     <p><b>My email address</b>: {{ user.email }}</p>
+
+                     <!-- Email -->
+                     <form>
+                        <div class="row mb-4">
+                           <div class="col-md-6">
+                           <label for="email" class="form-label"
+                              >New email address*</label
+                           >
+                           <input
+                              type="email"
+                              class="form-control"
+                              id="email"
+                              placeholder="Enter new email"
+                           />
+                           </div>
+                           <div class="col-md-6">
+                           <label for="password_for_email" class="form-label"
+                              >Password*</label
+                           >
+                           <input
+                              type="password"
+                              class="form-control"
+                              id="password_for_email"
+                              placeholder="Your password"
+                           />
+                           </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">
+                           Save changes
+                        </button>
+                     </form>
+                     </div>
+                     <div class="card p-4 shadow-sm mt-4">
+                     <h2 class="mb-2">Password</h2>
+
+                     <form>
+                        <div class="row mb-4">
+                           <div class="col-md-6">
+                           <label for="password" class="form-label"
+                              >Current password*</label
+                           >
+                           <input
+                              type="password"
+                              class="form-control"
+                              id="password"
+                              placeholder="Enter password"
+                           />
+                           </div>
+                           <div class="col-md-6">
+                           <label for="new_password" class="form-label"
+                              >New password*</label
+                           >
+                           <input
+                              type="password"
+                              class="form-control"
+                              id="new_password"
+                              placeholder="Enter new password"
+                           />
+                           </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">
+                           Save changes
+                        </button>
+                     </form>
+                     </div>
+                  </div>
+               </div>
+               <div
+                  class="tab-pane fade"
+                  id="v-pills-contact"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-contact-tab"
+               >
+                  <div class="tabs-content__single">
+                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
+                     <h5>
+                     From your account dashboard you can view your
+                     <span>Recent Orders, manage your shipping</span> and
+                     <span>billing addresses,</span> and edit your
+                     <span>Password and account details</span>
+                     </h5>
+                  </div>
+               </div>
+               </div>
+            </div>
+         </div>
+         </div>
+      </section>
+      <!--End My Account Page-->
+   </main>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
+import { areObjectsEqual } from "@/utils/helpers";
+
+export default {
+   name: "User Account",
+   data() {
+      return {
+         user: {},
+         passwordChangeForm: {},
+         emailChangeForm: {},
+      };
+   },
+   computed: {
+      compareObjects() {
+         return areObjectsEqual(this.user, this.userData)
+      },
+      ...mapGetters({
+         userData: "auth/getUserData",
+      }),
+   },
+   components: {
+      SizesRadioGroup,
+   },
+   mounted() {
+      this.user = JSON.parse(JSON.stringify(this.userData));
+   },
+   methods: {
+      handleUserDataChange() {
+         this.axios.patch(`http://localhost:8876/api/user/update/${this.user.id}`, this.user)
+         .then(res => {
+            if (res.status === 200) {
+               const newUserData = res.data.user;
+
+               this.user = newUserData;
+               
+               localStorage.setItem('user', JSON.stringify(newUserData));
+            }
+         })
+         .catch(err => {
+            console.error(err);
+         })
+      }, 
+   },
+};
+</script>
+
+<style lang="scss" scoped>
+input[type="radio"].btn-check:checked + label.btn {
+   background-color: #000;
+   color: #fff;
+}
+
+input[type="radio"].btn-check + label.btn {
+   cursor: pointer;
+}
+
+input[type="radio"].btn-check:checked {
+   background-color: #000;
+   color: #fff;
+   border-color: #000;
+}
+
+.btn-outline-dark:focus {
+   box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.7) !important;
+}
+
+.btn-check:focus + .btn-outline-dark {
+   box-shadow: none !important;
+}
+
+.phone-input {
+   display: flex;
+}
+
+.phone-code {
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   background-color: #f4f4f4;
+   border: 1px solid #ced4da;
+   border-right: none;
+   border-radius: 5px 0 0 5px;
+
+   img {
+      width: 24px;
+      height: 18px;
+      margin-right: 10px;
+   }
+}
+
+.form-control[disabled] {
+   background-color: #f8f9fa;
+}
+</style>

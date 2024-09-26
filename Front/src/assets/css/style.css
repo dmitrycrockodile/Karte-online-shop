@@ -8819,7 +8819,7 @@ pagination start
 .my-account-page__menu {
   position: relative;
   display: block;
-  background: #f4f4f4;
+  background: white;
   padding: 35px 40px 30px;
   max-width: 270px;
   width: 100%;
