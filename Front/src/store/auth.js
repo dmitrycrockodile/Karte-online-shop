@@ -7,14 +7,16 @@ const state = {
 }
 
 const mutations = {
-   AUTH_SUCCESS(state, {user, token}) {
-      state.user = user;
+   AUTH_SUCCESS(state, { user, token }) {
       state.token = token;
       state.status = '';
 
-      localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', JSON.stringify(token));
    }, 
+   SET_USER(state, { user }) {
+      state.user = user;
+      localStorage.setItem('user', JSON.stringify(user));
+   },
    AUTH_ERROR(state) {
       state.status = 'error';
    },
@@ -51,7 +53,8 @@ const actions = {
                const user = res.data.user;
                const token = res.data.remember_token;
 
-               commit('AUTH_SUCCESS', {user, token});
+               commit('AUTH_SUCCESS', { user, token });
+               commit('SET_USER', { user });
                dispatch('cart/fetchCartItems', null, { root: true });
             }
          })

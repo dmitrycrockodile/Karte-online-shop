@@ -9,7 +9,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-   public function update(IndexRequest $request, User $user) {
+   public function updateGeneral(IndexRequest $request, User $user) {
       $data = $request->validated();
       $data['sex'] = User::getSexValue($data['sex']);
 

@@ -48,5 +48,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::patch('/user/update/{user}', [UserController::class, 'update']);
+    Route::patch('/user/update/{user}', [UserController::class, 'updateGeneral']);
 });

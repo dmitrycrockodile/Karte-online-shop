@@ -135,46 +135,40 @@
                   <div class="tabs-content__single">
                      <div class="card p-4 shadow-sm">
                      <h2 class="mb-4">Profile information</h2>
-
-                     <!-- Gender Buttons -->
-
-                     <div class="mb-3">
-                        <label class="form-label">Sex :</label>
-                        <div class="row">
-                           <div class="col-6">
-                           <input
-                              type="radio"
-                              class="btn-check"
-                              name="gender"
-                              id="female"
-                              value="Female"
-                              v-model="user.sex"
-                              autocomplete="off"
-                              :checked="user.sex === 'Female'"
-                           />
-                           <label class="btn btn-outline-dark w-100" for="female"
-                              >Female</label
-                           >
-                           </div>
-                           <div class="col-6">
-                           <input
-                              type="radio"
-                              class="btn-check"
-                              name="gender"
-                              id="male"
-                              value="Male"
-                              v-model="user.sex"
-                              autocomplete="off"
-                              :checked="user.sex === 'Male'"
-                           />
-                           <label class="btn btn-outline-dark w-100" for="male"
-                              >Male</label
-                           >
+                     
+                     <form>
+                        <!-- Gender Buttons -->
+                        <div class="mb-3">
+                           <label class="form-label">Sex :</label>
+                           <div class="row">
+                              <div class="col-6">
+                              <input
+                                 type="radio"
+                                 class="btn-check"
+                                 name="gender"
+                                 id="female"
+                                 value="Female"
+                                 v-model="user.sex"
+                              />
+                              <label class="btn btn-outline-dark w-100" for="female"
+                                 >Female</label
+                              >
+                              </div>
+                              <div class="col-6">
+                              <input
+                                 type="radio"
+                                 class="btn-check"
+                                 name="gender"
+                                 id="male"
+                                 value="Male"
+                                 v-model="user.sex"
+                              />
+                              <label class="btn btn-outline-dark w-100" for="male"
+                                 >Male</label
+                              >
+                              </div>
                            </div>
                         </div>
-                     </div>
-
-                     <form>
                         <!-- Name, surname and patronymic -->
                         <div class="row mb-3">
                            <div class="col-md-6 mb-3">
@@ -250,13 +244,13 @@
                            />
                            </div>
                            <div class="col-md-6 mb-3">
-                           <label for="country" class="form-label"
-                              >Country</label
-                           >
-                           <select class="form-select" id="country">
-                              <option selected>Polska</option>
-                              <!-- Other countries can be added here -->
-                           </select>
+                              <label for="country" class="form-label"
+                                 >Country</label
+                              >
+                              <select class="form-select" id="country">
+                                 <option selected>Polska</option>
+                                 <!-- Other countries can be added here -->
+                              </select>
                            </div>
                         </div>
 
@@ -297,7 +291,10 @@
                                  src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
                                  alt="PL Flag"
                               />
-                              <span>{{ user.phoneCode }}</span>
+                              <select class="form-select" id="phone_code">
+                                 <option selected>+48</option>
+                                 <!-- Other number codes can be added here -->
+                              </select>
                            </div>
                            <input
                               type="text"
@@ -448,9 +445,9 @@ export default {
             if (res.status === 200) {
                const newUserData = res.data.user;
 
-               this.user = newUserData;
-               
-               localStorage.setItem('user', JSON.stringify(newUserData));
+               console.log(this.user)
+
+               this.$store.commit('auth/SET_USER', { user: newUserData });
             }
          })
          .catch(err => {
@@ -476,17 +473,27 @@ input[type="radio"].btn-check:checked {
    color: #fff;
    border-color: #000;
 }
-
-.btn-outline-dark:focus {
+input[type="radio"].btn-check:focus + label {
    box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.7) !important;
-}
-
-.btn-check:focus + .btn-outline-dark {
-   box-shadow: none !important;
 }
 
 .phone-input {
    display: flex;
+}
+
+#phone_code {
+   width: min-content;
+   margin-right: 24px;
+   background-color: transparent;
+   border: 1px solid rgb(183 183 183 / 80%);
+}
+
+#phone_code:focus {
+   box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.7) !important;
+}
+
+#phone_code:focus + #phone_code {
+   box-shadow: none !important;
 }
 
 .phone-code {
@@ -496,6 +503,7 @@ input[type="radio"].btn-check:checked {
    background-color: #f4f4f4;
    border: 1px solid #ced4da;
    border-right: none;
+   width: min-content;
    border-radius: 5px 0 0 5px;
 
    img {
@@ -503,6 +511,14 @@ input[type="radio"].btn-check:checked {
       height: 18px;
       margin-right: 10px;
    }
+}
+
+#country:focus {
+   box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.7) !important;
+}
+
+#country:focus + #country {
+   box-shadow: none !important;
 }
 
 .form-control[disabled] {
