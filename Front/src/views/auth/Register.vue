@@ -115,7 +115,7 @@
             passwordConfirm: '',
             acceptedTerms: false,
             formErrors: {
-               email: null, 
+              email: null, 
             },
          }
       },
@@ -123,15 +123,15 @@
          ...mapActions('auth', ['register']),
          handleSubmit() {
             this.register({
-               name: this.name, 
-               surname: this.surname, 
-               email: this.email, 
-               password: this.password, 
-               password_confirmation: this.passwordConfirm
+              name: this.name, 
+              surname: this.surname, 
+              email: this.email, 
+              password: this.password, 
+              password_confirmation: this.passwordConfirm
             })
             .then(() => {
-               this.$router.push({ name: 'main' });
-            });
+              this.$router.go(-1);
+            })
          },
       },
       components: {

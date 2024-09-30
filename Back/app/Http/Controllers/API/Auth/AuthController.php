@@ -17,25 +17,20 @@ class AuthController extends Controller
     public function register(StoreRequest $request) {
         $data = $request->validated();
         
-        $user = User::firstOrCreate([
+        User::firstOrCreate([
             'email' => $data['email']
         ], [
             ...$data,
             'password' => Hash::make($data['password'])
         ]);
-   
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        Auth::login($user);
 
         return response()->json([
             'success' => true,
-            'user' => new UserResource($user),
-            'remember_token' => $token,
-        ], Response::HTTP_CREATED);
+        ], 200);
     }
 
     public function login(IndexRequest $request) {
+        // return $request;
         $data = $request->validated();
 
         $user = User::whereEmail($data['email'])->first();
@@ -59,7 +54,7 @@ class AuthController extends Controller
                 'success' => true,
                 'user' => new UserResource($user),
                 'remember_token' => $token,
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,

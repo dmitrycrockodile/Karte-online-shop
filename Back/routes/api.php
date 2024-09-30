@@ -49,4 +49,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/user/update/{user}', [UserController::class, 'updateGeneral']);
+    Route::patch('/user/update/email/{user}', [UserController::class, 'updateEmail']);
+    Route::patch('/user/update/password/{user}', [UserController::class, 'updatePassword']);
 });

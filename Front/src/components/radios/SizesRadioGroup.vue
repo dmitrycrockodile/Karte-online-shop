@@ -4,9 +4,10 @@
         :class="{ active: selectedValue && selectedValue.title === size.title}"
         v-for="size in sizes"
         :key="size.id"
+        @click.prevent="setValue(size)"
       >
         <button
-          @click.prevent="setValue(size)"
+         
         >
           {{ size.title }}
         </button>

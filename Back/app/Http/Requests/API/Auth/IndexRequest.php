@@ -22,8 +22,8 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'nullable|email',
-            'password' => 'nullable|string',
+            'email' => 'required|email',
+            'password' => 'required|string',
         ];
     }
 

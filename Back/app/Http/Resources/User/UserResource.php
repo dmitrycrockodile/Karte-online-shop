@@ -23,12 +23,12 @@ class UserResource extends JsonResource
          'age' => $this->age,
          'address' => $this->address,
          'sex' => $this->sex_title,
-         'postalCode' => $this->postal_code,
+         'postal_code' => $this->postal_code,
          'city' => $this->city,
          'country' => $this->country,
-         'birthday' => $this->date_of_birth,
-         'phone' => $this->phone_number,
-         'phoneCode' => $this->phone_number_country,
+         'date_of_birth' => $this->date_of_birth,
+         'phone_number' => $this->phone_number,
+         'phone_code' => $this->phone_number_country,
       ];
    }
 }

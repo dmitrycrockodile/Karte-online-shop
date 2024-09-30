@@ -11147,6 +11147,7 @@ button.router-link:hover {
   height: 30px;
   width: 30px;
   border: 1px solid #dddddd;
+  cursor: pointer;
   font-size: 12px;
   text-transform: uppercase;
   display: -webkit-box;

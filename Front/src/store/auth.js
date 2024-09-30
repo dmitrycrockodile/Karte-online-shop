@@ -7,7 +7,7 @@ const state = {
 }
 
 const mutations = {
-   AUTH_SUCCESS(state, { user, token }) {
+   AUTH_SUCCESS(state, { token }) {
       state.token = token;
       state.status = '';
 
@@ -27,42 +27,37 @@ const mutations = {
 }
 
 const actions = {
-   register({ commit, dispatch }, payload) {
-      return new Promise((resolve, reject) => {
-         axios.post('http://localhost:8876/api/register', payload)
-            .then(res => {
-               dispatch('login', { email: payload.email, password: payload.password })
-                  .then(() => {
-                     resolve(res); 
-                  })
-                  .catch(err => {
-                     commit('AUTH_ERROR');
-                     reject(err); 
-                  });
-            })
-            .catch(err => {
-               commit('AUTH_ERROR');
-               reject(err); 
-            });
-      })
-   },
-   login({ commit, dispatch }, payload) {
-      axios.post("http://localhost:8876/api/login", payload)
-         .then(res => {
-            if (res.status === 200) {
-               const user = res.data.user;
-               const token = res.data.remember_token;
+   async register({ commit, dispatch }, payload) {
+      try {
+         const res = await axios.post('http://localhost:8876/api/register', payload);
 
-               commit('AUTH_SUCCESS', { user, token });
-               commit('SET_USER', { user });
-               dispatch('cart/fetchCartItems', null, { root: true });
-            }
-         })
-         .catch(err => {
-            commit('AUTH_ERROR');
-            
-            console.error(err)
-         })
+         await dispatch('login', { email: payload.email, password: payload.password });
+
+         return res;         
+      } catch (err) {
+         commit('AUTH_ERROR');
+         return Promise.reject(err); 
+      }
+   },
+   async login({ commit, dispatch }, payload) {
+      try {
+         const res = await axios.post("http://localhost:8876/api/login", payload);
+
+         if (res.status === 200) {
+            const user = res.data.user;
+            const token = res.data.remember_token;
+
+            commit('AUTH_SUCCESS', { token });
+            commit('SET_USER', { user });
+
+            await dispatch('cart/fetchCartItems', null, { root: true });
+
+            return res;
+         }
+      } catch (err) {
+         commit('AUTH_ERROR');
+         return Promise.reject(err);
+      }
    },
    async logout({ commit, dispatch }) {
       try {
@@ -73,8 +68,8 @@ const actions = {
 
          commit('LOGOUT_USER');
          dispatch('cart/clearCart', null, { root: true });
-      } catch(error) {
-         console.error(error)
+      } catch(err) {
+         return Promise.reject(err)
       }
    },
 }

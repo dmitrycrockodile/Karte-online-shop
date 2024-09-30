@@ -148,11 +148,9 @@
                                  name="gender"
                                  id="female"
                                  value="Female"
-                                 v-model="user.sex"
+                                 v-model="userDataForm.user.sex"
                               />
-                              <label class="btn btn-outline-dark w-100" for="female"
-                                 >Female</label
-                              >
+                              <label class="btn btn-outline-dark w-100" for="female">Female</label>
                               </div>
                               <div class="col-6">
                               <input
@@ -161,49 +159,42 @@
                                  name="gender"
                                  id="male"
                                  value="Male"
-                                 v-model="user.sex"
+                                 v-model="userDataForm.user.sex"
                               />
-                              <label class="btn btn-outline-dark w-100" for="male"
-                                 >Male</label
-                              >
+                              <label class="btn btn-outline-dark w-100" for="male">Male</label>
                               </div>
                            </div>
                         </div>
                         <!-- Name, surname and patronymic -->
                         <div class="row mb-3">
                            <div class="col-md-6 mb-3">
-                           <label for="first-name" class="form-label"
-                              >Name*</label
-                           >
+                           <label for="first-name" class="form-label">Name*</label>
                            <input
                               type="text"
                               class="form-control"
                               id="first-name"
-                              v-model.trim.lazy="user.name"
+                              v-model.trim.lazy="userDataForm.user.name"
                               placeholder="Enter your name"
+                              required
                            />
                            </div>
                            <div class="col-md-6 mb-3">
-                           <label for="last-name" class="form-label"
-                              >Surname</label
-                           >
+                           <label for="last-name" class="form-label">Surname</label>
                            <input
                               type="text"
                               class="form-control"
                               id="last-name"
-                              v-model.trim.lazy="user.surname"
+                              v-model.trim.lazy="userDataForm.user.surname"
                               placeholder="Enter your surname"
                            />
                            </div>
                            <div class="col-md-6">
-                           <label for="patronymic" class="form-label"
-                              >Patronymic</label
-                           >
+                           <label for="patronymic" class="form-label">Patronymic</label>
                            <input
                               type="text"
                               class="form-control"
                               id="patronymic"
-                              v-model.trim.lazy="user.patronymic"
+                              v-model.trim.lazy="userDataForm.user.patronymic"
                               placeholder="Enter your patronymic"
                            />
                            </div>
@@ -217,19 +208,17 @@
                               type="text"
                               class="form-control"
                               id="address"
-                              v-model.trim.lazy="user.address"
+                              v-model.trim.lazy="userDataForm.user.address"
                               placeholder="Enter your address"
                            />
                            </div>
                            <div class="col-md-6 mb-3">
-                           <label for="postal-code" class="form-label"
-                              >Postal code</label
-                           >
+                           <label for="postal-code" class="form-label">Postal code</label>
                            <input
                               type="text"
                               class="form-control"
                               id="postal-code"
-                              v-model.trim.lazy="user.postalCode"
+                              v-model.trim.lazy="userDataForm.user.postal_code"
                               placeholder="Kod pocztowy"
                            />
                            </div>
@@ -239,14 +228,12 @@
                               type="text"
                               class="form-control"
                               id="city"
-                              v-model.trim.lazy="user.city"
+                              v-model.trim.lazy="userDataForm.user.city"
                               placeholder="Enter your city"
                            />
                            </div>
                            <div class="col-md-6 mb-3">
-                              <label for="country" class="form-label"
-                                 >Country</label
-                              >
+                              <label for="country" class="form-label">Country</label>
                               <select class="form-select" id="country">
                                  <option selected>Polska</option>
                                  <!-- Other countries can be added here -->
@@ -257,54 +244,57 @@
                         <!-- Date of Birth and Age -->
                         <div class="row mb-3">
                            <div class="col-md-6">
-                           <label for="dob" class="form-label"
-                              >Date of birth</label
-                           >
+                           <label for="dob" class="form-label">Date of birth</label>
                            <input
                               type="date"
                               class="form-control"
                               id="dob"
-                              v-model="user.birthday"
+                              v-model="userDataForm.user.date_of_birth"
                            />
                            </div>
 
                            <div class="col-md-6">
-                           <label for="age" class="form-label">Age</label>
-                           <input
-                              type="number"
-                              class="form-control"
-                              id="age"
-                              placeholder="Enter your age"
-                              v-model="user.age"
-                           />
+                              <label for="age" class="form-label">Age</label>
+                              <input
+                                 type="number"
+                                 class="form-control"
+                                 id="age"
+                                 placeholder="Enter your age"
+                                 v-model="userDataForm.user.age"
+                              />
                            </div>
                         </div>
 
                         <!-- Phone Number -->
                         <div class="mb-4">
-                           <label for="phone" class="form-label"
-                           >Phone number</label
-                           >
+                           <label for="phone" class="form-label">Phone number</label>
                            <div class="phone-input">
-                           <div class="phone-code">
-                              <img
-                                 src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
-                                 alt="PL Flag"
+                              <div class="phone-code">
+                                 <img
+                                    src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
+                                    alt="PL Flag"
+                                 />
+                                 <select class="form-select" id="phone_code">
+                                    <option selected>+48</option>
+                                    <!-- Other number codes can be added here -->
+                                 </select>
+                              </div>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="phone"
+                                 v-model.trim.lazy="userDataForm.user.phone_number"
+                                 placeholder="Enter phone number"
                               />
-                              <select class="form-select" id="phone_code">
-                                 <option selected>+48</option>
-                                 <!-- Other number codes can be added here -->
-                              </select>
-                           </div>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="phone"
-                              v-model.trim.lazy="user.phone"
-                              placeholder="Enter phone number"
-                           />
                            </div>
                         </div>
+
+                        <p 
+                           v-show="userDataForm.serverRespond.success" 
+                           class=""
+                        >
+                           {{ userDataForm.serverRespond.message }}
+                        </p>
 
                         <button :disabled="compareObjects" @click.prevent="handleUserDataChange" type="submit" class="btn btn-dark w-100">
                            Save changes
@@ -315,7 +305,7 @@
                      <div class="card p-4 shadow-sm mt-4">
                      <h2 class="mb-2">E-mail</h2>
 
-                     <p><b>My email address</b>: {{ user.email }}</p>
+                     <p><b>My email address</b>: {{ userDataForm.user.email }}</p>
 
                      <!-- Email -->
                      <form>
@@ -329,6 +319,8 @@
                               class="form-control"
                               id="email"
                               placeholder="Enter new email"
+                              v-model="emailChangeForm.email"
+                              required
                            />
                            </div>
                            <div class="col-md-6">
@@ -340,11 +332,13 @@
                               class="form-control"
                               id="password_for_email"
                               placeholder="Your password"
+                              v-model="emailChangeForm.password"
+                              required
                            />
                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-dark w-100">
+                        <button @click.prevent="handleEmailChange" type="submit" class="btn btn-dark w-100">
                            Save changes
                         </button>
                      </form>
@@ -362,6 +356,7 @@
                               type="password"
                               class="form-control"
                               id="password"
+                              v-model="passwordChangeForm.password"
                               placeholder="Enter password"
                            />
                            </div>
@@ -373,12 +368,13 @@
                               type="password"
                               class="form-control"
                               id="new_password"
+                              v-model="passwordChangeForm.newPassword"
                               placeholder="Enter new password"
                            />
                            </div>
                         </div>
 
-                        <button type="submit" class="btn btn-dark w-100">
+                        <button @click.prevent="handlePasswordChange" type="submit" class="btn btn-dark w-100">
                            Save changes
                         </button>
                      </form>
@@ -419,14 +415,34 @@ export default {
    name: "User Account",
    data() {
       return {
-         user: {},
-         passwordChangeForm: {},
-         emailChangeForm: {},
+         userDataForm: {
+            user: {},
+            serverRespond: {
+               success: null,
+               message: '',
+            }, 
+         },
+         emailChangeForm: {
+            email: '',
+            password: '',
+            serverRespond: {
+               success: null,
+               message: '',
+            },
+         },
+         passwordChangeForm: {
+            password: '',
+            newPassword: '',
+            serverRespond: {
+               success: null,
+               message: '',
+            },
+         },
       };
    },
    computed: {
       compareObjects() {
-         return areObjectsEqual(this.user, this.userData)
+         return areObjectsEqual(this.userDataForm.user, this.userData)
       },
       ...mapGetters({
          userData: "auth/getUserData",
@@ -436,24 +452,84 @@ export default {
       SizesRadioGroup,
    },
    mounted() {
-      this.user = JSON.parse(JSON.stringify(this.userData));
+      this.userDataForm.user = JSON.parse(JSON.stringify(this.userData));
    },
    methods: {
       handleUserDataChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/${this.user.id}`, this.user)
+         this.axios.patch(`http://localhost:8876/api/user/update/${this.userDataForm.user.id}`, this.userDataForm.user)
          .then(res => {
             if (res.status === 200) {
                const newUserData = res.data.user;
 
-               console.log(this.user)
-
                this.$store.commit('auth/SET_USER', { user: newUserData });
+
+               this.userDataForm.serverRespond.message = res.data.message;
+               this.userDataForm.serverRespond.success = res.data.success;
+
+               console.log(this.userDataForm.serverRespond);
             }
          })
          .catch(err => {
-            console.error(err);
+            this.userDataForm.serverRespond.message = err.response.data.message;
+            this.userDataForm.serverRespond.success = err.response.data.success;
+
+            console.log(this.userDataForm.serverRespond);
          })
       }, 
+      handleEmailChange() {
+         this.axios.patch(`http://localhost:8876/api/user/update/email/${this.userDataForm.user.id}`, { 
+            email: this.emailChangeForm.email, 
+            password: this.emailChangeForm.password 
+         })
+         .then(res => {
+            if (res.status === 200) {
+               // Clears the form
+               this.emailChangeForm.email = '';
+               this.emailChangeForm.password = '';
+
+               // Sets the status of the request
+               this.emailChangeForm.serverRespond.message = res.data.message;
+               this.emailChangeForm.serverRespond.success = res.data.success;
+
+               // Sets the new email
+               this.userDataForm.user.email = res.data.new_email;
+               this.$store.commit('auth/SET_USER', { user: this.userDataForm.user });
+
+               console.log(this.emailChangeForm.serverRespond)
+            }
+         })
+         .catch(err => {
+            this.emailChangeForm.serverRespond.message = err.response.data.message;
+            this.emailChangeForm.serverRespond.success = err.response.data.success;
+
+            console.log(this.emailChangeForm.serverRespond)
+         })
+      },
+      handlePasswordChange() {
+         this.axios.patch(`http://localhost:8876/api/user/update/password/${this.userDataForm.user.id}`, { 
+            new_password: this.passwordChangeForm.newPassword, 
+            password: this.passwordChangeForm.password 
+         })
+         .then(res => {
+            if (res.status === 200) {
+               // Clears the form
+               this.passwordChangeForm.newPassword = '';
+               this.passwordChangeForm.password = '';
+
+               // Sets the status of the request
+               this.passwordChangeForm.serverRespond.message = res.data.message;
+               this.passwordChangeForm.serverRespond.success = res.data.success;
+
+               console.log(this.passwordChangeForm.serverRespond);
+            }
+         })
+         .catch(err => {
+            this.passwordChangeForm.serverRespond.message = err.response.data.message;
+            this.passwordChangeForm.serverRespond.success = err.response.data.success;
+
+            console.log(this.passwordChangeForm.serverRespond)
+         })
+      }
    },
 };
 </script>
