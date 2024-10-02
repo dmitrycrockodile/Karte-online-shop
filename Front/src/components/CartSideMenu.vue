@@ -36,8 +36,8 @@
             <h6 class="ammount text-uppercase">${{ totalProductsPrice }}</h6>
          </div>
          <div class="button-box d-flex justify-content-between"> 
-            <router-link :to="{ name: 'cart.index'}" @click.native="$emit('setActive', false)" class="btn_black"> View Cart </router-link> 
-            <a href="cart.html" class="button-2 btn_theme"> Chekout </a> 
+            <button @click.prevent="clearCart" class="btn_black"> Clear Cart </button> 
+            <router-link :to="{ name: 'cart.index' }" @click.native="$emit('setActive', false)" class="button-2 btn_theme"> Chekout </router-link> 
          </div>
       </div>
   </div>
@@ -58,6 +58,7 @@
          ...mapActions({
             removeFromCart: 'cart/removeFromCart',
             gettotalProductsPrice: 'cart/gettotalProductsPrice',
+            clearCart: 'cart/clearGlobalCart',
          })
       },
       props: {

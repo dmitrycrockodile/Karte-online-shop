@@ -106,9 +106,19 @@ const actions = {
          console.error(error);
       }
    },
-   clearCart({ commit }) {
+   clearLocalCart({ commit }) {
       commit('SET_CART_ITEMS', []);
       localStorage.removeItem('cart');
+   },
+   async clearGlobalCart({ dispatch }) {
+      try {
+         const res = await axios.delete('http://localhost:8876/api/cart/clear');
+
+         dispatch('clearLocalCart');
+         dispatch('updateStorage');
+      } catch (err) {
+         console.error(err)
+      }
    },
    updateStorage({ state }) {
       localStorage.setItem('cart', JSON.stringify(state.cartItems));

@@ -68,7 +68,7 @@ const actions = {
          localStorage.removeItem('token');
 
          commit('LOGOUT_USER');
-         dispatch('cart/clearCart', null, { root: true });
+         dispatch('cart/clearLocalCart', null, { root: true });
          dispatch('wishlist/clearWishList', null, { root: true });
       } catch(err) {
          return Promise.reject(err)

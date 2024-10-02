@@ -47,7 +47,6 @@ const actions = {
    async removeFromWishlist({ commit, dispatch }, id) {
       try {
          const res = await axios.delete(`http://localhost:8876/api/wishlist/${id}`);
-         console.log(res)
 
          commit('REMOVE_FROM_WISHLIST', id)
 

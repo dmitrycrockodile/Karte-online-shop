@@ -82,4 +82,22 @@ class CartItemController extends Controller {
       $cartItem->delete();
       return response()->json(['message' => 'Item removed from cart']);
    }
+
+   public function clearCart() {
+      $userId = Auth::id();
+
+      if (!$userId) {
+         return response()->json([
+            'message' => 'Unauthorized',
+            'success' => false,
+         ], 401);
+      }
+
+      CartItem::where('user_id', $userId)->delete();
+
+      return response()->json([
+         'message' => 'User cart cleared successfully',
+         'success' => true,
+      ], 200);
+   }
 }

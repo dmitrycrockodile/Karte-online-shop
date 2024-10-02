@@ -948,7 +948,6 @@ export default {
     },
     setSelectedColor(data) {
       this.choosenProductOptions.selectedColor = data;
-      console.log(this.wishlistItems.some(item => item.product_id === this.product.id))
     },
     handleWishlistAdd() {
       this.toggleWishlistItem(this.product.id)

@@ -19,7 +19,7 @@ axios.interceptors.response.use(
    err => {
       if (err.response && err.response.status === 401) {
          store.commit('auth/LOGOUT_USER');
-         store.dispatch('cart/clearCart', null, { root: true });
+         store.dispatch('cart/clearLocalCart', null, { root: true });
 
          router.push({ name: 'login' });
          
