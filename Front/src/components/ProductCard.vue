@@ -39,7 +39,11 @@
         <div class="products-grid__usefull-links">
           <ul>
             <li>
-              <a href="wishlist.html">
+              <a 
+                @click.prevent="handleWishlistAdd" 
+                :class="`${isActive ? 'active' : ''}`"
+                href="wishlist.html"
+              >
                 <i class="flaticon-heart"> </i>
                 <span> wishlist</span>
               </a>
@@ -177,6 +181,7 @@
 
 <script>
   import ProductPopup from "@/components/popups/ProductPopup.vue";
+  import { mapActions, mapGetters } from "vuex";
 
   export default {
     name: 'Product Card',
@@ -186,6 +191,13 @@
     },
     components: {
       ProductPopup,
+    },
+    data() {
+      return {
+        popupProduct: null,
+        popupId: null,
+        popupActive: false,
+      }
     },
     methods: {
       getPopupProduct(id) {
@@ -198,13 +210,16 @@
       togglePopup() {
         this.popupActive = !this.popupActive
       },
+      handleWishlistAdd() {
+        this.toggleWishlistItem(this.product.id);
+      },
+      ...mapActions('wishlist', ['toggleWishlistItem']),
     },
-    data() {
-      return {
-        popupProduct: null,
-        popupId: null,
-        popupActive: false,
-      }
+    computed: {
+      isActive() {
+        return this.wishlistItems.some(item => item.product_id === this.product.id)
+      },
+      ...mapGetters('wishlist', ['wishlistItems']),
     },
   }
 </script>

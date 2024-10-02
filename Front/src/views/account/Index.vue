@@ -54,18 +54,6 @@
                   </button>
                   <button
                      class="nav-link"
-                     id="v-pills-favourite-tab"
-                     data-bs-toggle="pill"
-                     data-bs-target="#v-pills-favourite"
-                     type="button"
-                     role="tab"
-                     aria-controls="v-pills-favourite"
-                     aria-selected="false"
-                  >
-                     <span>Favourite</span>
-                  </button>
-                  <button
-                     class="nav-link"
                      id="v-pills-profile-tab"
                      data-bs-toggle="pill"
                      data-bs-target="#v-pills-profile"
@@ -99,22 +87,6 @@
                   id="v-pills-orders"
                   role="tabpanel"
                   aria-labelledby="v-pills-orders-tab"
-               >
-                  <div class="tabs-content__single">
-                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
-                     <h5>
-                     From your account dashboard you can view your
-                     <span>Recent Orders, manage your shipping</span> and
-                     <span>billing addresses,</span> and edit your
-                     <span>Password and account details</span>
-                     </h5>
-                  </div>
-               </div>
-               <div
-                  class="tab-pane fade"
-                  id="v-pills-favourite"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-favourite-tab"
                >
                   <div class="tabs-content__single">
                      <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>

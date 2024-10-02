@@ -51,7 +51,12 @@
                   </div>
                 </swiper-slide>
 
-                <button class="love"><i class="flaticon-like"></i></button>
+                <button 
+                  :class="`love ${isActive ? 'active' : ''}`"
+                  @click.prevent="handleWishlistAdd" 
+                >
+                  <i class="flaticon-like"></i>
+                </button>
 
                 <button
                   class="slider-arrow mainPrevArrow"
@@ -80,7 +85,12 @@
                       )
                     }}</span>
                   </div>
-                  <a href="#0" class="love"><i class="flaticon-like"></i></a>
+                  <a
+                    :class="`love ${isActive ? 'active' : ''}`"
+                    @click.prevent="handleWishlistAdd" 
+                  >
+                    <i class="flaticon-like"></i>
+                  </a>
                 </div>
               </div>
               <div class="navholder" v-if="product.product_images.length">
@@ -846,7 +856,7 @@
 
 <script>
 import { ref } from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
@@ -938,11 +948,22 @@ export default {
     },
     setSelectedColor(data) {
       this.choosenProductOptions.selectedColor = data;
+      console.log(this.wishlistItems.some(item => item.product_id === this.product.id))
+    },
+    handleWishlistAdd() {
+      this.toggleWishlistItem(this.product.id)
     },
     ...mapActions({
       addToCart: "cart/addToCart",
+      toggleWishlistItem: "wishlist/toggleWishlistItem"
     }),
   },
+  computed: {
+      isActive() {
+        return this.wishlistItems.some(item => item.product_id === this.product.id)
+      },
+      ...mapGetters('wishlist', ['wishlistItems']),
+    },
 };
 </script>
 

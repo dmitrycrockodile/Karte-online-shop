@@ -48,6 +48,12 @@ const router = createRouter({
       component: () => import("../views/account/Index.vue"),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/wishlist',
+      name: 'wishlist.index',
+      component: () => import("../views/wishlist/Index.vue"),
+      meta: { requiresAuth: true }
+    },
   ]
 })
 

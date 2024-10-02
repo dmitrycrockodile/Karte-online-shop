@@ -147,10 +147,10 @@
                               </router-link>
                             </li>
                             <li class="d-lg-block d-none">
-                              <a href="wishlist.html" class="number"
+                              <router-link :to="{ name: 'wishlist.index' }" class="number"
                                 ><i class="flaticon-heart"></i>
-                                <span class="count">(2)</span>
-                              </a>
+                                <span class="count">({{ $store.state.wishlist.wishedItems.length }})</span>
+                              </router-link>
                             </li>
                             <li class="cartm">
                               <button
@@ -285,7 +285,7 @@
                       >View Cart</router-link
                     >
                   </li>
-                  <li><a href="wishlist.html">My WishList</a></li>
+                  <li><router-link :to="{ name: 'wishlist.index' }" >My WishList</router-link></li>
                   <li><a href="compare.html">Compare Products</a></li>
                 </ul>
               </div>
@@ -436,7 +436,7 @@ export default {
       this.handleScroll();
       $("select").niceSelect();
 
-      this.getCategories()
+      this.getCategories();
    },
    beforeDestroy() {
       window.removeEventListener("scroll", this.handleScroll);

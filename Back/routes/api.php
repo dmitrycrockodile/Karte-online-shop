@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
 use App\Http\Controllers\API\User\UserController;
+use App\Http\Controllers\API\Wishlist\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,6 @@ Route::middleware('guest:sanctum')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart', [CartItemController::class, 'index']);
     Route::post('/cart', [CartItemController::class, 'store']);
@@ -51,4 +51,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/user/update/{user}', [UserController::class, 'updateGeneral']);
     Route::patch('/user/update/email/{user}', [UserController::class, 'updateEmail']);
     Route::patch('/user/update/password/{user}', [UserController::class, 'updatePassword']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/wishlist', [WishListController::class, 'index']);
+    Route::post('/wishlist', [WishListController::class, 'store']);
+    Route::delete('/wishlist/{wishlist}', [WishListController::class, 'destroy']);
 });

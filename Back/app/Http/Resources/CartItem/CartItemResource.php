@@ -4,8 +4,6 @@ namespace App\Http\Resources\CartItem;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Size\SizeResource;
-use App\Http\Resources\Color\ColorResource;
 use App\Http\Resources\Coupon\CouponResource;
 
 class CartItemResource extends JsonResource

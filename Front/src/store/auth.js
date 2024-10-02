@@ -51,6 +51,7 @@ const actions = {
             commit('SET_USER', { user });
 
             await dispatch('cart/fetchCartItems', null, { root: true });
+            await dispatch('wishlist/fetchWishlistItems', null, { root: true });
 
             return res;
          }
@@ -68,6 +69,7 @@ const actions = {
 
          commit('LOGOUT_USER');
          dispatch('cart/clearCart', null, { root: true });
+         dispatch('wishlist/clearWishList', null, { root: true });
       } catch(err) {
          return Promise.reject(err)
       }
