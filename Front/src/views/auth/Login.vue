@@ -40,7 +40,7 @@
                 <h2>Login</h2>
                 <p>
                   Don't have an account yet?
-                  <router-link to="/register">Sign up for free</router-link>
+                  <router-link :to="{ name: 'register.index' }">Sign up for free</router-link>
                 </p>
               </div>
               <form class="common-form" method="post" @submit.prevent="handleSubmit">

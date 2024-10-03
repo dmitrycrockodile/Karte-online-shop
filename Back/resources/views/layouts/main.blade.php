@@ -151,6 +151,12 @@
                      <p>Users</p>
                   </a>
                </li>
+               <li class="nav-item">
+                  <a href="{{ route('question.index') }}" class="nav-link">
+                     <i class="nav-icon fas fa-headset"></i>
+                     <p>Questions</p>
+                  </a>
+               </li>
             </ul>
             </nav>
          </div>

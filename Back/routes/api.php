@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
+use App\Http\Controllers\API\Question\QuestionController;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Wishlist\WishlistController;
 
@@ -59,3 +60,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/wishlist', [WishListController::class, 'store']);
     Route::delete('/wishlist/{wishlist}', [WishListController::class, 'destroy']);
 });
+
+Route::post('/questions', [QuestionController::class, 'store']);

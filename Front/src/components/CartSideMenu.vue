@@ -8,13 +8,13 @@
          <div class="cart_items">
             <div v-for="cartItem in cartItems" class="items d-flex justify-content-between align-items-center" :key="cartItem.id">
                <div class="left d-flex align-items-center"> 
-                  <a href="shop-details-1.html" class="thumb d-flex justify-content-between align-items-center"> 
+                  <router-link :to="{ name: 'products.show', params: { id: cartItem.product_id} }" class="thumb d-flex justify-content-between align-items-center"> 
                      <img :src="cartItem.image" :alt="cartItem.title"> 
-                  </a>
+                  </router-link>
                   <div class="text"> 
-                     <a href="shop-details-1.html">
+                     <router-link :to="{ name: 'products.show', params: { id: cartItem.product_id } }">
                         <h6>{{ cartItem.title }}</h6>
-                     </a>
+                     </router-link>
                      <div>
                         <p>{{ cartItem.quantity }} X <span>${{ cartItem.price }}</span> </p>
                         <span class="cart-item__color" :style="`background-color: ${cartItem.color.title}`"></span>

@@ -13,7 +13,6 @@ const router = createRouter({
       path: '/products',
       name: 'products.index',
       component: () => import("../views/product/Index.vue"),
-      // meta: { requiresAuth: true }
     },
     {
       path: '/products/:id',
@@ -27,13 +26,13 @@ const router = createRouter({
     },
     {
       path: '/register',
-      name: 'register',
+      name: 'register.index',
       component: () => import("../views/auth/Register.vue"),
       meta: { guest: true }
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'login.index',
       component: () => import("../views/auth/Login.vue"),
       meta: { guest: true }
     },
@@ -53,6 +52,11 @@ const router = createRouter({
       name: 'wishlist.index',
       component: () => import("../views/wishlist/Index.vue"),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/contact',
+      name: 'contact.index',
+      component: () => import("../views/contact/Index.vue"),
     },
   ]
 })

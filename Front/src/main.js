@@ -21,7 +21,7 @@ axios.interceptors.response.use(
          store.commit('auth/LOGOUT_USER');
          store.dispatch('cart/clearLocalCart', null, { root: true });
 
-         router.push({ name: 'login' });
+         router.push({ name: 'login.index' });
          
          console.error("Unauthorized: Redirecting to login page.");
       }

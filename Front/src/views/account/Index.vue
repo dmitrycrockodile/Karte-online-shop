@@ -3,7 +3,7 @@
       <!--Start Breadcrumb Style2-->
       <section
          class="breadcrumb-area"
-         style="background-image: url(assets/images/inner-pages/breadcum-bg.png)"
+         :style="`background-image: url(${accountBGImage})`"
       >
          <div class="container">
          <div class="row">
@@ -13,9 +13,10 @@
                <div class="breadcrumb-menu">
                   <ul>
                      <li>
-                     <a href="index.html"
-                        ><i class="flaticon-home pe-2"></i>Home</a
-                     >
+                     <router-link :to="{ name: 'main' }">
+                        <i class="flaticon-home pe-2"></i>
+                        Home
+                     </router-link>
                      </li>
                      <li><i class="flaticon-next"></i></li>
                      <li class="active">My Account</li>
@@ -359,14 +360,8 @@
                   role="tabpanel"
                   aria-labelledby="v-pills-contact-tab"
                >
-                  <div class="tabs-content__single">
-                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
-                     <h5>
-                     From your account dashboard you can view your
-                     <span>Recent Orders, manage your shipping</span> and
-                     <span>billing addresses,</span> and edit your
-                     <span>Password and account details</span>
-                     </h5>
+                  <div class="tabs-content__single contact-us shadow-sm">
+                     <ContactForm />
                   </div>
                </div>
                </div>
@@ -380,8 +375,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
 import { areObjectsEqual } from "@/utils/helpers";
+
+import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
+import ContactForm from "@/components/ContactForm.vue";
+
+import accountBGImage from "@/assets/images/inner-pages/account_bg.jpg";
 
 export default {
    name: "User Account",
@@ -410,6 +409,7 @@ export default {
                message: '',
             },
          },
+         accountBGImage,
       };
    },
    computed: {
@@ -422,6 +422,7 @@ export default {
    },
    components: {
       SizesRadioGroup,
+      ContactForm,
    },
    mounted() {
       this.userDataForm.user = JSON.parse(JSON.stringify(this.userData));
@@ -571,5 +572,11 @@ input[type="radio"].btn-check:focus + label {
 
 .form-control[disabled] {
    background-color: #f8f9fa;
+}
+
+.contact-us {
+   border: 1px solid rgba(0, 0, 0, .125);
+   border-radius: .25rem;
+   margin-top: -20px;
 }
 </style>

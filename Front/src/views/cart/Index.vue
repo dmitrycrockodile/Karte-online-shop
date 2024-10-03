@@ -239,7 +239,7 @@
                   v-if="!user"
                   class="btn--primary mt-30"
                   style="margin-left: 10px"
-                  to="/login"
+                  :to="{ name: 'login.index' }"
                   >Please login to order</router-link
                 >
               </div>

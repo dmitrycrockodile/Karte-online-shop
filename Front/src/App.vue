@@ -16,7 +16,7 @@
                       <div class="menubar">
                         <span></span> <span></span> <span></span>
                       </div>
-                      <router-link to="/" class="logo">
+                      <router-link :to="{ name: 'main' }" class="logo">
                         <img src="./assets/images/logo/logo.png" alt="" />
                       </router-link>
                       <div class="cart-holder">
@@ -50,10 +50,10 @@
                 </div>
                 <ul class="page-dropdown-menu">
                   <li class="dropdown-list">
-                    <router-link to="/"><span>Home</span></router-link>
+                    <router-link :to="{ name: 'main' }"><span>Home</span></router-link>
                   </li>
                   <li class="dropdown-list">
-                    <router-link to="/products"
+                    <router-link :to="{ name: 'products.index' }"
                       ><span>Products</span></router-link
                     >
                   </li>
@@ -67,7 +67,7 @@
                 class="col-lg-3 d-flex align-items-center justify-content-center border-rit"
               >
                 <div class="logo">
-                  <router-link to="/">
+                  <router-link :to="{ name: 'main' }">
                     <img src="./assets/images/logo/logo.png" alt="" />
                   </router-link>
                 </div>
@@ -98,9 +98,9 @@
                           </select>
                         </div>
                         <div v-if="!user">
-                           <router-link class="router-link" to="/login"> Sign In </router-link>
+                           <router-link class="router-link" :to="{ name: 'login.index' }"> Sign In </router-link>
                            <span>&nbsp;/&nbsp;</span>
-                           <router-link class="router-link" to="/register"> Register </router-link>
+                           <router-link class="router-link" :to="{ name: 'register.index' }"> Register </router-link>
                         </div>
                         <div v-if="user">
                           <form method="post" @submit.prevent="handleLogout">
@@ -123,12 +123,12 @@
                             class="page-dropdown-menu d-flex align-items-center justify-content-center"
                           >
                             <li class="dropdown-list">
-                              <router-link to="/"
+                              <router-link :to="{ name: 'main' }"
                                 ><span>Home</span></router-link
                               >
                             </li>
                             <li class="dropdown-list">
-                              <router-link to="/products"
+                              <router-link :to="{ name: 'products.index' }"
                                 ><span>Products</span></router-link
                               >
                             </li>
@@ -216,10 +216,10 @@
                       class="page-dropdown-menu d-flex align-items-center justify-content-center"
                     >
                       <li class="dropdown-list">
-                        <router-link to="/"><span>Home</span></router-link>
+                        <router-link :to="{ name: 'main' }"><span>Home</span></router-link>
                       </li>
                       <li class="dropdown-list">
-                        <router-link to="/products"
+                        <router-link :to="{ name: 'products.index' }"
                           ><span>Products</span></router-link
                         >
                       </li>
@@ -278,13 +278,9 @@
                   <h4>Useful Links</h4>
                 </div>
                 <ul class="footer-links">
-                  <li><a href="my-account.html">Account</a></li>
-                  <li><router-link to="/login">Sign In</router-link></li>
-                  <li>
-                    <router-link :to="{ name: 'cart.index' }"
-                      >View Cart</router-link
-                    >
-                  </li>
+                  <li><router-link :to="{ name: 'account.index' }">Account</router-link></li>
+                  <li><router-link :to="{ name: 'login.index' }">Sign In</router-link></li>
+                  <li><router-link :to="{ name: 'cart.index' }">View Cart</router-link></li>
                   <li><router-link :to="{ name: 'wishlist.index' }" >My WishList</router-link></li>
                   <li><a href="compare.html">Compare Products</a></li>
                 </ul>
@@ -299,9 +295,8 @@
                 </div>
                 <ul class="footer-links">
                   <li><a href="about-us.html">About us</a></li>
-                  <li><a href="contact.html">Contact Us </a></li>
+                  <li><router-link :to="{ name: 'contact.index' }">Contact Us</router-link></li>
                   <li><a href="faq.html">Faq</a></li>
-                  <li><a href="blog.html">Latest Posts</a></li>
                   <li><a href="order-track.html">Order Track</a></li>
                 </ul>
               </div>
@@ -434,6 +429,7 @@ export default {
    mounted() {
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
+      
       $("select").niceSelect();
 
       this.getCategories();
@@ -492,7 +488,7 @@ export default {
          }
       },
       handleLogout() {
-        this.logout().then(this.$router.push({ name: 'login' }))
+        this.logout().then(this.$router.push({ name: 'login.index' }))
       },
       getCategories() {
         axios.get('http://localhost:8876/api/categories')

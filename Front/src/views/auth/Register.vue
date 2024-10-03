@@ -39,7 +39,7 @@
             >
               <div class="top-title text-center">
                 <h2>Register</h2>
-                <p>Already have an account? <router-link to="/login">Log in</router-link></p>
+                <p>Already have an account? <router-link :to="{ name: 'login.index' }">Log in</router-link></p>
               </div>
               <form class="common-form" method="post" @submit.prevent="handleSubmit">
                 <div class="form-group">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Question\QuestionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -86,4 +87,10 @@ Route::group(['prefix' => 'products', 'namespace' => 'App\Http\Controllers\Produ
     Route::get('/{product}', 'ShowController')->name('product.show');
     Route::patch('/{product}', 'UpdateController')->name('product.update');
     Route::delete('/{product}', 'DeleteController')->name('product.delete');
+});
+
+Route::group(['prefix' => 'questions', 'namespace' => 'App\Http\Controllers\Support'], function() {
+    Route::get('/', [QuestionController::class, 'index'])->name('question.index');
+    Route::get('/{question}', [QuestionController::class, 'show'])->name('question.show');
+    Route::patch('/{question}', [QuestionController::class, 'toggle_status'])->name('question.update');
 });

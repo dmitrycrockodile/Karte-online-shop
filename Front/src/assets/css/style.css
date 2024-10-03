@@ -9164,8 +9164,9 @@ button.router-link:hover {
 ***/
 .contact-box .map {
   min-height: 100%;
+  height: 100% !important;
 }
-.contact-box .map iframe {
+.contact-box .map #map {
   width: 100%;
   height: 700px;
 }
