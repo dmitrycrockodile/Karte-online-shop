@@ -13,15 +13,18 @@ class QuestionController extends Controller
       return view('questions.index', compact('questions'));
    }
 
-   public function show(Question $item) {
-      return view('questions.show', compact('item'));
+   public function show(Question $question) {
+      $question->status = 'In Progress';
+      $question->save();
+
+      return view('questions.show', compact('question'));
    }
 
    public function toggle_status(Question $question) {
-      if ($question->status == 'open') {
-         $question->status = 'resolved';
-      } elseif ($question->status == 'resolved') {
-         $question->status = 'open';
+      if ($question->status == 'In Progress' || $question->status == 'Pending') {
+         $question->status = 'Resolved';
+      } elseif ($question->status == 'Resolved') {
+         $question->status = 'Pending';
       }
       $question->save();
       

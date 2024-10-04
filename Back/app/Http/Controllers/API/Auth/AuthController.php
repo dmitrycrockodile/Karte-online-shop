@@ -30,7 +30,6 @@ class AuthController extends Controller
     }
 
     public function login(IndexRequest $request) {
-        // return $request;
         $data = $request->validated();
 
         $user = User::whereEmail($data['email'])->first();

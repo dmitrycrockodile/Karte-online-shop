@@ -488,7 +488,7 @@ export default {
          }
       },
       handleLogout() {
-        this.logout().then(this.$router.push({ name: 'login.index' }))
+        this.logout().then(() => this.$router.push({ name: 'login.index' }))
       },
       getCategories() {
         axios.get('http://localhost:8876/api/categories')

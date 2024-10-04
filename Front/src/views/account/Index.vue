@@ -77,293 +77,293 @@
                   >
                      <span>Contact Us</span>
                   </button>
-                  <button class="nav-link"><span> Logout </span></button>
+                  <button @click.prevent="handleLogout" class="nav-link"><span> Logout </span></button>
                </div>
                </div>
             </div>
             <div class="col-lg-7">
                <div class="tab-content" id="v-pills-tabContent">
-               <div
-                  class="tab-pane fade show active"
-                  id="v-pills-orders"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-orders-tab"
-               >
-                  <div class="tabs-content__single">
-                     <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
-                     <h5>
-                     From your account dashboard you can view your
-                     <span>Recent Orders, manage your shipping</span> and
-                     <span>billing addresses,</span> and edit your
-                     <span>Password and account details</span>
-                     </h5>
+                  <div
+                     class="tab-pane fade show active"
+                     id="v-pills-orders"
+                     role="tabpanel"
+                     aria-labelledby="v-pills-orders-tab"
+                  >
+                     <div class="tabs-content__single">
+                        <h4><span>Hello Admin</span> (Not Admin? Logout)</h4>
+                        <h5>
+                        From your account dashboard you can view your
+                        <span>Recent Orders, manage your shipping</span> and
+                        <span>billing addresses,</span> and edit your
+                        <span>Password and account details</span>
+                        </h5>
+                     </div>
                   </div>
-               </div>
-               <div
-                  class="tab-pane fade"
-                  id="v-pills-profile"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-profile-tab"
-               >
-                  <div class="tabs-content__single">
-                     <div class="card p-4 shadow-sm">
-                     <h2 class="mb-4">Profile information</h2>
-                     
-                     <form>
-                        <!-- Gender Buttons -->
-                        <div class="mb-3">
-                           <label class="form-label">Sex :</label>
-                           <div class="row">
-                              <div class="col-6">
-                              <input
-                                 type="radio"
-                                 class="btn-check"
-                                 name="gender"
-                                 id="female"
-                                 value="Female"
-                                 v-model="userDataForm.user.sex"
-                              />
-                              <label class="btn btn-outline-dark w-100" for="female">Female</label>
-                              </div>
-                              <div class="col-6">
-                              <input
-                                 type="radio"
-                                 class="btn-check"
-                                 name="gender"
-                                 id="male"
-                                 value="Male"
-                                 v-model="userDataForm.user.sex"
-                              />
-                              <label class="btn btn-outline-dark w-100" for="male">Male</label>
-                              </div>
-                           </div>
-                        </div>
-                        <!-- Name, surname and patronymic -->
-                        <div class="row mb-3">
-                           <div class="col-md-6 mb-3">
-                           <label for="first-name" class="form-label">Name*</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="first-name"
-                              v-model.trim.lazy="userDataForm.user.name"
-                              placeholder="Enter your name"
-                              required
-                           />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                           <label for="last-name" class="form-label">Surname</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="last-name"
-                              v-model.trim.lazy="userDataForm.user.surname"
-                              placeholder="Enter your surname"
-                           />
-                           </div>
-                           <div class="col-md-6">
-                           <label for="patronymic" class="form-label">Patronymic</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="patronymic"
-                              v-model.trim.lazy="userDataForm.user.patronymic"
-                              placeholder="Enter your patronymic"
-                           />
-                           </div>
-                        </div>
-
-                        <!-- Address -->
-                        <div class="row mb-3">
-                           <div class="col-md-6 mb-3">
-                           <label for="address" class="form-label">Adress</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="address"
-                              v-model.trim.lazy="userDataForm.user.address"
-                              placeholder="Enter your address"
-                           />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                           <label for="postal-code" class="form-label">Postal code</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="postal-code"
-                              v-model.trim.lazy="userDataForm.user.postal_code"
-                              placeholder="Kod pocztowy"
-                           />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                           <label for="city" class="form-label">City</label>
-                           <input
-                              type="text"
-                              class="form-control"
-                              id="city"
-                              v-model.trim.lazy="userDataForm.user.city"
-                              placeholder="Enter your city"
-                           />
-                           </div>
-                           <div class="col-md-6 mb-3">
-                              <label for="country" class="form-label">Country</label>
-                              <select class="form-select" id="country">
-                                 <option selected>Polska</option>
-                                 <!-- Other countries can be added here -->
-                              </select>
-                           </div>
-                        </div>
-
-                        <!-- Date of Birth and Age -->
-                        <div class="row mb-3">
-                           <div class="col-md-6">
-                           <label for="dob" class="form-label">Date of birth</label>
-                           <input
-                              type="date"
-                              class="form-control"
-                              id="dob"
-                              v-model="userDataForm.user.date_of_birth"
-                           />
-                           </div>
-
-                           <div class="col-md-6">
-                              <label for="age" class="form-label">Age</label>
-                              <input
-                                 type="number"
-                                 class="form-control"
-                                 id="age"
-                                 placeholder="Enter your age"
-                                 v-model="userDataForm.user.age"
-                              />
-                           </div>
-                        </div>
-
-                        <!-- Phone Number -->
-                        <div class="mb-4">
-                           <label for="phone" class="form-label">Phone number</label>
-                           <div class="phone-input">
-                              <div class="phone-code">
-                                 <img
-                                    src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
-                                    alt="PL Flag"
+                  <div
+                     class="tab-pane fade"
+                     id="v-pills-profile"
+                     role="tabpanel"
+                     aria-labelledby="v-pills-profile-tab"
+                  >
+                     <div class="tabs-content__single">
+                        <div class="card p-4 shadow-sm">
+                        <h2 class="mb-4">Profile information</h2>
+                        
+                        <form>
+                           <!-- Gender Buttons -->
+                           <div class="mb-3">
+                              <label class="form-label">Sex :</label>
+                              <div class="row">
+                                 <div class="col-6">
+                                 <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="gender"
+                                    id="female"
+                                    value="Female"
+                                    v-model="userDataForm.user.sex"
                                  />
-                                 <select class="form-select" id="phone_code">
-                                    <option selected>+48</option>
-                                    <!-- Other number codes can be added here -->
-                                 </select>
+                                 <label class="btn btn-outline-dark w-100" for="female">Female</label>
+                                 </div>
+                                 <div class="col-6">
+                                 <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="gender"
+                                    id="male"
+                                    value="Male"
+                                    v-model="userDataForm.user.sex"
+                                 />
+                                 <label class="btn btn-outline-dark w-100" for="male">Male</label>
+                                 </div>
                               </div>
+                           </div>
+                           <!-- Name, surname and patronymic -->
+                           <div class="row mb-3">
+                              <div class="col-md-6 mb-3">
+                              <label for="first-name" class="form-label">Name*</label>
                               <input
                                  type="text"
                                  class="form-control"
-                                 id="phone"
-                                 v-model.trim.lazy="userDataForm.user.phone_number"
-                                 placeholder="Enter phone number"
+                                 id="first-name"
+                                 v-model.trim.lazy="userDataForm.user.name"
+                                 placeholder="Enter your name"
+                                 required
                               />
+                              </div>
+                              <div class="col-md-6 mb-3">
+                              <label for="last-name" class="form-label">Surname</label>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="last-name"
+                                 v-model.trim.lazy="userDataForm.user.surname"
+                                 placeholder="Enter your surname"
+                              />
+                              </div>
+                              <div class="col-md-6">
+                              <label for="patronymic" class="form-label">Patronymic</label>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="patronymic"
+                                 v-model.trim.lazy="userDataForm.user.patronymic"
+                                 placeholder="Enter your patronymic"
+                              />
+                              </div>
                            </div>
+
+                           <!-- Address -->
+                           <div class="row mb-3">
+                              <div class="col-md-6 mb-3">
+                              <label for="address" class="form-label">Adress</label>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="address"
+                                 v-model.trim.lazy="userDataForm.user.address"
+                                 placeholder="Enter your address"
+                              />
+                              </div>
+                              <div class="col-md-6 mb-3">
+                              <label for="postal-code" class="form-label">Postal code</label>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="postal-code"
+                                 v-model.trim.lazy="userDataForm.user.postal_code"
+                                 placeholder="Kod pocztowy"
+                              />
+                              </div>
+                              <div class="col-md-6 mb-3">
+                              <label for="city" class="form-label">City</label>
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 id="city"
+                                 v-model.trim.lazy="userDataForm.user.city"
+                                 placeholder="Enter your city"
+                              />
+                              </div>
+                              <div class="col-md-6 mb-3">
+                                 <label for="country" class="form-label">Country</label>
+                                 <select class="form-select" id="country">
+                                    <option selected>Polska</option>
+                                    <!-- Other countries can be added here -->
+                                 </select>
+                              </div>
+                           </div>
+
+                           <!-- Date of Birth and Age -->
+                           <div class="row mb-3">
+                              <div class="col-md-6">
+                              <label for="dob" class="form-label">Date of birth</label>
+                              <input
+                                 type="date"
+                                 class="form-control"
+                                 id="dob"
+                                 v-model="userDataForm.user.date_of_birth"
+                              />
+                              </div>
+
+                              <div class="col-md-6">
+                                 <label for="age" class="form-label">Age</label>
+                                 <input
+                                    type="number"
+                                    class="form-control"
+                                    id="age"
+                                    placeholder="Enter your age"
+                                    v-model="userDataForm.user.age"
+                                 />
+                              </div>
+                           </div>
+
+                           <!-- Phone Number -->
+                           <div class="mb-4">
+                              <label for="phone" class="form-label">Phone number</label>
+                              <div class="phone-input">
+                                 <div class="phone-code">
+                                    <img
+                                       src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
+                                       alt="PL Flag"
+                                    />
+                                    <select class="form-select" id="phone_code">
+                                       <option selected>+48</option>
+                                       <!-- Other number codes can be added here -->
+                                    </select>
+                                 </div>
+                                 <input
+                                    type="text"
+                                    class="form-control"
+                                    id="phone"
+                                    v-model.trim.lazy="userDataForm.user.phone_number"
+                                    placeholder="Enter phone number"
+                                 />
+                              </div>
+                           </div>
+
+                           <p 
+                              v-show="userDataForm.serverRespond.success" 
+                              class=""
+                           >
+                              {{ userDataForm.serverRespond.message }}
+                           </p>
+
+                           <button :disabled="compareObjects" @click.prevent="handleUserDataChange" type="submit" class="btn btn-dark w-100">
+                              Save changes
+                           </button>
+                        </form>
                         </div>
 
-                        <p 
-                           v-show="userDataForm.serverRespond.success" 
-                           class=""
-                        >
-                           {{ userDataForm.serverRespond.message }}
-                        </p>
+                        <div class="card p-4 shadow-sm mt-4">
+                        <h2 class="mb-2">E-mail</h2>
 
-                        <button :disabled="compareObjects" @click.prevent="handleUserDataChange" type="submit" class="btn btn-dark w-100">
-                           Save changes
-                        </button>
-                     </form>
-                     </div>
+                        <p><b>My email address</b>: {{ userDataForm.user.email }}</p>
 
-                     <div class="card p-4 shadow-sm mt-4">
-                     <h2 class="mb-2">E-mail</h2>
-
-                     <p><b>My email address</b>: {{ userDataForm.user.email }}</p>
-
-                     <!-- Email -->
-                     <form>
-                        <div class="row mb-4">
-                           <div class="col-md-6">
-                           <label for="email" class="form-label"
-                              >New email address*</label
-                           >
-                           <input
-                              type="email"
-                              class="form-control"
-                              id="email"
-                              placeholder="Enter new email"
-                              v-model="emailChangeForm.email"
-                              required
-                           />
+                        <!-- Email -->
+                        <form>
+                           <div class="row mb-4">
+                              <div class="col-md-6">
+                              <label for="email" class="form-label">
+                                 New email address*
+                              </label>
+                              <input
+                                 type="email"
+                                 class="form-control"
+                                 id="email"
+                                 placeholder="Enter new email"
+                                 v-model="emailChangeForm.email"
+                                 required
+                              />
+                              </div>
+                              <div class="col-md-6">
+                              <label for="password_for_email" class="form-label"
+                                 >Password*</label
+                              >
+                              <input
+                                 type="password"
+                                 class="form-control"
+                                 id="password_for_email"
+                                 placeholder="Your password"
+                                 v-model="emailChangeForm.password"
+                                 required
+                              />
+                              </div>
                            </div>
-                           <div class="col-md-6">
-                           <label for="password_for_email" class="form-label"
-                              >Password*</label
-                           >
-                           <input
-                              type="password"
-                              class="form-control"
-                              id="password_for_email"
-                              placeholder="Your password"
-                              v-model="emailChangeForm.password"
-                              required
-                           />
-                           </div>
+
+                           <button @click.prevent="handleEmailChange" type="submit" class="btn btn-dark w-100">
+                              Save changes
+                           </button>
+                        </form>
                         </div>
+                        <div class="card p-4 shadow-sm mt-4">
+                        <h2 class="mb-2">Password</h2>
 
-                        <button @click.prevent="handleEmailChange" type="submit" class="btn btn-dark w-100">
-                           Save changes
-                        </button>
-                     </form>
-                     </div>
-                     <div class="card p-4 shadow-sm mt-4">
-                     <h2 class="mb-2">Password</h2>
+                        <form>
+                           <div class="row mb-4">
+                              <div class="col-md-6">
+                              <label for="password" class="form-label"
+                                 >Current password*</label
+                              >
+                              <input
+                                 type="password"
+                                 class="form-control"
+                                 id="password"
+                                 v-model="passwordChangeForm.password"
+                                 placeholder="Enter password"
+                              />
+                              </div>
+                              <div class="col-md-6">
+                              <label for="new_password" class="form-label"
+                                 >New password*</label
+                              >
+                              <input
+                                 type="password"
+                                 class="form-control"
+                                 id="new_password"
+                                 v-model="passwordChangeForm.newPassword"
+                                 placeholder="Enter new password"
+                              />
+                              </div>
+                           </div>
 
-                     <form>
-                        <div class="row mb-4">
-                           <div class="col-md-6">
-                           <label for="password" class="form-label"
-                              >Current password*</label
-                           >
-                           <input
-                              type="password"
-                              class="form-control"
-                              id="password"
-                              v-model="passwordChangeForm.password"
-                              placeholder="Enter password"
-                           />
-                           </div>
-                           <div class="col-md-6">
-                           <label for="new_password" class="form-label"
-                              >New password*</label
-                           >
-                           <input
-                              type="password"
-                              class="form-control"
-                              id="new_password"
-                              v-model="passwordChangeForm.newPassword"
-                              placeholder="Enter new password"
-                           />
-                           </div>
+                           <button @click.prevent="handlePasswordChange" type="submit" class="btn btn-dark w-100">
+                              Save changes
+                           </button>
+                        </form>
                         </div>
-
-                        <button @click.prevent="handlePasswordChange" type="submit" class="btn btn-dark w-100">
-                           Save changes
-                        </button>
-                     </form>
                      </div>
                   </div>
-               </div>
-               <div
-                  class="tab-pane fade"
-                  id="v-pills-contact"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-contact-tab"
-               >
-                  <div class="tabs-content__single contact-us shadow-sm">
-                     <ContactForm />
+                  <div
+                     class="tab-pane fade"
+                     id="v-pills-contact"
+                     role="tabpanel"
+                     aria-labelledby="v-pills-contact-tab"
+                  >
+                     <div class="tabs-content__single contact-us shadow-sm">
+                        <ContactForm />
+                     </div>
                   </div>
-               </div>
                </div>
             </div>
          </div>
@@ -374,7 +374,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
 
 import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
@@ -414,7 +414,9 @@ export default {
    },
    computed: {
       compareObjects() {
-         return areObjectsEqual(this.userDataForm.user, this.userData)
+         if (this.userDataForm.user && this.userData) {
+            return areObjectsEqual(this.userDataForm.user, this.userData)
+         }
       },
       ...mapGetters({
          userData: "auth/getUserData",
@@ -502,12 +504,19 @@ export default {
 
             console.log(this.passwordChangeForm.serverRespond)
          })
-      }
+      },
+      handleLogout() {
+         this.logout()
+            .then(() => this.$router.push({name: 'login.index'}))
+      }, 
+      ...mapActions({
+         logout: 'auth/logout'
+      }),
    },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 input[type="radio"].btn-check:checked + label.btn {
    background-color: #000;
    color: #fff;
@@ -577,6 +586,13 @@ input[type="radio"].btn-check:focus + label {
 .contact-us {
    border: 1px solid rgba(0, 0, 0, .125);
    border-radius: .25rem;
-   margin-top: -20px;
+}
+
+.contact-us .contact-form {
+   padding: 40px 40px 30px;
+}
+
+h2 {
+   font-size: 30px;
 }
 </style>

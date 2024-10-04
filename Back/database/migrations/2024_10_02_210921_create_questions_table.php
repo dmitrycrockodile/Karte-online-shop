@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('question', 100);
             $table->string('message')->nullable();
-            $table->string('status')->default('open');
+            $table->string('status')->default('Pending');
 
             $table->timestamps();
         });
@@ -31,6 +31,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('questions');
-        Schema::dropIfExists('supports');
     }
 };

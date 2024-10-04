@@ -31,10 +31,10 @@
                </div>
                <div class="col-lg-6">
                   <div class="form-group">
-                     <label for="email"> Email Address* </label>
+                     <label for="email_for_answer"> Email Address* </label>
                      <input
-                        type="text"
-                        id="email"
+                        type="email"
+                        id="email_for_answer"
                         class="form-control"
                         placeholder="Enter your email"
                         required
