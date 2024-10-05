@@ -73,6 +73,14 @@
    right: 10px;
    top: 10px;
    font-weight: 400;
+   background: transparent;
+   position: absolute;
+   right: 20px;
+   top: 0px;
+   transition: all .2s;
+}
+#newsLetter-popup .mfp-close:hover {
+   color: var(--thm-base);
 }
 .newsLetter-popup__content {
    padding-right: 0px;

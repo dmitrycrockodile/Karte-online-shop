@@ -32,8 +32,7 @@ class IndexRequest extends FormRequest
             'country' => 'nullable|string',
             'date_of_birth' => 'nullable|date',
             'age' => 'nullable|integer',
-            'phone_number' => 'nullable|integer',
-            'phone_number_country' => 'nullable|string',
+            'phone_number' => 'nullable|string|regex:/^\+[\d\s]+$/',
         ];
     }
 
@@ -47,7 +46,7 @@ class IndexRequest extends FormRequest
             'age.integer' => '"Age" field must be an integer',
             'address' => '"Address" field must be a string',
             'sex' => '"Sex" field must be an integer',
-            'phone_number.integer' => '"Phone number" field must be an integer',
+            'phone_number.regex' => 'Phone number must start from "+"',
         ];
     }
 }

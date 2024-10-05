@@ -242,16 +242,6 @@
                            <div class="mb-4">
                               <label for="phone" class="form-label">Phone number</label>
                               <div class="phone-input">
-                                 <div class="phone-code">
-                                    <img
-                                       src="https://flagicons.lipis.dev/flags/4x3/pl.svg"
-                                       alt="PL Flag"
-                                    />
-                                    <select class="form-select" id="phone_code">
-                                       <option selected>+48</option>
-                                       <!-- Other number codes can be added here -->
-                                    </select>
-                                 </div>
                                  <input
                                     type="text"
                                     class="form-control"

@@ -195,19 +195,6 @@
                            <p class="text-danger">{{ $message }}</p>
                         @enderror
                      </div>
-   
-                     <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
-                           name="phone_number_country" 
-                           placeholder="Your phone code (+...)"
-                           value="{{ old('phone_number_country') }}"
-                        >
-                        @error('phone_number_country')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                     </div>
                   </div>
                </div>
 

@@ -86,10 +86,6 @@
                      <th>Phone number</th>
                      <td>{{ $user->phone_number }}</td>
                   </tr>
-                  <tr>
-                     <th>Phone number code</th>
-                     <td>{{ $user->phone_number_country }}</td>
-                  </tr>
                </tbody>
             </table>
          </div>
