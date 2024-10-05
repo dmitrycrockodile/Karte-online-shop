@@ -75,6 +75,8 @@
 <script>
    import { mapGetters } from 'vuex';
 
+   import { useToast } from "vue-toastification";
+
    export default {
       name: 'Contact form',
       data() {
@@ -93,9 +95,11 @@
             user: 'auth/getUserData'
          })
       },
-      // mounted() {
-      //    $("select").niceSelect();
-      // },
+      setup() {
+         const toast = useToast();
+
+         return { toast }
+      },
       methods: {
          async handleSubmit() {
             try {
@@ -109,9 +113,13 @@
                      message: '',
                      question: '',
                   }
+
+                  this.toast.success('Thank you for your question!', { timeout: 2000 })
                }
             } catch (err) {
                console.error(err)
+
+               this.toast.error('Sorry, something went wrong. Please check the form data and try again.', { timeout: 2000 });
             }
          }
       },
