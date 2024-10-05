@@ -8,7 +8,15 @@ use App\Models\Question;
 class QuestionController extends Controller
 {
    public function index() {
-      $questions = Question::all();
+      $questions = Question::orderByRaw("
+         CASE 
+            WHEN status = 'Resolved' THEN 2
+            WHEN status = 'Pending' THEN 1
+            ELSE 0
+         END ASC
+      ")
+      ->orderBy('created_at', 'DESC')
+      ->get();
 
       return view('questions.index', compact('questions'));
    }

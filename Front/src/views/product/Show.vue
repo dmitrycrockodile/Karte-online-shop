@@ -244,7 +244,7 @@
                 </div>
                 <div class="shop-details-top-free-shipping">
                   <i class="flaticon-shipping"></i>
-                  <p>SPENT <span>$399.00</span> MORE FOR FREE SHIPPING</p>
+                  <p>SPENT <span>${{ TOTAL_PRICE_FOR_FREE_SHIPPING }}</span> MORE FOR FREE SHIPPING</p>
                 </div>
                 <div class="shop-details-top-social-box">
                   <p>Share:</p>
@@ -868,6 +868,8 @@ import ColorsRadioGroup from "@/components/radios/ColorsRadioGroup.vue";
 import QuantitySelector from "@/components/QuantitySelector.vue";
 import ProductCard from "@/components/ProductCard.vue";
 
+import { TOTAL_PRICE_FOR_FREE_SHIPPING } from '@/utils/constants';
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
@@ -913,6 +915,7 @@ export default {
         selectedColor: null,
         selectedSize: null,
       },
+      TOTAL_PRICE_FOR_FREE_SHIPPING
     };
   },
   methods: {

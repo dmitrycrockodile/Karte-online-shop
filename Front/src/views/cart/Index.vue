@@ -51,7 +51,7 @@
                           <router-link
                             :to="{
                               name: 'products.show',
-                              params: { id: cartItem.id },
+                              params: { id: cartItem.product_id },
                             }"
                             class="thumb"
                           >
@@ -61,7 +61,7 @@
                             <router-link
                               :to="{
                                 name: 'products.show',
-                                params: { id: cartItem.id },
+                                params: { id: cartItem.product_id },
                               }"
                               class="title"
                             >
@@ -261,8 +261,9 @@ import QuantitySelector from "@/components/QuantitySelector.vue";
 import {
   FLAT_RATE_PROCENT,
   FLAT_RATE,
-  FREE_SHIPPING,
+  SHIPPING,
   LOCAL_PICKUP,
+  TOTAL_PRICE_FOR_FREE_SHIPPING,
 } from "@/utils/constants";
 
 import backGroundImage from "@/assets/images/inner-pages/cart_bg.jpg";
@@ -278,7 +279,7 @@ export default {
       increaseBy: 1,
       shippingMethod: null,
       options: [
-        { label: FREE_SHIPPING },
+        { label: SHIPPING },
         { label: FLAT_RATE },
         { label: LOCAL_PICKUP },
       ],
@@ -290,7 +291,7 @@ export default {
     };
   },
   mounted() {
-    this.setShippingMethod(FREE_SHIPPING);
+    this.setShippingMethod(SHIPPING);
   },
   computed: {
     ...mapGetters({
@@ -305,8 +306,12 @@ export default {
       switch (this.shippingMethod) {
         case FLAT_RATE:
           return (this.totalProductsPrice * FLAT_RATE_PROCENT) / 100;
-        case FREE_SHIPPING:
-          return 0;
+        case SHIPPING:
+          if (this.totalProductsPrice > TOTAL_PRICE_FOR_FREE_SHIPPING) {
+            return 0;
+          } else {
+            return 70;
+          }
         case LOCAL_PICKUP:
           return 0;
       }

@@ -1,8 +1,5 @@
 <template>
    <div class="form-group eye">
-      <button ref="showPassword" @click.prevent="toggleInputType" class="icon icon-1">
-         <i class="flaticon-hidden"></i>
-      </button>
       <input
         :type="inputType"
         class="form-control"
@@ -11,8 +8,8 @@
         :required="required"
         @input="emitInput"
       />
-      <button ref="hidePassword" @click.prevent="toggleInputType" class="icon icon-2">
-        <i class="flaticon-visibility"></i>
+      <button type="button" @click.prevent="toggleInputType" class="icon">
+        <i :class="inputType === 'password' ? 'flaticon-hidden' : 'flaticon-visibility'"></i>
       </button>
    </div>
 </template>
@@ -47,12 +44,8 @@
          toggleInputType() {
             if (this.inputType === 'password') {
                this.inputType = 'text'
-               this.$refs.hidePassword.style.display = 'block'
-               this.$refs.showPassword.style.display = 'none'
             } else {
                this.inputType = 'password'
-               this.$refs.showPassword.style.display = 'block'
-               this.$refs.hidePassword.style.display = 'none'
             }
          }
       },

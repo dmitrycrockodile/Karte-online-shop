@@ -100,10 +100,12 @@ export default {
    methods: {
       ...mapActions('auth', ['login']),
       handleSubmit() {
-         this.login({email: this.email, password: this.password})
-         .then(() => {
+        this.login({email: this.email, password: this.password})
+        .then((res) => {
+          if (!res.response) {
             this.$router.go(-1);
-         });
+          }
+        });
       },
    },
 };

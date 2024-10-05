@@ -61,6 +61,8 @@ const actions = {
       } catch (err) {
          commit('AUTH_ERROR');
          toast.error(err.response.data.message, { timeout: 2000 });
+
+         return Promise.reject(err);
       }
    },
    async logout({ commit, dispatch }) {
