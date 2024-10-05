@@ -1,5 +1,9 @@
 import axios from "axios";
 
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
+
 const state = {
    cartItems: JSON.parse(localStorage.getItem('cart')) || [],
 };
@@ -45,20 +49,23 @@ const actions = {
             commit('ADD_TO_CART', response.data.cartItem);
          }
 
+         toast.success(response.data.message, { timeout: 2000 });
+
          dispatch('updateStorage');
       } catch (error) {
-         console.error(error)
+         toast.error(err.data.message, { timeout: 2000 })
       }   
    },
    async removeFromCart({ commit, dispatch }, cartItem) {
       try {
-         await axios.delete(`http://localhost:8876/api/cart/${cartItem.id}`);
+         const res = await axios.delete(`http://localhost:8876/api/cart/${cartItem.id}`);
 
          commit('REMOVE_FROM_CART', cartItem)
+         toast.success(res.data.message, { timeout: 2000 })
 
          dispatch('updateStorage');
-      } catch (error) {
-         console.error(error);
+      } catch (err) {
+         toast.error(err.data.message, { timeout: 2000 })
       }
    },
    async decreaseQty({ commit, dispatch }, cartItem) {

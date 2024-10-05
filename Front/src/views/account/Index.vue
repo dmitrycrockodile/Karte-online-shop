@@ -121,7 +121,7 @@
                                     name="gender"
                                     id="female"
                                     value="Female"
-                                    v-model="userDataForm.user.sex"
+                                    v-model="userDataForm.sex"
                                  />
                                  <label class="btn btn-outline-dark w-100" for="female">Female</label>
                                  </div>
@@ -132,7 +132,7 @@
                                     name="gender"
                                     id="male"
                                     value="Male"
-                                    v-model="userDataForm.user.sex"
+                                    v-model="userDataForm.sex"
                                  />
                                  <label class="btn btn-outline-dark w-100" for="male">Male</label>
                                  </div>
@@ -146,7 +146,7 @@
                                  type="text"
                                  class="form-control"
                                  id="first-name"
-                                 v-model.trim.lazy="userDataForm.user.name"
+                                 v-model.trim.lazy="userDataForm.name"
                                  placeholder="Enter your name"
                                  required
                               />
@@ -157,7 +157,7 @@
                                  type="text"
                                  class="form-control"
                                  id="last-name"
-                                 v-model.trim.lazy="userDataForm.user.surname"
+                                 v-model.trim.lazy="userDataForm.surname"
                                  placeholder="Enter your surname"
                               />
                               </div>
@@ -167,7 +167,7 @@
                                  type="text"
                                  class="form-control"
                                  id="patronymic"
-                                 v-model.trim.lazy="userDataForm.user.patronymic"
+                                 v-model.trim.lazy="userDataForm.patronymic"
                                  placeholder="Enter your patronymic"
                               />
                               </div>
@@ -181,7 +181,7 @@
                                  type="text"
                                  class="form-control"
                                  id="address"
-                                 v-model.trim.lazy="userDataForm.user.address"
+                                 v-model.trim.lazy="userDataForm.address"
                                  placeholder="Enter your address"
                               />
                               </div>
@@ -191,7 +191,7 @@
                                  type="text"
                                  class="form-control"
                                  id="postal-code"
-                                 v-model.trim.lazy="userDataForm.user.postal_code"
+                                 v-model.trim.lazy="userDataForm.postal_code"
                                  placeholder="Kod pocztowy"
                               />
                               </div>
@@ -201,7 +201,7 @@
                                  type="text"
                                  class="form-control"
                                  id="city"
-                                 v-model.trim.lazy="userDataForm.user.city"
+                                 v-model.trim.lazy="userDataForm.city"
                                  placeholder="Enter your city"
                               />
                               </div>
@@ -222,7 +222,7 @@
                                  type="date"
                                  class="form-control"
                                  id="dob"
-                                 v-model="userDataForm.user.date_of_birth"
+                                 v-model="userDataForm.date_of_birth"
                               />
                               </div>
 
@@ -233,7 +233,7 @@
                                     class="form-control"
                                     id="age"
                                     placeholder="Enter your age"
-                                    v-model="userDataForm.user.age"
+                                    v-model="userDataForm.age"
                                  />
                               </div>
                            </div>
@@ -256,18 +256,11 @@
                                     type="text"
                                     class="form-control"
                                     id="phone"
-                                    v-model.trim.lazy="userDataForm.user.phone_number"
+                                    v-model.trim.lazy="userDataForm.phone_number"
                                     placeholder="Enter phone number"
                                  />
                               </div>
                            </div>
-
-                           <p 
-                              v-show="userDataForm.serverRespond.success" 
-                              class=""
-                           >
-                              {{ userDataForm.serverRespond.message }}
-                           </p>
 
                            <button :disabled="compareObjects" @click.prevent="handleUserDataChange" type="submit" class="btn btn-dark w-100">
                               Save changes
@@ -278,7 +271,7 @@
                         <div class="card p-4 shadow-sm mt-4">
                         <h2 class="mb-2">E-mail</h2>
 
-                        <p><b>My email address</b>: {{ userDataForm.user.email }}</p>
+                        <p><b>My email address</b>: {{ userDataForm.email }}</p>
 
                         <!-- Email -->
                         <form>
@@ -376,6 +369,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
+import { useToast } from "vue-toastification";
 
 import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
 import ContactForm from "@/components/ContactForm.vue";
@@ -386,36 +380,22 @@ export default {
    name: "User Account",
    data() {
       return {
-         userDataForm: {
-            user: {},
-            serverRespond: {
-               success: null,
-               message: '',
-            }, 
-         },
+         userDataForm: {},
          emailChangeForm: {
             email: '',
-            password: '',
-            serverRespond: {
-               success: null,
-               message: '',
-            },
+            password: ''
          },
          passwordChangeForm: {
             password: '',
-            newPassword: '',
-            serverRespond: {
-               success: null,
-               message: '',
-            },
+            newPassword: ''
          },
          accountBGImage,
       };
    },
    computed: {
       compareObjects() {
-         if (this.userDataForm.user && this.userData) {
-            return areObjectsEqual(this.userDataForm.user, this.userData)
+         if (this.userDataForm && this.userData) {
+            return areObjectsEqual(this.userDataForm, this.userData)
          }
       },
       ...mapGetters({
@@ -426,33 +406,31 @@ export default {
       SizesRadioGroup,
       ContactForm,
    },
+   setup() {
+      const toast = useToast();
+
+      return { toast }
+   },
    mounted() {
-      this.userDataForm.user = JSON.parse(JSON.stringify(this.userData));
+      this.userDataForm = JSON.parse(JSON.stringify(this.userData));
    },
    methods: {
       handleUserDataChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/${this.userDataForm.user.id}`, this.userDataForm.user)
+         this.axios.patch(`http://localhost:8876/api/user/update/${this.userDataForm.id}`, this.userDataForm)
          .then(res => {
             if (res.status === 200) {
                const newUserData = res.data.user;
 
                this.$store.commit('auth/SET_USER', { user: newUserData });
-
-               this.userDataForm.serverRespond.message = res.data.message;
-               this.userDataForm.serverRespond.success = res.data.success;
-
-               console.log(this.userDataForm.serverRespond);
+               this.toast.success(res.data.message, { timeout: 2000 });
             }
          })
          .catch(err => {
-            this.userDataForm.serverRespond.message = err.response.data.message;
-            this.userDataForm.serverRespond.success = err.response.data.success;
-
-            console.log(this.userDataForm.serverRespond);
+            this.toast.error(err.response.data.message, { timeout: 2000 })
          })
       }, 
       handleEmailChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/email/${this.userDataForm.user.id}`, { 
+         this.axios.patch(`http://localhost:8876/api/user/update/email/${this.userDataForm.id}`, { 
             email: this.emailChangeForm.email, 
             password: this.emailChangeForm.password 
          })
@@ -462,26 +440,19 @@ export default {
                this.emailChangeForm.email = '';
                this.emailChangeForm.password = '';
 
-               // Sets the status of the request
-               this.emailChangeForm.serverRespond.message = res.data.message;
-               this.emailChangeForm.serverRespond.success = res.data.success;
+               this.toast.success(res.data.message, { timeout: 2000 });
 
                // Sets the new email
-               this.userDataForm.user.email = res.data.new_email;
-               this.$store.commit('auth/SET_USER', { user: this.userDataForm.user });
-
-               console.log(this.emailChangeForm.serverRespond)
+               this.userDataForm.email = res.data.new_email;
+               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
             }
          })
          .catch(err => {
-            this.emailChangeForm.serverRespond.message = err.response.data.message;
-            this.emailChangeForm.serverRespond.success = err.response.data.success;
-
-            console.log(this.emailChangeForm.serverRespond)
+            this.toast.error(err.response.data.message, { timeout: 2000 })
          })
       },
       handlePasswordChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/password/${this.userDataForm.user.id}`, { 
+         this.axios.patch(`http://localhost:8876/api/user/update/password/${this.userDataForm.id}`, { 
             new_password: this.passwordChangeForm.newPassword, 
             password: this.passwordChangeForm.password 
          })
@@ -491,18 +462,11 @@ export default {
                this.passwordChangeForm.newPassword = '';
                this.passwordChangeForm.password = '';
 
-               // Sets the status of the request
-               this.passwordChangeForm.serverRespond.message = res.data.message;
-               this.passwordChangeForm.serverRespond.success = res.data.success;
-
-               console.log(this.passwordChangeForm.serverRespond);
+               this.toast.success(res.data.message, { timeout: 2000 });
             }
          })
          .catch(err => {
-            this.passwordChangeForm.serverRespond.message = err.response.data.message;
-            this.passwordChangeForm.serverRespond.success = err.response.data.success;
-
-            console.log(this.passwordChangeForm.serverRespond)
+            this.toast.error(err.response.data.message, { timeout: 2000 })
          })
       },
       handleLogout() {

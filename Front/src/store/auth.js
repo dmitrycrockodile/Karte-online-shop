@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const state = {
    user: JSON.parse(localStorage.getItem('user')) || null,
@@ -36,7 +39,7 @@ const actions = {
          return res;         
       } catch (err) {
          commit('AUTH_ERROR');
-         return Promise.reject(err); 
+         toast.error(err.response.data.message, { timeout: 2000 });
       }
    },
    async login({ commit, dispatch }, payload) {
@@ -57,7 +60,7 @@ const actions = {
          }
       } catch (err) {
          commit('AUTH_ERROR');
-         return Promise.reject(err);
+         toast.error(err.response.data.message, { timeout: 2000 });
       }
    },
    async logout({ commit, dispatch }) {
@@ -71,7 +74,7 @@ const actions = {
          dispatch('cart/clearLocalCart', null, { root: true });
          dispatch('wishlist/clearWishList', null, { root: true });
       } catch(err) {
-         return Promise.reject(err)
+         toast.error(err.response.data.message, { timeout: 2000 });
       }
    },
 }

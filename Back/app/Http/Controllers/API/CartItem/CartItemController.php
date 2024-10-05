@@ -69,7 +69,7 @@ class CartItemController extends Controller {
                                        ->first();
 
       return response()->json([
-         'message' => 'Cart item updated',
+         'message' => 'Product added to the cart',
          'cartItem' => new CartItemResource($cartItemWithProduct)
       ], 200);
    }
@@ -80,7 +80,7 @@ class CartItemController extends Controller {
       }
 
       $cartItem->delete();
-      return response()->json(['message' => 'Item removed from cart']);
+      return response()->json(['message' => 'Product removed from cart']);
    }
 
    public function clearCart() {
