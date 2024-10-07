@@ -173,7 +173,7 @@
                   </div>
                 </div>
               </div>
-              <a href="shop-grid.html" class="offer-link"> Offer </a>
+              <router-link :to="{ name: 'products.index' }" class="offer-link"> Offer </router-link>
             </div>
           </div>
         </div>
@@ -190,13 +190,13 @@
                   <div class="menubar">
                     <span></span> <span></span> <span></span>
                   </div>
-                  <a href="index.html" class="logo">
-                    <img src="./assets/images/logo/logo.png" alt="" />
-                  </a>
+                  <router-link :to="{ name: 'main' }" class="logo">
+                    <img src="../../assets/images/logo/logo.png" alt="" />
+                  </router-link>
                   <div class="cart-holder">
-                    <a href="#0" class="cart cart-icon position-relative">
+                    <router-link :to="{ name: 'cart.index' }" class="cart cart-icon position-relative">
                       <i class="flaticon-shopping-cart"></i>
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -205,9 +205,9 @@
         </div>
         <div class="container position-relative d-lg-block d-none">
           <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo me-2">
+            <router-link :to="{ name: 'main' }" class="logo me-2">
               <img src="./assets/images/logo/logo.png" alt="" />
-            </a>
+            </router-link>
             <div class="mega-menu-default mega-menu d-lg-block d-none">
               <div class="container">
                 <div class="row">
@@ -370,7 +370,7 @@
         <div class="container">
           <div class="footer_bottom_content">
             <div class="copyright wow fadeInUp animated">
-              <p>© 2024 <a href="index.html">Karte.</a> All Rights Reserved.</p>
+              <p>© 2024 <router-link :to="{ name: 'main' }">Karte.</router-link> All Rights Reserved.</p>
             </div>
             <div class="footer-payment wow fadeInUp animated">
               <a href="#0">

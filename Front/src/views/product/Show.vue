@@ -8,7 +8,7 @@
           <div class="col-xl-12">
             <div class="shop-details-inner">
               <ul class="shop-details-menu">
-                <li><a href="index.html">Home</a></li>
+                <li><router-link :to="{ name: 'main' }">Home</router-link></li>
                 <li class="active">Shop Details</li>
               </ul>
             </div>

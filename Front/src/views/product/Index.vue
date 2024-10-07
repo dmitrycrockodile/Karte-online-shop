@@ -16,9 +16,10 @@
               <div class="breadcrumb-menu">
                 <ul>
                   <li>
-                    <a href="index.html"
-                      ><i class="flaticon-home pe-2"></i>Home</a
-                    >
+                    <router-link :to="{ name: 'main' }">
+                      <i class="flaticon-home pe-2"></i>
+                      Home
+                    </router-link>
                   </li>
                   <li><i class="flaticon-next"></i></li>
                   <li class="active">Products</li>

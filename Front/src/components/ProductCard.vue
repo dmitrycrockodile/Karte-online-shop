@@ -42,7 +42,7 @@
               <a 
                 @click.prevent="handleWishlistAdd" 
                 :class="`${isActive ? 'active' : ''}`"
-                href="wishlist.html"
+                href="/"
               >
                 <i class="flaticon-heart"> </i>
                 <span> wishlist</span>
@@ -166,7 +166,11 @@
               </a> 
             </li>
             <li>
-              <a href="wishlist.html">
+              <a 
+                @click.prevent="handleWishlistAdd" 
+                :class="`${isActive ? 'active' : ''}`"
+                href="/"
+              >
                 <i class="flaticon-heart"></i>
               </a> 
             </li>

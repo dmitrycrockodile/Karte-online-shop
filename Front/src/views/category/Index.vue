@@ -9,7 +9,12 @@
                           <h2>{{ category.title }}</h2>
                           <div class="breadcrumb-menu">
                               <ul>
-                                  <li><a href="index.html"><i class="flaticon-home pe-2"></i>Home</a></li>
+                                  <li>
+                                    <router-link :to="{ name: 'main' }">
+                                      <i class="flaticon-home pe-2"></i>
+                                      Home
+                                    </router-link>
+                                  </li>
                                   <li> <i class="flaticon-next"></i> </li>
                                   <li class="active">{{ category.title }}</li>
                               </ul>

@@ -4078,6 +4078,10 @@ categories-tab start
   color: var(--thm-base);
 }
 
+.product-grid-two__overlay-box .icon a.active { 
+  background-color: var(--thm-base) !important;
+}
+
 .product-grid-two-content {
   position: relative;
   display: block;
