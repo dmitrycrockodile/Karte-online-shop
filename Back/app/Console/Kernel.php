@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('support:delete-old')->daily();
+        $schedule->command('newsletter:send')->monthly();
     }
 
     /**

@@ -47,7 +47,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="Your Name"
+                    placeholder="Your Name*"
                     v-model.trim.lazy="name"
                     required
                   />
@@ -64,7 +64,7 @@
                   <input
                     type="email"
                     class="form-control"
-                    placeholder="Your Email"
+                    placeholder="Your Email*"
                     v-model.trim.lazy="email"
                     required
                   />

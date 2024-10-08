@@ -63,4 +63,26 @@ class UserController extends Controller
          ], 409);
       }
    }
+
+   public function updateSubscription(User $user) {
+      if ($user->is_subscribed) {
+         $user->is_subscribed = false;
+         $user->save();
+
+         return response()->json([
+            'message' => 'You have unsubscribed from out newsletter.',
+            'success' => true,
+            'is_subscribed' => false,
+         ], 201);
+      } else {
+         $user->is_subscribed = true;
+         $user->save();
+   
+         return response()->json([
+            'message' => 'Thank you for the subscription!',
+            'success' => true,
+            'is_subscribed' => true,
+         ], 201);
+      }
+   }
 }

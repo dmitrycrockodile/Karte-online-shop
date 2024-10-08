@@ -335,6 +335,16 @@
                            </button>
                         </form>
                         </div>
+                        <div class="card p-4 shadow-sm mt-4">
+                           <h2 class="mb-2">Newsletter</h2>
+                           <div class="row mb-2 mt-2">
+                              <div class="col-md-6">
+                                 <button @click.prevent="toggleSubscribtion" type="submit" class="btn btn-dark w-100">
+                                    {{ userDataForm.is_subscribed ? 'Unsubscribe' : 'Subscribe' }}
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <div
@@ -463,6 +473,25 @@ export default {
          this.logout()
             .then(() => this.$router.push({name: 'login.index'}))
       }, 
+      async toggleSubscribtion() {
+         try {
+            const res = await this.axios.patch(`http://localhost:8876/api/user/update/subscription/${this.userDataForm.id}`);  
+
+            if (res.status === 201 && res.data.success) {
+               this.toast.success(res.data.message);
+               this.userDataForm.is_subscribed = res.data.is_subscribed;
+               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+            }
+         } catch (err) {
+            if (!err.response.data.success && err.response.status === 409) {
+               this.toast.error(err.response.data.message)
+            } else {
+               this.toast.error('Something went wrong, please try again later')
+            }
+
+            return Promise.reject(err);
+         }
+      },
       ...mapActions({
          logout: 'auth/logout'
       }),

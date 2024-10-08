@@ -33,6 +33,7 @@ class UpdateRequest extends FormRequest
             'date_of_birth' => 'nullable|date',
             'age' => 'nullable|integer',
             'phone_number' => 'nullable|string|regex:/^\+[\d\s]+$/',
+            'is_subscribed' => 'nullable|boolean',
         ];
     }
 

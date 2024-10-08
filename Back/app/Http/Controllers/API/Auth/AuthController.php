@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Register;
 
 class AuthController extends Controller
 {
@@ -23,6 +25,8 @@ class AuthController extends Controller
             ...$data,
             'password' => Hash::make($data['password'])
         ]);
+
+        Mail::to($data['email'])->send(new Register($data['name']));
 
         return response()->json([
             'success' => true,

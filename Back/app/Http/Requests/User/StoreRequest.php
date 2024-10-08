@@ -35,6 +35,7 @@ class StoreRequest extends FormRequest
             'age' => 'nullable|integer',
             'phone_number' => 'nullable|string|regex:/^\+[\d\s]+$/',
             'password' => 'required|string|confirmed',
+            'is_subscribed' => 'nullable|boolean',
         ];
     }
 

@@ -86,6 +86,10 @@
                      <th>Phone number</th>
                      <td>{{ $user->phone_number }}</td>
                   </tr>
+                  <tr>
+                     <th>Subscription</th>
+                     <td>{{ $user->is_subscribed ? 'Subscribed' : 'Not subscribed' }}</td>
+                  </tr>
                </tbody>
             </table>
          </div>
