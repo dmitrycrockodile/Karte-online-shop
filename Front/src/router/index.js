@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import authModule from '../store/auth'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,7 +54,7 @@ const router = createRouter({
       path: '/wishlist',
       name: 'wishlist.index',
       component: () => import("../views/wishlist/Index.vue"),
-      meta: { requiresAuth: true }
+      meta: { requiresVerification: true }
     },
     {
       path: '/contact',
@@ -74,7 +77,19 @@ router.beforeEach((to, from, next) => {
     } else {
       next(); 
     }
-  } else {
+  } else if (to.matched.some(record => record.meta.requiresVerification)) {
+    if (authModule.getters.isAuthenticated()) {
+      if (!authModule.getters.isUserVerified()) {
+        toast.info('Please verify your email (from your email box) to access this section.');
+        next({ name: 'account.index' });
+      } else {
+        next();
+      }
+    } else {
+      next({ name: 'login' }); 
+    }
+   } 
+   else {
     next(); 
   }
 });

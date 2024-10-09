@@ -43,6 +43,10 @@
                      <td>{{ $user->email }}</td>
                   </tr>
                   <tr>
+                     <th>Verified</th>
+                     <td>{{ $user->email_verified_at ? 'Yes' : 'No' }}</td>
+                  </tr>
+                  <tr>
                      <th>Username</th>
                      <td>{{ $user->name }}</td>
                   </tr>

@@ -13,23 +13,26 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Register;
+use App\Mail\CustomVerifyEmail;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
     public function register(StoreRequest $request) {
         $data = $request->validated();
+
+        Mail::to($data['email'])->send(new CustomVerifyEmail($data['name'], $data['email']));
         
-        User::firstOrCreate([
+        $user = User::firstOrCreate([
             'email' => $data['email']
         ], [
             ...$data,
             'password' => Hash::make($data['password'])
         ]);
 
-        Mail::to($data['email'])->send(new Register($data['name']));
-
         return response()->json([
             'success' => true,
+            'verified' => $user->email_verified_at,
         ], 200);
     }
 
@@ -83,5 +86,29 @@ class AuthController extends Controller
                 'error' => 'Unauthorized',
             ], Response::HTTP_UNAUTHORIZED);
         }
+    }
+
+    public function verifyEmail($email) {
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+
+            Mail::to($user->email)->send(new Register($user->name));
+
+            return redirect()->away('http://localhost:5173/account');
+        }
+
+        return response()->json(['message' => 'Invalid verification link.'], 400);
+    }
+
+    public function sendNewVerificationMessage(Request $request) {
+        Mail::to($request['email'])->send(new CustomVerifyEmail($request['name'], $request['email']));
+
+        return response()->json([
+            'message' => 'Message sent, check your email and re-login after the verification', 
+            'success' => true
+        ], 200);
     }
 }

@@ -33,7 +33,7 @@ Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@
 Route::post('/categories/{category}/products', 'App\Http\Controllers\API\Category\CategoryController@getCategoryProducts');
 Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@getCategory');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/logout',[AuthController::class, 'logout']);
 });
     
@@ -42,7 +42,10 @@ Route::middleware('guest:sanctum')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::get('/verify-email/{email}', [AuthController::class, 'verifyEmail'])->name('verify.email');
+Route::post('/verify-email', [AuthController::class, 'sendNewVerificationMessage']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/cart', [CartItemController::class, 'index']);
     Route::post('/cart', [CartItemController::class, 'store']);
     Route::put('/cart/{cartItem}', [CartItemController::class, 'update']);
@@ -50,14 +53,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/cart/{cartItem}', [CartItemController::class, 'destroy']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/user/update/{user}', [UserController::class, 'updateGeneral']);
     Route::patch('/user/update/email/{user}', [UserController::class, 'updateEmail']);
     Route::patch('/user/update/password/{user}', [UserController::class, 'updatePassword']);
     Route::patch('/user/update/subscription/{user}', [UserController::class, 'updateSubscription']);
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/wishlist', [WishListController::class, 'index']);
     Route::post('/wishlist', [WishListController::class, 'store']);
     Route::delete('/wishlist/{wishlist}', [WishListController::class, 'destroy']);

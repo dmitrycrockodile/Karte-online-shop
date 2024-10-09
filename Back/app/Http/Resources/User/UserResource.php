@@ -29,6 +29,7 @@ class UserResource extends JsonResource
          'date_of_birth' => $this->date_of_birth,
          'phone_number' => $this->phone_number,
          'is_subscribed' => $this->is_subscribed,
+         'email_verified_at' => $this->email_verified_at,
       ];
    }
 }

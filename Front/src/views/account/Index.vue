@@ -67,6 +67,18 @@
                   </button>
                   <button
                      class="nav-link"
+                     id="v-pills-emails-tab"
+                     data-bs-toggle="pill"
+                     data-bs-target="#v-pills-emails"
+                     type="button"
+                     role="tab"
+                     aria-controls="v-pills-emails"
+                     aria-selected="false"
+                  >
+                     <span>Emails</span>
+                  </button>
+                  <button
+                     class="nav-link"
                      id="v-pills-contact-tab"
                      data-bs-toggle="pill"
                      data-bs-target="#v-pills-contact"
@@ -335,12 +347,32 @@
                            </button>
                         </form>
                         </div>
+                     </div>
+                  </div>
+                  <div
+                     class="tab-pane fade"
+                     id="v-pills-emails"
+                     role="tabpanel"
+                     aria-labelledby="v-pills-emails-tab"
+                  >
+                     <div class="tabs-content__single">
                         <div class="card p-4 shadow-sm mt-4">
                            <h2 class="mb-2">Newsletter</h2>
                            <div class="row mb-2 mt-2">
                               <div class="col-md-6">
                                  <button @click.prevent="toggleSubscribtion" type="submit" class="btn btn-dark w-100">
                                     {{ userDataForm.is_subscribed ? 'Unsubscribe' : 'Subscribe' }}
+                                 </button>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="card p-4 shadow-sm mt-4">
+                           <h2 class="mb-2">Verify email</h2>
+                           <div class="row mb-2 mt-2">
+                              <div class="col-md-6">
+                                 <button @click.prevent="sendVerificationMessage" :disabled="userDataForm.email_verified_at" type="submit" class="btn btn-dark w-100">
+                                    {{ userDataForm.email_verified_at ? 'Verified' : 'Send verification' }}
                                  </button>
                               </div>
                            </div>
@@ -489,6 +521,21 @@ export default {
                this.toast.error('Something went wrong, please try again later')
             }
 
+            return Promise.reject(err);
+         }
+      },
+      async sendVerificationMessage() {
+         try {
+            const res = await this.axios.post('http://localhost:8876/api/verify-email', {
+               email: this.userDataForm.email,
+               name: this.userDataForm.name,
+            });  
+
+            if (res.status === 200 && res.data.success) {
+               this.toast.info(res.data.message);
+            }
+         } catch (err) {
+            this.toast.error(err.response.data.message);
             return Promise.reject(err);
          }
       },

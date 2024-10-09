@@ -34,6 +34,10 @@ const actions = {
       try {
          const res = await axios.post('http://localhost:8876/api/register', payload);
 
+         if (!res.data.verified) {
+            toast.info('Please check your email box and verify your email');
+         }
+
          await dispatch('login', { email: payload.email, password: payload.password });
 
          return res;         
@@ -83,6 +87,7 @@ const actions = {
 
 const getters = {
    isAuthenticated: () => !!state.token,
+   isUserVerified: () => state.user.email_verified_at !== null,
    getUserData: (state) => state.user,
 }
 

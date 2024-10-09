@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('support:delete-old')->daily();
         $schedule->command('newsletter:send')->monthly();
+        $schedule->command('users:delete-old')->monthly();
     }
 
     /**

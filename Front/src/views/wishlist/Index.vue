@@ -34,7 +34,7 @@
             <div class="container">
             <div class="row">
                <div class="col-xl-12 wow fadeInUp animated">
-                  <div class="wishlist-table-box">
+                  <div v-if="wishlistItems.length" class="wishlist-table-box">
                      <div class="wishlist-table-outer">
                         <table class="wishlist-table">
                            <thead class="wishlist-header">
@@ -80,6 +80,7 @@
                         </table>
                      </div>
                   </div>
+                  <h5 v-if="!wishlistItems.length">No wished items for now...</h5>
                </div>
             </div>
          </div>
