@@ -116,6 +116,18 @@
                   </a>
                </li>
                <li class="nav-item">
+                  <a href="{{ route('user.index') }}" class="nav-link">
+                     <i class="nav-icon fas fa-user-tie"></i>
+                     <p>Users</p>
+                  </a>
+               </li>
+               <li class="nav-item">
+                  <a href="{{ route('review.index') }}" class="nav-link">
+                     <i class="nav-icon fas fa-comments"></i>
+                     <p>Reviews</p>
+                  </a>
+               </li>
+               <li class="nav-item">
                   <a href="{{ route('category.index') }}" class="nav-link">
                      <i class="nav-icon fas fa-list-ul"></i>
                      <p>Categories</p>
@@ -146,12 +158,6 @@
                   </a>
                </li>
                <li class="nav-item">
-                  <a href="{{ route('user.index') }}" class="nav-link">
-                     <i class="nav-icon fas fa-user-tie"></i>
-                     <p>Users</p>
-                  </a>
-               </li>
-               <li class="nav-item">
                   <a href="{{ route('question.index') }}" class="nav-link">
                      <i class="nav-icon fas fa-headset"></i>
                      <p>Questions</p>
@@ -167,7 +173,7 @@
       </div>
       
       <footer class="main-footer">
-         <strong>Copyright &copy; 2022-{{ now()->year }} <a href="{{ route('main.index') }}">Karte</a>.</strong>
+         <strong>Copyright &copy;{{ now()->year }} <a href="{{ route('main.index') }}">Karte</a>.</strong>
          All rights reserved.
       </footer>
 

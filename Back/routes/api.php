@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
 use App\Http\Controllers\API\Question\QuestionController;
-use App\Http\Controllers\API\Subscribers\SubscribersController;
+use App\Http\Controllers\API\Review\ReviewController;
 use App\Http\Controllers\API\User\UserController;
 use App\Http\Controllers\API\Wishlist\WishlistController;
 
@@ -64,6 +64,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/wishlist', [WishListController::class, 'index']);
     Route::post('/wishlist', [WishListController::class, 'store']);
     Route::delete('/wishlist/{wishlist}', [WishListController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::post('/review', [ReviewController::class, 'store']);
+    Route::patch('/review/mark-helpfulness/{review}', [ReviewController::class, 'markHelpfulness']);
+    Route::patch('/review/report/{review}', [ReviewController::class, 'report']);
+    Route::delete('/review/{review}', [ReviewController::class, 'destroy']);
 });
 
 Route::post('/questions', [QuestionController::class, 'store']);

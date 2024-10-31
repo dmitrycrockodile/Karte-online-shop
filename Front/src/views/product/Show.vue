@@ -118,14 +118,8 @@
               <div class="shop-details-top-right-content-box">
                 <div class="shop-details-top-review-box">
                   <div class="shop-details-top-review">
-                    <ul>
-                      <li><i class="flaticon-star-1"></i></li>
-                      <li><i class="flaticon-star-1"></i></li>
-                      <li><i class="flaticon-star-1"></i></li>
-                      <li><i class="flaticon-star-1"></i></li>
-                      <li><i class="flaticon-star-1"></i></li>
-                    </ul>
-                    <p>(2 Reviews)</p>
+                    <AverageStarRating :rating="product.average_rating" />
+                    <p>({{ product.reviews.length }} Review{{ product.reviews.length === 1 ? '' : 's' }})</p>
                   </div>
                 </div>
                 <div class="shop-details-top-title">
@@ -277,8 +271,8 @@
                 <div class="checked-box">
                   <form>
                     <div class="form-group">
-                      <input type="checkbox" id="html" />
-                      <label for="html"
+                      <input type="checkbox" id="terms" />
+                      <label for="terms"
                         >I agree with all company terms & condition</label
                       >
                     </div>
@@ -678,122 +672,91 @@
               <div class="product-drescription">
                 <div class="review-single pt-0 hed">
                   <div class="ratting">
-                    <i class="flaticon-star-1"></i>
-                    <i class="flaticon-star-1"></i>
-                    <i class="flaticon-star-1"></i>
-                    <i class="flaticon-star-1"></i>
-                    <i class="flaticon-star-1"></i>
-                    <span class="ps-2">BASED ON 100 REVIEW</span>
+                    <AverageStarRating :rating="product.average_rating" />
+                    <span class="ps-2">BASED ON {{ product.reviews.length }} REVIEW{{ product.reviews.length === 1 ? '' : 'S' }}</span>
                   </div>
                 </div>
-                <div class="review-single">
+                <div v-for="review in product.reviews" :key="review.id" class="review-single">
                   <div class="left">
                     <div class="ratting">
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
+                      <AverageStarRating :rating="+review.rating" />
                     </div>
                     <h6>
-                      Vary Good quality Theme
-                      <span>Raul Bates on January 28, 2022</span>
+                     {{ review.title }}
+                      <span>{{ review.username }} on {{ review.date }}</span>
                     </h6>
                     <p>
-                      Assertively conceptualize parallel process improvements
-                      through user friendly colighue to action items.
-                      Interactively antidos cultivate interdependent customer
-                      service without clicks-and-mortar e-services.
+                      {{ review.body }}
                     </p>
-                  </div>
-                  <a href="#0" class="right-box"> Report this Comments </a>
-                </div>
-                <div class="review-single">
-                  <div class="left">
-                    <div class="ratting">
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
-                      <i class="flaticon-star-1"></i>
+                    <div class="helpfull__container">
+                      <div class="helpfull__positive">
+                        <button @click.prevent="markHelpfulness(review.id, true)">
+                          <i class="far fa-thumbs-up"></i>
+                        </button>
+                        ({{ review.helpful_count ? `+${review.helpful_count}` : review.helpful_count }})
+                      </div>
+                      <div class="helpfull__negative">
+                        <button @click.prevent="markHelpfulness(review.id, false)">
+                          <i class="far fa-thumbs-down"></i>
+                        </button>
+                        ({{ review.not_helpful_count ? `-${review.not_helpful_count}` : review.not_helpful_count }})
+                      </div>
                     </div>
-                    <h6>
-                      Amazing Theme <span>Kurt Morgan on January 28, 2022</span>
-                    </h6>
-                    <p>
-                      Assertively conceptualize parallel process improvements
-                      through user friendly colighue to action items.
-                      Interactively antidos cultivate interdependent customer
-                      service without clicks-and-mortar e-services.
-                    </p>
+                    <div v-show="review.user_id === getUserData.id" class="review-single__actions">
+                      <!-- <button @click.prevent="editReview(review.id)">Edit<i class="fa-solid fa-pen"></i></button> -->
+                      <button @click.prevent="deleteReview(review.id)">Delete<i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                    <button v-if="!review.reported && review.user_id !== getUserData.id" @click.prevent="reportOnReview(review.id)" class="right-box">
+                      Report this Comments
+                    </button>
+                    <p v-if="review.reported && review.user_id !== getUserData.id" class="helpfull--reported">Reported</p>
                   </div>
-                  <a href="#0" class="right-box">Report this Comments </a>
                 </div>
-                <div class="review-from-box mt-30">
+                <div v-show="!product.reviews.some(item => item.user_id === getUserData.id)" id="review-form" class="review-from-box mt-30">
                   <h6>Write a Review</h6>
-                  <form action="#" class="review-from">
+                  <form @submit.prevent="handleReviewSubmit" class="review-from">
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="ratting-box">
                           <p>RATING</p>
                           <div class="ratting">
-                            <i class="flaticon-star-1"></i>
-                            <i class="flaticon-star-1"></i>
-                            <i class="flaticon-star-1"></i>
-                            <i class="flaticon-star-1"></i>
-                            <i class="flaticon-star-1"></i>
+                            <label for="star1" title="1 stars" style="--i:1"><i class="flaticon-star-1"></i></label>
+                            <input type="radio" v-model="reviewFormData.rating" id="star1" name="rating" value="1" />
+                            
+                            <label for="star2" title="2 stars" style="--i:2"><i class="flaticon-star-1"></i></label>
+                            <input type="radio" v-model="reviewFormData.rating" id="star2" name="rating" value="2" />
+                        
+                            <label for="star3" title="3 stars" style="--i:3"><i class="flaticon-star-1"></i></label>
+                            <input type="radio" v-model="reviewFormData.rating" id="star3" name="rating" value="3" />
+                        
+                            <label for="star4" title="4 stars" style="--i:4"><i class="flaticon-star-1"></i></label>
+                            <input type="radio" v-model="reviewFormData.rating" id="star4" name="rating" value="4" />
+                        
+                            <label for="star5" title="5 star" style="--i:5"><i class="flaticon-star-1"></i></label>
+                            <input type="radio" v-model="reviewFormData.rating" id="star5" name="rating" value="5" />
                           </div>
                         </div>
+                        
                       </div>
-                      <div class="col-lg-6">
+                      <div class="col-lg-4">
                         <div class="form-group">
-                          <label for="name">NAME</label>
+                          <label for="title"> REVIEW TITLE</label>
                           <input
                             type="text"
-                            id="name"
+                            id="title"
                             class="form-control"
-                            placeholder="David Warner"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="number">Number</label>
-                          <input
-                            type="text"
-                            id="number"
-                            class="form-control"
-                            placeholder="Phone Number"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="email"> Email </label>
-                          <input
-                            type="text"
-                            id="email"
-                            class="form-control"
-                            placeholder="support@gmail.com"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="namee"> REVIEW TITLE</label>
-                          <input
-                            type="text"
-                            id="namee"
-                            class="form-control"
+                            v-model.trim.lazy="reviewFormData.title"
                             placeholder="Give your review title"
                           />
                         </div>
                       </div>
                       <div class="col-12">
                         <div class="form-group m-0">
-                          <label for="email">BODY OF REVIEW (1500) </label>
+                          <label for="body">BODY OF REVIEW (1500) </label>
                           <textarea
+                            id="body"
                             placeholder="Write Your Comments Here"
+                            v-model.trim="reviewFormData.body"
                           ></textarea>
                         </div>
                       </div>
@@ -860,6 +823,7 @@ import { mapActions, mapGetters } from "vuex";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
+import { useToast } from "vue-toastification";
 
 import CountdownTimer from "@/components/CountdownTimer.vue";
 import ProductPopup from "@/components/popups/ProductPopup.vue";
@@ -867,6 +831,7 @@ import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
 import ColorsRadioGroup from "@/components/radios/ColorsRadioGroup.vue";
 import QuantitySelector from "@/components/QuantitySelector.vue";
 import ProductCard from "@/components/ProductCard.vue";
+import AverageStarRating from "@/components/AverageStarRating.vue";
 
 import { TOTAL_PRICE_FOR_FREE_SHIPPING } from '@/utils/constants';
 
@@ -885,6 +850,7 @@ export default {
     ColorsRadioGroup,
     QuantitySelector,
     ProductCard,
+    AverageStarRating,
   },
   mounted() {
     this.getRecentProducts();
@@ -897,10 +863,13 @@ export default {
       thumbsSwiper.value = swiper;
     };
 
+    const toast = useToast();
+
     return {
       thumbsSwiper,
       setThumbsSwiper,
       modules: [Navigation, Thumbs],
+      toast,
     };
   },
   data() {
@@ -915,7 +884,12 @@ export default {
         selectedColor: null,
         selectedSize: null,
       },
-      TOTAL_PRICE_FOR_FREE_SHIPPING
+      reviewFormData: {
+        rating: null,
+        title: '',
+        body: '',
+      },
+      TOTAL_PRICE_FOR_FREE_SHIPPING,
     };
   },
   methods: {
@@ -955,6 +929,95 @@ export default {
     handleWishlistAdd() {
       this.toggleWishlistItem(this.product.id)
     },
+    hasUserVoted(reviewId) {
+      return this.userVotes.includes(reviewId);
+    },
+    async handleReviewSubmit() {
+      try {
+        const res = await this.axios.post('http://localhost:8876/api/review', {
+          rating: this.reviewFormData.rating,
+          title: this.reviewFormData.title,
+          body: this.reviewFormData.body,
+          product_id: this.product.id
+        });
+
+        if (res.status === 200) {
+          this.reviewFormData = {
+            rating: null,
+            title: '',
+            body: '',
+          };
+
+          this.product.reviews.push(res.data.item);
+          this.product.average_rating = res.data.average_rating
+
+          this.toast.success('Thank you for your review!', { timeout: 2000 })
+        }
+      } catch (err) {
+        console.error(err)
+
+        this.toast.error(err.response.data.message, { timeout: 2000 });
+      }
+    },
+    async markHelpfulness(id, isHelpful) {
+      try {
+        const res = await this.axios.patch(`http://localhost:8876/api/review/mark-helpfulness/${id}`, {
+          isHelpful: isHelpful
+        });
+        
+        if (res.status === 200) {
+          this.toast.success(res.data.message, { timeout: 2000 })
+
+          this.product.reviews = this.product.reviews.map(review => {
+            if (review.id === res.data.review.id) {
+              return res.data.review;
+            }
+            
+            return review;
+          });
+        }
+      } catch (err) {
+        console.error(err)
+
+        this.toast.error(err.response.data.message, { timeout: 2000 });
+      }
+    },
+    async reportOnReview(id) {
+      try {
+        const res = await this.axios.patch(`http://localhost:8876/api/review/report/${id}}`);
+
+        if (res.status === 200) {
+          this.toast.success(res.data.message, { timeout: 2000 })
+
+          this.product.reviews = this.product.reviews.map(review => {
+              if (review.id === res.data.review.id) {
+                return res.data.review;
+              }
+              
+              return review;
+          });
+        }
+      } catch (err) {
+        console.error(err)
+
+        this.toast.error(err.response.data.message, { timeout: 2000 });
+      }
+    },
+    async deleteReview(id) {
+      try {
+        const res = await this.axios.delete(`http://localhost:8876/api/review/${id}}`);
+
+        if (res.status === 200) {
+          this.toast.success(res.data.message, { timeout: 2000 })
+
+          this.product.reviews = this.product.reviews.filter(review => review.id !== id);
+        }
+      } catch (err) {
+        console.error(err)
+
+        this.toast.error(err.response.data.message, { timeout: 2000 });
+      }
+    },
     ...mapActions({
       addToCart: "cart/addToCart",
       toggleWishlistItem: "wishlist/toggleWishlistItem"
@@ -965,11 +1028,12 @@ export default {
         return this.wishlistItems.some(item => item.product_id === this.product.id)
       },
       ...mapGetters('wishlist', ['wishlistItems']),
+      ...mapGetters('auth', ['getUserData']),
     },
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .add-btn:disabled {
   cursor: default;
   background-color: #ccc;
@@ -979,5 +1043,88 @@ export default {
   transform: scale(0);
   -webkit-transform-origin: none;
   transform-origin: none;
+}
+
+.ratting input[type="radio"] {
+  display: none; 
+}
+
+.ratting label {
+  color: #ccc; 
+  font-size: 24px;
+  cursor: pointer;
+}
+.ratting label:is(:hover, :has(~ :hover)) i {
+	color: #f69c63;
+}
+
+.ratting label:has(~ :checked) i {
+	color: #f69c63;
+	text-shadow: 0 0 2px #ffffff, 0 0 6px #f69c63;
+}
+
+.helpfull__container {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  margin-top: 10px;
+
+  button {
+    background-color: transparent;
+    border: none;
+    transition: all .2s;
+
+    .fa-thumbs-up {
+      color: rgb(0, 214, 0);
+    }
+
+    .fa-thumbs-down {
+      color: rgb(255, 28, 28);
+    }
+
+    &:last-child {
+      margin-left: 10px;
+
+      &:hover {
+        transform: rotate(20deg);
+      }
+    }
+
+    &:first-child:hover {
+      transform: rotate(-20deg);
+    }
+  }
+}
+
+.helpfull--reported {
+  color: rgb(195, 195, 195);
+  font-size: 14px;
+}
+
+.review-single__actions {
+  margin-top: 10px;
+
+  button {
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    transition: all .2s ease-in;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    .fa-pen {
+      color: rgb(0, 214, 0);
+      margin-right: 15px;
+      margin-left: 7px;
+    }
+
+    .fa-trash-can {
+      color: rgb(255, 28, 28);
+      margin-left: 7px;
+    }
+  }
 }
 </style>

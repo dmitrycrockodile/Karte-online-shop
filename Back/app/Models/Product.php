@@ -36,6 +36,16 @@ class Product extends Model
         return $this->hasMany(ProductImage::class, 'product_id', 'id');
     }
 
+    public function reviews() {
+        return $this->hasMany(Review::class, 'product_id', 'id')->where('deleted', false);
+    }
+
+    public function getAverageRatingAttribute() {
+        $average_rating = $this->reviews()->avg('rating') ?: 0;
+
+        return round($average_rating, 2);
+    }
+
     public function getPreviewImageUrlAttribute() {
         if ($this->preview_image) {
             return url('storage/' . $this->preview_image);

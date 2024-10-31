@@ -399,7 +399,7 @@ textarea {
 }
 
 .ratting {
-  font-size: 14px;
+  font-size: 22px;
 }
 .ratting i {
   margin: 1px;
@@ -4768,11 +4768,11 @@ products-grid start
 }
 .qtySelector input {
   border: 0px solid rgba(255, 255, 255, 0);
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   padding: 0px 0px 0px 40px;
   font-size: 18px;
   color: var(--thm-black);
+  background-color: transparent;
 }
 .qtySelector input::-webkit-input-placeholder {
   color: var(--thm-black);
@@ -11001,46 +11001,17 @@ button.router-link:hover {
 }
 
 .shop-details-top-right-content-box {
-  position: relative;
   display: block;
 }
 
 .shop-details-top-review-box {
-  position: relative;
   display: block;
 }
 
 .shop-details-top-review {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.shop-details-top-review ul {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.shop-details-top-review ul li + li {
-  margin-left: 5px;
-}
-
-.shop-details-top-review ul li i {
-  font-size: 15px;
-  color: var(--thm-black);
-}
-
-.shop-details-top-review ul li:last-child i {
-  color: #74787c;
+  align-items: center;
+  width: 100%;
 }
 
 .shop-details-top-review p {
@@ -13197,12 +13168,7 @@ button.router-link:hover {
       flex-wrap: wrap;
 }
 .product-drescription .review-single .ratting {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   margin-top: 10px;
 }
 .product-drescription .review-single h6 {
@@ -13221,6 +13187,8 @@ button.router-link:hover {
   margin-top: 10px;
   color: var(--thm-base);
   text-decoration: underline;
+  background: transparent;
+  border: none;
   font-size: 14px;
 }
 .product-drescription .review-from label,

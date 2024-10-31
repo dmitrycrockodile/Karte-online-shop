@@ -3,7 +3,7 @@
 use App\Http\Controllers\Question\QuestionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MailController;
+use App\Http\Controllers\Review\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,8 +90,18 @@ Route::group(['prefix' => 'products', 'namespace' => 'App\Http\Controllers\Produ
     Route::delete('/{product}', 'DeleteController')->name('product.delete');
 });
 
+
+//!!!!!
 Route::group(['prefix' => 'questions', 'namespace' => 'App\Http\Controllers\Support'], function() {
     Route::get('/', [QuestionController::class, 'index'])->name('question.index');
     Route::get('/{question}', [QuestionController::class, 'show'])->name('question.show');
     Route::patch('/{question}', [QuestionController::class, 'toggle_status'])->name('question.update');
+});
+
+Route::group(['prefix' => 'reviews'], function() {
+    Route::get('/', [ReviewController::class, 'index'])->name('review.index');
+    Route::get('/{review}', [ReviewController::class, 'show'])->name('review.show');
+    Route::patch('/resolve/{review}', [ReviewController::class, 'resolve_report'])->name('review.resolve');
+    Route::patch('/restore/{review}', [ReviewController::class, 'restore'])->name('review.restore');
+    Route::delete('/{review}', [ReviewController::class, 'delete'])->name('review.delete');
 });

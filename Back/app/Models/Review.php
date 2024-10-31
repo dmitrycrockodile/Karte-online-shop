@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
+
+class Review extends Model
+{
+    protected $table = 'reviews';
+    protected $guarded = false;
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function product() {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    public function helpfulness() {
+        return $this->hasMany(ReviewHelpfulness::class, 'review_id', 'id');
+    }
+
+    public function getHelpfulCountAttribute() {
+        return $this->helpfulness()->where('is_helpful', true)->count();
+    }
+
+    public function getNotHelpfulCountAttribute() {
+        return $this->helpfulness()->where('is_helpful', false)->count();
+    }
+
+    public function getDaysOldAttribute() {
+        return Carbon::now()->diffInDays($this->created_at);
+    }
+}

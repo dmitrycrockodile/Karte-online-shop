@@ -6,6 +6,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Color\ColorResource;
 use App\Http\Resources\Coupon\CouponResource;
 use App\Http\Resources\ProductImage\ProductImageResource;
+use App\Http\Resources\Review\ReviewResource;
 use App\Http\Resources\Size\SizeResource;
 use App\Http\Resources\Tag\TagResource;
 use Illuminate\Http\Request;
@@ -36,6 +37,8 @@ class ProductResource extends JsonResource
             'colors' => ColorResource::collection($this->colors),
             'product_images' => ProductImageResource::collection($this->images),
             'coupons' => CouponResource::collection($this->coupons),
+            'reviews' => ReviewResource::collection($this->reviews),
+            'average_rating' => $this->averageRating,
         ];
     }
 }

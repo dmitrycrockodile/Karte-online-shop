@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import authModule from '../store/auth'
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification' 
 
 const toast = useToast()
 
@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
     if (authModule.getters.isAuthenticated()) {
       next(); 
     } else {
-      next({ name: 'login' }); 
+      next({ name: 'login' });
     }
   } else if (to.matched.some(record => record.meta.guest)) {
     if (authModule.getters.isAuthenticated()) {
@@ -86,7 +86,7 @@ router.beforeEach((to, from, next) => {
         next();
       }
     } else {
-      next({ name: 'login' }); 
+      next({ name: 'login' });
     }
    } 
    else {
