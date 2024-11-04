@@ -296,7 +296,7 @@
                 <ul class="footer-links">
                   <li><a href="about-us.html">About us</a></li>
                   <li><router-link :to="{ name: 'contact.index' }">Contact Us</router-link></li>
-                  <li><a href="faq.html">Faq</a></li>
+                  <li><router-link :to="{ name: 'faq.index' }">Faq</router-link></li>
                   <li><a href="order-track.html">Order Track</a></li>
                 </ul>
               </div>

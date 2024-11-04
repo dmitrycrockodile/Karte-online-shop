@@ -61,7 +61,19 @@ const router = createRouter({
       name: 'contact.index',
       component: () => import("../views/contact/Index.vue"),
     },
-  ]
+    {
+      path: '/faq',
+      name: 'faq.index',
+      component: () => import("../views/faq/Index.vue"),
+    },
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  }
 })
 
 router.beforeEach((to, from, next) => {

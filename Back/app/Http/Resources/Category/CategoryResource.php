@@ -21,6 +21,7 @@ class CategoryResource extends JsonResource
             'coupons' => CouponResource::collection($this->coupons),
             'preview_image' => $this->previewImageUrl,
             'banner' => $this->bannerUrl,
+            'products_count' => count($this->products),
         ];
     }
 }
