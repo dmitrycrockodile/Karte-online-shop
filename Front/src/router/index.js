@@ -66,6 +66,11 @@ const router = createRouter({
       name: 'faq.index',
       component: () => import("../views/faq/Index.vue"),
     },
+    {
+      path: '/about-us',
+      name: 'about_us.index',
+      component: () => import("../views/about_us/Index.vue"),
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -81,7 +86,8 @@ router.beforeEach((to, from, next) => {
     if (authModule.getters.isAuthenticated()) {
       next(); 
     } else {
-      next({ name: 'login' });
+      toast.info('Please login to access this section.');
+      next({ name: 'login.index' });
     }
   } else if (to.matched.some(record => record.meta.guest)) {
     if (authModule.getters.isAuthenticated()) {
@@ -98,7 +104,8 @@ router.beforeEach((to, from, next) => {
         next();
       }
     } else {
-      next({ name: 'login' });
+      toast.info('Please login to access this section.');
+      next({ name: 'login.index' });
     }
    } 
    else {

@@ -53,9 +53,7 @@
                     <router-link :to="{ name: 'main' }"><span>Home</span></router-link>
                   </li>
                   <li class="dropdown-list">
-                    <router-link :to="{ name: 'products.index' }"
-                      ><span>Products</span></router-link
-                    >
+                    <router-link :to="{ name: 'products.index' }"><span>Products</span></router-link>
                   </li>
                 </ul>
               </div>
@@ -123,14 +121,19 @@
                             class="page-dropdown-menu d-flex align-items-center justify-content-center"
                           >
                             <li class="dropdown-list">
-                              <router-link :to="{ name: 'main' }"
-                                ><span>Home</span></router-link
-                              >
+                              <router-link :to="{ name: 'main' }"><span>Home</span></router-link>
                             </li>
                             <li class="dropdown-list">
-                              <router-link :to="{ name: 'products.index' }"
-                                ><span>Products</span></router-link
-                              >
+                              <router-link :to="{ name: 'products.index' }"><span>Products</span></router-link>
+                            </li>
+                            <li class="dropdown-list">
+                              <router-link :to="{ name: 'about_us.index' }"><span>About Us</span></router-link>
+                            </li>
+                            <li class="dropdown-list">
+                              <router-link :to="{ name: 'faq.index' }"><span>Faq</span></router-link>
+                            </li>
+                            <li class="dropdown-list">
+                              <router-link :to="{ name: 'cart.index' }"><span>Cart</span></router-link>
                             </li>
                           </ul>
                         </nav>
@@ -294,7 +297,7 @@
                   <h4>Information</h4>
                 </div>
                 <ul class="footer-links">
-                  <li><a href="about-us.html">About us</a></li>
+                  <li><router-link :to="{ name: 'about_us.index' }">About us</router-link></li>
                   <li><router-link :to="{ name: 'contact.index' }">Contact Us</router-link></li>
                   <li><router-link :to="{ name: 'faq.index' }">Faq</router-link></li>
                   <li><a href="order-track.html">Order Track</a></li>

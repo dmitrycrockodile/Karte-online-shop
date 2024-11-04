@@ -5712,6 +5712,13 @@ products-grid start
   margin-right: 30px;
 }
 
+.testimonial-two__single-img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .testimonial-two__single-content .text {
   margin-bottom: 18px;
 }
@@ -8341,7 +8348,8 @@ pagination start
 }
 
 .mission__thumb img {
-  min-width: 100%;
+  width: 359px;
+  height: 405px;
 }
 
 .mission__thumb .content-box {
@@ -8461,6 +8469,10 @@ pagination start
 }
 .team__single-img img {
   min-width: 100%;
+  height: 450px;
+  width: 370px;
+  object-fit: cover;
+  object-position: top;
 }
 
 .team__single-img::before {
@@ -8583,11 +8595,16 @@ pagination start
   line-height: 1.1;
 }
 
-.team__single .team-content h2 a {
+.team__single .team-content h2 {
+  color: var(--thm-black);
+  transition: all .3s;
+}
+
+.team__single .team-content h2 span {
   color: var(--thm-black);
 }
 
-.team__single .team-content h2 a:hover {
+.team__single .team-content h2:hover {
   color: var(--thm-base);
 }
 
