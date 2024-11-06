@@ -236,7 +236,6 @@
       </div>
 
       <CartSideMenu :active="isCartModalActive" @setActive="setIsModalActive" ref="cartMenu" />
-      <div class="sidebar-content-closer"></div>
     </header>
 
     <router-view :key="$route.fullPath"></router-view>

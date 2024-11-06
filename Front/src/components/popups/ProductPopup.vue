@@ -223,12 +223,6 @@ export default {
   width: 430px;
   height: 520px;
 }
-.fashon .quick-view-popup .ratting i {
-  color: #fa323c;
-}
-.fashon .quick-view-popup .popup-right-content .price h2 {
-  color: #fa323c;
-}
 
 .popup-right-content .ratting {
   font-size: 18px;
