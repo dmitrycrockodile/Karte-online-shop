@@ -1,11 +1,5 @@
 /*** 
 =====================================================
-Imnner Pages Csss
-=====================================================
-***/
-
-/*** 
-=====================================================
 breadcrumb-area start
 =====================================================
 ***/
@@ -76,26 +70,23 @@ breadcrumb-area start
     }
 }
 
-// @media (min-width: 767px) {
-//     .breadcrumb-area {
-//         padding: 119px 0px 115px;
-//     }
-// }
+@media (min-width: 767px) {
+    .breadcrumb-area {
+        padding: 119px 0px 115px;
+    }
+}
 
-// @media (min-width: 1200px) {
-//     .breadcrumb-area {
-//         padding: 120px 0px 120px;
-//     }
-// }
+@media (min-width: 1200px) {
+    .breadcrumb-area {
+        padding: 120px 0px 120px;
+    }
+}
 
-// @media (min-width: 1400px) {
-//     .breadcrumb-area {
-//         padding: 178px 0px 173px;
-//     }
-// }
-
-
-
+@media (min-width: 1400px) {
+    .breadcrumb-area {
+        padding: 178px 0px 173px;
+    }
+}
 
 /*** 
 =====================================================
@@ -489,9 +480,6 @@ pagination start
     }
 }
 
-
-
-
 /*** 
 =============================================
     Team Css
@@ -640,161 +628,6 @@ pagination start
         padding-top: 37px;
     }
 }
-
-
-/*** 
-=============================================
-    Video Three Css
-=============================================
-***/
-.video-three {
-    position: relative;
-    display: block;
-    padding: 240px 0px 240px;
-}
-
-.video-three__bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-attachment: scroll;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-.video-three__inner {
-    position: relative;
-    display: block;
-    text-align: center;
-}
-
-.video-three__inner .icon {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-}
-
-.video-three__inner .icon .border-animation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 1px solid var(--thm-black);
-    animation: squares 2.9s linear 0s infinite;
-    -webkit-animation: squares 2.9s linear 0s infinite;
-    -ms-animation: squares 2.9s linear 0s infinite;
-    -o-animation: squares 2.9s linear 0s infinite;
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
-    opacity: 0;
-    border-radius: 50%;
-}
-
-.video-three__inner .icon .border-animation.border-2 {
-    -webkit-animation-delay: 1s;
-    animation-delay: 1s;
-}
-
-.video-three__inner .icon .border-animation.border-3 {
-    -webkit-animation-delay: 2s;
-    animation-delay: 2s;
-}
-
-.video-three__inner .icon a {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 80px;
-    border: 1px solid var(--thm-black);
-    border-radius: 50%;
-    background: transparent;
-    text-align: center;
-    color: var(--thm-black);
-    transition: all 200ms linear;
-    transition-delay: 0.1s;
-    z-index: 5;
-}
-
-.video-three__inner .icon a:hover {
-    color: var(--thm-base);
-}
-
-.video-three__inner .icon a i {
-    font-size: 30px;
-    line-height: 0px;
-}
-
-/** squares **/
-
-@keyframes squares {
-    0% {
-        -webkit-transform: scale(1);
-        -moz-transform: scale(1);
-        -o-transform: scale(1);
-        transform: scale(1);
-        opacity: 0
-    }
-
-    20% {
-        -webkit-transform: scale(1.24);
-        -moz-transform: scale(1.24);
-        -o-transform: scale(1.24);
-        transform: scale(1.24);
-        opacity: 1
-    }
-
-    100% {
-        -webkit-transform: scale(2.1);
-        -moz-transform: scale(2.1);
-        -o-transform: scale(2.1);
-        /* transform:scale(2.1); */
-        opacity: 0;
-    }
-}
-
-@media (min-width: 575px) {
-    .video-three__inner .icon a {
-        width: 120px;
-        height: 120px;
-    }
-
-    .video-three__inner .icon a i {
-        font-size: 50px;
-    }
-
-}
-
-@media (min-width: 768px) {
-    .video-three__inner .icon a {
-        width: 170px;
-        height: 170px;
-    }
-
-    .video-three__inner .icon a i {
-        font-size: 70px;
-    }
-
-}
-
-@media (min-width: 1200px) {
-    .video-three__inner .icon a {
-        width: 225px;
-        height: 225px;
-    }
-
-    .video-three__inner .icon a i {
-        font-size: 90px;
-    }
-}
-
-
-
 
 /*** 
 =============================================
@@ -963,10 +796,6 @@ pagination start
     color: var(--thm-black);
 }
 
-
-
-
-
 /*** 
 =============================================
     login-register-form Css
@@ -1118,9 +947,6 @@ pagination start
     } 
 }
 
-
-
-
 /*** 
 =============================================
     Error Page    
@@ -1156,8 +982,6 @@ pagination start
         margin-top: 43px;
     }
 } 
-
-
 
 /*** 
 =============================================
@@ -1197,15 +1021,11 @@ pagination start
     color: var(--thm-base);
 }
 
-
-
-
 /*** 
 =============================================
     Contact box Start  
 =============================================
 ***/
-
 .contact-box {
     .map {
         min-height: 100%;
@@ -1342,14 +1162,11 @@ pagination start
     }
 }
 
-
-
 /*** 
 =============================================
    faq-box Start  
 =============================================
 ***/
-
 .accordion-item {
     border: none;
     margin-top: 23px;
@@ -1615,8 +1432,6 @@ pagination start
         font-size: 72px;
     }
 }
-
-
 
 /*** 
 =============================================
@@ -2075,9 +1890,6 @@ pagination start
     }
 
 }
-
-
-
 
 /*** 
 =============================================

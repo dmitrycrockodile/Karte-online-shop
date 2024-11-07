@@ -106,59 +106,6 @@
     color: #ffffff;
 }
 
-
-/*** 
-=============================================
-  btn--secondary Css
-=============================================
-***/
-.btn--secondary {
-    position: relative;
-    display: inline-block;
-    background: #ffffff;
-    color: var(--thm-black);
-    font-size: 12px;
-    line-height: 40px;
-    font-weight: 500;
-    text-transform: uppercase;
-    padding: 0px 20px 0px;
-    border-radius: 0px;
-    transition: all 200ms linear;
-    transition-delay: 0.1s;
-    overflow: hidden;
-    font-family: var(--font-heading-family);
-    z-index: 1;
-}
-
-.btn--secondary::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    background: var(--thm-base);
-    z-index: -1;
-    -webkit-transform: scale(0, 1);
-    transform: scale(0, 1);
-    transition: -webkit-transform 0.4s ease;
-    transition: transform 0.4s ease;
-    transition: transform 0.4s ease, -webkit-transform 0.4s ease;
-    -webkit-transform-origin: right center;
-    transform-origin: right center;
-}
-
-.btn--secondary:hover:before {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1, 1);
-    -webkit-transform-origin: left center;
-    transform-origin: left center;
-}
-
-.btn--secondary:hover {
-    color: #ffffff;
-}
-
 /*** 
 =============================================
   btn--secondary .style2 Css
