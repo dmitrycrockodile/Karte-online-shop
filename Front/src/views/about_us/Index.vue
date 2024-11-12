@@ -9,7 +9,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xl-12">
-            <div class="breadcrumb-content text-center wow fadeInUp animated">
+            <div class="breadcrumb-content text-center fadeInUp animated wow">
               <h2>About Us</h2>
               <div class="breadcrumb-menu">
                 <ul>

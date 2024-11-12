@@ -82,18 +82,24 @@
                       </p>
                       <div class="right d-flex align-items-center">
                         <div class="language currency">
-                          <select>
-                            <option>USD</option>
-                            <option value="1">INR</option>
-                            <option value="2">BDT</option>
-                          </select>
+                          <CustomSelect 
+                            :options="[
+                              {title: 'USD', value: 'USD'}, 
+                              {title: 'INR', value: 'INR'}, 
+                              {title: 'BDT', value: 'BDT'}
+                            ]" 
+                            v-model="selectedCurrency"
+                          />
                         </div>
                         <div class="language two">
-                          <select>
-                            <option>ENGLISH</option>
-                            <option value="1">GERMAN</option>
-                            <option value="4">FRENCH</option>
-                          </select>
+                          <CustomSelect 
+                            :options="[
+                              {title: 'English', value: 'EN'}, 
+                              {title: 'German', value: 'GE'}, 
+                              {title: 'French', value: 'FR'}
+                            ]" 
+                            v-model="selectedLanguage"
+                          />
                         </div>
                         <div v-if="!user">
                            <router-link class="router-link" :to="{ name: 'login.index' }"> Sign In </router-link>
@@ -250,7 +256,7 @@
         <div class="container">
           <div class="row">
             <div
-              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-30 wow fadeInUp animated"
+              class="col-xl-3 col-lg-6 col-md-6 col-sm-12 mt-30fadeInUp animated wow"
             >
               <div class="footer-default__single-box">
                 <div class="company-info">
@@ -385,7 +391,7 @@
     <!--===scroll bottom to top===-->
     <button
       :class="scrollButtonClasses"
-      class="scrollToTop wow"
+      class="scrollToTop"
       @click="scrollToTop"
     >
       <i class="flaticon-up-arrow"></i>
@@ -399,17 +405,17 @@ import { mapState, mapActions } from "vuex";
 import axios from "axios";
 
 import CartSideMenu from "@/components/CartSideMenu.vue";
+import CustomSelect from "@/components/CustomSelect.vue";
 
 export default {
    name: "App",
    components: {
-      CartSideMenu
+      CartSideMenu,
+      CustomSelect,
    },
    mounted() {
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
-      
-      $("select").niceSelect();
 
       this.getCategories();
    },
@@ -420,6 +426,8 @@ export default {
       return {
         scrollPosition: 0,
         isCartModalActive: false,
+        selectedLanguage: '',
+        selectedCurrency: '',
       };
    },
    computed: {
@@ -481,4 +489,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

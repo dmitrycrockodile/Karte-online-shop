@@ -1080,71 +1080,6 @@ pagination start
             .sellect-box {
                 height: 50px;
             }
-
-            .nice-select {
-                width: 100%;
-                border: 1px solid rgb(228, 228, 228);
-                background: transparent;
-                height: 50px;
-                padding: 10px 30px;
-                border-radius: 0px;
-                display: flex;
-                align-items: center;
-                color: var(--thm-gray) !important;
-                font-size: 14px;
-                font-weight: 300 !important;
-                padding: 10px 30px;
-
-                &:after {
-                    border-bottom: 1px solid rgb(0, 0, 0);
-                    border-right: 1px solid rgb(0, 0, 0);
-                    width: 8px;
-                    height: 8px;
-                    top: 45%;
-                }
-
-
-                .list {
-                    width: 100%;
-                    background-color: rgb(255, 255, 255);
-                    box-shadow: 0px 4px 30px rgb(40 38 126 / 10%);
-                    padding: 0;
-                    margin: 0;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    top: calc(100% + 2px);
-
-                    li {
-                        color: var(--thm-gray);
-                        font-size: 14px;
-                        font-weight: 300;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        border-top: 1px solid rgb(228, 228, 228);
-                        width: 100%;
-                        padding: 5px 20px 5px;
-                        line-height: 1.1;
-
-
-                        &:first-child {
-                            border: 0px;
-                        }
-
-                        &:hover {
-                            color: var(--thm-base);
-                        }
-                    }
-                }
-            }
-
-            .nice-select .option:hover,
-            .nice-select .option.focus,
-            .nice-select .option.selected.focus {
-                background-color: #ffffff;
-            }
         }
     }
 }
@@ -2162,37 +2097,6 @@ pagination start
 
 .shop-grid-page-top-info .right-box .select-box {
     width: 200px;
-}
-
-.shop-grid-page-top-info .right-box .nice-select {
-    position: relative;
-    display: block;
-    height: 50px;
-    line-height: 48px;
-    background: #ffffff;
-    border: 1px solid #e4e4e4 !important;
-    font-family: var(--thm-font);
-    border-radius: 0px !important;
-    color: #888888;
-    font-size: 14px;
-    font-weight: 300;
-    padding-left: 20px;
-    padding-right: 0px;
-}
-
-.shop-grid-page-top-info .right-box .nice-select:after {
-    width: 8px;
-    height: 8px;
-    border-bottom: 2px solid var(--thm-gray);
-    border-right: 2px solid var(--thm-gray);
-    right: 25px;
-    margin-top: 0px;
-    top: 18px;
-    z-index: 9;
-}
-
-.shop-grid-page-top-info .right-box .nice-select .list {
-    border-radius: 0px !important;
 }
 
 .product-view-style {
@@ -3692,16 +3596,6 @@ pagination start
                 display: flex;
                 justify-content: center;
                 align-items: center;
-
-                .nice-select {
-                    border: 0px;
-                    background: transparent;
-
-                    span.current {
-                        font-size: 18px;
-                        color: var(--thm-black);
-                    }
-                }
             }
         }
     }

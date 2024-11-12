@@ -50,6 +50,7 @@
                            v-model="formData.question" 
                            name="question"
                            required
+                           class="question-select"
                         >
                            <option value="" selected disabled>Select your question</option>
                            <option value="Want to know order status">Want to know order status</option>
@@ -77,6 +78,8 @@
 
    import { useToast } from "vue-toastification";
 
+   import CustomSelect from './CustomSelect.vue';
+
    export default {
       name: 'Contact form',
       data() {
@@ -89,6 +92,9 @@
                question: '',
             }
          }
+      },
+      components: {
+         CustomSelect,
       },
       computed: {
          ...mapGetters({
@@ -127,5 +133,13 @@
 </script>
 
 <style lang="scss" scoped>
-
+.question-select {
+   border: 1px solid #e4e4e4;
+   background: transparent;
+   padding: 14px 2px;
+   border-radius: 4px;
+   color: var(--thm-gray);
+   font-weight: 300;
+   width: 75%;
+}
 </style>

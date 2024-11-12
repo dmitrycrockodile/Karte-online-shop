@@ -2488,9 +2488,6 @@ import "swiper/css/autoplay";
 
 export default {
   name: "Index",
-  mounted() {
-    $(document).trigger("init");
-  },
   components: {
     Swiper,
     SwiperSlide,
