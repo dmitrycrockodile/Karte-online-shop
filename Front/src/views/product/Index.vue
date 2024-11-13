@@ -333,10 +333,7 @@ export default {
       productFilters: [],
       filterCategories: [],
       colors: [],
-      prices: {
-        minPrice: 0,
-        maxPrice: 10000,
-      },
+      prices: {},
       tags: [],
       pagination: [],
       dataPerPage: 12,
@@ -356,8 +353,8 @@ export default {
       this.filterCategories = [];
       this.colors = [];
       this.prices = {
-        minPrice: 0,
-        maxPrice: 10000,
+        minPrice: this.productFilters.prices.minPrice,
+        maxPrice: this.productFilters.prices.maxPrice,
       };
       this.tags = [];
 
