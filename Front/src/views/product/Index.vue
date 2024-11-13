@@ -314,6 +314,8 @@ import ProductList from "@/components/ProductList.vue";
 import SortSelect from "@/components/SortSelect.vue";
 import RangeSelect from "@/components/RangeSelect.vue";
 
+import { scrollToTop } from "@/utils/helpers";
+
 import productsBackGroundImage from '@/assets/images/inner-pages/products_bg.jpg';
 
 export default {
@@ -369,7 +371,8 @@ export default {
     },
     getProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.isProductsLoading = true;
-  
+      scrollToTop()
+      
       this.axios
         .post("http://localhost:8876/api/products", {
           categories: this.filterCategories,
@@ -390,6 +393,7 @@ export default {
         .finally(() => {
           this.isPageLoading = false;
           this.isProductsLoading = false;
+          
         });
     },
     getFilters() {

@@ -32,3 +32,10 @@ export function areObjectsEqual(obj1, obj2) {
       return obj1[key] === obj2[key];
    });
 };
+
+export function scrollToTop() {
+   window.scrollTo({
+      top: 500,
+      behavior: "smooth"
+   });
+};
