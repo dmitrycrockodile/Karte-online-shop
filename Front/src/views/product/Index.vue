@@ -1,7 +1,6 @@
 <template>
   <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
   <main v-if="!isPageLoading" class="overflow-hidden">
-    <!--Start Breadcrumb Style2-->
     <div
       class="breadcrumb-area"
       :style="{backgroundImage: `url(${productsBackGroundImage})`}"
@@ -30,8 +29,7 @@
         </div>
       </div>
     </div>
-    <!--End Breadcrumb Style2-->
-    <!--Start Product Categories One-->
+    
     <section class="product-categories-one pb-60">
       <div class="container">
         <div class="row wow fadeInUp animated">
@@ -65,8 +63,7 @@
         </div>
       </div>
     </section>
-    <!--End Product Categories One-->
-    <!--Start product-grid-->
+    
     <div class="product-grid pt-60 pb-120">
       <div class="container">
         <div class="row gx-4">
@@ -150,11 +147,15 @@
                 <div class="single-sidebar-box mt-30 wow fadeInUp animated">
                   <h4>Filter By Price</h4>
                   <div class="slider-box">
-                    <div id="price-range" class="slider"></div>
-                    <div class="output-price">
-                      <label for="priceRange">Price:</label>
-                      <input type="text" id="priceRange" readonly />
-                    </div>
+                    <RangeSelect 
+                      :min="productFilters.prices.minPrice" 
+                      :max="productFilters.prices.maxPrice" 
+                      :gap="200" 
+                      :step="1" 
+                      v-model:minPrice="this.prices.minPrice"
+                      v-model:maxPrice="this.prices.maxPrice"
+                    />
+      
                     <button
                       @click.prevent="getProducts()"
                       class="filterbtn"
@@ -303,7 +304,6 @@
         </div>
       </div>
     </div>
-    <!--End product-grid-->
   </main>
 </template>
 
@@ -312,6 +312,7 @@ import { mapGetters } from "vuex";
 
 import ProductList from "@/components/ProductList.vue";
 import SortSelect from "@/components/SortSelect.vue";
+import RangeSelect from "@/components/RangeSelect.vue";
 
 import productsBackGroundImage from '@/assets/images/inner-pages/products_bg.jpg';
 
@@ -324,6 +325,7 @@ export default {
   components: {
     ProductList,
     SortSelect,
+    RangeSelect,
   },
   data() {
     return {
@@ -331,14 +333,17 @@ export default {
       productFilters: [],
       filterCategories: [],
       colors: [],
-      prices: [],
+      prices: {
+        minPrice: 0,
+        maxPrice: 10000,
+      },
       tags: [],
       pagination: [],
       dataPerPage: 12,
       isPageLoading: true,
       isProductsLoading: true,
       productsBackGroundImage,
-      type: 'basic'
+      type: 'basic',
     };
   },
   computed: {
@@ -350,7 +355,10 @@ export default {
     resetFilters() {
       this.filterCategories = [];
       this.colors = [];
-      this.prices = [];
+      this.prices = {
+        minPrice: 0,
+        maxPrice: 10000,
+      };
       this.tags = [];
 
       this.getProducts();
@@ -364,6 +372,7 @@ export default {
     },
     getProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.isProductsLoading = true;
+      console.log(this.prices)
   
       this.axios
         .post("http://localhost:8876/api/products", {
@@ -392,37 +401,24 @@ export default {
         .get("http://localhost:8876/api/products/filters")
         .then((res) => {
           this.productFilters = res.data;
-
-          let thisVue = this;
-          //  Price Filter
-          if ($("#price-range").length) {
-            $("#price-range").slider({
-              range: true,
-              min: this.productFilters.prices.minPrice,
-              max: this.productFilters.prices.maxPrice,
-              values: [
-                this.productFilters.prices.minPrice,
-                this.productFilters.prices.maxPrice,
-              ],
-              slide: function (event, ui) {
-                $("#priceRange").val(
-                  "$" + ui.values[0] + " - $" + ui.values[1]
-                );
-                thisVue.prices = [ui.values[0], ui.values[1]];
-              },
-            });
-            $("#priceRange").val(
-              "$" +
-                $("#price-range").slider("values", 0) +
-                " - $" +
-                $("#price-range").slider("values", 1)
-            );
-          }
+          this.prices.minPrice = this.productFilters.prices.minPrice;
+          this.prices.maxPrice = this.productFilters.prices.maxPrice;
+          // console.log(this.productFilters.prices)
         });
     },
     handleProductListType(type) {
       return this.type = type;
-    }
+    },
+    setMaxPrice(price) {
+      this.productFilters.prices.maxPrice = price;
+      this.prices.maxPrice = price;
+      console.log(this.price)
+    },
+    setMinPrice(price) {
+      this.productFilters.prices.minPrice = price;
+      this.prices.minPrice = price;
+      console.log(this.price)
+    },
   },
 };
 </script>
