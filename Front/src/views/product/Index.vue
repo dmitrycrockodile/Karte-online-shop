@@ -372,7 +372,6 @@ export default {
     },
     getProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.isProductsLoading = true;
-      console.log(this.prices)
   
       this.axios
         .post("http://localhost:8876/api/products", {
@@ -403,21 +402,10 @@ export default {
           this.productFilters = res.data;
           this.prices.minPrice = this.productFilters.prices.minPrice;
           this.prices.maxPrice = this.productFilters.prices.maxPrice;
-          // console.log(this.productFilters.prices)
         });
     },
     handleProductListType(type) {
       return this.type = type;
-    },
-    setMaxPrice(price) {
-      this.productFilters.prices.maxPrice = price;
-      this.prices.maxPrice = price;
-      console.log(this.price)
-    },
-    setMinPrice(price) {
-      this.productFilters.prices.minPrice = price;
-      this.prices.minPrice = price;
-      console.log(this.price)
     },
   },
 };
