@@ -1,6 +1,5 @@
 <template>
   <main>
-    <!--Start Breadcrumb Style-->
     <section
       class="breadcrumb-area"
       :style="{ backgroundImage: `url(${backGroundImage}` }"
@@ -26,8 +25,7 @@
         </div>
       </div>
     </section>
-    <!--End Breadcrumb Style-->
-    <!--Start cart area-->
+    
     <section class="cart-area pt-120 pb-120">
       <div class="container">
         <div class="row wow fadeInUp animated">
@@ -248,15 +246,14 @@
         </div>
       </div>
     </section>
-    <!--End cart area-->
   </main>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 
-import BasicRadioGroup from "@/components/radios/BasicRadioGroup.vue";
-import QuantitySelector from "@/components/QuantitySelector.vue";
+import BasicRadioGroup from "@/components/base/BaseRadioGroup.vue";
+import QuantitySelector from "@/components/base/QuantitySelector.vue";
 
 import {
   FLAT_RATE_PROCENT,

@@ -310,9 +310,9 @@
 <script>
 import { mapGetters } from "vuex";
 
-import ProductList from "@/components/ProductList.vue";
-import SortSelect from "@/components/SortSelect.vue";
-import RangeSelect from "@/components/RangeSelect.vue";
+import ProductList from "@/components/features/product/ProductList.vue";
+import SortSelect from "@/components/features/filter/SortSelect.vue";
+import RangeSelect from "@/components/features/filter/RangeSelect.vue";
 
 import { scrollToTop } from "@/utils/helpers";
 

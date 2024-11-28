@@ -107,8 +107,8 @@
 </template>
 
 <script>
-   import ContactForm from "@/components/ContactForm.vue"; 
-   import Map from "@/components/Map.vue";
+   import ContactForm from "@/components/common/ContactForm.vue"; 
+   import Map from "@/components/common/Map.vue";
 
    import contacBGImage from "@/assets/images/inner-pages/contact-us_bg.jpg";
 

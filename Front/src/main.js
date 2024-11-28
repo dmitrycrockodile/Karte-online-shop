@@ -4,7 +4,6 @@ import axios from 'axios'
 import router from './router'
 import store from './store'
 import Toast from "vue-toastification"
-import vSelect from "vue-select";
 
 import "vue-toastification/dist/index.css";
 
@@ -16,7 +15,6 @@ app.use(router)
 app.use(store)
 app.use(Toast)
 
-app.component("v-select", vSelect);
 //axios config
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(

@@ -403,8 +403,8 @@ import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
 import { useToast } from "vue-toastification";
 
-import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
-import ContactForm from "@/components/ContactForm.vue";
+import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
+import ContactForm from "@/components/common/ContactForm.vue";
 
 import accountBGImage from "@/assets/images/inner-pages/account_bg.jpg";
 

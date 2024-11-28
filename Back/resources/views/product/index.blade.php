@@ -27,7 +27,6 @@
                   <tr>
                      <th>ID</th>
                      <th>Title</th>
-                     {{-- <th>Acts</th> --}}
                   </tr>
                </thead>
                <tbody>
@@ -35,11 +34,6 @@
                      <tr>
                         <td>{{ $product->id }}</td>
                         <td><a href="{{ route('product.show', $product->id) }}">{{ $product->title }}</a></td>
-                        {{-- <td>
-                           <a class="text-success" href="{{ route('product.edit', $product->id) }}"><i class="fas fa-pen"></i></a>
-                           <a class="text-danger ml-2" href="{{ route('product.delete', $product->id) }}"><i class="fas fa-trash"></i></a>
-                           <a class="text-primary ml-2" href="{{ route('product.show', $product->id) }}"><i class="fas fa-eye"></i></a>
-                        </td> --}}
                      </tr>
                   @endforeach
                </tbody>

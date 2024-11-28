@@ -77,7 +77,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 
-import PasswordInput from "@/components/PasswordInput.vue";
+import PasswordInput from "@/components/base/PasswordInput.vue";
 
 import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
 import loginFormBGImage from "@/assets/images/inner-pages/login-bg.png";

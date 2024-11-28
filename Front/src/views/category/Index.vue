@@ -155,9 +155,9 @@
   import axios from "axios";
   import { mapGetters } from "vuex";
 
-  import ProductCard from '@/components/ProductCard.vue';
-  import ProductList from "@/components/ProductList.vue";
-  import SortSelect from "@/components/SortSelect.vue";
+  import ProductCard from '@/components/features/product/ProductCard.vue';
+  import ProductList from "@/components/features/product/ProductList.vue";
+  import SortSelect from "@/components/features/filter/SortSelect.vue";
 
   export default {
     name: "Category List",

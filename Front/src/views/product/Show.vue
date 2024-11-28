@@ -1,7 +1,6 @@
 <template>
   <div v-if="isLoading" class="loader"><span>Karte...</span></div>
   <main v-if="!isLoading">
-    <!--Start Shop Details Breadcrumb-->
     <div class="shop-details-breadcrumb wow fadeInUp animated overflow-hidden">
       <div class="container">
         <div class="row">
@@ -16,8 +15,6 @@
         </div>
       </div>
     </div>
-    <!--End Shop Details Breadcrumb-->
-    <!--Start Shop Details Top-->
     <section class="shop-details-top two">
       <div class="container">
         <div class="row mt--30">
@@ -288,7 +285,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-1.jpg"
+                            src="@/assets/images/payment_method/product-payment-1.jpg"
                             alt="VISA"
                           />
                         </a>
@@ -298,7 +295,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-2.jpg"
+                            src="@/assets/images/payment_method/product-payment-2.jpg"
                             alt="MasterCard"
                           />
                         </a>
@@ -308,7 +305,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-3.jpg"
+                            src="@/assets/images/payment_method/product-payment-3.jpg"
                             alt="Skrill"
                           />
                         </a>
@@ -318,7 +315,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-4.jpg"
+                            src="@/assets/images/payment_method/product-payment-4.jpg"
                             alt="PayPal"
                           />
                         </a>
@@ -328,7 +325,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-5.jpg"
+                            src="@/assets/images/payment_method/product-payment-5.jpg"
                             alt="Maestro"
                           />
                         </a>
@@ -338,7 +335,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-6.jpg"
+                            src="@/assets/images/payment_method/product-payment-6.jpg"
                             alt="PayGate"
                           />
                         </a>
@@ -348,7 +345,7 @@
                       <div class="shop-details-top-safe-checkout-img">
                         <a href="#0">
                           <img
-                            src="../../assets/images/home-four/method-7.jpg"
+                            src="@/assets/images/payment_method/product-payment-7.jpg"
                             alt="American Express"
                           />
                         </a>
@@ -825,13 +822,13 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
 import { useToast } from "vue-toastification";
 
-import CountdownTimer from "@/components/CountdownTimer.vue";
-import ProductPopup from "@/components/popups/ProductPopup.vue";
-import SizesRadioGroup from "@/components/radios/SizesRadioGroup.vue";
-import ColorsRadioGroup from "@/components/radios/ColorsRadioGroup.vue";
-import QuantitySelector from "@/components/QuantitySelector.vue";
-import ProductCard from "@/components/ProductCard.vue";
-import AverageStarRating from "@/components/AverageStarRating.vue";
+import CountdownTimer from "@/components/common/CountdownTimer.vue";
+import ProductPopup from "@/components/common/popups/ProductPopup.vue";
+import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
+import ColorsRadioGroup from "@/components/common/radios/ColorsRadioGroup.vue";
+import QuantitySelector from "@/components/base/QuantitySelector.vue";
+import ProductCard from "@/components/features/product/ProductCard.vue";
+import AverageStarRating from "@/components/features/reviews/AverageStarRating.vue";
 
 import { TOTAL_PRICE_FOR_FREE_SHIPPING } from '@/utils/constants';
 

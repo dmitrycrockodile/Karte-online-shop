@@ -2266,7 +2266,7 @@
           <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
             <div class="blog-three__single mt-30">
               <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/blog/blog-v3-1.jpg" alt="" />
+                <img src="../../assets/images/home-three/blog-v3-1.jpg" alt="" />
               </a>
               <div class="blog-three__single-content text-center">
                 <span>Vendora Style</span>
@@ -2286,7 +2286,7 @@
           <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
             <div class="blog-three__single mt-30">
               <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/blog/blog-v3-2.jpg" alt="" />
+                <img src="../../assets/images/home-three/blog-v3-2.jpg" alt="" />
               </a>
               <div class="blog-three__single-content text-center">
                 <span>Vendora Style</span>
@@ -2301,12 +2301,11 @@
               </div>
             </div>
           </div>
-          <!--End Blog Three Single-->
-          <!--Start Blog Three Single-->
+          
           <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
             <div class="blog-three__single mt-30">
               <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/blog/blog-v3-3.jpg" alt="" />
+                <img src="../../assets/images/home-three/blog-v3-3.jpg" alt="" />
               </a>
               <div class="blog-three__single-content text-center">
                 <span>Vendora Style</span>
@@ -2480,7 +2479,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Autoplay } from "swiper/modules";
-import NewsletterPopup from "@/components/popups/NewsletterPopup.vue";
+import NewsletterPopup from "@/components/common/popups/NewsletterPopup.vue";
 
 import "swiper/css";
 import "swiper/css/pagination";

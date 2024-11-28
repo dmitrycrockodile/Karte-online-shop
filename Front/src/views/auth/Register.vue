@@ -99,7 +99,7 @@
 <script>
    import { mapActions } from "vuex";
 
-   import PasswordInput from '@/components/PasswordInput.vue';
+   import PasswordInput from '@/components/base/PasswordInput.vue';
 
    import formBGImage from '@/assets/images/inner-pages/login-bg.png';
    import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
