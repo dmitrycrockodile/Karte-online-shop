@@ -26,6 +26,9 @@ const mutations = {
    LOGOUT_USER(state) {
       state.user = null;
       state.token = null;
+
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
    }
 }
 
@@ -44,6 +47,7 @@ const actions = {
       } catch (err) {
          commit('AUTH_ERROR');
          toast.error(err.response.data.message, { timeout: 2000 });
+         return Promise.reject(err);
       }
    },
    async login({ commit, dispatch }, payload) {
@@ -65,22 +69,21 @@ const actions = {
       } catch (err) {
          commit('AUTH_ERROR');
          toast.error(err.response.data.message, { timeout: 2000 });
-
          return Promise.reject(err);
       }
    },
    async logout({ commit, dispatch }) {
       try {
          await axios.delete('http://localhost:8876/api/logout');
-         
-         localStorage.removeItem('user');
-         localStorage.removeItem('token');
 
          commit('LOGOUT_USER');
          dispatch('cart/clearLocalCart', null, { root: true });
          dispatch('wishlist/clearWishList', null, { root: true });
+
+         toast.info('Logged out successfully');
       } catch(err) {
          toast.error(err.response.data.message, { timeout: 2000 });
+         return Promise.reject(err);
       }
    },
 }

@@ -9,13 +9,15 @@ import "vue-toastification/dist/index.css";
 
 const app = createApp(App)
 
+// Initialize WOW.js for animations
 new WOW().init()
 
+// Use Vue Router, Vuex Store, and Toast plugin
 app.use(router)
 app.use(store)
 app.use(Toast)
 
-//axios config
+// Axios configuration
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
    response => response,
@@ -32,6 +34,9 @@ axios.interceptors.response.use(
       return Promise.reject(err);
    }
 )
+
+// Set axios as a global property
 app.config.globalProperties.axios = axios;
 
+// Mount the Vue app
 app.mount('#app')

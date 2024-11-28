@@ -221,54 +221,54 @@
 </template>
 
 <script>
-   import { mapState, mapActions } from "vuex";
+  import { mapState, mapActions } from "vuex";
 
-   import CartSideMenu from "@/components/common/CartSideMenu.vue";
-   import CustomSelect from "@/components/base/CustomSelect.vue";
+  import CartSideMenu from "@/components/common/CartSideMenu.vue";
+  import CustomSelect from "@/components/base/CustomSelect.vue";
 
-   export default {
-      name: 'Header',
-      props: {
-         headerClasses: { type: Object, required: true }
-      },
-      data() {
-         return {
-            isCartModalActive: false,
-            selectedLanguage: '',
-            selectedCurrency: '',
-         }
-      },
-      components: {
-         CartSideMenu,
-         CustomSelect,
-      },
-      computed: {
-         ...mapState('auth', ['user']),
-      },
-      methods: {
-         ...mapActions('auth', ['logout']),
-         setIsModalActive(status) {
-            this.isCartModalActive = status;
-            
-            if (status) {
-            document.addEventListener('click', this.handleClickOutsideCart);
-            } else {
-            document.removeEventListener('click', this.handleClickOutsideCart);
-            }
-         },
-         handleClickOutsideCart(event) {
-            const cartMenu = this.$refs.cartMenu.$el;
-            const openCartButton = this.$refs.openCartButton;
-
-            if (cartMenu && !cartMenu.contains(event.target) && !openCartButton.contains(event.target)) {
-               this.setIsModalActive(false);
-            }
-         },
-         handleLogout() {
-            this.logout().then(() => this.$router.push({ name: 'login.index' }))
-         },
+  export default {
+    name: 'Header',
+    props: {
+      headerClasses: { type: Object, required: true }
+    },
+    data() {
+      return {
+        isCartModalActive: false,
+        selectedLanguage: '',
+        selectedCurrency: '',
       }
-   }
+    },
+    components: {
+      CartSideMenu,
+      CustomSelect,
+    },
+    computed: {
+      ...mapState('auth', ['user']),
+    },
+    methods: {
+      ...mapActions('auth', ['logout']),
+      setIsModalActive(status) {
+        this.isCartModalActive = status;
+        
+        if (status) {
+        document.addEventListener('click', this.handleClickOutsideCart);
+        } else {
+        document.removeEventListener('click', this.handleClickOutsideCart);
+        }
+      },
+      handleClickOutsideCart(event) {
+        const cartMenu = this.$refs.cartMenu.$el;
+        const openCartButton = this.$refs.openCartButton;
+
+        if (cartMenu && !cartMenu.contains(event.target) && !openCartButton.contains(event.target)) {
+          this.setIsModalActive(false);
+        }
+      },
+      handleLogout() {
+        this.logout().then(() => this.$router.push({ name: 'login.index' }))
+      },
+    }
+  }
 </script>
 
 <style lang="scss" scoped>

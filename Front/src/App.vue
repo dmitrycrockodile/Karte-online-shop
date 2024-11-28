@@ -19,7 +19,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import axios from "axios";
 
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
@@ -63,7 +62,7 @@ export default {
       this.scrollPosition = window.scrollY;
     },
     getCategories() {
-      axios.get('http://localhost:8876/api/categories')
+      this.axios.get('http://localhost:8876/api/categories')
         .then(res => {
           this.setCategories(res.data.data)
         })

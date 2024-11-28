@@ -1,5 +1,4 @@
 import axios from "axios";
-
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
@@ -16,21 +15,33 @@ const mutations = {
       state.cartItems.push(cartItem);
    },
    INCREASE_QTY(state, { cartItem, quantity = 1}) {
-      const existingItem = state.cartItems.find(item => {
-         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
-      });
+      const existingItem = state.cartItems.find(item => 
+         item.id === cartItem.id && 
+         item.color.id === cartItem.color.id &&
+         item.size.id === cartItem.size.id
+      );
 
-      existingItem.quantity += quantity; 
+      if(existingItem) { 
+         existingItem.quantity += quantity; 
+      }
    },
    DECREASE_QTY(state, cartItem) {
-      const existingItem = state.cartItems.find(item => {
-         return item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id;
-      });
+      const existingItem = state.cartItems.find(item => 
+         item.id === cartItem.id && 
+         item.color.id === cartItem.color.id && 
+         item.size.id === cartItem.size.id
+      );
 
-      existingItem.quantity -= 1; 
+      if(existingItem) { 
+         existingItem.quantity -= 1; 
+      }
    },
    REMOVE_FROM_CART(state, cartItem) {
-      state.cartItems = state.cartItems.filter(item => !(item.id === cartItem.id && item.color.id === cartItem.color.id && item.size.id === cartItem.size.id));
+      state.cartItems = state.cartItems.filter(item => 
+         !(item.id === cartItem.id && 
+           item.color.id === cartItem.color.id && 
+           item.size.id === cartItem.size.id)
+      );
    },
 };
 
@@ -50,10 +61,9 @@ const actions = {
          }
 
          toast.success(response.data.message, { timeout: 2000 });
-
          dispatch('updateStorage');
       } catch (error) {
-         toast.error(err.data.message, { timeout: 2000 })
+         toast.error(error.response.data.message, { timeout: 2000 })
       }   
    },
    async removeFromCart({ commit, dispatch }, cartItem) {
@@ -65,7 +75,7 @@ const actions = {
 
          dispatch('updateStorage');
       } catch (err) {
-         toast.error(err.data.message, { timeout: 2000 })
+         toast.error(err.response.data.message, { timeout: 2000 })
       }
    },
    async decreaseQty({ commit, dispatch }, cartItem) {

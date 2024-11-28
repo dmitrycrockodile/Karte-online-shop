@@ -12,7 +12,7 @@ const mutations = {
       state.wishedItems.push(item);
    },
    REMOVE_FROM_WISHLIST(state, itemId) {
-      state.wishedItems = state.wishedItems.filter(wishedItem => !(wishedItem.id === itemId));
+      state.wishedItems = state.wishedItems.filter(wishedItem => wishedItem.id !== itemId);
    },
 };
 

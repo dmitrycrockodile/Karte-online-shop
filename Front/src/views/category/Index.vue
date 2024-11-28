@@ -152,7 +152,6 @@
 </template>
 
 <script>
-  import axios from "axios";
   import { mapGetters } from "vuex";
 
   import ProductCard from '@/components/features/product/ProductCard.vue';
@@ -184,7 +183,7 @@
     },
     methods: {
       getCategory(id) {
-        axios.get(`http://localhost:8876/api/categories/${id}`)
+        this.axios.get(`http://localhost:8876/api/categories/${id}`)
         .then(res => {
           this.category = res.data.data
         })
@@ -197,7 +196,7 @@
         this.isProductsLoading = true;
         this.products = [];
 
-        axios.post(`http://localhost:8876/api/categories/${this.category.id}/products`, {
+        this.axios.post(`http://localhost:8876/api/categories/${this.category.id}/products`, {
           page: pageNumber,
           dataPerPage: dataPerPage,
           sortby: sortby,

@@ -1,6 +1,5 @@
 <template>
    <main class="overflow-hidden">
-      <!--Start Breadcrumb Style2-->
       <section
          class="breadcrumb-area"
          :style="{ backgroundImage: `url(${wishlistBGImage}) ` }"
@@ -28,8 +27,7 @@
             </div>
          </div>
       </section>
-         <!--End Breadcrumb Style2-->
-         <!--Start Wishlist-->
+      
          <section class="wishlist pt-120 pb-120">
             <div class="container">
             <div class="row">
@@ -85,7 +83,6 @@
             </div>
          </div>
       </section>
-      <!--End Wishlist-->
    </main>
 </template>
 
@@ -112,7 +109,3 @@
       },
    };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
