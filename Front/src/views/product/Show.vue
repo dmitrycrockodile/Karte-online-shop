@@ -42,7 +42,7 @@
                   }}</span>
                 </div>
 
-                <swiper-slide v-for="image in product.product_images">
+                <swiper-slide v-for="image in product.product_images" :key="image.url">
                   <div class="single-item">
                     <img :src="image.url" :alt="image.title" />
                   </div>
@@ -101,7 +101,7 @@
                   :modules="modules"
                   class="single-product-one-nav slider-nav"
                 >
-                  <swiper-slide v-for="image in product.product_images">
+                  <swiper-slide v-for="image in product.product_images" :key="image.url">
                     <span class="single-item">
                       <img :src="image.url" :alt="image.title" />
                     </span>

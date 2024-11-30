@@ -258,7 +258,7 @@
                     </a>
                   </li>
 
-                  <template v-for="link in pagination.links">
+                  <template v-for="link in pagination.links" :key="link.label">
                     <template v-if="Number(link.label)">
                       <li
                         v-if="

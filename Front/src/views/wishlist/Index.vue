@@ -46,7 +46,7 @@
                            </tr>
                            </thead>
                            <tbody>
-                           <tr v-for="item in wishlistItems">
+                           <tr v-for="item in wishlistItems" :key="item.id">
                               <td>
                                  <div class="wishlist-thumb">
                                  <img

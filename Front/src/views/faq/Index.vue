@@ -235,7 +235,7 @@
             <div class="sidebar-box mt-30 wow fadeInUp animated">
               <h4>Categories</h4>
               <ul class="categories-list">
-                <li v-for="category in categories">
+                <li v-for="category in categories" :key="category.id">
                   <router-link :to="{ name: 'category.index', params: { id: category.id }}">
                     <span><i class="flaticon-play"></i>{{ category.title }}</span>
                     <span>({{ category.products_count }})</span>
