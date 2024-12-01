@@ -171,14 +171,14 @@
                     </a>
                   </li>
                   <li>
-                    <a href="#0">
+                    <router-link :to="{ name: 'contact.index' }">
                       <div class="icon">
                         <i class="flaticon-chat-bubble"></i>
                       </div>
                       <div class="text">
                         <p>Ask Question</p>
                       </div>
-                    </a>
+                    </router-link>
                   </li>
                 </ul>
                 <div class="timer-box">
@@ -847,8 +847,6 @@ export default {
     QuantitySelector,
     ProductCard,
     AverageStarRating,
-    Thumbs,
-    Navigation
   },
   mounted() {
     this.getRecentProducts();
@@ -874,6 +872,7 @@ export default {
       TOTAL_PRICE_FOR_FREE_SHIPPING,
       toast: useToast(),
       thumbsSwiper: null,
+      modules: [Navigation, Thumbs]
     };
   },
   methods: {
@@ -1007,7 +1006,7 @@ export default {
       toggleWishlistItem: "wishlist/toggleWishlistItem"
     }),
     setThumbsSwiper(swiper) {
-      thumbsSwiper.value = swiper;
+      this.thumbsSwiper = swiper;
     },
   },
   computed: {
