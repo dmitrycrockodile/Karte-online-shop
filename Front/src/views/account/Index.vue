@@ -1,34 +1,10 @@
 <template>
    <main class="overflow-hidden">
-      <!--Start Breadcrumb Style2-->
-      <section
-         class="breadcrumb-area"
-         :style="`background-image: url(${accountBGImage})`"
-      >
-         <div class="container">
-         <div class="row">
-            <div class="col-xl-12">
-               <div class="breadcrumb-content text-center wow fadeInUp animated">
-               <h2>My Account</h2>
-               <div class="breadcrumb-menu">
-                  <ul>
-                     <li>
-                     <router-link :to="{ name: 'main' }">
-                        <i class="flaticon-home pe-2"></i>
-                        Home
-                     </router-link>
-                     </li>
-                     <li><i class="flaticon-next"></i></li>
-                     <li class="active">My Account</li>
-                  </ul>
-               </div>
-               </div>
-            </div>
-         </div>
-         </div>
-      </section>
-      <!--End Breadcrumb Style2-->
-      <!--Start My Account Page-->
+      <BreadCrumps 
+         :backgroundImageUrl="accountBGImage"
+         :title="'My Account'"
+      />
+      
       <section class="my-account-page pt-120 pb-120">
          <div class="container">
          <div class="row wow fadeInUp animated">
@@ -405,11 +381,17 @@ import { useToast } from "vue-toastification";
 
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import ContactForm from "@/components/common/ContactForm.vue";
+import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
 import accountBGImage from "@/assets/images/inner-pages/account_bg.jpg";
 
 export default {
    name: "User Account",
+   components: {
+      SizesRadioGroup,
+      ContactForm,
+      BreadCrumps,
+   },
    data() {
       return {
          userDataForm: {},
@@ -422,6 +404,7 @@ export default {
             newPassword: ''
          },
          accountBGImage,
+         toast: useToast(),
       };
    },
    computed: {
@@ -433,15 +416,6 @@ export default {
       ...mapGetters({
          userData: "auth/getUserData",
       }),
-   },
-   components: {
-      SizesRadioGroup,
-      ContactForm,
-   },
-   setup() {
-      const toast = useToast();
-
-      return { toast }
    },
    mounted() {
       this.userDataForm = JSON.parse(JSON.stringify(this.userData));

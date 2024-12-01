@@ -1,33 +1,9 @@
 <template>
   <main class="overflow-hidden">
-    <section
-      class="breadcrumb-area"
-      :style="{
-        'background-image': `url(${pageBGImage})`
-      }"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="breadcrumb-content text-center fadeInUp animated wow">
-              <h2>About Us</h2>
-              <div class="breadcrumb-menu">
-                <ul>
-                  <li>
-                     <router-link :to="{ name: 'main' }">
-                        <i class="flaticon-home pe-2"></i>
-                        Home
-                     </router-link>
-                  </li>
-                  <li><i class="flaticon-next"></i></li>
-                  <li class="active">About Us</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <BreadCrumps 
+      :backgroundImageUrl="pageBGImage" 
+      :title="'About us'"
+    />
     
     <section class="about pt-120 pb-120">
       <div class="container">
@@ -393,14 +369,19 @@
 </template>
 
 <script>
+import BreadCrumps from '@/components/common/BreadCrumps.vue';
+
 import pageBGImage from '@/assets/images/inner-pages/about_us_bg.jpg';
 
 export default {
   name: "About Us",
+  components: {
+    BreadCrumps
+  },  
   data() {
-   return {
-      pageBGImage,
-   }
+    return {
+        pageBGImage,
+    }
   },
 };
 </script>

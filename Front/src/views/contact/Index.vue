@@ -1,34 +1,10 @@
 <template>
    <main class="overflow-hidden">
-      <!--Start Breadcrumb Style2-->
-      <section
-         class="breadcrumb-area"
-         :style="`background-image: url(${contacBGImage})`"
-      >
-         <div class="container">
-         <div class="row">
-            <div class="col-xl-12">
-               <div class="breadcrumb-content text-center wow fadeInUp animated">
-               <h2>Contact Us</h2>
-               <div class="breadcrumb-menu">
-                  <ul>
-                     <li>
-                     <router-link :to="{ name: 'main' }">
-                        <i class="flaticon-home pe-2"></i>
-                        Home
-                     </router-link>
-                     </li>
-                     <li><i class="flaticon-next"></i></li>
-                     <li class="active">Contact Us</li>
-                  </ul>
-               </div>
-               </div>
-            </div>
-         </div>
-         </div>
-      </section>
-      <!--End Breadcrumb Style2-->
-      <!--Start Contact Page Info-->
+      <BreadCrumps 
+        :backgroundImageUrl="contacBGImage"
+        :title="'Contact Us'"
+      />
+      
       <section class="contact-page-info pt-120 pb-60">
          <div class="container">
          <div class="row mt--30">
@@ -109,19 +85,21 @@
 <script>
    import ContactForm from "@/components/common/ContactForm.vue"; 
    import Map from "@/components/common/Map.vue";
+   import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
    import contacBGImage from "@/assets/images/inner-pages/contact-us_bg.jpg";
 
    export default {
       name: "Contact us",
+      components: {
+         ContactForm,
+         Map,
+         BreadCrumps,
+      },
       data() {
          return {
             contacBGImage,
          };
-      },
-      components: {
-         ContactForm,
-         Map,
       },
    };
 </script>

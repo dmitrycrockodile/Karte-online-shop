@@ -18,7 +18,7 @@
    export default {
       name: "Sort Select",
       props: {
-         "onChange": { type: Function, required: true, default: () => {} },
+         "onChange": { type: Function, required: true },
       },
       data() {
          return {

@@ -2492,14 +2492,10 @@ export default {
     SwiperSlide,
     NewsletterPopup
   },
-  setup() {
-    return {
-      modules: [Pagination, Autoplay],
-    };
-  },
   data() {
     return {
       isPopupActive: true,
+      modules: [Pagination, Autoplay],
     }
   },
   methods: {

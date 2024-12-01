@@ -1,35 +1,10 @@
 <template>
   <main class="overflow-hidden">
-    <!--Start Breadcrumb Style2-->
-    <section
-      class="breadcrumb-area"
-      :style="{ backgroundImage: `url(${authBGImage}) `}"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="breadcrumb-content text-center wow fadeInUp animated">
-              <h2>Register</h2>
-              <div class="breadcrumb-menu">
-                <ul>
-                  <li>
-                    <router-link :to="{ name: 'main' }">
-                      <i class="flaticon-home pe-2"></i>
-                      Home
-                    </router-link>
-                  </li>
-                  <li><i class="flaticon-next"></i></li>
-                  <li class="active">Register</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--End Breadcrumb Style2-->
+    <BreadCrumps 
+      :backgroundImageUrl="authBGImage"
+      :title="'Register'"
+    />
 
-    <!--Start Login Page-->
     <section class="login-page pt-120 pb-120">
       <div class="container">
         <div class="row justify-content-center">
@@ -97,48 +72,50 @@
 </template>
 
 <script>
-   import { mapActions } from "vuex";
+  import { mapActions } from "vuex";
 
-   import PasswordInput from '@/components/base/PasswordInput.vue';
+  import PasswordInput from '@/components/base/PasswordInput.vue';
+  import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
-   import formBGImage from '@/assets/images/inner-pages/login-bg.png';
-   import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
+  import formBGImage from '@/assets/images/inner-pages/login-bg.png';
+  import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
 
-   export default {
-      data() {
-         return {
-            formBGImage,
-            authBGImage,
-            name: '',
-            surname: '',
-            email: '',
-            password: '',
-            passwordConfirm: '',
-            acceptedTerms: false,
-            formErrors: {
-              email: null, 
-            },
-         }
-      },
-      methods: {
-         ...mapActions('auth', ['register']),
-         handleSubmit() {
-            this.register({
-              name: this.name, 
-              surname: this.surname, 
-              email: this.email, 
-              password: this.password, 
-              password_confirmation: this.passwordConfirm
-            })
-            .then(() => {
-              this.$router.go(-1);
-            })
-         },
-      },
-      components: {
-        PasswordInput
+  export default {
+    data() {
+      return {
+        formBGImage,
+        authBGImage,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        acceptedTerms: false,
+        formErrors: {
+          email: null, 
+        },
       }
-   };
+    },
+    components: {
+      PasswordInput,
+      BreadCrumps
+    },
+    methods: {
+      ...mapActions('auth', ['register']),
+      handleSubmit() {
+        this.register({
+          name: this.name, 
+          surname: this.surname, 
+          email: this.email, 
+          password: this.password, 
+          password_confirmation: this.passwordConfirm
+        })
+        .then(() => {
+          this.$router.go(-1);
+        })
+      },
+    },
+  };
 </script>
 
 <style scoped></style>

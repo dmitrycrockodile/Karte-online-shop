@@ -815,7 +815,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { mapActions, mapGetters } from "vuex";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -848,26 +847,12 @@ export default {
     QuantitySelector,
     ProductCard,
     AverageStarRating,
+    Thumbs,
+    Navigation
   },
   mounted() {
     this.getRecentProducts();
     this.getProduct(this.$route.params.id);
-  },
-  setup() {
-    const thumbsSwiper = ref(null);
-
-    const setThumbsSwiper = (swiper) => {
-      thumbsSwiper.value = swiper;
-    };
-
-    const toast = useToast();
-
-    return {
-      thumbsSwiper,
-      setThumbsSwiper,
-      modules: [Navigation, Thumbs],
-      toast,
-    };
   },
   data() {
     return {
@@ -887,6 +872,8 @@ export default {
         body: '',
       },
       TOTAL_PRICE_FOR_FREE_SHIPPING,
+      toast: useToast(),
+      thumbsSwiper: null,
     };
   },
   methods: {
@@ -1019,6 +1006,9 @@ export default {
       addToCart: "cart/addToCart",
       toggleWishlistItem: "wishlist/toggleWishlistItem"
     }),
+    setThumbsSwiper(swiper) {
+      thumbsSwiper.value = swiper;
+    },
   },
   computed: {
       isActive() {

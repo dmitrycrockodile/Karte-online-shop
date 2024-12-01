@@ -10,7 +10,7 @@
    export default {
       name: 'Average Star Rating',
       props: {
-         "rating": { type: Number, required: true, default: 0 },
+         "rating": { type: Number, required: true },
       },
       computed: {
          starRatingWidth() {

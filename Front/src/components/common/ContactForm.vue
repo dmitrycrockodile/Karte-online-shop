@@ -90,7 +90,8 @@
                email: '',
                message: '',
                question: '',
-            }
+            },
+            toast: useToast(),
          }
       },
       components: {
@@ -100,11 +101,6 @@
          ...mapGetters({
             user: 'auth/getUserData'
          })
-      },
-      setup() {
-         const toast = useToast();
-
-         return { toast }
       },
       methods: {
          async handleSubmit() {

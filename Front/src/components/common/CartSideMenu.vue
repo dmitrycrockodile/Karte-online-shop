@@ -62,7 +62,7 @@
          })
       },
       props: {
-         "active": { type: Boolean, required: true, default: false },
+         "active": { type: Boolean, required: true },
       },
       emits: {
          "setActive": { type: Function, required: true },

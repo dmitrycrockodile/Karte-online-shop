@@ -1,34 +1,10 @@
 <template>
   <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
   <main v-if="!isPageLoading" class="overflow-hidden">
-    <div
-      class="breadcrumb-area"
-      :style="{backgroundImage: `url(${productsBackGroundImage})`}"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div
-              class="breadcrumb-content pb-60 text-center wow fadeInUp animated"
-            >
-              <h2>Products</h2>
-              <div class="breadcrumb-menu">
-                <ul>
-                  <li>
-                    <router-link :to="{ name: 'main' }">
-                      <i class="flaticon-home pe-2"></i>
-                      Home
-                    </router-link>
-                  </li>
-                  <li><i class="flaticon-next"></i></li>
-                  <li class="active">Products</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BreadCrumps 
+      :backgroundImageUrl="productsBackGroundImage" 
+      :title="'Products'"
+    />
     
     <section class="product-categories-one pb-60">
       <div class="container">
@@ -313,6 +289,7 @@ import { mapGetters } from "vuex";
 import ProductList from "@/components/features/product/ProductList.vue";
 import SortSelect from "@/components/features/filter/SortSelect.vue";
 import RangeSelect from "@/components/features/filter/RangeSelect.vue";
+import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
 import { scrollToTop } from "@/utils/helpers";
 
@@ -328,6 +305,7 @@ export default {
     ProductList,
     SortSelect,
     RangeSelect,
+    BreadCrumps,
   },
   data() {
     return {

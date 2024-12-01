@@ -25,7 +25,7 @@
          "selectedValue": { type: Object },
          "setValue": { type: Function },
          // TYPE CAN BE SMALL AND REGULAR
-         "type": { type: String, required: true, default: 'regular' }
+         "type": { type: String, default: 'regular' }
       }
    }
 </script>

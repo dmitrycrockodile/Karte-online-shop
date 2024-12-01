@@ -1,33 +1,9 @@
 <template>
   <main class="overflow-hidden">
-    <section
-      class="breadcrumb-area"
-      :style="{
-        'background-image': `url(${faqBGImage})`
-      }"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="breadcrumb-content text-center wow fadeInUp animated">
-              <h2>FAQ</h2>
-              <div class="breadcrumb-menu">
-                <ul>
-                  <li>
-                     <router-link :to="{ name: 'main' }">
-                        <i class="flaticon-home pe-2"></i>
-                        Home
-                     </router-link>
-                  </li>
-                  <li><i class="flaticon-next"></i></li>
-                  <li class="active">FAQ</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <BreadCrumps 
+      :backgroundImageUrl="faqBGImage"
+      :title="'FAQ'"
+    />
     
     <div class="faq-box pt-120 pb-120">
       <div class="container">
@@ -295,20 +271,23 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
+import BreadCrumps from '@/components/common/BreadCrumps.vue';
 import faqBGImage from '@/assets/images/inner-pages/faq_bg.jpg';
 
 export default {
-   name: 'FAQ',
-   data() {
-      return {
-         faqBGImage,
-      }
-   },
-   computed: {
-      ...mapGetters({
-         categories: 'categories/categories'
-      }),
-   },
+  name: 'FAQ',
+  components: {
+    BreadCrumps
+  },
+  data() {
+    return {
+      faqBGImage,
+    }
+  },
+  computed: {
+    ...mapGetters({
+      categories: 'categories/categories'
+    }),
+  },
 };
 </script>

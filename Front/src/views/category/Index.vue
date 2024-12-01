@@ -1,31 +1,11 @@
 <template>
     <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
     <main v-show="!isPageLoading" class="overflow-hidden ">
-      <section class="breadcrumb-area" :style="{'background-image': `url(${category.banner || 'path/to/default/image.jpg'})`}">
-          <div class="container">
-              <div class="row">
-                  <div class="col-xl-12">
-                      <div class="breadcrumb-content pb-60 text-center wow fadeInUp animated">
-                          <h2>{{ category.title }}</h2>
-                          <div class="breadcrumb-menu">
-                              <ul>
-                                  <li>
-                                    <router-link :to="{ name: 'main' }">
-                                      <i class="flaticon-home pe-2"></i>
-                                      Home
-                                    </router-link>
-                                  </li>
-                                  <li> <i class="flaticon-next"></i> </li>
-                                  <li class="active">{{ category.title }}</li>
-                              </ul>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </section>
-      <!--End Breadcrumb Style2-->
-      <!--Start Product Categories One-->
+      <BreadCrumps 
+        :backgroundImageUrl="category.banner"
+        :title="`${category.title}`"
+      />
+      
       <section class="product-categories-one pb-60">
         <div class="container">
           <div class="row wow fadeInUp animated">
@@ -157,9 +137,16 @@
   import ProductCard from '@/components/features/product/ProductCard.vue';
   import ProductList from "@/components/features/product/ProductList.vue";
   import SortSelect from "@/components/features/filter/SortSelect.vue";
+  import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
   export default {
     name: "Category List",
+    components: {
+      ProductCard,
+      SortSelect,
+      ProductList,
+      BreadCrumps
+    },
     data() {
       return {
         category: {},
@@ -170,11 +157,6 @@
         dataPerPage: 16,
         page: 1,
       }
-    },
-    components: {
-      ProductCard,
-      SortSelect,
-      ProductList,
     },
     computed: {
       ...mapGetters({

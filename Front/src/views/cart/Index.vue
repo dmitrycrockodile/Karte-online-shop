@@ -1,30 +1,9 @@
 <template>
   <main>
-    <section
-      class="breadcrumb-area"
-      :style="{ backgroundImage: `url(${backGroundImage}` }"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-12">
-            <div class="breadcrumb-content text-center wow fadeInUp animated">
-              <h2>Cart</h2>
-              <div class="breadcrumb-menu">
-                <ul>
-                  <li>
-                    <router-link :to="{ name: 'main' }"
-                      ><i class="flaticon-home pe-2"></i>Home</router-link
-                    >
-                  </li>
-                  <li><i class="flaticon-next"></i></li>
-                  <li class="active">Cart</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <BreadCrumps 
+      :backgroundImageUrl="backgroundImage"
+      :title="'Cart'"
+    />
     
     <section class="cart-area pt-120 pb-120">
       <div class="container">
@@ -254,6 +233,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 
 import BasicRadioGroup from "@/components/base/BaseRadioGroup.vue";
 import QuantitySelector from "@/components/base/QuantitySelector.vue";
+import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
 import {
   FLAT_RATE_PROCENT,
@@ -263,13 +243,14 @@ import {
   TOTAL_PRICE_FOR_FREE_SHIPPING,
 } from "@/utils/constants";
 
-import backGroundImage from "@/assets/images/inner-pages/cart_bg.jpg";
+import backgroundImage from "@/assets/images/inner-pages/cart_bg.jpg";
 
 export default {
   name: "Show",
   components: {
     BasicRadioGroup,
     QuantitySelector,
+    BreadCrumps,
   },
   data() {
     return {
@@ -280,7 +261,7 @@ export default {
         { label: FLAT_RATE },
         { label: LOCAL_PICKUP },
       ],
-      backGroundImage,
+      backgroundImage,
       usedCoupon: '',
       isCouponActive: false,
       couponDiscount: 0,
