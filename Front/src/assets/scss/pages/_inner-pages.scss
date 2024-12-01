@@ -3003,13 +3003,15 @@ pagination start
     transition: all 500ms ease;
 }
 
-.shop-details-top-size-guide a {
+.shop-details-top-size-guide button {
     color: var(--thm-gray);
     -webkit-transition: all 500ms ease;
     transition: all 500ms ease;
+    background: transparent;
+    border: none;
 }
 
-.shop-details-top-size-guide a:hover {
+.shop-details-top-size-guide button:hover {
     color: var(--thm-base);
 }
 

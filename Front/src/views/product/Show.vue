@@ -143,7 +143,7 @@
                     <SizesRadioGroup :setValue="setSelectedSize" :sizes="product.sizes" :selectedValue="choosenProductOptions.selectedSize" />
                     
                     <p class="shop-details-top-size-guide">
-                      <a href="#0">Size Guide</a>
+                      <button @click="scrollToTargetTab('sizechart')">Size Guide</button>
                     </p>
                   </div>
                 </div>
@@ -400,7 +400,7 @@
       </div>
     </section>
     <!--End Shop Details Top-->
-    <!-- productdrescription-tabStart -->
+    <!-- product drescription-tabStart -->
     <section class="product pt-60 pb-60 wow fadeInUp overflow-hidden">
       <div class="container">
         <div class="row wow fadeInUp animated">
@@ -409,6 +409,7 @@
               class="nav product-details-nav nav-one nav-pills justify-content-center"
               id="pills-tab-two"
               role="tablist"
+              ref="tabList"
             >
               <li class="nav-item" role="presentation">
                 <button
@@ -533,6 +534,7 @@
               id="pills-sizechart"
               role="tabpanel"
               aria-labelledby="pills-sizechart-tab"
+              ref="sizeChartTab"
             >
               <div class="product-drescription">
                 <div class="size-chirt">
@@ -1007,6 +1009,40 @@ export default {
     }),
     setThumbsSwiper(swiper) {
       this.thumbsSwiper = swiper;
+    },
+    scrollToTargetTab(id) {
+      // Scroll to the tablist
+      const tabList = this.$refs.tabList;
+
+      if (tabList) {
+        tabList.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Activation of the size chart tab
+      const targetTab = document.getElementById(`pills-${id}-tab`);
+      if (targetTab) {
+        const allTabs = document.querySelectorAll('.nav-link');
+
+        allTabs.forEach(tab => {
+          tab.classList.remove('active'); 
+          tab.setAttribute('aria-selected', 'false');
+        });
+
+        targetTab.classList.add('active'); 
+        targetTab.setAttribute('aria-selected', 'true');
+
+        const allTabContents = document.querySelectorAll('.tab-pane'); 
+
+        allTabContents.forEach(content => { 
+          content.classList.remove('show', 'active'); 
+        }); 
+
+        const targetContent = document.getElementById(`pills-${id}`); 
+
+        if (targetContent) { 
+          targetContent.classList.add('show', 'active'); 
+        }
+      }
     },
   },
   computed: {
