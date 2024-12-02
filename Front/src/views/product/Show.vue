@@ -689,26 +689,25 @@
                     </p>
                     <div class="helpfull__container">
                       <div class="helpfull__positive">
-                        <button @click.prevent="markHelpfulness(review.id, true)">
+                        <button @click.prevent="handleHelpfulVote(review.id, true)">
                           <i class="far fa-thumbs-up"></i>
                         </button>
                         ({{ review.helpful_count ? `+${review.helpful_count}` : review.helpful_count }})
                       </div>
                       <div class="helpfull__negative">
-                        <button @click.prevent="markHelpfulness(review.id, false)">
+                        <button @click.prevent="handleHelpfulVote(review.id, false)">
                           <i class="far fa-thumbs-down"></i>
                         </button>
                         ({{ review.not_helpful_count ? `-${review.not_helpful_count}` : review.not_helpful_count }})
                       </div>
                     </div>
                     <div v-show="review.user_id === getUserData.id" class="review-single__actions">
-                      <!-- <button @click.prevent="editReview(review.id)">Edit<i class="fa-solid fa-pen"></i></button> -->
-                      <button @click.prevent="deleteReview(review.id)">Delete<i class="fa-regular fa-trash-can"></i></button>
+                      <button @click.prevent="handleDeleteReview(review.id)">Delete<i class="fa-regular fa-trash-can"></i></button>
                     </div>
-                    <button v-if="!review.reported && review.user_id !== getUserData.id" @click.prevent="reportOnReview(review.id)" class="right-box">
+                    <button v-if="!review.reported && review.user_id !== getUserData.id" @click.prevent="handleReviewReport(review.id)" class="right-box">
                       Report this Comments
                     </button>
-                    <p v-if="review.reported && review.user_id !== getUserData.id" class="helpfull--reported">Reported</p>
+                    <p v-else class="helpfull--reported">Reported</p>
                   </div>
                 </div>
                 <div v-show="!product.reviews.some(item => item.user_id === getUserData.id)" id="review-form" class="review-from-box mt-30">
@@ -822,6 +821,7 @@ import { mapActions, mapGetters } from "vuex";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
 import { useToast } from "vue-toastification";
+import { addReview, deleteReview, reportOnReview, markHelpful } from "@/services/reviewService";
 
 import CountdownTimer from "@/components/common/CountdownTimer.vue";
 import ProductPopup from "@/components/common/popups/ProductPopup.vue";
@@ -878,6 +878,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      addToCart: "cart/addToCart",
+      toggleWishlistItem: "wishlist/toggleWishlistItem",
+    }),
     getProduct(id) {
       this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
         this.product = res.data.data;
@@ -918,95 +922,80 @@ export default {
       return this.userVotes.includes(reviewId);
     },
     async handleReviewSubmit() {
-      try {
-        const res = await this.axios.post('http://localhost:8876/api/review', {
-          rating: this.reviewFormData.rating,
-          title: this.reviewFormData.title,
-          body: this.reviewFormData.body,
-          product_id: this.product.id
-        });
+      const res = await addReview(this.reviewFormData, this.product.id);
 
-        if (res.status === 200) {
-          this.reviewFormData = {
-            rating: null,
-            title: '',
-            body: '',
-          };
-
-          this.product.reviews.push(res.data.item);
-          this.product.average_rating = res.data.average_rating
-
-          this.toast.success('Thank you for your review!', { timeout: 2000 })
+      if (res.success) {
+        this.reviewFormData = {
+          rating: null,
+          title: '',
+          body: '',
         }
-      } catch (err) {
-        console.error(err)
 
-        this.toast.error(err.response.data.message, { timeout: 2000 });
-      }
-    },
-    async markHelpfulness(id, isHelpful) {
-      try {
-        const res = await this.axios.patch(`http://localhost:8876/api/review/mark-helpfulness/${id}`, {
-          isHelpful: isHelpful
-        });
+        this.product.reviews.push(res.data.item);
+        this.product.average_rating = res.data.average_rating;
         
-        if (res.status === 200) {
-          this.toast.success(res.data.message, { timeout: 2000 })
-
-          this.product.reviews = this.product.reviews.map(review => {
-            if (review.id === res.data.review.id) {
-              return res.data.review;
-            }
-            
-            return review;
-          });
-        }
-      } catch (err) {
-        console.error(err)
-
-        this.toast.error(err.response.data.message, { timeout: 2000 });
+        // Shows success message
+        this.toast.success('Thank you for your review!', { timeout: 2000 })
+      } else {
+        // Shows error message
+        this.toast.error(res.message, { timeout: 2000 });
       }
     },
-    async reportOnReview(id) {
-      try {
-        const res = await this.axios.patch(`http://localhost:8876/api/review/report/${id}}`);
-
-        if (res.status === 200) {
-          this.toast.success(res.data.message, { timeout: 2000 })
-
-          this.product.reviews = this.product.reviews.map(review => {
-              if (review.id === res.data.review.id) {
-                return res.data.review;
-              }
-              
-              return review;
-          });
-        }
-      } catch (err) {
-        console.error(err)
-
-        this.toast.error(err.response.data.message, { timeout: 2000 });
+    async handleHelpfulVote(id, isHelpful) {
+      const res = await markHelpful(id, isHelpful);
+      
+      if (res.success) {
+        // Updates reported review
+        this.updateReviewList(res.review);
+        // Shows success message
+        this.toast.success(res.message, { timeout: 2000 })
+      } else {
+        // Shows error message
+        this.toast.error(res.message, { timeout: 2000 });
       }
     },
-    async deleteReview(id) {
-      try {
-        const res = await this.axios.delete(`http://localhost:8876/api/review/${id}}`);
+    async handleReviewReport(id) {
+      const res = await reportOnReview(id);
 
-        if (res.status === 200) {
-          this.toast.success(res.data.message, { timeout: 2000 })
-
-          this.product.reviews = this.product.reviews.filter(review => review.id !== id);
-        }
-      } catch (err) {
-        console.error(err)
-
-        this.toast.error(err.response.data.message, { timeout: 2000 });
+      if (res.success) {
+        // Shows success message
+        this.toast.success(res.message, { timeout: 2000 })
+        // Updates reported review
+        this.updateReviewList(res.review);
+      } else {
+        // Shows error message
+        this.toast.error(res.message, { timeout: 2000 });
       }
     },
-    ...mapActions({
-      addToCart: "cart/addToCart",
-      toggleWishlistItem: "wishlist/toggleWishlistItem"
-    }),
+    async handleDeleteReview(id) {
+      const res = await deleteReview(id);
+
+      if (res.success) {
+        // Remove deleted rewiev
+        this.product.reviews = this.product.reviews.filter(review => review.id !== id);
+        // Recalculate average rating
+        this.calcAverageRating(); 
+        // Shows success message
+        this.toast.success(res.message, { timeout: 2000 })
+      } else {
+        // Shows error message
+        this.toast.error(res.message, { timeout: 2000 });
+      }
+    },
+    calcAverageRating() {
+      // No reviews, average rating is 0
+      if (this.product.reviews.length === 0) { 
+        this.product.average_rating = 0; 
+      }
+
+      const sum = this.product.reviews.reduce((total, review) => total + review.rating, 0); 
+      this.product.average_rating = sum / this.product.reviews.length;
+    },
+    updateReviewList(reviewToUpdate) {
+      this.product.reviews = this.product.reviews.map(
+        review => review.id === reviewToUpdate.id ? reviewToUpdate : review
+      );
+    },
     setThumbsSwiper(swiper) {
       this.thumbsSwiper = swiper;
     },
@@ -1046,12 +1035,12 @@ export default {
     },
   },
   computed: {
-      isActive() {
-        return this.wishlistItems.some(item => item.product_id === this.product.id)
-      },
-      ...mapGetters('wishlist', ['wishlistItems']),
-      ...mapGetters('auth', ['getUserData']),
+    isActive() {
+      return this.wishlistItems.some(item => item.product_id === this.product.id)
     },
+    ...mapGetters('wishlist', ['wishlistItems']),
+    ...mapGetters('auth', ['getUserData']),
+  },
 };
 </script>
 

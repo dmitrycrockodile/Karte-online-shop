@@ -6,3 +6,5 @@ export const SHIPPING = 'Shipping';
 export const LOCAL_PICKUP = 'Local Pickup';
 
 export const MAX_PRODUCT_RATING = 5;
+
+export const BASE_API_URL = 'http://localhost:8876/api';
