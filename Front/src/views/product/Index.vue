@@ -133,7 +133,7 @@
                     />
       
                     <button
-                      @click.prevent="getProducts()"
+                      @click.prevent="fetchProducts()"
                       class="filterbtn"
                       type="submit"
                     >
@@ -169,7 +169,7 @@
                   >
                     <div class="short-by">
                       <div class="select-box">
-                        <SortSelect :onChange="getProducts" />
+                        <SortSelect :onChange="fetchProducts" />
                       </div>
                     </div>
                       <div class="product-view-style d-flex justify-content-md-between justify-content-center">  
@@ -227,7 +227,7 @@
                 <ul class="pagination text-center">
                   <li v-if="pagination.current_page !== 1" class="next">
                     <a
-                      @click.prevent="getProducts(pagination.first_page)"
+                      @click.prevent="fetchProducts(pagination.first_page)"
                       href="#0"
                     >
                       <i class="flaticon-left-arrows" aria-hidden="true"></i>
@@ -245,7 +245,7 @@
                         "
                       >
                         <a
-                          @click.prevent="getProducts(link.label)"
+                          @click.prevent="fetchProducts(link.label)"
                           href="#0"
                           :class="link.active ? 'active' : ''"
                           >{{ link.label }}</a
@@ -267,7 +267,7 @@
                     class="next"
                   >
                     <a
-                      @click.prevent="getProducts(pagination.current_page + 1)"
+                      @click.prevent="fetchProducts(pagination.current_page + 1)"
                       href="#0"
                     >
                       <i class="flaticon-next-1" aria-hidden="true"></i>
@@ -291,15 +291,23 @@ import SortSelect from "@/components/features/filter/SortSelect.vue";
 import RangeSelect from "@/components/features/filter/RangeSelect.vue";
 import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
+import { getProducts, getProductFilters } from "@/services/productsService";
 import { scrollToTop } from "@/utils/helpers";
 
 import productsBackGroundImage from '@/assets/images/inner-pages/products_bg.jpg';
 
 export default {
   name: "Index",
-  mounted() {
-    this.getProducts();
-    this.getFilters();
+  async mounted() {
+    this.fetchProducts();
+
+    const res = await getProductFilters();
+
+    if (res.success) {
+      this.productFilters = res.data;
+      this.prices.minPrice = this.productFilters.prices.minPrice;
+      this.prices.maxPrice = this.productFilters.prices.maxPrice;
+    }
   },
   components: {
     ProductList,
@@ -338,7 +346,7 @@ export default {
       };
       this.tags = [];
 
-      this.getProducts();
+      this.fetchProducts();
     },
     addAttribute(attr, array) {
       if (!this[array].includes(attr)) {
@@ -347,41 +355,27 @@ export default {
         this[array] = this[array].filter((el) => el !== attr);
       }
     },
-    getProducts(sortBy = '', page = 1, dataPerPage = 12) {
+    async fetchProducts(sortBy = '', page = 1, dataPerPage = 12) {
       this.isProductsLoading = true;
-      scrollToTop()
+      scrollToTop();
       
-      this.axios
-        .post("http://localhost:8876/api/products", {
-          categories: this.filterCategories,
-          colors: this.colors,
-          prices: this.prices,
-          tags: this.tags,
-          page: page,
-          sortby: sortBy,
-          dataPerPage: this.dataPerPage || dataPerPage,
-        })
-        .then((res) => {
-          this.products = res.data.data;
-          this.pagination = res.data.meta;
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.isPageLoading = false;
-          this.isProductsLoading = false;
-          
-        });
-    },
-    getFilters() {
-      this.axios
-        .get("http://localhost:8876/api/products/filters")
-        .then((res) => {
-          this.productFilters = res.data;
-          this.prices.minPrice = this.productFilters.prices.minPrice;
-          this.prices.maxPrice = this.productFilters.prices.maxPrice;
-        });
+      const res = await getProducts({
+        categories: this.filterCategories,
+        colors: this.colors,
+        prices: this.prices,
+        tags: this.tags,
+        page: page,
+        sortby: sortBy,
+        dataPerPage: this.dataPerPage || dataPerPage,
+      });
+
+      if (res.success) {
+        this.products = res.products;
+        // this.pagination = res.data.meta;
+      }
+
+      this.isPageLoading = false;
+      this.isProductsLoading = false;
     },
     handleProductListType(type) {
       return this.type = type;

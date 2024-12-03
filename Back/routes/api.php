@@ -30,7 +30,6 @@ Route::get('/products/filters', 'App\Http\Controllers\API\Product\FilterListCont
 Route::get('/products/{product}', 'App\Http\Controllers\API\Product\ShowController');
 
 Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@getCategories');
-Route::post('/categories/{category}/products', 'App\Http\Controllers\API\Category\CategoryController@getCategoryProducts');
 Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@getCategory');
 
 Route::middleware(['auth:sanctum'])->group(function () {

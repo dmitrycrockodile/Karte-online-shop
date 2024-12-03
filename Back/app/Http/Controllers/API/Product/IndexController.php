@@ -13,7 +13,7 @@ class IndexController extends Controller
     public function __invoke(IndexRequest $request)
     {
         $data = $request->validated();
-        
+
         $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
         
         $query = Product::filter($filter);
@@ -24,6 +24,9 @@ class IndexController extends Controller
             $products = ProductResource::collection($query->get());
         }
 
-        return $products;
+        return response()->json([
+            'success' => true,
+            'products' => $products,
+        ], 200);
     }
 }

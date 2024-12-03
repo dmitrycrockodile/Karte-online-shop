@@ -10,6 +10,9 @@ class ShowController extends Controller
 {
    public function __invoke(Product $product)
    {
-      return new ProductResource($product);
-   }
+      return response()->json([
+         'success' => true,
+         'product' => new ProductResource($product),
+      ], 200);
+   }  
 }

@@ -822,6 +822,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, Thumbs } from "swiper/modules";
 import { useToast } from "vue-toastification";
 import { addReview, deleteReview, reportOnReview, markHelpful } from "@/services/reviewService";
+import { getProduct, getRecentProducts } from "@/services/productsService";
 
 import CountdownTimer from "@/components/common/CountdownTimer.vue";
 import ProductPopup from "@/components/common/popups/ProductPopup.vue";
@@ -850,9 +851,21 @@ export default {
     ProductCard,
     AverageStarRating,
   },
-  mounted() {
-    this.getRecentProducts();
-    this.getProduct(this.$route.params.id);
+  async created() {
+    const res = await getProduct(this.$route.params.id);
+      
+    if (res.success) {
+      this.product = res.product;
+      this.maxProductQuantity = res.product.count;
+    }
+  },
+  async mounted() {
+    const res = await getRecentProducts();
+
+    if (res.success) {
+      this.recentProducts = res.data;
+      this.isLoading = false;
+    }
   },
   data() {
     return {
@@ -882,32 +895,11 @@ export default {
       addToCart: "cart/addToCart",
       toggleWishlistItem: "wishlist/toggleWishlistItem",
     }),
-    getProduct(id) {
-      this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
-        this.product = res.data.data;
-        this.maxProductQuantity = res.data.data.count;
-      });
-    },
-    getRecentProducts() {
-      this.axios
-        .post("http://localhost:8876/api/products", {
-          tags: { title: "new" },
-        })
-        .then((res) => {
-          this.recentProducts = res.data.data;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
     countDiscountPercentage(oldPrice, newPrice) {
       if (!oldPrice) return "";
 
       const percentageChange = ((newPrice - oldPrice) / oldPrice) * 100;
       return `${percentageChange.toFixed()}%`;
-    },
-    goToProductPage(productId) {
-      this.$router.push({ name: "products.show", params: { id: productId } });
     },
     setSelectedSize(data) {
       this.choosenProductOptions.selectedSize = data;

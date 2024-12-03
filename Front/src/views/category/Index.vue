@@ -57,7 +57,7 @@
                             class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
                             <div class="short-by">
                               <div class="select-box"> 
-                                <SortSelect :onChange="getProductsByCategory" />
+                                <SortSelect :onChange="fetchProductsByCategory" />
                               </div>
                             </div>
                           </div>
@@ -77,7 +77,7 @@
                   <ul class="pagination text-center">
                     <li v-if="pagination.current_page !== 1" class="next">
                       <a
-                        @click.prevent="getProductsByCategory(_, pagination.first_page, dataPerPage)"
+                        @click.prevent="fetchProductsByCategory(_, pagination.first_page, dataPerPage)"
                         href="#0"
                       >
                         <i class="flaticon-left-arrows" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
                           "
                         >
                           <a
-                            @click.prevent="getProductsByCategory(_, link.label, dataPerPage)"
+                            @click.prevent="fetchProductsByCategory(_, link.label, dataPerPage)"
                             href="#0"
                             :class="link.active ? 'active' : ''"
                             >{{ link.label }}</a
@@ -117,7 +117,7 @@
                       class="next"
                     >
                       <a
-                        @click.prevent="getProductsByCategory('all', pagination.current_page + 1, dataPerPage)"
+                        @click.prevent="fetchProductsByCategory('all', pagination.current_page + 1, dataPerPage)"
                         href="#0"
                       >
                         <i class="flaticon-next-1" aria-hidden="true"></i>
@@ -138,6 +138,8 @@
   import ProductList from "@/components/features/product/ProductList.vue";
   import SortSelect from "@/components/features/filter/SortSelect.vue";
   import BreadCrumps from "@/components/common/BreadCrumps.vue";
+
+  import { getProducts } from "@/services/productsService";
 
   export default {
     name: "Category List",
@@ -170,24 +172,26 @@
           this.category = res.data.data
         })
         .then(() => {
-          this.getProductsByCategory('all', this.pageNumber, this.dataPerPage)
+          this.fetchProductsByCategory('all', this.pageNumber, this.dataPerPage)
         })
         .finally(() => this.isPageLoading = false)
       },
-      getProductsByCategory(sortby = 'all', pageNumber = 1, dataPerPage = 16) {
+      async fetchProductsByCategory(sortby = 'all', pageNumber = 1, dataPerPage = 16) {
         this.isProductsLoading = true;
         this.products = [];
 
-        this.axios.post(`http://localhost:8876/api/categories/${this.category.id}/products`, {
+        const res = await getProducts({
+          categories: [this.category.id],
           page: pageNumber,
-          dataPerPage: dataPerPage,
           sortby: sortby,
-        })
-        .then(res => {
-          this.products = res.data.data;
-          this.pagination = res.data.meta;
-        })
-        .finally(() => this.isProductsLoading = false)
+          dataPerPage: this.dataPerPage || dataPerPage,
+        });
+
+        if (res.success) {
+          this.products = res.products;
+          // this.pagination = res.data.meta;
+        }
+        this.isProductsLoading = false;
       },
     },
     mounted() {
