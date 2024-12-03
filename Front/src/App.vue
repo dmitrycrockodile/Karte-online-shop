@@ -20,6 +20,8 @@
 <script>
 import { mapActions } from "vuex";
 
+import { getCategories } from "@/services/categoriesService";
+
 import Header from "@/components/common/Header.vue";
 import Footer from "@/components/common/Footer.vue";
 
@@ -61,18 +63,15 @@ export default {
     handleScroll() {
       this.scrollPosition = window.scrollY;
     },
-    getCategories() {
-      this.axios.get('http://localhost:8876/api/categories')
-        .then(res => {
-          this.setCategories(res.data.data)
-        })
-    },
   },
-  mounted() {
+  async mounted() {
     window.addEventListener("scroll", this.handleScroll);
-    this.handleScroll();
 
-    this.getCategories();
+    const res = await getCategories();
+
+    if (res.success) {
+      this.setCategories(res.categories);
+    }
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.handleScroll);

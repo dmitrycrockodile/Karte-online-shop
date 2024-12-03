@@ -184,8 +184,9 @@
 </template>
 
 <script>
-  import ProductPopup from "@/components/common/popups/ProductPopup.vue";
   import { mapActions, mapGetters } from "vuex";
+  import { getProduct } from "@/services/productsService";
+  import ProductPopup from "@/components/common/popups/ProductPopup.vue";
 
   export default {
     name: 'Product Card',
@@ -204,12 +205,14 @@
       }
     },
     methods: {
-      getPopupProduct(id) {
-        this.axios.get(`http://localhost:8876/api/products/${id}`).then((res) => {
+      async getPopupProduct(id) {
+        const res = await getProduct(id);
+
+        if (res.success) {
           this.popupId = id;
-          this.popupProduct = res.data.data;
+          this.popupProduct = res.product;
           this.togglePopup();
-        });
+        }
       },
       togglePopup() {
         this.popupActive = !this.popupActive

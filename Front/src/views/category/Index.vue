@@ -140,6 +140,7 @@
   import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
   import { getProducts } from "@/services/productsService";
+  import { getCategory } from "@/services/categoriesService";
 
   export default {
     name: "Category List",
@@ -166,16 +167,6 @@
       }),
     },
     methods: {
-      getCategory(id) {
-        this.axios.get(`http://localhost:8876/api/categories/${id}`)
-        .then(res => {
-          this.category = res.data.data
-        })
-        .then(() => {
-          this.fetchProductsByCategory('all', this.pageNumber, this.dataPerPage)
-        })
-        .finally(() => this.isPageLoading = false)
-      },
       async fetchProductsByCategory(sortby = 'all', pageNumber = 1, dataPerPage = 16) {
         this.isProductsLoading = true;
         this.products = [];
@@ -194,8 +185,14 @@
         this.isProductsLoading = false;
       },
     },
-    mounted() {
-      this.getCategory(this.$route.params.id)
+    async mounted() {
+      const res = await getCategory(this.$route.params.id);
+
+      if (res.success) {
+        this.category = res.category;
+        this.fetchProductsByCategory('all', this.pageNumber, this.dataPerPage);
+        this.isPageLoading = false;
+      }
     },
   }
 </script>

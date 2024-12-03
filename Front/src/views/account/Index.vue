@@ -337,7 +337,7 @@
                            <div class="row mb-2 mt-2">
                               <div class="col-md-6">
                                  <button @click.prevent="toggleSubscribtion" type="submit" class="btn btn-dark w-100">
-                                    {{ userDataForm.is_subscribed ? 'Unsubscribe' : 'Subscribe' }}
+                                    {{ userDataForm.isSubscribed ? 'Unsubscribe' : 'Subscribe' }}
                                  </button>
                               </div>
                            </div>
@@ -378,6 +378,8 @@
 import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
 import { useToast } from "vue-toastification";
+
+import { updateUserData, updateUserEmail, updateUserPassword, updateUserSubscription } from "@/services/userService";
 
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import ContactForm from "@/components/common/ContactForm.vue";
@@ -421,82 +423,66 @@ export default {
       this.userDataForm = JSON.parse(JSON.stringify(this.userData));
    },
    methods: {
-      handleUserDataChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/${this.userDataForm.id}`, this.userDataForm)
-         .then(res => {
-            if (res.status === 200) {
-               const newUserData = res.data.user;
+      async handleUserDataChange() {
+         const res = await updateUserData(this.userDataForm.id, this.userDataForm);
 
-               this.$store.commit('auth/SET_USER', { user: newUserData });
-               this.toast.success(res.data.message, { timeout: 2000 });
-            }
-         })
-         .catch(err => {
-            this.toast.error(err.response.data.message, { timeout: 2000 })
-         })
+         if (res.success) {
+            // Updates user data
+            this.$store.commit('auth/SET_USER', { user: res.newUser });
+            // Shows success message
+            this.toast.success(res.message, { timeout: 2000 });
+         } else {
+            // Shows error message
+            this.toast.error(res.message, { timeout: 2000 })
+         }
       }, 
-      handleEmailChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/email/${this.userDataForm.id}`, { 
-            email: this.emailChangeForm.email, 
-            password: this.emailChangeForm.password 
-         })
-         .then(res => {
-            if (res.status === 200) {
-               // Clears the form
-               this.emailChangeForm.email = '';
-               this.emailChangeForm.password = '';
+      async handleEmailChange() {
+         const res = await updateUserEmail(this.userDataForm.id, this.emailChangeForm.email, this.emailChangeForm.password);
 
-               this.toast.success(res.data.message, { timeout: 2000 });
+         if (res.success) {
+            // Clears the form
+            this.emailChangeForm.email = '';
+            this.emailChangeForm.password = '';
 
-               // Sets the new email
-               this.userDataForm.email = res.data.new_email;
-               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
-            }
-         })
-         .catch(err => {
-            this.toast.error(err.response.data.message, { timeout: 2000 })
-         })
+            // Shows success message
+            this.toast.success(res.message, { timeout: 2000 });
+
+            // Sets the new email
+            this.userDataForm.email = res.newEmail;
+            this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+         } else {
+            // Shows error message
+            this.toast.error(res.message, { timeout: 2000 })
+         }
       },
-      handlePasswordChange() {
-         this.axios.patch(`http://localhost:8876/api/user/update/password/${this.userDataForm.id}`, { 
-            new_password: this.passwordChangeForm.newPassword, 
-            password: this.passwordChangeForm.password 
-         })
-         .then(res => {
-            if (res.status === 200) {
-               // Clears the form
-               this.passwordChangeForm.newPassword = '';
-               this.passwordChangeForm.password = '';
-
-               this.toast.success(res.data.message, { timeout: 2000 });
-            }
-         })
-         .catch(err => {
+      async handlePasswordChange() {
+         const res = await updateUserPassword(this.userDataForm.id, this.passwordChangeForm.password, this.passwordChangeForm.newPassword);
+        
+         if (res.success) {
+            // Clears the form
+            this.passwordChangeForm.newPassword = '';
+            this.passwordChangeForm.password = '';
+            // Shows success message
+            this.toast.success(res.message, { timeout: 2000 });
+         } else {
+            // Shows error message
             this.toast.error(err.response.data.message, { timeout: 2000 })
-         })
+         }
       },
       handleLogout() {
          this.logout()
             .then(() => this.$router.push({name: 'login.index'}))
       }, 
       async toggleSubscribtion() {
-         try {
-            const res = await this.axios.patch(`http://localhost:8876/api/user/update/subscription/${this.userDataForm.id}`);  
+         const res = await updateUserSubscription(this.userDataForm.id);  
 
-            if (res.status === 201 && res.data.success) {
-               this.toast.success(res.data.message);
-               this.userDataForm.is_subscribed = res.data.is_subscribed;
-               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
-            }
-         } catch (err) {
-            if (!err.response.data.success && err.response.status === 409) {
-               this.toast.error(err.response.data.message)
-            } else {
-               this.toast.error('Something went wrong, please try again later')
-            }
-
-            return Promise.reject(err);
-         }
+         if (res.success) {
+            this.toast.success(res.message);
+            this.userDataForm.isSubscribed = res.isSubscribed;
+            this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+         } else {
+            this.toast.error(res.message)
+         } 
       },
       async sendVerificationMessage() {
          try {

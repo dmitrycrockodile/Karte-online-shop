@@ -19,7 +19,7 @@ class UserController extends Controller
       $user->update($data);
 
       return response()->json([
-         'user' => new UserResource($user),
+         'new_user' => new UserResource($user),
          'message' => 'Your data was successfully updated',
          'success' => true,
       ], 200);
