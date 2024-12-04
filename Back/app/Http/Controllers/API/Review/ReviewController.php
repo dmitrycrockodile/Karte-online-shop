@@ -16,19 +16,6 @@ class ReviewController extends Controller
    public function store(StoreRequest $request) {
       $data = $request->validated();
       $user_id = Auth::id(); 
-      $existingReview = Review::where('user_id', $user_id)->first();
-
-      if ($existingReview) {
-         $existingReview->update($data);
-         $product = Product::where('id', $data['product_id'])->first();
-
-         return response()->json([
-            'message' => 'Product added to the cart',
-            'review' => new ReviewResource($existingReview),
-            'average_rating' => $product->averageRating,
-            'success' => true,
-         ], 200);
-      }
 
       $review = Review::create([
          'user_id' => $user_id,
@@ -38,7 +25,7 @@ class ReviewController extends Controller
       $product = Product::where('id', $data['product_id'])->first();
 
       return response()->json([
-         'item' => new ReviewResource($review),
+         'review' => new ReviewResource($review),
          'average_rating' => $product->averageRating,
          'message' => 'Review successfully added!',
          'success' => true,

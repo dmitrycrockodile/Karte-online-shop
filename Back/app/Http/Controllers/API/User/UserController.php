@@ -73,7 +73,7 @@ class UserController extends Controller
             'message' => 'You have unsubscribed from out newsletter.',
             'success' => true,
             'is_subscribed' => false,
-         ], 201);
+         ], 200);
       } else {
          $user->is_subscribed = true;
          $user->save();
@@ -82,7 +82,7 @@ class UserController extends Controller
             'message' => 'Thank you for the subscription!',
             'success' => true,
             'is_subscribed' => true,
-         ], 201);
+         ], 200);
       }
    }
 }

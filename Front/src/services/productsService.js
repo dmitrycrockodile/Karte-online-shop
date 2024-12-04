@@ -1,15 +1,13 @@
 import axios from "axios";
+import { handleResponse, handleError } from "../utils/helpers";
 import { BASE_API_URL } from "../utils/constants";
 
 export const getProduct = async (id) => {
    try {
       const res = await axios.get(`${BASE_API_URL}/products/${id}`);
-      
-      if (res.status === 200) {
-         return { success: res.data.success, product: res.data.product };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err.message);
+      return handleError(err);
    }
 };
 
@@ -18,35 +16,26 @@ export const getRecentProducts = async () => {
       const res = await axios.post(`${BASE_API_URL}/products`, {
         tags: { title: "new" },
       });
-
-      if (res.status === 200) {
-         return { success: true, data: res.data.data };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err.message);
+      return handleError(err);
    }
 };
 
 export const getProducts = async (args) => {
    try {
       const res = await axios.post(`${BASE_API_URL}/products`, args);
-
-      if (res.status === 200) {
-         return { success: res.data.success, products: res.data.products };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err.message);
+      return handleError(err);
    }
 };
 
 export const getProductFilters = async () => {
    try {
       const res = await axios.get(`${BASE_API_URL}/products/filters`);
-
-      if (res.status === 200) {
-         return { data: res.data, success: true };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err.message);
+      return handleError(err);
    }
 };

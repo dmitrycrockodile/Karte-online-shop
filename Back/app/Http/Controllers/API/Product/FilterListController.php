@@ -15,14 +15,17 @@ class FilterListController extends Controller
 {
    public function __invoke()
    {
-      return [
-         'categories' => CategoryResource::collection(Category::all()),
-         'colors' => ColorResource::collection(Color::all()),
-         'tags' => TagResource::collection(Tag::all()),
-         'prices' => [
-            'minPrice' => Product::min('price'),
-            'maxPrice' => Product::max('price'),
+      return response()->json([
+         'filters' => [
+            'categories' => CategoryResource::collection(Category::all()),
+            'colors' => ColorResource::collection(Color::all()),
+            'tags' => TagResource::collection(Tag::all()),
+            'prices' => [
+               'minPrice' => Product::min('price'),
+               'maxPrice' => Product::max('price'),
+            ],
          ],
-      ];
+         'success' => true
+      ], 200);
    }
 }

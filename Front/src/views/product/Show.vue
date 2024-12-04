@@ -684,7 +684,7 @@
                      {{ review.title }}
                       <span>{{ review.username }} on {{ review.date }}</span>
                     </h6>
-                    <p>
+                    <p v-if="review.body">
                       {{ review.body }}
                     </p>
                     <div class="helpfull__container">
@@ -707,7 +707,7 @@
                     <button v-if="!review.reported && review.user_id !== getUserData.id" @click.prevent="handleReviewReport(review.id)" class="right-box">
                       Report this Comments
                     </button>
-                    <p v-else class="helpfull--reported">Reported</p>
+                    <p v-if="review.reported && review.user_id !== getUserData.id" class="helpfull--reported">Reported</p>
                   </div>
                 </div>
                 <div v-show="!product.reviews.some(item => item.user_id === getUserData.id)" id="review-form" class="review-from-box mt-30">
@@ -863,7 +863,7 @@ export default {
     const res = await getRecentProducts();
 
     if (res.success) {
-      this.recentProducts = res.data;
+      this.recentProducts = res.products;
       this.isLoading = false;
     }
   },
@@ -923,8 +923,8 @@ export default {
           body: '',
         }
 
-        this.product.reviews.push(res.data.item);
-        this.product.average_rating = res.data.average_rating;
+        this.product.reviews.push(res.review);
+        this.product.average_rating = res.average_rating;
         
         // Shows success message
         this.toast.success('Thank you for your review!', { timeout: 2000 })
@@ -1071,6 +1071,7 @@ export default {
   align-items: center;
   font-size: 17px;
   margin-top: 10px;
+  margin-left: -7px;
 
   button {
     background-color: transparent;

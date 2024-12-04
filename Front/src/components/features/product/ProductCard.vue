@@ -107,7 +107,7 @@
           :alt="product.title"
         />
         <img
-          src="../assets/images/home-three/productss2-hover-1.png"
+          src="@/assets/images/home-three/productss2-hover-1.png"
           :alt="product.title" 
           class="hover-img" 
         /> 

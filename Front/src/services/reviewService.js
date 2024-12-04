@@ -1,4 +1,5 @@
 import axios from "axios";
+import { handleResponse, handleError } from "../utils/helpers";
 import { BASE_API_URL } from "../utils/constants";
 
 export const addReview = async (formData, productId) => {
@@ -9,39 +10,27 @@ export const addReview = async (formData, productId) => {
          body: formData.body,
          product_id: productId,
       });
-
-      if (res.status === 200) {
-         return { success: res.data.success, data: res.data };
-      }
+      return handleResponse(res);
    } catch (err) {
-      return { message: err.res?.data?.message || 'An error occurred' };
+      return handleError(err);
    }
 };
 
 export const deleteReview = async (id) => {
    try {
       const res = await axios.delete(`${BASE_API_URL}/review/${id}}`);
-
-      if (res.status === 200) {
-         return { success: res.data.success, message: res.data.message }
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err);
-      return { message: err.res?.data?.message || 'An error occurred' };
+      return handleError(err);
    }
 };
 
 export const reportOnReview = async (id) => {
    try {
       const res = await axios.patch(`${BASE_API_URL}/review/report/${id}}`);
-
-      if (res.status === 200) {
-         return { success: res.data.success, message: res.data.message, review: res.data.review };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err)
-
-      return { message: err.res?.data?.message || 'An error occured' };
+      return handleError(err);
    }
 };
 
@@ -50,13 +39,8 @@ export const markHelpful = async (id, isHelpful) => {
       const res = await axios.patch(`${BASE_API_URL}/review/mark-helpfulness/${id}`, {
          isHelpful: isHelpful
       });
-      
-      if (res.status === 200) {
-         return { success: res.data.success, message: res.data.message, review: res.data.review };
-      }
+      return handleResponse(res);
    } catch (err) {
-      console.error(err)
-
-      return { message: err.res?.data?.message || 'An error occured' }
+      return handleError(err);
    }
 };

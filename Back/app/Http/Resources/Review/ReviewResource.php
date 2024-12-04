@@ -26,7 +26,7 @@ class ReviewResource extends JsonResource
             'not_helpful_count' => $this->notHelpfulCount,
             'body' => $this->body,
             'date' => Carbon::parse($this->created_at)->format('F j, Y'),
-            'reported' => $this->reported,
+            'reported' => $this->reported || false,
         ];
     }
 }

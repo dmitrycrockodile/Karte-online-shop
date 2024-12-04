@@ -448,7 +448,7 @@ export default {
             this.toast.success(res.message, { timeout: 2000 });
 
             // Sets the new email
-            this.userDataForm.email = res.newEmail;
+            this.userDataForm.email = res.new_email;
             this.$store.commit('auth/SET_USER', { user: this.userDataForm });
          } else {
             // Shows error message
@@ -478,7 +478,7 @@ export default {
 
          if (res.success) {
             this.toast.success(res.message);
-            this.userDataForm.isSubscribed = res.isSubscribed;
+            this.userDataForm.isSubscribed = res.is_subscribed;
             this.$store.commit('auth/SET_USER', { user: this.userDataForm });
          } else {
             this.toast.error(res.message)

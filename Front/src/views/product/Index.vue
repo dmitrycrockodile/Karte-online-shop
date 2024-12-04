@@ -304,7 +304,7 @@ export default {
     const res = await getProductFilters();
 
     if (res.success) {
-      this.productFilters = res.data;
+      this.productFilters = res.filters;
       this.prices.minPrice = this.productFilters.prices.minPrice;
       this.prices.maxPrice = this.productFilters.prices.maxPrice;
     }
