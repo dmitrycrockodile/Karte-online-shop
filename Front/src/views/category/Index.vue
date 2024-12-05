@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isPageLoading" class="loader"><span>Karte...</span></div>
+    <Fallback v-if="isPageLoading"/>
     <main v-show="!isPageLoading" class="overflow-hidden ">
       <BreadCrumps 
         :backgroundImageUrl="category.banner"
@@ -138,6 +138,7 @@
   import ProductList from "@/components/features/product/ProductList.vue";
   import SortSelect from "@/components/features/filter/SortSelect.vue";
   import BreadCrumps from "@/components/common/BreadCrumps.vue";
+  import Fallback from "@/components/common/Fallback.vue";
 
   import { getProducts } from "@/services/productsService";
   import { getCategory } from "@/services/categoriesService";
@@ -148,7 +149,8 @@
       ProductCard,
       SortSelect,
       ProductList,
-      BreadCrumps
+      BreadCrumps,
+      Fallback
     },
     data() {
       return {

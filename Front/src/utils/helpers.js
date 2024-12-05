@@ -42,7 +42,6 @@ export function scrollToTop() {
 
 export function handleResponse(res) {
    if (res.status === 200) {
-      console.log({...res.data});
       return { 
          ...res.data 
       };

@@ -53,7 +53,7 @@
                   <h4>Information</h4>
                 </div>
                 <ul class="footer-links">
-                  <li><router-link :to="{ name: 'about_us.index' }">About us</router-link></li>
+                  <li><router-link :to="{ name: 'aboutUs.index' }">About us</router-link></li>
                   <li><router-link :to="{ name: 'contact.index' }">Contact Us</router-link></li>
                   <li><router-link :to="{ name: 'faq.index' }">Faq</router-link></li>
                   <li><a href="order-track.html">Order Track</a></li>

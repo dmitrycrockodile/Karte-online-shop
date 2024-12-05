@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoading" class="loader"><span>Karte...</span></div>
+  <Fallback v-if="isLoading"/>
   <main v-if="!isLoading">
     <div class="shop-details-breadcrumb wow fadeInUp animated overflow-hidden">
       <div class="container">
@@ -825,12 +825,12 @@ import { addReview, deleteReview, reportOnReview, markHelpful } from "@/services
 import { getProduct, getRecentProducts } from "@/services/productsService";
 
 import CountdownTimer from "@/components/common/CountdownTimer.vue";
-import ProductPopup from "@/components/common/popups/ProductPopup.vue";
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import ColorsRadioGroup from "@/components/common/radios/ColorsRadioGroup.vue";
 import QuantitySelector from "@/components/base/QuantitySelector.vue";
 import ProductCard from "@/components/features/product/ProductCard.vue";
 import AverageStarRating from "@/components/features/reviews/AverageStarRating.vue";
+import Fallback from "@/components/common/Fallback.vue";
 
 import { TOTAL_PRICE_FOR_FREE_SHIPPING } from '@/utils/constants';
 
@@ -844,12 +844,12 @@ export default {
     Swiper,
     SwiperSlide,
     CountdownTimer,
-    ProductPopup,
     SizesRadioGroup,
     ColorsRadioGroup,
     QuantitySelector,
     ProductCard,
     AverageStarRating,
+    Fallback,
   },
   async created() {
     const res = await getProduct(this.$route.params.id);

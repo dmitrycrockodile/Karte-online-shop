@@ -101,7 +101,7 @@
                               <router-link :to="{ name: 'products.index' }"><span>Products</span></router-link>
                             </li>
                             <li class="dropdown-list">
-                              <router-link :to="{ name: 'about_us.index' }"><span>About Us</span></router-link>
+                              <router-link :to="{ name: 'aboutUs.index' }"><span>About Us</span></router-link>
                             </li>
                             <li class="dropdown-list">
                               <router-link :to="{ name: 'faq.index' }"><span>Faq</span></router-link>

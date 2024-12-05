@@ -54,7 +54,7 @@
                   <div class="form-check p-0 m-0">
                     <input type="checkbox" name="acceptedTerms" id="remember" v-model="acceptedTerms" required />
                     <label class="p-0" for="remember">
-                     Accept the Terms and Privacy Policy
+                      Accept the <button @click.prevent="togglePopup" type="button" class="terms">Terms and Privacy Policy</button>
                     </label>
                   </div>
                 </div>
@@ -67,7 +67,8 @@
         </div>
       </div>
     </section>
-    <!--End Login Page-->
+
+    <TermsAndConditionsPopup :active="popupActive" :togglePopup="togglePopup"/>
   </main>
 </template>
 
@@ -76,6 +77,7 @@
 
   import PasswordInput from '@/components/base/PasswordInput.vue';
   import BreadCrumps from "@/components/common/BreadCrumps.vue";
+  import TermsAndConditionsPopup from "@/components/common/popups/TermsAndConditionsPopup.vue";
 
   import formBGImage from '@/assets/images/inner-pages/login-bg.png';
   import authBGImage from "@/assets/images/inner-pages/auth_bg.jpg";
@@ -94,11 +96,13 @@
         formErrors: {
           email: null, 
         },
+        popupActive: false,
       }
     },
     components: {
       PasswordInput,
-      BreadCrumps
+      BreadCrumps,
+      TermsAndConditionsPopup
     },
     methods: {
       ...mapActions('auth', ['register']),
@@ -114,8 +118,20 @@
           this.$router.go(-1);
         })
       },
+      togglePopup() {
+        this.popupActive = !this.popupActive
+      },
     },
   };
 </script>
 
-<style scoped></style>
+<style scoped>
+.terms {
+  background-color: transparent;
+  border: none;
+  display: inline;
+  width: max-content;
+  height: 100%;
+  color: #f69c63;
+}
+</style>

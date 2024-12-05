@@ -82,10 +82,21 @@ const actions = {
 
          toast.info('Logged out successfully');
       } catch(err) {
-         toast.error(err.response.data.message, { timeout: 2000 });
-         return Promise.reject(err);
+         if (err.status !== 401) {
+            toast.error(err.response?.data?.message, { timeout: 2000 });
+            return Promise.reject(err);
+         }
+
+         return err;
       }
    },
+   async clearExpiredSession({ commit, dispatch }) {
+      commit('LOGOUT_USER');
+      dispatch('cart/clearLocalCart', null, { root: true });
+      dispatch('wishlist/clearWishList', null, { root: true });
+
+      toast.info('Session expired: please login again.', { timeout: 2000 });
+   }
 }
 
 const getters = {

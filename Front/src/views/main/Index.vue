@@ -1,6 +1,6 @@
 <template>
   <main class="overflow-hidden">
-    <!-- newsLetter_popup Start -->
+    <!-- NewsletterPopup -->
     <NewsletterPopup :active="isPopupActive" :closePopup="closePopup" />
 
     <!-- Start Main Slider -->
