@@ -12,4 +12,4 @@ export default createStore({
       categories: categoriesModule,
       wishlist: wishlistModule,
    }
-})
+});

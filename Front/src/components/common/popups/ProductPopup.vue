@@ -20,9 +20,8 @@
             <div class="popup-right-content">
               <h3>{{ product.title }}</h3>
               <div class="ratting">
-                <i class="flaticon-star"></i> <i class="flaticon-star"></i>
-                <i class="flaticon-star"></i> <i class="flaticon-star"></i>
-                <i class="flaticon-star"></i> <span>(112)</span>
+                <AverageStarRating :rating="product.average_rating" />
+                <span>({{ product?.reviews.length || 0 }})</span>
               </div>
               <p class="text">
                 {{ cutString(product.description, 200) }}
@@ -124,6 +123,7 @@ import BasePopup from '@/components/base/BasePopup.vue';
 import ColorsRadioGroup from "@/components/common/radios/ColorsRadioGroup.vue";
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import QuantitySelector from "@/components/base/QuantitySelector.vue";
+import AverageStarRating from "@/components/features/reviews/AverageStarRating.vue";
 
 import { cutString } from "@/utils/helpers.js";
 
@@ -147,11 +147,13 @@ export default {
     ColorsRadioGroup,
     SizesRadioGroup,
     QuantitySelector,
+    AverageStarRating,
   },
   methods: {
     cutString,
     setSelectedSize(data) {
       this.choosenProductOptions.selectedSize = data;
+      console.log(this.product)
     },
     setSelectedColor(data) {
       this.choosenProductOptions.selectedColor = data;
@@ -228,11 +230,12 @@ export default {
   font-size: 18px;
   font-weight: 700;
   display: flex;
+  align-items: center;
 }
 .popup-right-content .ratting span {
   font-weight: 500;
   padding-left: 10px;
-  margin-top: -1px;
+  margin-top: 1px;
 }
 .popup-right-content p.text {
   font-size: 18px;

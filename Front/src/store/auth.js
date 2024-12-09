@@ -90,13 +90,28 @@ const actions = {
          return err;
       }
    },
+   async sendVerificationMessage({ commit, dispatch }, { name, email }) {
+      try {
+         const res = await axios.post('http://localhost:8876/api/verify-email', {
+            email: email,
+            name: name,
+         });  
+
+         if (res.status === 200 && res.data.success) {
+            toast.info(res.data.message);
+         }
+      } catch (err) {
+         toast.error(err.response.data.message);
+         return Promise.reject(err);
+      }
+   },
    async clearExpiredSession({ commit, dispatch }) {
       commit('LOGOUT_USER');
       dispatch('cart/clearLocalCart', null, { root: true });
       dispatch('wishlist/clearWishList', null, { root: true });
 
       toast.info('Session expired: please login again.', { timeout: 2000 });
-   }
+   },
 }
 
 const getters = {

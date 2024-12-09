@@ -28,7 +28,7 @@
                      type="text" 
                      class="form-control" 
                      name="title" 
-                     placeholder="Enter title"
+                     placeholder="Enter title *"
                      value="{{ old('title') }}"
                   >
                   @error('title')
@@ -41,7 +41,7 @@
                      type="text" 
                      class="form-control" 
                      name="description" 
-                     placeholder="Enter description"
+                     placeholder="Enter description *"
                      value="{{ old('description') }}"
                   >
                   @error('description')
@@ -54,7 +54,7 @@
                      class="form-control" 
                      rows="3" 
                      name="content" 
-                     placeholder="Enter content"
+                     placeholder="Enter content *"
                   >{{ old('content') }}</textarea>
                   @error('content')
                      <p class="text-danger">{{ $message }}</p>
@@ -66,7 +66,7 @@
                      type="number" 
                      class="form-control" 
                      name="price" 
-                     placeholder="Enter price"
+                     placeholder="Enter price *"
                      value="{{ old('price') }}"
                   >
                   @error('price')
@@ -92,7 +92,7 @@
                      type="number" 
                      class="form-control" 
                      name="count" 
-                     placeholder="Enter count"
+                     placeholder="Enter count *"
                      value="{{ old('count') }}"
                   >
                   @error('count')
@@ -162,7 +162,7 @@
                </div>
 
                <div class="form-group">
-                  <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color" style="width: 100%;">
+                  <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color*" style="width: 100%;">
                      @foreach ($colors as $color)
                         <option 
                            value="{{ $color->id }}"
@@ -177,7 +177,7 @@
                </div>
 
                <div class="form-group">
-                  <h4>Upload preview image</h4>
+                  <h4>Upload preview image *</h4>
                   <div class="input-group">
                      <div class="custom-file">
                         <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile" value="{{ old('preview_image') }}">
@@ -199,10 +199,6 @@
                            <label class="custom-file-label" for="exampleInputFile">Choose first image</label>
                         </div>
                      </div>
-   
-                     @error('images[]')
-                        <p class="text-danger">{{ $message }}</p>
-                     @enderror
                   </div>
 
                   <div class="form-group">
@@ -212,10 +208,6 @@
                            <label class="custom-file-label" for="exampleInputFile">Choose second image</label>
                         </div>
                      </div>
-   
-                     @error('images[]')
-                        <p class="text-danger">{{ $message }}</p>
-                     @enderror
                   </div>
 
                   <div class="form-group">
@@ -225,11 +217,11 @@
                            <label class="custom-file-label" for="exampleInputFile">Choose third image</label>
                         </div>
                      </div>
-   
-                     @error('images[]')
-                        <p class="text-danger">{{ $message }}</p>
-                     @enderror
                   </div>
+
+                  @error('images')
+                     <p class="text-danger">{{ $message }}</p>
+                  @enderror
                </div>
 
                <div class="form-check mb-3 ml-1">

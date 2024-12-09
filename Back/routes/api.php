@@ -8,6 +8,7 @@ use App\Http\Controllers\API\CartItem\CartItemController;
 use App\Http\Controllers\API\Question\QuestionController;
 use App\Http\Controllers\API\Review\ReviewController;
 use App\Http\Controllers\API\User\UserController;
+use App\Http\Controllers\API\Utilities\UtilitiesController;
 use App\Http\Controllers\API\Wishlist\WishlistController;
 
 /*

@@ -347,7 +347,7 @@
                            <h2 class="mb-2">Verify email</h2>
                            <div class="row mb-2 mt-2">
                               <div class="col-md-6">
-                                 <button @click.prevent="sendVerificationMessage" :disabled="userDataForm.email_verified_at" type="submit" class="btn btn-dark w-100">
+                                 <button @click.prevent="sendVerificationMessage({email: userDataForm.email, name: userDataForm.name})" :disabled="userDataForm.email_verified_at" type="submit" class="btn btn-dark w-100">
                                     {{ userDataForm.email_verified_at ? 'Verified' : 'Send verification' }}
                                  </button>
                               </div>
@@ -386,6 +386,7 @@ import ContactForm from "@/components/common/ContactForm.vue";
 import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
 import accountBGImage from "@/assets/images/inner-pages/account_bg.jpg";
+import axios from "axios";
 
 export default {
    name: "User Account",
@@ -477,14 +478,17 @@ export default {
          const res = await updateUserSubscription(this.userDataForm.id);  
 
          if (res.success) {
-            this.toast.success(res.message);
+            // Updates the subscription data
             this.userDataForm.isSubscribed = res.is_subscribed;
             this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+            // Shows success message
+            this.toast.success(res.message);
          } else {
+            // Shows error message
             this.toast.error(res.message)
          } 
       },
-      async sendVerificationMessage() {
+      async handleVerificationSend() {
          try {
             const res = await this.axios.post('http://localhost:8876/api/verify-email', {
                email: this.userDataForm.email,
@@ -500,7 +504,8 @@ export default {
          }
       },
       ...mapActions({
-         logout: 'auth/logout'
+         logout: 'auth/logout',
+         sendVerificationMessage: 'auth/sendVerificationMessage',
       }),
    },
 };
@@ -584,5 +589,21 @@ input[type="radio"].btn-check:focus + label {
 
 h2 {
    font-size: 30px;
+}
+
+
+table { 
+   width: 100%; 
+   border-collapse: collapse; 
+} 
+table, th, td { 
+   border: 1px solid black; 
+} 
+th, td { 
+   padding: 8px; 
+   text-align: left; 
+} 
+th { 
+   background-color: #f2f2f2; 
 }
 </style>
