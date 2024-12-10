@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\CartItem;
 
+use App\Http\Resources\Category\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Coupon\CouponResource;
@@ -27,6 +28,7 @@ class CartItemResource extends JsonResource
             'price' => $this->product->price,
             'old_price' => $this->product->old_price,
             'coupons' => CouponResource::collection($this->product->coupons),
+            'category' => new CategoryResource($this->product->category),
         ];
     }
 }

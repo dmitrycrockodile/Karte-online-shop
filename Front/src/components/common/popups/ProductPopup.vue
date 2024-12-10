@@ -153,7 +153,6 @@ export default {
     cutString,
     setSelectedSize(data) {
       this.choosenProductOptions.selectedSize = data;
-      console.log(this.product)
     },
     setSelectedColor(data) {
       this.choosenProductOptions.selectedColor = data;

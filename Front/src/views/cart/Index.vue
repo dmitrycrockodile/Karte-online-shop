@@ -320,14 +320,34 @@ export default {
     checkIfCouponMatch(coupon) {
       let result;
 
-      this.cartItems.forEach(item => {
-        item.coupons.forEach(producCoupon => {
-          if (coupon === producCoupon.code) {
-            result = ((producCoupon.percentage / 100) * item.price).toFixed(2);
-            return;
+      // Check product coupons
+      this.cartItems.some(item => {
+        return item.coupons.some(productCoupon => {
+          if (coupon === productCoupon.code) {
+            result = ((productCoupon.percentage / 100) * item.price).toFixed(2);
+            return true;
           };
+          return false;
         })
       });
+
+      if (result) return result;
+
+      // Check category coupons
+      this.cartItems.some(item => {
+        return item.category.coupons.some(categoryCoupon => {
+          if (coupon === categoryCoupon.code) {
+            let singleDiscount = ((categoryCoupon.percentage / 100) * item.price).toFixed(2);
+            let categoriedItems = this.cartItems.filter(filteredItem => filteredItem.category.title === item.category.title);
+            let categoriedItemsQuantity = categoriedItems.reduce((total, current) => total + current.quantity, 0);
+            
+            result = singleDiscount * categoriedItemsQuantity;
+            
+            return true;
+          }
+          return false;
+        })
+      })
 
       return result;
     }

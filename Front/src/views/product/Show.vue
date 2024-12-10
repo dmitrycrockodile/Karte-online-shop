@@ -701,16 +701,16 @@
                         ({{ review.not_helpful_count ? `-${review.not_helpful_count}` : review.not_helpful_count }})
                       </div>
                     </div>
-                    <div v-show="review.user_id === getUserData.id" class="review-single__actions">
+                    <div v-show="review.user_id === getUserData?.id" class="review-single__actions">
                       <button @click.prevent="handleDeleteReview(review.id)">Delete<i class="fa-regular fa-trash-can"></i></button>
                     </div>
-                    <button v-if="!review.reported && review.user_id !== getUserData.id" @click.prevent="handleReviewReport(review.id)" class="right-box">
+                    <button v-if="!review.reported && review.user_id !== getUserData?.id" @click.prevent="handleReviewReport(review.id)" class="right-box">
                       Report this Comments
                     </button>
-                    <p v-if="review.reported && review.user_id !== getUserData.id" class="helpfull--reported">Reported</p>
+                    <p v-if="review.reported && review.user_id !== getUserData?.id" class="helpfull--reported">Reported</p>
                   </div>
                 </div>
-                <div v-show="!product.reviews.some(item => item.user_id === getUserData.id)" id="review-form" class="review-from-box mt-30">
+                <div v-show="!product.reviews.some(item => item.user_id === getUserData?.id) && getUserData?.id" id="review-form" class="review-from-box mt-30">
                   <h6>Write a Review</h6>
                   <form @submit.prevent="handleReviewSubmit" class="review-from">
                     <div class="row">
