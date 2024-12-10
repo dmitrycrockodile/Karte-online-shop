@@ -11,6 +11,7 @@ class ProductFilter extends AbstractFilter {
    const PRICES = 'prices';
    const TAGS = 'tags';
    const SORTBY = 'sortby';
+   const TITLE = 'title';
 
 
    protected function getCallbacks(): array
@@ -21,6 +22,7 @@ class ProductFilter extends AbstractFilter {
          self::PRICES => [$this, 'prices'],
          self::TAGS => [$this, 'tags'],
          self::SORTBY => [$this, 'sortby'],
+         self::TITLE => [$this, 'title'],
       ];
    }
 
@@ -42,6 +44,10 @@ class ProductFilter extends AbstractFilter {
       $builder->whereHas('tags', function($b) use ($value) {
          $b->whereIn('title', $value);
       });
+   }
+
+   protected function title(Builder $builder, $value) {
+      $builder->where('title', 'like', '%' . $value . '%');
    }
 
    protected function sortby(Builder $builder, $value) {

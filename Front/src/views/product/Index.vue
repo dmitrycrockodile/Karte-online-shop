@@ -50,14 +50,14 @@
               </button>
               <div class="sidebar-holder">
                 <form
-                  action="#0"
                   class="footer-default__subscrib-form m-0 p-0 wow fadeInUp animated"
+                  @submit.prevent="fetchProducts()"
                 >
                   <div class="footer-input-box p-0">
                     <input
-                      type="email"
-                      placeholder="Email address"
-                      name="email"
+                      type="text"
+                      placeholder="Product title"
+                      v-model="searchedTitle"
                     />
                     <button type="submit" class="subscribe_btn">
                       <i class="flaticon-magnifying-glass"></i>
@@ -331,6 +331,7 @@ export default {
       isProductsLoading: true,
       productsBackGroundImage,
       type: 'basic',
+      searchedTitle: '',
     };
   },
   computed: {
@@ -366,6 +367,7 @@ export default {
         colors: this.colors,
         prices: this.prices,
         tags: this.tags,
+        title: this.searchedTitle,
         page: page,
         sortby: sortBy,
         dataPerPage: this.dataPerPage || dataPerPage,

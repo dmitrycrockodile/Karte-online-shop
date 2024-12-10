@@ -7477,7 +7477,15 @@ button.router-link:hover {
   height: 100%;
   width: 50px;
   background: #1a1a1a;
+  transition: all .2 ease;
 }
+
+.shop-grid-sidebar .footer-input-box .subscribe_btn:hover {
+  background: #f69c63;
+  border: 2px solid white;
+  border-radius: 9px;
+}
+
 .shop-grid-sidebar .footer-input-box .subscribe_btn i {
   line-height: 0px;
   font-size: 20px;

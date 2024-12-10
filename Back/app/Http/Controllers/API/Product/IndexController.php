@@ -17,7 +17,7 @@ class IndexController extends Controller
         $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
         
         $query = Product::filter($filter);
-
+        
         if (isset($data['dataPerPage'])) {
             $products = ProductResource::collection($query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']));
         } else {
