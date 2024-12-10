@@ -14,7 +14,7 @@
                         Maybe try one of the links below or a search?
                      </p>
                      <div class="btn-box"> 
-                        <router-link :to="{ name: 'notFound' }" class="btn--primary style2">Go Back</router-link> 
+                        <router-link :to="{ name: 'products.index' }" class="btn--primary style2">Products Page</router-link> 
                      </div>
                   </div>
                </div>

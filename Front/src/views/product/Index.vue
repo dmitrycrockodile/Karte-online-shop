@@ -160,7 +160,7 @@
                   <div class="left-box wow fadeInUp animated">
                     <p>
                       Showing 
-                      {{ products.length ? `1-${products.length} of ${pagination.total}` : 0 }}
+                      {{ products.length ? `${(pagination.current_page - 1) * pagination.per_page + 1}-${pagination.current_page * pagination.per_page < pagination.total ? pagination.current_page * pagination.per_page : pagination.total} of ${pagination.total}` : 0 }}
                       Results
                     </p>
                   </div>
@@ -326,7 +326,6 @@ export default {
       prices: {},
       tags: [],
       pagination: [],
-      dataPerPage: 12,
       isPageLoading: true,
       isProductsLoading: true,
       productsBackGroundImage,
@@ -358,7 +357,7 @@ export default {
         this[array] = this[array].filter((el) => el !== attr);
       }
     },
-    async fetchProducts(sortBy = '', page = 1, dataPerPage = 12) {
+    async fetchProducts(page = 1, dataPerPage = 2, sortBy = 'all') {
       this.isProductsLoading = true;
       scrollToTop();
       
@@ -370,12 +369,12 @@ export default {
         title: this.searchedTitle,
         page: page,
         sortby: sortBy,
-        dataPerPage: this.dataPerPage || dataPerPage,
+        dataPerPage: dataPerPage,
       });
 
       if (res.success) {
         this.products = res.products;
-        // this.pagination = res.data.meta;
+        this.pagination = res.meta;
       }
 
       this.isPageLoading = false;

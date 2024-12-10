@@ -17,16 +17,20 @@ class IndexController extends Controller
         $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
         
         $query = Product::filter($filter);
-        
-        if (isset($data['dataPerPage'])) {
-            $products = ProductResource::collection($query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']));
-        } else {
-            $products = ProductResource::collection($query->get());
-        }
+
+        $paginatedProducts = $query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']);
+        $products = ProductResource::collection($paginatedProducts);
 
         return response()->json([
             'success' => true,
             'products' => $products,
+            'meta' => [
+                'current_page' => $paginatedProducts->currentPage(),
+                'last_page' => $paginatedProducts->lastPage(),
+                'per_page' => $paginatedProducts->perPage(), 
+                'total' => $paginatedProducts->total(),
+                'links' => $paginatedProducts->toArray()['links'],
+            ],
         ], 200);
     }
 }

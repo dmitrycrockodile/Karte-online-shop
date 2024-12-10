@@ -169,7 +169,7 @@
       }),
     },
     methods: {
-      async fetchProductsByCategory(sortby = 'all', pageNumber = 1, dataPerPage = 16) {
+      async fetchProductsByCategory(pageNumber = 1, dataPerPage = 16, sortby = 'all') {
         this.isProductsLoading = true;
         this.products = [];
 
