@@ -169,7 +169,7 @@
                   >
                     <div class="short-by">
                       <div class="select-box">
-                        <SortSelect :onChange="fetchProducts" />
+                        <SortSelect :onChange="setSortBy" />
                       </div>
                     </div>
                       <div class="product-view-style d-flex justify-content-md-between justify-content-center">  
@@ -227,7 +227,7 @@
                 <ul class="pagination text-center">
                   <li v-if="pagination.current_page !== 1" class="next">
                     <a
-                      @click.prevent="fetchProducts(pagination.first_page)"
+                      @click.prevent="setPage(1)"
                       href="#0"
                     >
                       <i class="flaticon-left-arrows" aria-hidden="true"></i>
@@ -245,7 +245,7 @@
                         "
                       >
                         <a
-                          @click.prevent="fetchProducts(link.label)"
+                          @click.prevent="setPage(link.label)"
                           href="#0"
                           :class="link.active ? 'active' : ''"
                           >{{ link.label }}</a
@@ -267,7 +267,7 @@
                     class="next"
                   >
                     <a
-                      @click.prevent="fetchProducts(pagination.current_page + 1)"
+                      @click.prevent="setPage(pagination.current_page + 1)"
                       href="#0"
                     >
                       <i class="flaticon-next-1" aria-hidden="true"></i>
@@ -331,12 +331,23 @@ export default {
       productsBackGroundImage,
       type: 'basic',
       searchedTitle: '',
+      sortBy: 'all',
+      page: 1,
+      dataPerPage: 3,
     };
   },
   computed: {
     ...mapGetters({
       categories: 'categories/categories',
     }),
+  },
+  watch: {
+    sortBy(newVal, oldVal) {
+      this.fetchProducts();
+    },
+    page(newVal, oldVal) {
+      this.fetchProducts();
+    }
   },
   methods: {
     resetFilters() {
@@ -357,7 +368,7 @@ export default {
         this[array] = this[array].filter((el) => el !== attr);
       }
     },
-    async fetchProducts(page = 1, dataPerPage = 2, sortBy = 'all') {
+    async fetchProducts() {
       this.isProductsLoading = true;
       scrollToTop();
       
@@ -367,9 +378,9 @@ export default {
         prices: this.prices,
         tags: this.tags,
         title: this.searchedTitle,
-        page: page,
-        sortby: sortBy,
-        dataPerPage: dataPerPage,
+        page: this.page,
+        sortby: this.sortBy,
+        dataPerPage: this.dataPerPage,
       });
 
       if (res.success) {
@@ -383,6 +394,12 @@ export default {
     handleProductListType(type) {
       return this.type = type;
     },
+    setSortBy(sortBy) {
+      this.sortBy = sortBy;
+    },
+    setPage(newPage) {
+      this.page = newPage;
+    }
   },
 };
 </script>

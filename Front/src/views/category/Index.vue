@@ -77,7 +77,7 @@
                   <ul class="pagination text-center">
                     <li v-if="pagination.current_page !== 1" class="next">
                       <a
-                        @click.prevent="fetchProductsByCategory(_, pagination.first_page, dataPerPage)"
+                        @click.prevent="fetchProductsByCategory(pagination.first_page)"
                         href="#0"
                       >
                         <i class="flaticon-left-arrows" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
                           "
                         >
                           <a
-                            @click.prevent="fetchProductsByCategory(_, link.label, dataPerPage)"
+                            @click.prevent="fetchProductsByCategory(link.label)"
                             href="#0"
                             :class="link.active ? 'active' : ''"
                             >{{ link.label }}</a
@@ -117,7 +117,7 @@
                       class="next"
                     >
                       <a
-                        @click.prevent="fetchProductsByCategory('all', pagination.current_page + 1, dataPerPage)"
+                        @click.prevent="fetchProductsByCategory(pagination.current_page + 1)"
                         href="#0"
                       >
                         <i class="flaticon-next-1" aria-hidden="true"></i>
@@ -159,7 +159,6 @@
         isPageLoading: true,
         isProductsLoading: true,
         pagination: [],
-        dataPerPage: 16,
         page: 1,
       }
     },
@@ -169,15 +168,15 @@
       }),
     },
     methods: {
-      async fetchProductsByCategory(pageNumber = 1, dataPerPage = 16, sortby = 'all') {
+      async fetchProductsByCategory(page = 1, dataPerPage = 3, sortby = 'all') {
         this.isProductsLoading = true;
         this.products = [];
 
         const res = await getProducts({
           categories: [this.category.id],
-          page: pageNumber,
+          page: page,
           sortby: sortby,
-          dataPerPage: this.dataPerPage || dataPerPage,
+          dataPerPage: dataPerPage,
         });
 
         if (res.success) {
@@ -192,7 +191,7 @@
 
       if (res.success) {
         this.category = res.category;
-        this.fetchProductsByCategory('all', this.pageNumber, this.dataPerPage);
+        this.fetchProductsByCategory();
         this.isPageLoading = false;
       }
     },

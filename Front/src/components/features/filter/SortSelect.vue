@@ -1,6 +1,6 @@
 <template>
    <select
-      @change.prevent="handleSelectChange"
+      @change.prevent="$emit('change', selectedValue)"
       class="wide"
       v-model="selectedValue"
    >
@@ -17,18 +17,13 @@
 <script>
    export default {
       name: "Sort Select",
-      props: {
-         "onChange": { type: Function, required: true },
+      emits: {
+         "change": sortValue => typeof sortValue === 'string',
       },
       data() {
          return {
             selectedValue: 'all',
          }
-      },
-      methods: { 
-         handleSelectChange() {
-            this.onChange(this.selectedValue);
-         },
       },
    }
 </script>
