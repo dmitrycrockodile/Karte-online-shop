@@ -18,19 +18,28 @@ class IndexController extends Controller
         
         $query = Product::filter($filter);
 
-        $paginatedProducts = $query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']);
-        $products = ProductResource::collection($paginatedProducts);
+        if (isset($data['dataPerPage'])) {
+            $paginatedProducts = $query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']);
+            $products = ProductResource::collection($paginatedProducts);
 
-        return response()->json([
-            'success' => true,
-            'products' => $products,
-            'meta' => [
-                'current_page' => $paginatedProducts->currentPage(),
-                'last_page' => $paginatedProducts->lastPage(),
-                'per_page' => $paginatedProducts->perPage(), 
-                'total' => $paginatedProducts->total(),
-                'links' => $paginatedProducts->toArray()['links'],
-            ],
-        ], 200);
+            return response()->json([
+                'success' => true,
+                'products' => $products,
+                'meta' => [
+                    'current_page' => $paginatedProducts->currentPage(),
+                    'last_page' => $paginatedProducts->lastPage(),
+                    'per_page' => $paginatedProducts->perPage(), 
+                    'total' => $paginatedProducts->total(),
+                    'links' => $paginatedProducts->toArray()['links'],
+                ],
+            ], 200);
+        } else {
+            $products = ProductResource::collection($query->get());
+
+            return response()->json([
+                'success' => true,
+                'products' => $products,
+            ], 200);
+        }
     }
 }

@@ -41,7 +41,7 @@
                   <li><router-link :to="{ name: 'login.index' }">Sign In</router-link></li>
                   <li><router-link :to="{ name: 'cart.index' }">View Cart</router-link></li>
                   <li><router-link :to="{ name: 'wishlist.index' }" >My WishList</router-link></li>
-                  <li><a href="compare.html">Compare Products</a></li>
+                  <li><router-link :to="{ name: 'compare.index' }">Compare Products</router-link></li>
                 </ul>
               </div>
             </div>

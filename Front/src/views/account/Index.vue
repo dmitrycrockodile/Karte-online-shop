@@ -386,7 +386,6 @@ import ContactForm from "@/components/common/ContactForm.vue";
 import BreadCrumps from "@/components/common/BreadCrumps.vue";
 
 import accountBGImage from "@/assets/images/inner-pages/account_bg.jpg";
-import axios from "axios";
 
 export default {
    name: "User Account",

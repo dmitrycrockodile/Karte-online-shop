@@ -161,14 +161,14 @@
                 </div>
                 <ul class="shop-details-top-ask-question">
                   <li>
-                    <a href="#0">
+                    <button @click.prevent="addToCompare(product)">
                       <div class="icon">
                         <i class="flaticon-left-and-right-arrows"></i>
                       </div>
                       <div class="text">
                         <p>Add to Compare</p>
                       </div>
-                    </a>
+                    </button>
                   </li>
                   <li>
                     <router-link :to="{ name: 'contact.index' }">
@@ -894,6 +894,7 @@ export default {
     ...mapActions({
       addToCart: "cart/addToCart",
       toggleWishlistItem: "wishlist/toggleWishlistItem",
+      addToCompare: "compare/addToCompare",
     }),
     countDiscountPercentage(oldPrice, newPrice) {
       if (!oldPrice) return "";

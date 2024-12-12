@@ -104,7 +104,7 @@
                               <router-link :to="{ name: 'aboutUs.index' }"><span>About Us</span></router-link>
                             </li>
                             <li class="dropdown-list">
-                              <router-link :to="{ name: 'faq.index' }"><span>Faq</span></router-link>
+                              <router-link :to="{ name: 'faq.index' }"><span>FAQ</span></router-link>
                             </li>
                             <li class="dropdown-list">
                               <router-link :to="{ name: 'cart.index' }"><span>Cart</span></router-link>
@@ -121,6 +121,12 @@
                             <li class="d-lg-block d-none">
                               <router-link :to="{ name: 'account.index'}"
                                 ><i class="flaticon-user"></i>
+                              </router-link>
+                            </li>
+                            <li class="d-lg-block d-none">
+                              <router-link :to="{ name: 'compare.index' }" class="number">
+                                <i class="flaticon-left-and-right-arrows"></i>
+                                <span class="count">({{ $store.state.compare.comparedProducts.length }})</span>
                               </router-link>
                             </li>
                             <li class="d-lg-block d-none">

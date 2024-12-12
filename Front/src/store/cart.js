@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useToast } from 'vue-toastification'
+import { useToast } from 'vue-toastification';
 
 const toast = useToast();
 

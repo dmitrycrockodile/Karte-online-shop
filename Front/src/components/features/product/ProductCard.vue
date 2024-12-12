@@ -49,7 +49,9 @@
               </a>
             </li>
             <li>
-              <a href="compare.html">
+              <a 
+                @click.prevent="addToCompare(product)"
+                href="/">
                 <i
                   class="flaticon-left-and-right-arrows"
                 ></i>
@@ -205,6 +207,10 @@
       }
     },
     methods: {
+      ...mapActions({
+        toggleWishlistItem: 'wishlist/toggleWishlistItem',
+        addToCompare: 'compare/addToCompare',
+      }),
       async getPopupProduct(id) {
         const res = await getProduct(id);
 
@@ -220,7 +226,6 @@
       handleWishlistAdd() {
         this.toggleWishlistItem(this.product.id);
       },
-      ...mapActions('wishlist', ['toggleWishlistItem']),
     },
     computed: {
       isActive() {

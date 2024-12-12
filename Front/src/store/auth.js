@@ -79,6 +79,7 @@ const actions = {
          commit('LOGOUT_USER');
          dispatch('cart/clearLocalCart', null, { root: true });
          dispatch('wishlist/clearWishList', null, { root: true });
+         dispatch('compare/clearCompare', null, { root: true });
 
          toast.info('Logged out successfully');
       } catch(err) {
@@ -109,6 +110,7 @@ const actions = {
       commit('LOGOUT_USER');
       dispatch('cart/clearLocalCart', null, { root: true });
       dispatch('wishlist/clearWishList', null, { root: true });
+      dispatch('compare/clearCompare', null, { root: true });
 
       toast.info('Session expired: please login again.', { timeout: 2000 });
    },
