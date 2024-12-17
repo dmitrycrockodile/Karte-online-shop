@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', "User: $user->name")
+
 @section('content')
    <div class="content-header">
       <div class="container-fluid">

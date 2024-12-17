@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', "Edit User: $user->name")
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
@@ -34,7 +36,7 @@
                                     class="form-control" 
                                     name="name" 
                                     placeholder="Your name"
-                                    value="{{ old('name', $user->name) }}"
+                                    value="{{ $errors->any() ? old('name') : $user->name }}"
                                 >
                                 @error('name')
                                     <p class="text-danger">{{ $message }}</p>
@@ -47,7 +49,7 @@
                                     class="form-control" 
                                     name="surname" 
                                     placeholder="Your surname"
-                                    value="{{ old('surname', $user->surname) }}"
+                                    value="{{ $errors->any() ? old('surname') : $user->surname }}"
                                 >
                                 @error('surname')
                                     <p class="text-danger">{{ $message }}</p>
@@ -60,7 +62,7 @@
                                     class="form-control" 
                                     name="patronymic" 
                                     placeholder="Your patronymic"
-                                    value="{{ old('patronymic', $user->patronymic) }}"
+                                    value="{{ $errors->any() ? old('patronymic') : $user->patronymic }}"
                                 >
                                 @error('patronymic')
                                     <p class="text-danger">{{ $message }}</p>
@@ -87,7 +89,7 @@
                                  class="form-control" 
                                  name="address" 
                                  placeholder="Address"
-                                 value="{{ old('address', $user->address) }}"
+                                 value="{{ $errors->any() ? old('address') : $user->address }}"
                               >
                               @error('address')
                                  <p class="text-danger">{{ $message }}</p>
@@ -100,7 +102,7 @@
                                  class="form-control" 
                                  name="postal_code" 
                                  placeholder="Postal code"
-                                 value="{{ old('postal_code', $user->postal_code) }}"
+                                 value="{{ $errors->any() ? old('postal_code') : $user->postal_code }}"
                               >
                               @error('postal_code')
                                  <p class="text-danger">{{ $message }}</p>
@@ -113,7 +115,7 @@
                                  class="form-control" 
                                  name="city" 
                                  placeholder="City"
-                                 value="{{ old('city', $user->city) }}"
+                                 value="{{ $errors->any() ? old('city') : $user->city }}"
                               >
                               @error('city')
                                  <p class="text-danger">{{ $message }}</p>
@@ -126,7 +128,7 @@
                                  class="form-control" 
                                  name="country" 
                                  placeholder="Country"
-                                 value="{{ old('country', $user->country) }}"
+                                 value="{{ $errors->any() ? old('country') : $user->country }}"
                               >
                               @error('country')
                                  <p class="text-danger">{{ $message }}</p>
@@ -144,7 +146,7 @@
                                  type="date" 
                                  class="form-control" 
                                  name="date_of_birth" 
-                                 value="{{ old('date_of_birth', $user->date_of_birth) }}"
+                                 value="{{ $errors->any() ? old('date_of_birth') : $user->date_of_birth }}"
                               >
                               @error('date_of_birth')
                                  <p class="text-danger">{{ $message }}</p>
@@ -157,7 +159,7 @@
                                  class="form-control" 
                                  name="age" 
                                  placeholder="Your age"
-                                 value="{{ old('age', $user->age) }}"
+                                 value="{{ $errors->any() ? old('age') : $user->age }}"
                               >
                               @error('age')
                                  <p class="text-danger">{{ $message }}</p>
@@ -176,7 +178,7 @@
                                  class="form-control" 
                                  name="phone_number" 
                                  placeholder="Phone number"
-                                 value="{{ old('phone_number', $user->phone_number) }}"
+                                 value="{{ $errors->any() ? old('phone_number') : $user->phone_number }}"
                               >
                               @error('phone_number')
                                  <p class="text-danger">{{ $message }}</p>

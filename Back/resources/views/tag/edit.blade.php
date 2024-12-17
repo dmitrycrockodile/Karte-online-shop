@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', "Edit Tag: $tag->title")
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
@@ -25,7 +27,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input type="text" class="form-control" name="title" placeholder="New title" value="{{ old('name', $tag->title) }}">
+                        <input type="text" class="form-control" name="title" placeholder="New title" value="{{ $errors->any() ? old('name') : $tag->title }}">
 
                         @error('title')
                            <p class="text-danger">{{ $message }}</p>

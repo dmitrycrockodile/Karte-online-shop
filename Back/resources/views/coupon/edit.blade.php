@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', "Edit Coupon: $coupon->code")
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
@@ -25,7 +27,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input type="text" class="form-control" name="code" placeholder="New code" value="{{ old('name', $coupon->code) }}">
+                        <input type="text" class="form-control" name="code" placeholder="New code" value="{{ $errors->any() ? old('code') : $coupon->code }}">
 
                         @error('code')
                            <p class="text-danger">{{ $message }}</p>
@@ -33,7 +35,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" name="percentage" placeholder="New percentage" value="{{ old('name', $coupon->percentage) }}">
+                        <input type="text" class="form-control" name="percentage" placeholder="New percentage" value="{{ $errors->any() ? old('percentage') : $coupon->percentage }}">
 
                         @error('percentage')
                            <p class="text-danger">{{ $message }}</p>

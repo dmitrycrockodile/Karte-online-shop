@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', "Edit Product: $product->title")
+
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
@@ -30,7 +32,7 @@
                            class="form-control" 
                            name="title" 
                            placeholder="Enter title"
-                           value="{{ old('title') ?? $product->title }}"
+                           value="{{ $errors->any() ? old('title') : $product->title }}"
                         >
                         @error('title')
                            <p class="text-danger">{{ $message }}</p>
@@ -43,7 +45,7 @@
                            class="form-control" 
                            name="description" 
                            placeholder="Enter description"
-                           value="{{ old('description') ?? $product->description }}"
+                           value="{{ $errors->any() ? old('description') : $product->description }}"
                         >
                         @error('description')
                            <p class="text-danger">{{ $message }}</p>
@@ -56,7 +58,7 @@
                            rows="3" 
                            name="content" 
                            placeholder="Enter content"
-                        >{{ old('content') ?? $product->content }}</textarea>
+                        >{{ $errors->any() ? old('content') : $product->content }}</textarea>
                         @error('content')
                            <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -68,7 +70,7 @@
                            class="form-control" 
                            name="price" 
                            placeholder="Enter price"
-                           value="{{ old('price') ?? $product->price }}"
+                           value="{{ $errors->any() ? old('price') : $product->price }}"
                         >
                         @error('price')
                            <p class="text-danger">{{ $message }}</p>
@@ -81,7 +83,7 @@
                            class="form-control" 
                            name="old_price" 
                            placeholder="Enter old price"
-                           value="{{ old('old_price') }}"
+                           value="{{ $errors->any() ? old('old_price') : $product->old_price }}"
                         >
                         @error('price')
                            <p class="text-danger">{{ $message }}</p>
@@ -94,7 +96,7 @@
                            class="form-control" 
                            name="count" 
                            placeholder="Enter count"
-                           value="{{ old('count') ?? $product->count }}"
+                           value="{{ $errors->any() ? old('count') : $product->count }}"
                         >
                         @error('count')
                            <p class="text-danger">{{ $message }}</p>
@@ -107,7 +109,7 @@
                             @foreach ($categories as $category)
                                 <option 
                                     value="{{ $category->id }}"
-                                    {{ $category->id == (old('category_id') ?? $product->category_id) ? ' selected' : '' }}
+                                    {{ $category->id == ($errors->any() ? old('category_id') : $product->category_id) ? ' selected' : '' }}
                                 >{{ $category->title }}</option>
                             @endforeach
                         </select>

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('title', 'Coupons')
+
 @section('content')
    <div class="content-header">
       <div class="container-fluid">

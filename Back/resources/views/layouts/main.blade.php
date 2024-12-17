@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Karte | Admin panel</title>
+      <title>@yield('title', 'Karte | Admin panel')</title>
       <!-- Select2 -->
       <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
       <!-- Favicon icon -->
@@ -16,6 +16,8 @@
       <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
       <!-- Theme style -->
       <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+      <!-- Build CSS -->
+      @vite(['resources/css/app.css'])
    </head>
    <body class="hold-transition sidebar-mini layout-fixed">
       <div class="wrapper">
@@ -211,5 +213,7 @@
       <script src="{{ asset('adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
       <!-- AdminLTE App -->
       <script src="{{ asset('adminlte/dist/js/adminlte.js') }}"></script>
+      <!-- Build CSS -->
+      @vite(['resources/js/app.js'])
    </body>
 </html>
