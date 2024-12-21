@@ -49,7 +49,7 @@
                      <th>Coupons</th>
                      @foreach ($category->coupons as $coupon)
                         <td>
-                           {{ $coupon->code }}
+                           {{ $coupon->title }}
                         </td>
                      @endforeach
                   </tr>

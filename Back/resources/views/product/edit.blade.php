@@ -27,252 +27,169 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input 
-                           type="text" 
-                           class="form-control" 
-                           name="title" 
-                           placeholder="Enter title"
-                           value="{{ $errors->any() ? old('title') : $product->title }}"
-                        >
-                        @error('title')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="title" 
+                            type="text" 
+                            :isRequired="true" 
+                            :defaultValue="$product->title" 
+                        />
+                    </div>
+                    <div class="form-group">
+                        <x-forms.simple-input 
+                            name="description" 
+                            type="text" 
+                            :isRequired="true" 
+                            :defaultValue="$product->description" 
+                        />
                     </div>
       
                     <div class="form-group">
-                        <input 
-                           type="text" 
-                           class="form-control" 
-                           name="description" 
-                           placeholder="Enter description"
-                           value="{{ $errors->any() ? old('description') : $product->description }}"
-                        >
-                        @error('description')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.textarea
+                            name="content" 
+                            rows="3" 
+                            :isRequired="true" 
+                            :defaultValue="$product->content" 
+                        />
                     </div>
       
                     <div class="form-group">
-                        <textarea 
-                           class="form-control" 
-                           rows="3" 
-                           name="content" 
-                           placeholder="Enter content"
-                        >{{ $errors->any() ? old('content') : $product->content }}</textarea>
-                        @error('content')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-      
-                    <div class="form-group">
-                        <input 
-                           type="number" 
-                           class="form-control" 
-                           name="price" 
-                           placeholder="Enter price"
-                           value="{{ $errors->any() ? old('price') : $product->price }}"
-                        >
-                        @error('price')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="price" 
+                            type="number" 
+                            :isRequired="true" 
+                            :defaultValue="$product->price"
+                        />
                     </div>
 
                     <div class="form-group">
-                        <input 
-                           type="number" 
-                           class="form-control" 
-                           name="old_price" 
-                           placeholder="Enter old price"
-                           value="{{ $errors->any() ? old('old_price') : $product->old_price }}"
-                        >
-                        @error('price')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                     </div>
-      
-                    <div class="form-group">
-                        <input 
-                           type="number" 
-                           class="form-control" 
-                           name="count" 
-                           placeholder="Enter count"
-                           value="{{ $errors->any() ? old('count') : $product->count }}"
-                        >
-                        @error('count')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="old_price" 
+                            type="number" 
+                            :defaultValue="$product->old_price" 
+                            placeholder="Enter old price"
+                        />
                     </div>
       
                     <div class="form-group">
-                        <select name="category_id" class="form-control select2" style="width: 100%;">
-                           <option selected="selected" disabled>Select a category</option>
-                            @foreach ($categories as $category)
-                                <option 
-                                    value="{{ $category->id }}"
-                                    {{ $category->id == ($errors->any() ? old('category_id') : $product->category_id) ? ' selected' : '' }}
-                                >{{ $category->title }}</option>
-                            @endforeach
-                        </select>
-      
-                        @error('category_id')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="count" 
+                            type="number" 
+                            :isRequired="true" 
+                            :defaultValue="$product->count" 
+                        />
                     </div>
       
                     <div class="form-group">
-                        <select name="tags[]" class="tags" multiple="multiple" data-placeholder="Select a tag" style="width: 100%;">
-                          @foreach ($tags as $tag)
-                            <option
-                                value="{{ $tag->id }}"
-                                {{ is_array($product->tags->pluck('id')->toArray()) && in_array($tag->id, $product->tags->pluck('id')->toArray()) ? ' selected' : '' }}  
-                            >{{ $tag->title }}</option>
-                          @endforeach
-                        </select>
+                        <x-forms.select 
+                            name="category_id"
+                            defaultText="Select a category"
+                            :values="$categories"
+                            :selectedValue="$product->category_id"
+                            class="categories"
+                            :isRequired="true"
+                        />
+                    </div>
       
-                        @error('tags')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                    <div class="form-group">
+                        <x-forms.select 
+                            name="tags[]"
+                            defaultText="Select a tag"
+                            :values="$tags"
+                            :selectedValue="$product->tags"
+                            :multiple="true"
+                            class="tags"
+                        />
                     </div>
 
                     <div class="form-group">
-                        <select name="sizes[]" class="sizes" multiple="multiple" data-placeholder="Select a size" style="width: 100%;">
-                          @foreach ($sizes as $size)
-                            <option
-                                value="{{ $size->id }}"
-                                {{ is_array($product->sizes->pluck('id')->toArray()) && in_array($size->id, $product->sizes->pluck('id')->toArray()) ? ' selected' : '' }}  
-                            >{{ $size->title }}</option>
-                          @endforeach
-                        </select>
-      
-                        @error('sizes')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.select 
+                            name="sizes[]"
+                            defaultText="Select a size"
+                            :values="$sizes"
+                            :selectedValue="$product->sizes"
+                            :multiple="true"
+                            class="sizes"
+                            :isRequired="true"
+                        />
                     </div>
 
                     <div class="form-group">
-                        <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
-                          @foreach ($coupons as $coupon)
-                            <option
-                                value="{{ $coupon->id }}"
-                                {{ is_array($product->coupons->pluck('id')->toArray()) && in_array($coupon->id, $product->coupons->pluck('id')->toArray()) ? ' selected' : '' }}  
-                            >{{ $coupon->code }}</option>
-                          @endforeach
-                        </select>
-      
-                        @error('coupons')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.select 
+                            name="coupons[]"
+                            defaultText="Select a coupon"
+                            :values="$coupons"
+                            :selectedValue="$product->coupons"
+                            :multiple="true"
+                            class="coupons"
+                        />
                     </div>
       
                     <div class="form-group">
-                        <select name="colors[]" class="colors" multiple="multiple" data-placeholder="Select a color" style="width: 100%;">
-                            @foreach ($colors as $color)
-                                <option 
-                                    value="{{ $color->id }}"
-                                    {{ is_array($product->colors->pluck('id')->toArray()) && in_array($color->id, $product->colors->pluck('id')->toArray()) ? ' selected' : '' }}  
-                                >{{$color->title}}</option>
-                            @endforeach
-                        </select>
-      
-                        @error('colors')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.select 
+                            name="colors[]"
+                            defaultText="Select a color"
+                            :values="$colors"
+                            :selectedValue="$product->colors"
+                            :multiple="true"
+                            class="colors"
+                            :isRequired="true"
+                        />
                     </div>
       
                     <div class="form-group">
                         <h4>Upload preview image</h4>
-                        <div class="input-group d-flex flex-column">
-                            <div class="custom-file w-100">
-                                <label class="custom-file-label" for="exampleInputFile">Choose new file</label>
-                                <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile"">
-                            </div>
-
-                            <div class="w-50 mt-2">
-                                <img src="{{ $product->previewImageUrl }}" alt="Preview image" class="w-50" />
-                            </div>
-                        </div>
-      
-                        @error('preview_image')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.image-input
+                            name="preview_image"
+                            :src="$product->previewImageUrl"
+                            label="Choose new file"
+                            alt="Preview image"
+                            :isSet="$product->previewImageUrl ? true : false"
+                            errorName="preview_image"
+                        />
                     </div>
 
                     <div>
                         <h4>Upload product images</h4>
                         <div class="form-group">
-                           <div class="input-group">
-                              <div class="custom-file">
-                                 <input name="images[]" type="file" class="custom-file-input" id="exampleInputFile">
-                                 <label class="custom-file-label" for="exampleInputFile">Choose first image</label>
-                              </div>
-                           </div>
-
-                           @if (isset($product->images[0]))
-                            <div class="w-50 mt-2">
-                                <img src="{{ $product->images[0]->imageUrl }}" alt="Preview image" class="w-50" />
-                            </div>
-                           @endif
-         
-                           @error('images[]')
-                              <p class="text-danger">{{ $message }}</p>
-                           @enderror
+                            <x-forms.image-input
+                                name="images[]"
+                                :src="isset($product->images[0]) ? $product->images[0]->imageUrl : false"
+                                label="Choose first image"
+                                alt="Product Image"
+                                isSet="{{isset($product->images[0]) ? true : false}}"
+                                errorName="images.0"
+                            />
                         </div>
       
                         <div class="form-group">
-                           <div class="input-group">
-                              <div class="custom-file">
-                                 <input name="images[]" type="file" class="custom-file-input" id="exampleInputFile">
-                                 <label class="custom-file-label" for="exampleInputFile">Choose second image</label>
-                              </div>
-                           </div>
-
-                           @if (isset($product->images[1]))
-                            <div class="w-50 mt-2">
-                                <img src="{{ $product->images[1]->imageUrl }}" alt="Preview image" class="w-50" />
-                            </div>
-                           @endif
-
-         
-                           @error('images[]')
-                              <p class="text-danger">{{ $message }}</p>
-                           @enderror
+                            <x-forms.image-input
+                                name="images[]"
+                                :src="isset($product->images[1]) ? $product->images[1]->imageUrl : false"
+                                label="Choose second image"
+                                alt="Product Image"
+                                isSet="{{isset($product->images[1]) ? true : false}}"
+                                errorName="images.1"
+                            />
                         </div>
       
                         <div class="form-group">
-                           <div class="input-group">
-                              <div class="custom-file">
-                                 <input name="images[]" type="file" class="custom-file-input" id="exampleInputFile">
-                                 <label class="custom-file-label" for="exampleInputFile">Choose third image</label>
-                              </div>
-                           </div>
-
-                           @if (isset($product->images[2]))
-                            <div class="w-50 mt-2">
-                                <img src="{{ $product->images[2]->imageUrl }}" alt="Preview image" class="w-50" />
-                            </div>
-                           @endif
-         
-                           @error('images[]')
-                              <p class="text-danger">{{ $message }}</p>
-                           @enderror
+                            <x-forms.image-input
+                                name="images[]"
+                                :src="isset($product->images[2]) ? $product->images[2]->imageUrl : false"
+                                label="Choose third image"
+                                alt="Product Image"
+                                isSet="{{isset($product->images[2]) ? true : false}}"
+                                errorName="images.2"
+                            />
                         </div>
                      </div>
 
                     <div class="form-check mb-3 ml-1">
-                        <label class="form-check-label">
-                            <input 
-                                name="is_published" 
-                                type="checkbox" 
-                                class="form-check-input" 
-                                value="1"
-                                {{ (old('is_published') ?? $product->is_published) ? ' checked' : '' }}    
-                            >
-                           Published
-                        </label>
-      
-                        @error('is_published')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.checkbox
+                            name="is_published" 
+                            :isChecked="old('is_published') ?? $product->is_published"
+                            placeholder="Published"
+                        />
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

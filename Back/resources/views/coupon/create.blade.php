@@ -26,29 +26,21 @@
             <form action="{{ route('coupon.store') }}" method="post">
                @csrf
                <div class="form-group">
-                  <input 
+                  <x-forms.simple-input 
+                     name="title" 
                      type="text" 
-                     class="form-control" 
-                     name="code" 
-                     placeholder="Enter Coupon code"
-                     value="{{ old('code') }}"
-                  >
-                  @error('code')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                     :isRequired="true"
+                     placeholder="Enter Coupon title"
+                  />
                </div>
 
                <div class="form-group">
-                  <input 
-                     type="number" 
-                     class="form-control" 
+                  <x-forms.simple-input 
                      name="percentage" 
+                     type="number" 
+                     :isRequired="true"
                      placeholder="Sale percentage"
-                     value="{{ old('percentage') }}"
-                  >
-                  @error('percentage')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  />
                </div>
 
                <button type="submit" class="btn btn-primary">Submit</button>

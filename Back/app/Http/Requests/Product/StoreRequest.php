@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
             'old_price' => 'nullable|integer',
             'count' => 'required|integer',
             'is_published' => 'nullable|boolean',
-            'category_id' => 'nullable|integer|exists:categories,id',
+            'category_id' => 'required|integer|exists:categories,id',
             'colors' => 'required|array',
             'colors.*' => 'required|integer|exists:colors,id',
             'images' => 'nullable|array',
@@ -38,7 +38,7 @@ class StoreRequest extends FormRequest
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|integer|exists:tags,id',
             'sizes' => 'nullable|array',
-            'sizes.*' => 'nullable|integer|exists:sizes,id',
+            'sizes.*' => 'required|integer|exists:sizes,id',
             'coupons' => 'nullable|array',
             'coupons.*' => 'nullable|integer|exists:coupons,id'
         ];
@@ -67,6 +67,9 @@ class StoreRequest extends FormRequest
             'colors.array' => 'Colors must be an array',
             'images.array' => 'Images must be an array',
             'images.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
+            'images.0' => 'First image is invalid',
+            'images.1' => 'Second image is invalid',
+            'images.2' => 'Third image is invalid',
             'tags.array' => 'Tags must be an array',
             'sizes.array' => 'Sizes must be an array',
             'coupons.array' => 'Coupons must be an array',

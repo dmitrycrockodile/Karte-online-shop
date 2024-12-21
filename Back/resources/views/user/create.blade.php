@@ -28,58 +28,40 @@
 
                <div class="form-group w-50">
                   <h2 class="mb-2 h5">Email</h2>
-                  <input 
-                     type="email" 
-                     class="form-control" 
+                  <x-forms.simple-input 
                      name="email" 
+                     type="email" 
+                     :isRequired="true"
                      placeholder="Your email"
-                     value="{{ old('email') }}"
-                  >
-                  @error('email')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  />
                </div>
 
                <div>
                   <h2 class="mb-2 h5">Full name and sex</h2>
                   <div class="d-flex flex-wrap">
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="name" 
+                           type="text" 
+                           :isRequired="true"
                            placeholder="Your name"
-                           value="{{ old('name') }}"
-                        >
-                        @error('name')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="surname" 
+                           type="text" 
                            placeholder="Your surname"
-                           value="{{ old('surname') }}"
-                        >
-                        @error('surname')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="patronymic" 
+                           type="text" 
                            placeholder="Your patronymic"
-                           value="{{ old('patronymic') }}"
-                        >
-                        @error('patronymic')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
 
                      <div class="form-group col-md-2 pl-0">
@@ -97,55 +79,35 @@
 
                   <div class="d-flex flex-wrap">
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="address" 
+                           type="text" 
                            placeholder="Address"
-                           value="{{ old('address') }}"
-                        >
-                        @error('address')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="postal_code" 
+                           type="text" 
                            placeholder="Postal code"
-                           value="{{ old('postal_code') }}"
-                        >
-                        @error('postal_code')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="city" 
+                           type="text" 
                            placeholder="City"
-                           value="{{ old('city') }}"
-                        >
-                        @error('city')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="country" 
+                           type="text" 
                            placeholder="Country"
-                           value="{{ old('country') }}"
-                        >
-                        @error('country')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
                   </div>
                </div>
@@ -155,28 +117,18 @@
 
                   <div class="d-flex flex-wrap">
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="date" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="date_of_birth" 
-                           value="{{ old('date_of_birth') }}"
-                        >
-                        @error('date_of_birth')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                           type="date" 
+                        />
                      </div>
    
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="number" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="age" 
+                           type="number" 
                            placeholder="Your age"
-                           value="{{ old('age') }}"
-                        >
-                        @error('age')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
                   </div>
                </div>
@@ -186,16 +138,11 @@
 
                   <div class="d-flex flex-wrap">
                      <div class="form-group col-md-5 pl-0">
-                        <input 
-                           type="text" 
-                           class="form-control" 
+                        <x-forms.simple-input 
                            name="phone_number" 
+                           type="text" 
                            placeholder="Phone number"
-                           value="{{ old('phone_number') }}"
-                        >
-                        @error('phone_number')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        />
                      </div>
                   </div>
                </div>
@@ -205,29 +152,21 @@
                      Password
                   </h2>
                   <div class="form-group w-50">
-                     <input 
-                        type="password" 
-                        class="form-control" 
+                     <x-forms.simple-input 
                         name="password" 
+                        type="password" 
                         placeholder="Your password"
-                        value="{{ old('password') }}"
-                     >
-                     @error('password')
-                        <p class="text-danger">{{ $message }}</p>
-                     @enderror
+                        :isRequired="true"
+                     />
                   </div>
    
                   <div class="form-group w-50">
-                     <input 
-                        type="password" 
-                        class="form-control" 
+                     <x-forms.simple-input 
                         name="password_confirmation" 
+                        type="password" 
                         placeholder="Confirm password"
-                        value="{{ old('password_confirmation') }}"
-                     >
-                     @error('password_confirmation')
-                        <p class="text-danger">{{ $message }}</p>
-                     @enderror
+                        :isRequired="true"
+                     />
                   </div>
                </div>
             

@@ -26,59 +26,42 @@
             <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                @csrf
                <div class="form-group">
-                  <input 
-                     type="text" 
-                     class="form-control" 
+                  <x-forms.simple-input 
                      name="title" 
+                     type="text" 
+                     :isRequired="true"
                      placeholder="Enter title"
-                     value="{{ old('title') }}"
-                  >
-                  @error('title')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  />
                </div>
 
                <div class="form-group">
-                  <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
-                    @foreach ($coupons as $coupon)
-                     <option 
-                        value="{{ $coupon->id }}"
-                        {{ old('coupons') && in_array($coupon->id, old('coupons')) ? ' selected' : '' }}
-                     >{{ $coupon->code }}</option>
-                    @endforeach
-                  </select>
-
-                  @error('coupons')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  <x-forms.select 
+                     name="coupons[]"
+                     multiple="multiple"
+                     defaultText="Select a coupon"
+                     :values="$coupons"
+                     class="coupons"
+                  />
                </div>
 
                <div class="form-group">
                   <p>Upload preview image</p>
-                  <div class="input-group">
-                     <div class="custom-file">
-                        <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile" value="{{ old('preview_image') }}">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                     </div>
-                  </div>
-
-                  @error('preview_image')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  <x-forms.image-input
+                     name="preview_image"
+                     label="Choose file"
+                     alt="Preview image"
+                     errorName="preview_image"
+                  />
                </div>
 
                <div class="form-group">
                   <p>Upload banner image</p>
-                  <div class="input-group">
-                     <div class="custom-file">
-                        <input name="banner" type="file" class="custom-file-input" id="exampleInputFile" value="{{ old('banner') }}">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                     </div>
-                  </div>
-
-                  @error('banner')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  <x-forms.image-input
+                     name="banner"
+                     label="Choose file"
+                     alt="Banner image"
+                     errorName="banner"
+                  />
                </div>
 
                <button type="submit" class="btn btn-primary">Submit</button>

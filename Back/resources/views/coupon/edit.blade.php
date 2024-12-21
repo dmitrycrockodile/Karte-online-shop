@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
-@section('title', "Edit Coupon: $coupon->code")
+@section('title', "Edit Coupon: $coupon->title")
 
 @section('content')
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Edit: {{ $coupon->code }}</h1>
+                    <h1 class="m-0">Edit: {{ $coupon->title }}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -27,19 +27,23 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input type="text" class="form-control" name="code" placeholder="New code" value="{{ $errors->any() ? old('code') : $coupon->code }}">
-
-                        @error('code')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="title" 
+                            type="text" 
+                            :isRequired="true"
+                            :defaultValue="$coupon->title"
+                            placeholder="Enter title"
+                        />
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" name="percentage" placeholder="New percentage" value="{{ $errors->any() ? old('percentage') : $coupon->percentage }}">
-
-                        @error('percentage')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="percentage" 
+                            type="number" 
+                            :isRequired="true"
+                            :defaultValue="$coupon->percentage"
+                            placeholder="New percentage"
+                        />
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

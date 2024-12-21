@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'required|string',
+            'title' => 'required|string',
             'percentage' => 'required|integer'
         ];
     }
@@ -30,8 +30,8 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'code.required' => 'Please write a coupon code',
-            'code.string' => 'Coupon must be a string',
+            'title.required' => 'Please write a coupon title',
+            'title.string' => 'Coupon must be a string',
             'percentage.required' => 'Please write a percentage',
             'percentage.integer' => 'Percentage must be an integer',
         ];

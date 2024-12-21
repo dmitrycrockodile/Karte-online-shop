@@ -199,6 +199,7 @@
          $('.colors').select2()
          $('.sizes').select2()
          $('.coupons').select2()
+         $('.categories').select2()
          bsCustomFileInput.init()
       })
       $.widget.bridge('uibutton', $.ui.button)

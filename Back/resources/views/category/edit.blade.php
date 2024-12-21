@@ -27,64 +27,48 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input type="text" class="form-control" name="title" placeholder="New title" value="{{ $errors->any() ? old('title') : $category->title }}">
-
-                        @error('title')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="title" 
+                            type="text" 
+                            :isRequired="true"
+                            placeholder="New title"
+                            :defaultValue="$category->title"
+                        />
                     </div>
 
                     <div class="form-group">
-                        <select name="coupons[]" class="coupons" multiple="multiple" data-placeholder="Select a coupon" style="width: 100%;">
-                          @foreach ($coupons as $coupon)
-                            <option
-                                value="{{ $coupon->id }}"
-                                {{ is_array($category->coupons->pluck('id')->toArray()) && in_array($coupon->id, $category->coupons->pluck('id')->toArray()) ? ' selected' : '' }}  
-                            >{{ $coupon->code }}</option>
-                          @endforeach
-                        </select>
-      
-                        @error('coupons')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.select 
+                            name="coupons[]"
+                            class="coupons"
+                            multiple="multiple"
+                            defaultText="Select a coupon"
+                            :values="$coupons"
+                            :selectedValue="$category->coupons"
+                        />
                     </div>
 
                     <div class="form-group">
                         <h4>Upload preview image</h4>
-                        <div class="input-group d-flex flex-column">
-                            <div class="custom-file w-100">
-                                <label class="custom-file-label" for="exampleInputFile">Choose new file</label>
-                                <input name="preview_image" type="file" class="custom-file-input" id="exampleInputFile"">
-                            </div>
-
-                            <div class="w-50 mt-2">
-                                <img src="{{ $category->previewImageUrl }}" alt="Preview image" class="w-50" />
-                            </div>
-                        </div>
-      
-                        @error('preview_image')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.image-input
+                            name="preview_image"
+                            label="Choose new file"
+                            alt="Preview image"
+                            errorName="preview_image"
+                            :src="$category->previewImageUrl"
+                            :isSet="$category->previewImageUrl ? true : false"
+                        />
                     </div>
 
                     <div class="form-group">
                         <h4>Upload banner image</h4>
-                        <div class="input-group d-flex flex-column">
-                            <div class="custom-file w-100">
-                                <label class="custom-file-label" for="exampleInputFile">Choose new file</label>
-                                <input name="banner" type="file" class="custom-file-input" id="exampleInputFile"">
-                            </div>
-
-                            @if ($category->bannerUrl)
-                                <div class="w-50 mt-2">
-                                    <img src="{{ $category->bannerUrl }}" alt="Banner image" class="w-50" />
-                                </div>
-                            @endif
-                        </div>
-      
-                        @error('banner')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.image-input
+                            name="banner"
+                            label="Choose new file"
+                            alt="Banner image"
+                            errorName="banner"
+                            :src="$category->bannerUrl"
+                            :isSet="$category->bannerUrl ? true : false"
+                        />
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

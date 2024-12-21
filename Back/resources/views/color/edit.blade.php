@@ -27,11 +27,13 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <input type="text" class="form-control" name="title" placeholder="New title" value="{{ $errors->any() ? old('title') : $color->title }}">
-
-                        @error('title')
-                           <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        <x-forms.simple-input 
+                            name="title" 
+                            type="text" 
+                            :isRequired="true"
+                            :defaultValue="$color->title"
+                            placeholder="New title"
+                        />
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>

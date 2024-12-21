@@ -78,7 +78,7 @@
                   </tr>
                   <tr>
                      <th>Published</th>
-                     <td>{{ $product->is_published }}</td>
+                     <td>{{ $product->is_published ? 'Yes' : 'No' }}</td>
                   </tr>
                   <tr>
                      <th>Category</th>
@@ -112,7 +112,7 @@
                      <th>Coupons</th>
                      <td>
                         @foreach ($product->coupons as $coupon)
-                           <span class="mr-3">{{ $coupon->code }}</span>
+                           <span class="mr-3">{{ $coupon->title }}</span>
                         @endforeach
                      </td>
                   </tr>

@@ -1,19 +1,19 @@
 @extends('layouts.main')
 
-@section('title', "Coupon: $coupon->code")
+@section('title', "Coupon: $coupon->title")
 
 @section('content')
    <div class="content-header">
       <div class="container-fluid">
          <div class="row mb-2">
             <div class="col-sm-6">
-               <h1 class="m-0">{{ $coupon->code }}</h1>
+               <h1 class="m-0">{{ $coupon->title }}</h1>
             </div>
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Main page</a></li>
                   <li class="breadcrumb-item"><a href="{{ route('coupon.index') }}">Coupons</a></li>
-                  <li class="breadcrumb-item active">{{ $coupon->code }}</li>
+                  <li class="breadcrumb-item active">{{ $coupon->title }}</li>
                </ol>
             </div>
          </div>
@@ -41,8 +41,8 @@
                </thead>
                <tbody>
                   <tr>
-                     <th>Code</th>
-                     <td>{{ $coupon->code }}</td>
+                     <th>Title</th>
+                     <td>{{ $coupon->title }}</td>
                   </tr>
                   <tr>
                      <th>Percentage</th>

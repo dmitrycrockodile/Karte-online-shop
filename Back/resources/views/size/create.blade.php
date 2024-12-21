@@ -26,16 +26,12 @@
             <form action="{{ route('size.store') }}" method="post">
                @csrf
                <div class="form-group">
-                  <input 
-                     type="text" 
-                     class="form-control" 
+                  <x-forms.simple-input 
                      name="title" 
+                     type="text" 
+                     :isRequired="true"
                      placeholder="Enter title"
-                     value="{{ old('title') }}"
-                  >
-                  @error('title')
-                     <p class="text-danger">{{ $message }}</p>
-                  @enderror
+                  />
                </div>
 
                <button type="submit" class="btn btn-primary">Submit</button>

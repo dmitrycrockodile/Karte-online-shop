@@ -28,7 +28,7 @@
                <thead>
                   <tr>
                      <th>ID</th>
-                     <th>Code</th>
+                     <th>Title</th>
                      {{-- <th>Acts</th> --}}
                   </tr>
                </thead>
@@ -36,7 +36,7 @@
                   @foreach ($coupons as $coupon)
                      <tr>
                         <td>{{ $coupon->id }}</td>
-                        <td><a href="{{ route('coupon.show', $coupon->id) }}">{{ $coupon->code }}</a></td>
+                        <td><a href="{{ route('coupon.show', $coupon->id) }}">{{ $coupon->title }}</a></td>
                         {{-- <td>
                            <a class="text-success" href="{{ route('coupon.edit', $coupon->id) }}"><i class="fas fa-pen"></i></a>
                            <a class="text-danger ml-2" href="{{ route('coupon.delete', $coupon->id) }}"><i class="fas fa-trash"></i></a>

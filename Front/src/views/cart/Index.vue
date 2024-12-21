@@ -189,8 +189,8 @@
                     <input
                       type="text"
                       v-model.trim.lazy="usedCoupon"
-                      placeholder="Coupon Code"
-                      ref="couponCode"
+                      placeholder="Coupon title"
+                      ref="couponTitle"
                     />
                   </div>
                   <div class="apply-coupon-button mt-30">
@@ -312,8 +312,8 @@ export default {
         this.errorMessage = '';    
         this.couponDiscount = couponCheck;  
       } else {
-        this.errorMessage = 'The coupon code is invalid';
-        this.$refs.couponCode.value = '';
+        this.errorMessage = 'The coupon title is invalid';
+        this.$refs.couponTitle.value = '';
         this.usedCoupon = '';
       }
     },
@@ -323,7 +323,7 @@ export default {
       // Check product coupons
       this.cartItems.some(item => {
         return item.coupons.some(productCoupon => {
-          if (coupon === productCoupon.code) {
+          if (coupon === productCoupon.title) {
             result = ((productCoupon.percentage / 100) * item.price).toFixed(2);
             return true;
           };
@@ -336,7 +336,7 @@ export default {
       // Check category coupons
       this.cartItems.some(item => {
         return item.category.coupons.some(categoryCoupon => {
-          if (coupon === categoryCoupon.code) {
+          if (coupon === categoryCoupon.title) {
             let singleDiscount = ((categoryCoupon.percentage / 100) * item.price).toFixed(2);
             let categoriedItems = this.cartItems.filter(filteredItem => filteredItem.category.title === item.category.title);
             let categoriedItemsQuantity = categoriedItems.reduce((total, current) => total + current.quantity, 0);

@@ -31,42 +31,31 @@
                         <h2 class="mb-2 h5">Full name and sex</h2>
                         <div class="d-flex flex-wrap">
                             <div class="form-group col-md-5 pl-0">
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="name" 
-                                    placeholder="Your name"
-                                    value="{{ $errors->any() ? old('name') : $user->name }}"
-                                >
-                                @error('name')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                              <x-forms.simple-input 
+                                 name="name" 
+                                 type="text" 
+                                 :isRequired="true"
+                                 placeholder="Your name"
+                                 :defaultValue="$user->name"
+                              />
                             </div>
          
                             <div class="form-group col-md-5 pl-0">
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="surname" 
-                                    placeholder="Your surname"
-                                    value="{{ $errors->any() ? old('surname') : $user->surname }}"
-                                >
-                                @error('surname')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                              <x-forms.simple-input 
+                                 name="surname" 
+                                 type="text" 
+                                 placeholder="Your surname"
+                                 :defaultValue="$user->surname"
+                              />
                             </div>
          
                             <div class="form-group col-md-5 pl-0">
-                                <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    name="patronymic" 
-                                    placeholder="Your patronymic"
-                                    value="{{ $errors->any() ? old('patronymic') : $user->patronymic }}"
-                                >
-                                @error('patronymic')
-                                    <p class="text-danger">{{ $message }}</p>
-                                @enderror
+                              <x-forms.simple-input 
+                                 name="patronymic" 
+                                 type="text" 
+                                 placeholder="Your patronymic"
+                                 :defaultValue="$user->patronymic"
+                              />
                             </div>
       
                             <div class="form-group col-md-2 pl-0">
@@ -84,55 +73,39 @@
       
                         <div class="d-flex flex-wrap">
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="text" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="address" 
+                                 type="text" 
                                  placeholder="Address"
-                                 value="{{ $errors->any() ? old('address') : $user->address }}"
-                              >
-                              @error('address')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->address"
+                              />
                            </div>
          
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="text" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="postal_code" 
+                                 type="text" 
                                  placeholder="Postal code"
-                                 value="{{ $errors->any() ? old('postal_code') : $user->postal_code }}"
-                              >
-                              @error('postal_code')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->postal_code"
+                              />
                            </div>
          
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="text" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="city" 
+                                 type="text" 
                                  placeholder="City"
-                                 value="{{ $errors->any() ? old('city') : $user->city }}"
-                              >
-                              @error('city')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->city"
+                              />
                            </div>
          
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="text" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="country" 
+                                 type="text" 
                                  placeholder="Country"
-                                 value="{{ $errors->any() ? old('country') : $user->country }}"
-                              >
-                              @error('country')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->country"
+                              />
                            </div>
                         </div>
                      </div>
@@ -142,28 +115,20 @@
       
                         <div class="d-flex flex-wrap">
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="date" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="date_of_birth" 
-                                 value="{{ $errors->any() ? old('date_of_birth') : $user->date_of_birth }}"
-                              >
-                              @error('date_of_birth')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 type="date" 
+                                 :defaultValue="$user->date_of_birth"
+                              />
                            </div>
          
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="number" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="age" 
+                                 type="number" 
                                  placeholder="Your age"
-                                 value="{{ $errors->any() ? old('age') : $user->age }}"
-                              >
-                              @error('age')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->age"
+                              />
                            </div>
                         </div>
                      </div>
@@ -173,16 +138,12 @@
       
                         <div class="d-flex flex-wrap">
                            <div class="form-group col-md-5 pl-0">
-                              <input 
-                                 type="text" 
-                                 class="form-control" 
+                              <x-forms.simple-input 
                                  name="phone_number" 
+                                 type="number" 
                                  placeholder="Phone number"
-                                 value="{{ $errors->any() ? old('phone_number') : $user->phone_number }}"
-                              >
-                              @error('phone_number')
-                                 <p class="text-danger">{{ $message }}</p>
-                              @enderror
+                                 :defaultValue="$user->phone_number"
+                              />
                            </div>
                         </div>
                      </div>
