@@ -3,22 +3,11 @@
 @section('title', 'Create New Coupon')
 
 @section('content')
-   <div class="content-header">
-      <div class="container-fluid">
-         <div class="row mb-2">
-               <div class="col-sm-6">
-                  <h1 class="m-0">Create coupon</h1>
-               </div>
-               <div class="col-sm-6">
-                  <ol class="breadcrumb float-sm-right">
-                     <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Main page</a></li>
-                     <li class="breadcrumb-item"><a href="{{ route('coupon.index') }}">Coupons</a></li>
-                     <li class="breadcrumb-item active">Create</li>
-                  </ol>
-               </div>
-         </div>
-      </div>
-   </div>
+   <x-navigation.breadcrumps title="Create coupon">
+      <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Main page</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('coupon.index') }}">Coupons</a></li>
+      <li class="breadcrumb-item active">Create</li>
+   </x-navigation.breadcrumps>
 
    <section class="content">
       <div class="container-fluid">
