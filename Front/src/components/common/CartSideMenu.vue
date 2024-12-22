@@ -67,7 +67,7 @@
          "active": { type: Boolean, required: true },
       },
       emits: {
-         "setActive": { type: Function, required: true },
+         "setActive": value => typeof value === 'boolean'
       },
    }
 </script>

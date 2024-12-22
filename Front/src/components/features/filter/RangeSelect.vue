@@ -37,7 +37,10 @@
          minPrice: { required: true },
          maxPrice: { required: true },
       },
-      emits: ['update:minPrice', 'update:maxPrice'],
+      emits: {
+         "update:minPrice": value => typeof value === 'number',
+         "update:maxPrice": value => typeof value === 'number',
+      },
       computed: {
          progressLeft() {
             return (this.minPrice / this.max) * 100;

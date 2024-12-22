@@ -57,7 +57,7 @@
                             class="right-box justify-content-md-between justify-content-center wow fadeInUp animated">
                             <div class="short-by">
                               <div class="select-box"> 
-                                <SortSelect :onChange="fetchProductsByCategory" />
+                                <SortSelect :onChange="setSortBy" />
                               </div>
                             </div>
                           </div>
@@ -77,7 +77,7 @@
                   <ul class="pagination text-center">
                     <li v-if="pagination.current_page !== 1" class="next">
                       <a
-                        @click.prevent="fetchProductsByCategory(pagination.first_page)"
+                        @click.prevent="setPage(1)"
                         href="#0"
                       >
                         <i class="flaticon-left-arrows" aria-hidden="true"></i>
@@ -95,7 +95,7 @@
                           "
                         >
                           <a
-                            @click.prevent="fetchProductsByCategory(link.label)"
+                            @click.prevent="setPage(link.label)"
                             href="#0"
                             :class="link.active ? 'active' : ''"
                             >{{ link.label }}</a
@@ -117,7 +117,7 @@
                       class="next"
                     >
                       <a
-                        @click.prevent="fetchProductsByCategory(pagination.current_page + 1)"
+                        @click.prevent="setPage(pagination.current_page + 1)"
                         href="#0"
                       >
                         <i class="flaticon-next-1" aria-hidden="true"></i>
@@ -159,7 +159,9 @@
         isPageLoading: true,
         isProductsLoading: true,
         pagination: [],
+        sortBy: 'all',
         page: 1,
+        dataPerPage: 3,
       }
     },
     computed: {
@@ -168,22 +170,28 @@
       }),
     },
     methods: {
-      async fetchProductsByCategory(page = 1, dataPerPage = 3, sortby = 'all') {
+      async fetchProductsByCategory() {
         this.isProductsLoading = true;
         this.products = [];
 
         const res = await getProducts({
           categories: [this.category.id],
-          page: page,
-          sortby: sortby,
-          dataPerPage: dataPerPage,
+          page: this.page,
+          sortby: this.sortBy,
+          dataPerPage: this.dataPerPage,
         });
 
         if (res.success) {
           this.products = res.products;
-          // this.pagination = res.data.meta;
+          this.pagination = res.meta;
         }
         this.isProductsLoading = false;
+      },
+      setSortBy(sortBy) {
+        this.sortBy = sortBy;
+      },
+      setPage(newPage) {
+        this.page = newPage;
       },
     },
     async mounted() {
@@ -193,6 +201,14 @@
         this.category = res.category;
         this.fetchProductsByCategory();
         this.isPageLoading = false;
+      }
+    },
+    watch: {
+      sortBy(newVal, oldVal) {
+        this.fetchProductsByCategory();
+      },
+      page(newVal, oldVal) {
+        this.fetchProductsByCategory();
       }
     },
   }

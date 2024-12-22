@@ -32,6 +32,9 @@ export default {
       modelValue: { default: null },
       name: { type: String, default: ''},
    },
+   emits: {
+      "update:modelValue": value => typeof value === 'object'
+   },
    methods: {
       selectOption(option) {
          this.$emit('update:modelValue', option)

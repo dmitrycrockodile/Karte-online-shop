@@ -31,6 +31,9 @@
             default: false,
          }
       },
+      emits: {
+         "update:modelValue": value => typeof value === 'string'
+      },
       data() {
          return {
             password: this.modelValue,

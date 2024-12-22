@@ -11,10 +11,15 @@
    </div>
    <div v-if="isLoading" class="skeletons">
       <!-- SKELETONS... -->
-      <Skeleton width="300px" height="350px" borderRadius="10px" />
-      <Skeleton width="300px" height="350px" borderRadius="10px" />
-      <Skeleton width="300px" height="350px" borderRadius="10px" />
-      <Skeleton v-if="columns == 4" width="300px" height="350px" borderRadius="10px" />
+      <div v-if="type === 'basic'" style="display: flex; justify-content: space-between; width: 100%;">
+         <Skeleton width="300px" height="350px" borderRadius="10px" />
+         <Skeleton width="300px" height="350px" borderRadius="10px" />
+         <Skeleton width="300px" height="350px" borderRadius="10px" />
+         <Skeleton v-if="columns == 4" width="300px" height="350px" borderRadius="10px" />
+      </div>
+      <div v-else class="center-skeletons">
+         <Skeleton width="1000px" height="300px" borderRadius="10px" />
+      </div>
    </div>
 </template>
 
@@ -50,5 +55,11 @@
    justify-content: space-between;
    align-items: center;
    margin-top: 50px
+}
+
+.center-skeletons {
+   margin: 0 auto;
+   max-width: 100%;
+   overflow: hidden;
 }
 </style>

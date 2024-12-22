@@ -34,6 +34,9 @@
             type: Number
          },
       },
+      emits: {
+         "update:modelValue": value => typeof value === 'number'
+      },
       computed: {
          quantity: {
             get() {
