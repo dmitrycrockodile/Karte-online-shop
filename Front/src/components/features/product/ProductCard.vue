@@ -189,6 +189,7 @@
   import { mapActions, mapGetters } from "vuex";
   import { getProduct } from "@/services/productsService";
   import ProductPopup from "@/components/common/popups/ProductPopup.vue";
+  import { useToast } from "vue-toastification";
 
   export default {
     name: 'Product Card',
@@ -204,6 +205,7 @@
         popupProduct: null,
         popupId: null,
         popupActive: false,
+        toast: useToast(),
       }
     },
     methods: {
@@ -224,14 +226,21 @@
         this.popupActive = !this.popupActive
       },
       handleWishlistAdd() {
-        this.toggleWishlistItem(this.product.id);
+        if (this.user) {
+          this.toggleWishlistItem(this.product.id);
+        } else {
+          this.toast.info('Log in to access wishlist.', { timeout: 2000 });
+        }
       },
     },
     computed: {
       isActive() {
         return this.wishlistItems.some(item => item.product_id === this.product.id)
       },
-      ...mapGetters('wishlist', ['wishlistItems']),
+      ...mapGetters({
+        wishlistItems: 'wishlist/wishlistItems',
+        user: 'auth/getUserData'
+      }),
     },
   }
 </script>
