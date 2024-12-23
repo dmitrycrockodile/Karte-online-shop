@@ -39,34 +39,28 @@
         <div class="products-grid__usefull-links">
           <ul>
             <li>
-              <a 
+              <button 
                 @click.prevent="handleWishlistAdd" 
                 :class="`${isActive ? 'active' : ''}`"
-                href="/"
               >
                 <i class="flaticon-heart"> </i>
-                <span> wishlist</span>
-              </a>
+                <span>wishlist</span>
+              </button>
             </li>
             <li>
-              <a 
-                @click.prevent="addToCompare(product)"
-                href="/">
-                <i
-                  class="flaticon-left-and-right-arrows"
-                ></i>
+              <button @click.prevent="addToCompare(product)">
+                <i class="flaticon-left-and-right-arrows"></i>
                 <span> compare</span>
-              </a>
+              </button>
             </li>
             <li>
-              <a
+              <button
                 @click.prevent="getPopupProduct(product.id)"
-                :href="`#popup${product.id}`"
                 class="popup_link"
               >
                 <i class="flaticon-visibility"></i>
                 <span> quick view</span>
-              </a>
+              </button>
             </li>
           </ul>
         </div>
@@ -159,22 +153,20 @@
         <div class="icon">
           <ul>
             <li>
-              <a 
-                @click.prevent="getPopupProduct(product.id)"
-                :href="`#popup${product.id}`"
+              <button 
+                @click.prevent="getPopupProduct(product.id)" 
                 class="popup_link"
               >
                 <i class="flaticon-eye"></i>
-              </a> 
+              </button> 
             </li>
             <li>
-              <a 
+              <button
                 @click.prevent="handleWishlistAdd" 
                 :class="`${isActive ? 'active' : ''}`"
-                href="/"
               >
                 <i class="flaticon-heart"></i>
-              </a> 
+              </button> 
             </li>
           </ul>
         </div>

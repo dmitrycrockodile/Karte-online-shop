@@ -2633,13 +2633,14 @@ categories-tab start
   display: block;
   color: #ffffff;
   font-size: 15px;
+  background-color: transparent;
 }
 
-.product-grid-two__overlay-box a:hover {
+.product-grid-two__overlay-box button:hover {
   color: var(--thm-base);
 }
 
-.product-grid-two__overlay-box .icon a.active { 
+.product-grid-two__overlay-box .icon button.active { 
   background-color: var(--thm-base) !important;
 }
 
@@ -2836,10 +2837,10 @@ products-grid start
   transition: opacity 0.6s linear;
   z-index: 3;
 }
-.products-grid__usefull-links a {
+.products-grid__usefull-links button {
   position: relative;
-  height: 35px;
-  width: 35px;
+  height: 43px;
+  width: 43px;
   background: var(--thm-white);
   display: flex;
   justify-content: center;
@@ -2850,10 +2851,11 @@ products-grid start
   font-weight: 900;
   font-size: 12px;
 }
-.products-grid__usefull-links a i {
+.products-grid__usefull-links button i {
   line-height: 0px;
+  font-size: 15px;
 }
-.products-grid__usefull-links a span {
+.products-grid__usefull-links button span {
   position: absolute;
   top: 50%;
   -webkit-transform: translate(-50%);
@@ -2873,7 +2875,7 @@ products-grid start
   transition: 0.3s;
   font-weight: 400;
 }
-.products-grid__usefull-links a span::before {
+.products-grid__usefull-links button span::before {
   position: absolute;
   left: 92%;
   top: 50%;
@@ -2884,7 +2886,7 @@ products-grid start
   width: 8px;
   z-index: -1;
 }
-.products-grid__usefull-links a::before {
+.products-grid__usefull-links button::before {
   content: '';
   position: absolute;
   opacity: 0;
@@ -2898,22 +2900,22 @@ products-grid start
   z-index: -1;
   transition: all 0.3s linear;
 }
-.products-grid__usefull-links a.active:hover::before {
+.products-grid__usefull-links button.active:hover::before {
   opacity: .6;
   transition: all 0.3s linear;
 }
-.products-grid__usefull-links a.active {
+.products-grid__usefull-links button.active {
   background: var(--thm-base);
   color: var(--thm-white);
 }
-.products-grid__usefull-links a:hover {
+.products-grid__usefull-links button:hover {
   background: var(--thm-base);
   color: var(--thm-white);
 }
 .products-grid__usefull-links li {
   position: relative;
 }
-.products-grid__usefull-links li:hover a span {
+.products-grid__usefull-links li:hover button span {
   right: 120%;
   opacity: 1;
   visibility: visible;
@@ -7953,12 +7955,8 @@ button.router-link:hover {
   opacity: 1;
   visibility: visible;
   position: unset;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   background: transparent;
   padding: 0px;
 }
@@ -7967,36 +7965,28 @@ button.router-link:hover {
   height: 50px;
   padding: 10px 25px 10px;
   color: #ffff;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   margin-right: 15px;
 }
 .product-grid-two.list .product-grid-two__overlay-box .title a:hover {
   background: var(--thm-base);
   color: var(--thm-white);
 }
-.product-grid-two.list .product-grid-two__overlay-box .icon a {
+.product-grid-two.list .product-grid-two__overlay-box .icon button {
   height: 50px;
   width: 50px;
   background: var(--thm-black);
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: var(--thm-white);
+  transition: all .2s;
+  line-height: 1;
 }
-.product-grid-two.list .product-grid-two__overlay-box .icon a:hover {
+.product-grid-two.list .product-grid-two__overlay-box .icon button:hover {
   background: var(--thm-base);
   color: var(--thm-white);
 }
