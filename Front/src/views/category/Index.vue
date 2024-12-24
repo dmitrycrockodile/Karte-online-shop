@@ -201,6 +201,8 @@
         this.category = res.category;
         this.fetchProductsByCategory();
         this.isPageLoading = false;
+
+        document.title = `Karte | ${this.category.title}`
       }
     },
     watch: {

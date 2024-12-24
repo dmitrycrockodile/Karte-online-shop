@@ -861,10 +861,12 @@ export default {
   },
   async mounted() {
     const res = await getRecentProducts();
-
+    
     if (res.success) {
       this.recentProducts = res.products;
       this.isLoading = false;
+      
+      document.title = `Karte | ${this.product.title}`
     }
   },
   data() {

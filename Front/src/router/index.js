@@ -10,76 +10,86 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: () => import("../views/main/Index.vue")
+      component: () => import("../views/main/Index.vue"),
+      meta: { title: 'Karte - Online E-Commerce shop' }
     },
     {
       path: '/products',
       name: 'products.index',
       component: () => import("../views/product/Index.vue"),
+      meta: { title: 'Karte | Products' },
     },
     {
       path: '/products/:id',
       name: 'products.show',
-      component: () => import("../views/product/Show.vue")
+      component: () => import("../views/product/Show.vue"),
+      meta: { title: 'Karte - Online E-Commerce shop' },
     },
     {
       path: '/cart',
       name: 'cart.index',
-      component: () => import("../views/cart/Index.vue")
+      component: () => import("../views/cart/Index.vue"),
+      meta: { title: 'Karte | Cart' }
     },
     {
       path: '/register',
       name: 'register.index',
       component: () => import("../views/auth/Register.vue"),
-      meta: { guest: true }
+      meta: { guest: true, title: 'Karte | Registration' },
     },
     {
       path: '/login',
       name: 'login.index',
       component: () => import("../views/auth/Login.vue"),
-      meta: { guest: true }
+      meta: { guest: true, title: 'Karte | Authorization' },
     },
     {
       path: '/category/:id',
       name: 'category.index',
-      component: () => import("../views/category/Index.vue")
+      component: () => import("../views/category/Index.vue"),
+      meta: { title: 'Karte - Online E-Commerce shop' },
     },
     {
       path: '/account',
       name: 'account.index',
       component: () => import("../views/account/Index.vue"),
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, title: 'Karte | Account' },
     },
     {
       path: '/wishlist',
       name: 'wishlist.index',
       component: () => import("../views/wishlist/Index.vue"),
-      meta: { requiresVerification: true }
+      meta: { requiresVerification: true, title: 'Karte | Wishlist' },
     },
     {
       path: '/contact',
       name: 'contact.index',
       component: () => import("../views/contact/Index.vue"),
+      meta: { title: 'Karte | Contact' }
     },
     {
       path: '/faq',
       name: 'faq.index',
       component: () => import("../views/faq/Index.vue"),
+      meta: { title: 'Karte | Frequently Asked Questions' },
     },
     {
       path: '/aboutUs',
       name: 'aboutUs.index',
       component: () => import("../views/about_us/Index.vue"),
+      meta: { title: 'Karte | About' },
     },
     {
       path: '/compare',
       name: 'compare.index',
       component: () => import("../views/compare/Index.vue"),
+      meta: { title: 'Karte | Compare products' },
     },
     {
       path: '/:catchAll(.*)',
       name: 'notFound',
       component: () => import("../views/notFound/Index.vue"),
+      meta: { title: 'Karte | Page Not Found' },
     },
   ],
   scrollBehavior(to, from, savedPosition) {
@@ -92,6 +102,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  document.title = to?.meta?.title || 'Karte - Online E-Commerce shop';
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (authModule.getters.isAuthenticated()) {
       next(); 
