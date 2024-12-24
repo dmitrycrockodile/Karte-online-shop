@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Rules\AlphaOnly;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -23,7 +24,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users,email',
-            'name' => 'required|string',
+            'name' => ['required', 'string', new AlphaOnly],
             'surname' => 'nullable|string',
             'patronymic' => 'nullable|string',
             'sex' => 'nullable|integer',

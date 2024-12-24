@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\User;
 
+use App\Rules\AlphaOnly;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexRequest extends FormRequest
@@ -22,7 +23,7 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => ['required', 'string', new AlphaOnly],
             'surname' => 'nullable|string',
             'patronymic' => 'nullable|string',
             'sex' => 'nullable|string',
