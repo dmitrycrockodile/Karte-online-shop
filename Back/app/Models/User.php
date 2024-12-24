@@ -16,7 +16,22 @@ class User extends Authenticatable implements MustVerifyEmail
     const SEX_FEMALE = 2;    
 
     protected $table = 'users';
-    protected $guarded = false;
+    protected $fillable = [
+        'name', 
+        'email', 
+        'surname', 
+        'patronymic', 
+        'age', 
+        'address', 
+        'sex', 
+        'postal_code', 
+        'city', 
+        'country', 
+        'date_of_birth', 
+        'phone_number', 
+        'is_subscribed',
+        'password'
+    ];
 
     static function getSexes() {
         return [

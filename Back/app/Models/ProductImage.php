@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ProductImage extends Model
 {
     protected $table = 'product_images';
-    protected $guarded = false;
+    protected $fillable = [
+        'file_path',
+        'product_id'
+    ];
 
     public function getImageUrlAttribute() {
         if ($this->file_path) {

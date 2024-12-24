@@ -10,7 +10,17 @@ class Product extends Model
     use Filterable;
 
     protected $table = 'products';
-    protected $guarded = false;
+    protected $fillable = [
+        'title',
+        'description',
+        'content',
+        'preview_image',
+        'price',
+        'count',
+        'is_published',
+        'category_id',
+        'old_price'
+    ];
 
     public function tags() {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');

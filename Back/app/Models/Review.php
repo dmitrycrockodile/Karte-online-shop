@@ -8,7 +8,15 @@ use Illuminate\Support\Carbon;
 class Review extends Model
 {
     protected $table = 'reviews';
-    protected $guarded = false;
+    protected $fillable = [
+        'user_id',
+        'product_id',
+        'rating',
+        'title',
+        'body',
+        'reported',
+        'deleted'
+    ];
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');

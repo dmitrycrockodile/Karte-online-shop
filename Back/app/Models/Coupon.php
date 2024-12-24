@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Coupon extends Model
 {
     protected $table = 'coupons';
-    protected $guarded = false;
+    protected $fillable = [
+        'percentage',
+        'title'
+    ];
 }

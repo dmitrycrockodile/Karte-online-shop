@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryCoupon extends Model
 {
     protected $table = 'category_coupons';
-    protected $guarded = false;
+    protected $fillable = [
+        'category_id',
+        'coupon_id'
+    ];
 }

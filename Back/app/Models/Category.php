@@ -8,7 +8,11 @@ use App\Models\Product;
 class Category extends Model
 {
     protected $table = 'categories';
-    protected $guarded = false;
+    protected $fillable = [
+        'title',
+        'preview_image',
+        'banner'
+    ];
 
     public function coupons() {
         return $this->belongsToMany(Coupon::class, 'category_coupons', 'category_id', 'coupon_id');
