@@ -8,15 +8,7 @@ use App\Models\Question;
 class QuestionController extends Controller
 {
    public function index() {
-      $questions = Question::orderByRaw("
-         CASE 
-            WHEN status = 'Resolved' THEN 2
-            WHEN status = 'Pending' THEN 1
-            ELSE 0
-         END ASC
-      ")
-      ->orderBy('created_at', 'DESC')
-      ->get();
+      $questions = $this->getOrderedQuestions();
 
       return view('questions.index', compact('questions'));
    }
@@ -28,7 +20,7 @@ class QuestionController extends Controller
       return view('questions.show', compact('question'));
    }
 
-   public function toggle_status(Question $question) {
+   public function update(Question $question) {
       if ($question->status == 'In Progress' || $question->status == 'Pending') {
          $question->status = 'Resolved';
       } elseif ($question->status == 'Resolved') {
@@ -37,5 +29,19 @@ class QuestionController extends Controller
       $question->save();
       
       return redirect()->route('question.index');
+   }
+
+   private function getOrderedQuestions() {
+      $questions = Question::orderByRaw("
+         CASE 
+            WHEN status = 'Resolved' THEN 2
+            WHEN status = 'Pending' THEN 1
+            ELSE 0
+         END ASC
+      ")
+      ->orderBy('created_at', 'DESC')
+      ->get();
+
+      return $questions;
    }
 }

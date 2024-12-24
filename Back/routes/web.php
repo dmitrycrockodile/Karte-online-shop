@@ -94,13 +94,13 @@ Route::group(['prefix' => 'products', 'namespace' => 'App\Http\Controllers\Produ
 Route::group(['prefix' => 'questions', 'namespace' => 'App\Http\Controllers\Support'], function() {
     Route::get('/', [QuestionController::class, 'index'])->name('question.index');
     Route::get('/{question}', [QuestionController::class, 'show'])->name('question.show');
-    Route::patch('/{question}', [QuestionController::class, 'toggle_status'])->name('question.update');
+    Route::patch('/{question}', [QuestionController::class, 'update'])->name('question.update');
 });
 
 Route::group(['prefix' => 'reviews', 'namespace' => 'App\Http\Controllers\Review'], function() {
     Route::get('/', [ReviewController::class, 'index'])->name('review.index');
     Route::get('/{review}', [ReviewController::class, 'show'])->name('review.show');
-    Route::patch('/resolve/{review}', [ReviewController::class, 'resolve_report'])->name('review.resolve');
+    Route::patch('/resolve/{review}', [ReviewController::class, 'resolveReport'])->name('review.resolve');
     Route::patch('/restore/{review}', [ReviewController::class, 'restore'])->name('review.restore');
     Route::delete('/{review}', [ReviewController::class, 'delete'])->name('review.delete');
 });

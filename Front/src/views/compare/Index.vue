@@ -34,13 +34,7 @@
                   <div class="compare-table-box">
                      <div class="compare-table-outer">
                         <table class="compare-table">
-                           <thead :class="
-                                       `
-                                       compare-header 
-                                       ${comparedProducts.length === 2 ? 'full-table' : ''} 
-                                       ${comparedProducts.length === 1 ? 'single-item' : ''}
-                                       `
-                           ">
+                           <thead :class="compareTableHeaderClass">
                               <tr>
                                  <th>
                                     <p>Product</p>
@@ -55,7 +49,7 @@
                                  </th>
                               </tr>
                            </thead>
-                           <tbody :class="`${comparedProducts.length === 2 ? 'full-table' : ''} ${comparedProducts.length === 1 ? 'single-item' : ''}`">
+                           <tbody :class="compareTableBodyClass">
                               <tr>
                                  <td>
                                     <h5>Name</h5>
@@ -77,10 +71,10 @@
                                     <h5>Price</h5>
                                  </td>
                                  <td v-if="comparedProducts" 
-                                     v-for="product in comparedProducts" 
-                                     class="price"
+                                    v-for="product in comparedProducts" 
+                                    class="price"
                                  >
-                                     ${{ product.price }}
+                                    ${{ product.price }}
                                  </td>
                               </tr>
                               <tr>
@@ -88,8 +82,8 @@
                                     <h5>Stock</h5>
                                  </td>
                                  <td v-if="comparedProducts" 
-                                     v-for="product in comparedProducts" 
-                                     class="color"
+                                    v-for="product in comparedProducts" 
+                                    class="color"
                                  >
                                     {{ product.count > 0 ? 'In stock' : 'Not in stock' }}
                                  </td>
@@ -150,6 +144,24 @@
          ...mapGetters({
             comparedProducts: 'compare/comparedProducts'
          }),
+         compareTableHeaderClass() {
+            let baseClass = 'compare-header';
+
+            if (this.comparedProducts.length === 2) {
+               baseClass += ' full-table';
+            } else if (this.comparedProducts.length === 1) {
+               baseClass += ' single-item';
+            }
+
+            return baseClass;
+         },
+         compareTableBodyClass() {
+            if (this.comparedProducts.length === 2) {
+               return 'full-table';
+            } else if (this.comparedProducts.length === 1) {
+               return 'single-item';
+            }
+         }
       },
       methods: {
          ...mapActions({

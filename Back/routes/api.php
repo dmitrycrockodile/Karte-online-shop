@@ -29,8 +29,8 @@ Route::post('/products', 'App\Http\Controllers\API\Product\IndexController');
 Route::get('/products/filters', 'App\Http\Controllers\API\Product\FilterListController');
 Route::get('/products/{product}', 'App\Http\Controllers\API\Product\ShowController');
 
-Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@getCategories');
-Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@getCategory');
+Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@index');
+Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@show');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/logout',[AuthController::class, 'logout']);

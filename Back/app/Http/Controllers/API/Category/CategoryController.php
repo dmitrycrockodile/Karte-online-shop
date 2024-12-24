@@ -7,7 +7,7 @@ use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 
 class CategoryController extends Controller {
-   public function getCategories() {
+   public function index() {
       $categories = Category::all();
 
       return response()->json([
@@ -16,7 +16,7 @@ class CategoryController extends Controller {
       ], 200);
    }
 
-   public function getCategory(Category $category) {
+   public function show(Category $category) {
       return response()->json([
          'category' => new CategoryResource($category),
          'success' => true,

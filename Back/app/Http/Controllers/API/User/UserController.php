@@ -20,7 +20,7 @@ class UserController extends Controller
 
       return response()->json([
          'new_user' => new UserResource($user),
-         'message' => 'Your data was successfully updated',
+         'message' => 'Your data was successfully updated!',
          'success' => true,
       ], 200);
    }
@@ -39,7 +39,7 @@ class UserController extends Controller
          ], 200);
       } else {
          return response()->json([
-            'message' => 'Invalid password',
+            'message' => 'Invalid password.',
             'success' => false,
          ], 409);
       }
@@ -58,7 +58,7 @@ class UserController extends Controller
          ], 200);
       } else {
          return response()->json([
-            'message' => 'Invalid password',
+            'message' => 'Invalid password.',
             'success' => false,
          ], 409);
       }

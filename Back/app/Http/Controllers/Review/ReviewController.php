@@ -28,11 +28,11 @@ class ReviewController extends Controller
       return view('review.show', compact('review'));
    }
 
-   public function resolve_report(Review $review) {
+   public function resolveReport(Review $review) {
       if ($review->reported == true) {
          $review->reported = false;
-         $content = $review->body ? $review->body : $review->title;
-         Mail::to($review->user->email)->send(new ResolvedReview($review->user->name, $content));
+
+         $this->sendReviewResolvedEmail($review);
       } 
       $review->save();
       
@@ -55,9 +55,18 @@ class ReviewController extends Controller
       $review->deleted = false;
       $review->save();
 
-      $content = $review->body ? $review->body : $review->title;
-      Mail::to($review->user->email)->send(new RestoredReview($review->user->name, $content));
+      $this->sendReviewRestoredEmail($review);
 
       return redirect()->route('review.index');
+   }
+
+   private function sendReviewResolvedEmail(Review $review) {
+      $content = $review->body ? $review->body : $review->title;
+      Mail::to($review->user->email)->send(new ResolvedReview($review->user->name, $content));
+   }
+
+   private function sendReviewRestoredEmail(Review $review) {
+      $content = $review->body ? $review->body : $review->title;
+      Mail::to($review->user->email)->send(new RestoredReview($review->user->name, $content));
    }
 }
