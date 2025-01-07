@@ -11,9 +11,18 @@ class StoreController extends Controller
     public function __invoke(StoreRequest $request)
     {
         $data = $request->validated();
-        User::firstOrCreate([
-            'email' => $data['email']
-        ], $data);
+        $user = User::withTrashed()->where('email', $data['email'])->first();
+
+        if ($user) {
+            if ($user->trashed()) {
+                $user->restore();
+                $user->update($data);
+            }
+        } else {
+            User::firstOrCreate([
+                'email' => $data['email']
+            ], $data);
+        }
         
         return redirect()->route('user.index')->with('success', "User \"{$data['name']}\" was created!");
     }

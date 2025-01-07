@@ -1,20 +1,15 @@
 @extends('layouts.main')
 
-@section('title', 'Users')
+@section('title', 'Deleted users')
 
 @section('content')
-   <x-navigation.breadcrumps title="Users">
+   <x-navigation.breadcrumps title="Trashed users">
       <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Main page</a></li>
-      <li class="breadcrumb-item active">Users</li>
+      <li class="breadcrumb-item active">Deleted users</li>
    </x-navigation.breadcrumps>
 
-   @if(session('success'))
-      <x-info-message>{{ session('success') }}</x-info-message>
-   @endif
-
    <section class="content">
-      <a class="btn btn-primary" href="{{ route('user.create') }}">Create</a>
-      <a class="btn btn-danger" href="{{ route('user.trashed') }}">Deleted users</a>
+      <a class="btn btn-primary" href="{{ route('user.index') }}">Back</a>
 
       <div class="card w-50 mt-3">
          <div class="card-body table-responsive p-0">
@@ -24,23 +19,21 @@
                      <th>ID</th>
                      <th>Username</th>
                      <th>eMail</th>
+                     <th>Restore</th>
                   </tr>
                </thead>
                <tbody>
-                  @foreach ($users as $user)
+                  @foreach ($trashed_users as $trashed_user)
                      <tr>
-                        <td>{{ $user->id }}</td>
+                        <td>{{ $trashed_user->id }}</td>
+                        <td>{{ $trashed_user->name }}</td>
+                        <td>{{ $trashed_user->email }}</td>
                         <td>
-                           <a href="{{ route('user.show', $user->id) }}">{{ $user->name }}</a>
-                        </td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                           <a class="text-success" href="{{ route('user.edit', $user->id) }}"><i class="fas fa-pen"></i></a>
-                           <form action="{{ route('user.delete', $user->id) }}" method="POST" class="d-inline">
+                           <form action="{{ route('user.restore', $trashed_user->id) }}" method="POST" class="d-inline">
                               @csrf
-                              @method('DELETE')
+                              @method('PATCH')
                               <button type="submit" class="text-danger ml-2 mb-1" style="background-color: transparent; border: none;">
-                                 <i class="fas fa-trash"></i>
+                                 Restore
                               </button>
                            </form>
                         </td>

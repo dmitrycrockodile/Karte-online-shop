@@ -4,6 +4,7 @@ namespace App\Http\Requests\User;
 
 use App\Rules\AlphaOnly;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,7 +24,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->whereNull('deleted_at'),
+            ],
             'name' => ['required', 'string', new AlphaOnly],
             'surname' => 'nullable|string',
             'patronymic' => 'nullable|string',

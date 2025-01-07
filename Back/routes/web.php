@@ -73,10 +73,12 @@ Route::group(['prefix' => 'colors', 'namespace' => 'App\Http\Controllers\Color']
 Route::group(['prefix' => 'users', 'namespace' => 'App\Http\Controllers\User'], function() {
     Route::get('/', 'IndexController')->name('user.index');
     Route::get('/create', 'CreateController')->name('user.create');
+    Route::get('/trashed', 'TrashedController')->name('user.trashed');
     Route::post('/', 'StoreController')->name('user.store');
     Route::get('/{user}/edit', 'EditController')->name('user.edit');
     Route::get('/{user}', 'ShowController')->name('user.show');
     Route::patch('/{user}', 'UpdateController')->name('user.update');
+    Route::patch('/{user}/restore', 'RestoreController')->name('user.restore');
     Route::delete('/{user}', 'DeleteController')->name('user.delete');
 });
 
