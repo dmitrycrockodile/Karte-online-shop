@@ -25,8 +25,22 @@ class StoreRequest extends FormRequest
             'title' => 'required|string',
             'coupons' => 'nullable|array',
             'coupons.*' => 'nullable|integer|exists:coupons,id',
-            'preview_image' => 'required|image',
-            'banner' => 'required|image',
+            'preview_image' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!$this->isImageValid($value)) {
+                        $fail('File must be an image (.jpeg, .png, .jpg, .gif)');
+                    }
+                }    
+            ],
+            'banner' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!$this->isImageValid($value)) {
+                        $fail('File must be an image (.jpeg, .png, .jpg, .gif)');
+                    }
+                }
+            ],
         ];
     }
 
@@ -37,9 +51,13 @@ class StoreRequest extends FormRequest
             'title.string' => 'Title must be a string',
             'coupons.array' => 'Coupons must be an array',
             'preview_image.required' => 'Please upload the image',
-            'preview_image.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
             'banner.required' => 'Please upload the banner image',
-            'banner.image' => 'File must be an image (.jpeg, .png, .jpg, .gif)',
         ];
+    }
+
+    protected function isImageValid($value) {
+        return $value
+        && $value->isValid()
+        && in_array($value->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg', 'image/gif']);
     }
 }

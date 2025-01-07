@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Color;
+namespace App\Http\Requests\Size;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class SizeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'regex:/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/']
+            'title' => 'required|string',
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => 'Please write the color',
-            'title.string' => 'Color must be a string',
-            'title.regex' => 'Color must start with "#" and be a HEX value',
+            'title.required' => 'Please write the title',
+            'title.string' => 'Title must be a string',
         ];
     }
 }

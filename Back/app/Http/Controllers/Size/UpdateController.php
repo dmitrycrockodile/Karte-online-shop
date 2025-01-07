@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Size;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Size\UpdateRequest;
+use App\Http\Requests\Size\SizeRequest;
 use App\Models\Size;
 
 class UpdateController extends Controller
 {
-    public function __invoke(UpdateRequest $request, Size $size)
+    public function __invoke(SizeRequest $request, Size $size)
     {
         $data = $request->validated();
         $size->update($data);
