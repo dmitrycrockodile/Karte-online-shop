@@ -13,6 +13,6 @@ class StoreController extends Controller
         $data = $request->validated();
         Color::firstOrCreate($data);
         
-        return redirect()->route('color.index');
+        return redirect()->route('color.index')->with('success', "Color \"{$data['title']}\" was created!");
     }
 }

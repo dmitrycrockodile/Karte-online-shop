@@ -7,6 +7,10 @@
       <li class="breadcrumb-item"><a href="{{ route('main.index') }}">Main page</a></li>
       <li class="breadcrumb-item active">Sizes</li>
    </x-navigation.breadcrumps>
+
+   @if(session('success'))
+      <x-info-message>{{ session('success') }}</x-info-message>
+   @endif
    
    <section class="content">
       <a class="btn btn-primary" href="{{ route('size.create') }}">Create</a>

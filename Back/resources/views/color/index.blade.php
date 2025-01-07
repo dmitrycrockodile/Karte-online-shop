@@ -8,6 +8,10 @@
       <li class="breadcrumb-item active">Colors</li>
    </x-navigation.breadcrumps>
 
+   @if(session('success'))
+      <x-info-message>{{ session('success') }}</x-info-message>
+   @endif
+
    <section class="content">
       <a class="btn btn-primary" href="{{ route('color.create') }}">Create</a>
 

@@ -36,6 +36,6 @@ class UpdateController extends Controller
 
         $category->coupons()->sync($couponsIds);
 
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with('success', "Category \"{$category['title']}\" was updated!");
     }
 }

@@ -13,6 +13,6 @@ class UpdateController extends BaseController
 
         $this->service->update($data, $product);
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', "Product \"{$product['title']}\" was updated!");
     }
 }

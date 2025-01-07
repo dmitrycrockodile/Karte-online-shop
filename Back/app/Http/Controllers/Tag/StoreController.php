@@ -13,6 +13,7 @@ class StoreController extends Controller
         $data = $request->validated();
         Tag::firstOrCreate($data);
         
-        return redirect()->route('tag.index');
+        return redirect()->route('tag.index')
+                         ->with('success', "Tag \"{$data['title']}\" was created!");
     }
 }

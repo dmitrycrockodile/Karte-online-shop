@@ -13,6 +13,6 @@ class StoreController extends Controller
         $data = $request->validated();
         Coupon::firstOrCreate($data);
         
-        return redirect()->route('coupon.index');
+        return redirect()->route('coupon.index')->with('success', "Coupon \"{$data['title']}\" was created!");
     }
 }

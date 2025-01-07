@@ -10,6 +10,6 @@ class DeleteController extends BaseController
     {
         $product->delete();
 
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', "Product \"{$product['title']}\" was deleted!");
     }
 }

@@ -11,6 +11,7 @@ class DeleteController extends Controller
     {
         $tag->delete();
 
-        return redirect()->route('tag.index');
+        return redirect()->route('tag.index')
+                         ->with('success', "Tag \"{$tag['title']}\" was deleted!");
     }
 }

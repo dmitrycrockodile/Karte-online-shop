@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $user->update($data);
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success', "User \"{$user['name']}\" was updated!");
     }
 }

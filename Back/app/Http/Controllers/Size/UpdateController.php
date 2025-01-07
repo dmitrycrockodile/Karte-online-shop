@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $size->update($data);
 
-        return redirect()->route('size.index');
+        return redirect()->route('size.index')->with('success', "Size \"{$size['title']}\" was updated!");
     }
 }

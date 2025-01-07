@@ -11,6 +11,6 @@ class StoreController extends BaseController
         $data = $request->validated();
         $this->service->store($data);
         
-        return redirect()->route('product.index');
+        return redirect()->route('product.index')->with('success', "Product \"{$data['title']}\" was created!");
     }
 }
