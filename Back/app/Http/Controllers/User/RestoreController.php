@@ -12,6 +12,6 @@ class RestoreController extends Controller
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
 
-        return redirect()->route('user.index')->with('success', "The {$user->name} restored!");
+        return redirect()->route('user.index')->with('success', trans('notifications.restored', ['type' => 'User', 'title' => $user['name']]));
     }
 }

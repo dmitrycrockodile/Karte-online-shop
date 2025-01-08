@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $user->update($data);
 
-        return redirect()->route('user.index')->with('success', "User \"{$user['name']}\" was updated!");
+        return redirect()->route('user.index')->with('success', trans("notifications.edited", ['type' => 'User', 'title' => $user['name']]));
     }
 }

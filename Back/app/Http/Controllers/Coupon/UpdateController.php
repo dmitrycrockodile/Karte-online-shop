@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $coupon->update($data);
 
-        return redirect()->route('coupon.index')->with('success', "Coupon \"{$coupon['title']}\" was updated!");
+        return redirect()->route('coupon.index')->with('success', trans("notifications.edited", ['type' => 'Coupon', 'title' => $coupon['title']]));
     }
 }

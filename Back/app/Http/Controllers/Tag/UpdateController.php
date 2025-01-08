@@ -14,6 +14,6 @@ class UpdateController extends Controller
         $tag->update($data);
 
         return redirect()->route('tag.index')
-                         ->with('success', "Tag \"{$tag['title']}\" was updated!");
+                         ->with('success', trans("notifications.edited", ['type' => 'Tag', 'title' => $tag['title']]));
     }
 }

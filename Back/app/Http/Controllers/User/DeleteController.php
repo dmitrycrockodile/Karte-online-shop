@@ -11,6 +11,6 @@ class DeleteController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('user.index')->with('success', "User \"{$user['name']}\" was deleted!");
+        return redirect()->route('user.index')->with('success', trans("notifications.deleted", ['type' => 'User', 'title' => $user['name']]));
     }
 }

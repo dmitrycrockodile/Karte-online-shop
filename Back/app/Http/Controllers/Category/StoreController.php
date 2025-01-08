@@ -27,6 +27,6 @@ class StoreController extends Controller
         
         $category->coupons()->attach($couponsIds);
         
-        return redirect()->route('category.index')->with('success', "Category \"{$category['title']}\" was created!");
+        return redirect()->route('category.index')->with('success', trans("notifications.created", ['type' => 'Category', 'title' => $data['title']]));
     }
 }

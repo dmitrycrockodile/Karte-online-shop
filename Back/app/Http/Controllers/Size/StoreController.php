@@ -13,6 +13,6 @@ class StoreController extends Controller
         $data = $request->validated();
         Size::firstOrCreate($data);
         
-        return redirect()->route('size.index')->with('success', "Size \"{$data['title']}\" was created!");
+        return redirect()->route('size.index')->with('success', trans("notifications.created", ['type' => 'Size', 'title' => $data['title']]));
     }
 }

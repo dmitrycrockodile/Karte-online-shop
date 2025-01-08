@@ -11,6 +11,6 @@ class DeleteController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('category.index')->with('success', "Category \"{$category['title']}\" was deleted!");
+        return redirect()->route('category.index')->with('success', trans("notifications.deleted", ['type' => 'Category', 'title' => $category['title']]));
     }
 }

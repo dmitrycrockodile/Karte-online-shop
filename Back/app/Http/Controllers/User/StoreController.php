@@ -24,6 +24,6 @@ class StoreController extends Controller
             ], $data);
         }
         
-        return redirect()->route('user.index')->with('success', "User \"{$data['name']}\" was created!");
+        return redirect()->route('user.index')->with('success', trans("notifications.created", ['type' => 'User', 'title' => $data['name']]));
     }
 }

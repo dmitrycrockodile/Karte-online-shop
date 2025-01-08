@@ -11,6 +11,6 @@ class DeleteController extends Controller
     {
         $size->delete();
 
-        return redirect()->route('size.index')->with('success', "Size \"{$size['title']}\" was deleted!");
+        return redirect()->route('size.index')->with('success', trans("notifications.deleted", ['type' => 'Size', 'title' => $size['title']]));
     }
 }

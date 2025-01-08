@@ -11,6 +11,6 @@ class DeleteController extends Controller
     {
         $color->delete();
 
-        return redirect()->route('color.index')->with('success', "Color \"{$color['title']}\" was deleted!");
+        return redirect()->route('color.index')->with('success', trans("notifications.deleted", ['type' => 'Color', 'title' => $color['title']]));
     }
 }

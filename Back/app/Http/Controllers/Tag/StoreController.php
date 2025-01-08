@@ -14,6 +14,6 @@ class StoreController extends Controller
         Tag::firstOrCreate($data);
         
         return redirect()->route('tag.index')
-                         ->with('success', "Tag \"{$data['title']}\" was created!");
+                         ->with('success', trans("notifications.created", ['type' => 'Tag', 'title' => $data['title']]));
     }
 }

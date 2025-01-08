@@ -13,6 +13,6 @@ class StoreController extends Controller
         $data = $request->validated();
         Coupon::firstOrCreate($data);
         
-        return redirect()->route('coupon.index')->with('success', "Coupon \"{$data['title']}\" was created!");
+        return redirect()->route('coupon.index')->with('success', trans("notifications.created", ['type' => 'Coupon', 'title' => $data['title']]));
     }
 }

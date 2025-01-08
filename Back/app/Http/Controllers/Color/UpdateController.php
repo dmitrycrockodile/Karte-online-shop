@@ -13,6 +13,6 @@ class UpdateController extends Controller
         $data = $request->validated();
         $color->update($data);
 
-        return redirect()->route('color.index')->with('success', "Color \"{$color['title']}\" was updated!");
+        return redirect()->route('color.index')->with('success', trans("notifications.edited", ['type' => 'Color', 'title' => $color['title']]));
     }
 }

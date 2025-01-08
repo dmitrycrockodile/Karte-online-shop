@@ -11,6 +11,6 @@ class DeleteController extends Controller
     {
         $coupon->delete();
 
-        return redirect()->route('coupon.index')->with('success', "Coupon \"{$coupon['title']}\" was deleted!");
+        return redirect()->route('coupon.index')->with('success', trans("notifications.deleted", ['type' => 'Coupon', 'title' => $coupon['title']]));
     }
 }
