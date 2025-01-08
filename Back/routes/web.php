@@ -92,8 +92,7 @@ Route::group(['prefix' => 'products', 'namespace' => 'App\Http\Controllers\Produ
     Route::delete('/{product}', 'DeleteController')->name('product.delete');
 });
 
-//!!!!!
-Route::group(['prefix' => 'questions', 'namespace' => 'App\Http\Controllers\Support'], function() {
+Route::group(['prefix' => 'questions', 'namespace' => 'App\Http\Controllers\Question'], function() {
     Route::get('/', [QuestionController::class, 'index'])->name('question.index');
     Route::get('/{question}', [QuestionController::class, 'show'])->name('question.show');
     Route::patch('/{question}', [QuestionController::class, 'update'])->name('question.update');
