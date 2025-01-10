@@ -62,11 +62,14 @@ const actions = {
             commit('SET_USER', { user });
 
             await dispatch('cart/fetchCartItems', null, { root: true });
-            await dispatch('wishlist/fetchWishlistItems', null, { root: true });
+            if (user.email_verified_at) {
+               await dispatch('wishlist/fetchWishlistItems', null, { root: true });
+            }
 
             return res;
          }
       } catch (err) {
+         console.error(err)
          commit('AUTH_ERROR');
          toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
          return Promise.reject(err);
@@ -83,10 +86,10 @@ const actions = {
 
          toast.info('Logged out successfully');
       } catch(err) {
-         if (err.status !== 401) {
+         if (err.response.status !== 401) {
             toast.error(err.response?.data?.message, { timeout: 2000 });
             return Promise.reject(err);
-         }
+         } 
 
          return err;
       }

@@ -289,7 +289,7 @@
                         </div>
                         <div class="card p-4 shadow-sm mt-4">
                         <h2 class="mb-2">Password</h2>
-
+                        <!-- Password change -->
                         <form>
                            <div class="row mb-4">
                               <div class="col-md-6">
@@ -322,6 +322,31 @@
                               Save changes
                            </button>
                         </form>
+                        </div>
+
+                        <div class="card p-4 shadow-sm mt-4">
+                           <h2 class="mb-2">Delete Account</h2>
+                           <!-- Account delete -->
+                           <form @submit.prevent="handleAccountDelete">
+                              <div class="row mb-4">
+                                 <div class="col-md-6">
+                                 <label for="accound_delete_password" class="form-label">Password*</label>
+                                 <input
+                                    type="password"
+                                    class="form-control"
+                                    id="accound_delete_password"
+                                    v-model="deleteAccountForm.password"
+                                    placeholder="Enter password"
+                                    required
+                                 />
+                                 </div>
+                                 <div class="col-md-6 align-self-end">
+                                    <button type="submit" class="btn btn-danger w-100">
+                                       Delete account
+                                    </button>
+                                 </div>
+                              </div>
+                           </form>
                         </div>
                      </div>
                   </div>
@@ -379,7 +404,7 @@ import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
 import { useToast } from "vue-toastification";
 
-import { updateUserData, updateUserEmail, updateUserPassword, updateUserSubscription } from "@/services/userService";
+import { updateUserData, updateUserEmail, updateUserPassword, updateUserSubscription, deleteUserAccount } from "@/services/userService";
 
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import ContactForm from "@/components/common/ContactForm.vue";
@@ -404,6 +429,9 @@ export default {
          passwordChangeForm: {
             password: '',
             newPassword: ''
+         },
+         deleteAccountForm: {
+            password: '',
          },
          accountBGImage,
          toast: useToast(),
@@ -466,7 +494,22 @@ export default {
             this.toast.success(res.message, { timeout: 2000 });
          } else {
             // Shows error message
-            this.toast.error(err.response.data.message, { timeout: 2000 })
+            this.toast.error(res.message, { timeout: 2000 })
+         }
+      },
+      async handleAccountDelete() {
+         const res = await deleteUserAccount(this.userDataForm.id, this.deleteAccountForm.password);
+        
+         if (res.success) {
+            // Clears the form
+            this.deleteAccountForm.password = '';
+            // Shows success message
+            this.toast.success(res.message, { timeout: 2000 });
+            // Logs out user
+            this.handleLogout();
+         } else {
+            // Shows error message
+            this.toast.error(res.message, { timeout: 2000 })
          }
       },
       handleLogout() {

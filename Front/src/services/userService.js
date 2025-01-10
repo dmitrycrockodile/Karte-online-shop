@@ -40,3 +40,14 @@ export const updateUserSubscription = async (id) => {
       return handleError(err);
    }
 };
+
+export const deleteUserAccount = async (id, password) => {
+   try {
+      const res = await axios.delete(`${BASE_API_URL}/user/${id}`, {
+        data: { password: password }
+      });
+      return handleResponse(res);
+   } catch (err) {
+      return handleError(err);
+   }
+}

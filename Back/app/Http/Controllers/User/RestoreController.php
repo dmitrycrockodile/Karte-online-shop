@@ -7,11 +7,12 @@ use App\Models\User;
 
 class RestoreController extends Controller
 {
-    public function __invoke($id)
+    public function __invoke(int $id)
     {
         $user = User::withTrashed()->findOrFail($id);
         $user->restore();
 
-        return redirect()->route('user.index')->with('success', trans('notifications.restored', ['type' => 'User', 'title' => $user['name']]));
+        return redirect()->route('user.index')
+                         ->with('success', trans('notifications.restored', ['type' => 'User', 'title' => $user['name']]));
     }
 }

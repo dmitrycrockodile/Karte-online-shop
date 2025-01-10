@@ -17,7 +17,6 @@ class User extends Authenticatable implements MustVerifyEmail
     const SEX_FEMALE = 2;    
 
     protected $table = 'users';
-    protected $dates = 'deleted_at';
     protected $fillable = [
         'name', 
         'email', 

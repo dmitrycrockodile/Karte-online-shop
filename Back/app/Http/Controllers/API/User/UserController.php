@@ -7,6 +7,7 @@ use App\Http\Resources\User\UserResource;
 use App\Http\Requests\API\User\IndexRequest;
 use App\Http\Requests\API\User\EmailUpdateRequest;
 use App\Http\Requests\API\User\PasswordUpdateRequest;
+use App\Http\Requests\API\User\DeleteAccountRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,7 +21,7 @@ class UserController extends Controller
 
       return response()->json([
          'new_user' => new UserResource($user),
-         'message' => 'Your data was successfully updated!',
+         'message' => 'Your data was successfully updated',
          'success' => true,
       ], 200);
    }
@@ -39,7 +40,7 @@ class UserController extends Controller
          ], 200);
       } else {
          return response()->json([
-            'message' => 'Invalid password.',
+            'message' => 'Invalid password',
             'success' => false,
          ], 409);
       }
@@ -58,7 +59,7 @@ class UserController extends Controller
          ], 200);
       } else {
          return response()->json([
-            'message' => 'Invalid password.',
+            'message' => 'Invalid password',
             'success' => false,
          ], 409);
       }
@@ -83,6 +84,24 @@ class UserController extends Controller
             'success' => true,
             'is_subscribed' => true,
          ], 200);
+      }
+   }
+
+   public function destroy(DeleteAccountRequest $request, User $user) {
+      $data = $request->validated();
+   
+      if (Hash::check($data['password'], $user->password)) {
+         $user->delete();
+   
+         return response()->json([
+            'message' => 'Your account was deleted!',
+            'success' => true,
+         ], 200);
+      } else {
+         return response()->json([
+            'message' => 'Invalid password.',
+            'success' => false,
+         ], 409);
       }
    }
 }

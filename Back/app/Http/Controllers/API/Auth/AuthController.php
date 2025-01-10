@@ -65,7 +65,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Incorrect password.',
-            ], 401);
+            ], 400);
         }
     }
 
@@ -83,8 +83,9 @@ class AuthController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'error' => 'Unauthorized',
-            ], Response::HTTP_UNAUTHORIZED);
+                'success' => false,
+                'message' => 'Unauthorized.',
+            ], 401);
         }
     }
 
