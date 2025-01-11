@@ -56,9 +56,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/user/update/{user}', [UserController::class, 'updateGeneral']);
     Route::patch('/user/update/email/{user}', [UserController::class, 'updateEmail']);
     Route::patch('/user/update/password/{user}', [UserController::class, 'updatePassword']);
-    Route::patch('/user/update/subscription/{user}', [UserController::class, 'updateSubscription']);
+    // Route::patch('/user/update/subscription/{user}', [UserController::class, 'updateSubscription']);
     Route::delete('/user/{user}', [UserController::class, 'destroy']);
 });
+Route::post('/user/subscribe', [UserController::class, 'subscribe']);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/wishlist', [WishListController::class, 'index']);

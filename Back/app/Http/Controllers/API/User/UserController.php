@@ -9,6 +9,8 @@ use App\Http\Requests\API\User\EmailUpdateRequest;
 use App\Http\Requests\API\User\PasswordUpdateRequest;
 use App\Http\Requests\API\User\DeleteAccountRequest;
 use App\Models\User;
+use App\Models\Subscriber;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -65,27 +67,59 @@ class UserController extends Controller
       }
    }
 
-   public function updateSubscription(User $user) {
-      if ($user->is_subscribed) {
-         $user->is_subscribed = false;
-         $user->save();
+   public function subscribe(Request $request) {
+      $validated = $request->validate([
+         'email' => 'required|email|unique:subscribers,email',
+      ]);
 
-         return response()->json([
-            'message' => 'You have unsubscribed from out newsletter.',
-            'success' => true,
-            'is_subscribed' => false,
-         ], 200);
-      } else {
-         $user->is_subscribed = true;
-         $user->save();
-   
+      if (User::where('email', $validated['email'])->first()) {
+         $user = User::where('email', $validated['email'])->first();
+         $user->update(['is_subscribed' => true]);
+
          return response()->json([
             'message' => 'Thank you for the subscription!',
             'success' => true,
             'is_subscribed' => true,
          ], 200);
       }
+
+      if (!Subscriber::where('email', $validated['email'])->exists()) {
+         Subscriber::create(['email' => $validated['email']]);
+         return response()->json([
+               'message' => 'Thank you for the subscription!',
+               'success' => true,
+               'is_subscribed' => true,
+         ], 200);
+      }
+
+      return response()->json([
+         'message' => 'Email already subscribed.',
+         'success' => false,
+      ], 409);
    }
+
+
+   // public function updateSubscription(User $user) {
+   //    if ($user->is_subscribed) {
+   //       $user->is_subscribed = false;
+   //       $user->save();
+
+   //       return response()->json([
+   //          'message' => 'You have unsubscribed from out newsletter.',
+   //          'success' => true,
+   //          'is_subscribed' => false,
+   //       ], 200);
+   //    } else {
+   //       $user->is_subscribed = true;
+   //       $user->save();
+   
+   //       return response()->json([
+   //          'message' => 'Thank you for the subscription!',
+   //          'success' => true,
+   //          'is_subscribed' => true,
+   //       ], 200);
+   //    }
+   // }
 
    public function destroy(DeleteAccountRequest $request, User $user) {
       $data = $request->validated();

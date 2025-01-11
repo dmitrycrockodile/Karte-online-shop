@@ -362,7 +362,7 @@
                            <div class="row mb-2 mt-2">
                               <div class="col-md-6">
                                  <button @click.prevent="toggleSubscribtion" type="submit" class="btn btn-dark w-100">
-                                    {{ userDataForm.isSubscribed ? 'Unsubscribe' : 'Subscribe' }}
+                                    {{ userDataForm.is_subscribed ? 'Unsubscribe' : 'Subscribe' }}
                                  </button>
                               </div>
                            </div>

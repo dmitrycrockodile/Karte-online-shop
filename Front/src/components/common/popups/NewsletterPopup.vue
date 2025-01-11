@@ -6,8 +6,8 @@
             <div class="col-lg-5 d-lg-block">
                <div class="newsLetter-popup__thumb imgenews">
                   <img
-                  src="@/assets/images/home-three/products-1.jpg"
-                  alt="newsletter"
+                     src="@/assets/images/inner-pages/newsletter-1.jpg"
+                     alt="newsletter"
                   />
                </div>
             </div>
@@ -18,19 +18,20 @@
                      <img src="@/assets/images/logo/logo.png" alt="logo" />
                   </router-link>
                   <h2>Join <span>with us.</span></h2>
-                  <p>Subscribe to receive news from Karte In a free hour</p>
-                  </div>
-                  <form action="#0" class="newsLetter-popup__subscrib-form">
+               </div>
+               <form @submit.prevent="subscribe" class="newsLetter-popup__subscrib-form">
+                  <p>Subscribe to receive news from Karte every month!</p>
                   <div class="input_box">
                      <input
                         type="email"
+                        v-model="email"
                         placeholder="Enter your email Address"
-                        name="email"
+                        required
                      />
                      <button type="submit" class="subscribe_btn">Submit</button>
                   </div>
-                  <div class="form-group">
-                     <input type="checkbox" id="html" />
+                  <div class="form-group checkbox__container">
+                     <input type="checkbox" id="html" required />
                      <label for="html">
                         By providing my information, I agree to Karte
                         <a href="#0"> Privacy Policy</a> and
@@ -47,11 +48,31 @@
 
 <script>
    import BasePopup from '@/components/base/BasePopup.vue';
+   import { useToast } from "vue-toastification";
 
    export default {
       props: {
          active: Boolean,
          closePopup: Function,
+      },
+      data() {
+         return {
+            email: '',
+            toast: useToast(),
+         }
+      },
+      methods: {
+         async subscribe() {
+            try {
+               const response = await this.axios.post('http://localhost:8876/api/user/subscribe', { email: this.email });
+               this.toast.success(response.data.message, { timeout: 2000 });
+            } catch (err) {
+               console.log(err);
+               this.toast.error(err.response?.data?.message || 'An error occurred.', { timeout: 2000 });
+            }
+
+            this.closePopup();
+         },
       },
       components: {
          BasePopup
@@ -64,8 +85,9 @@
    position: relative;
    background-color: var(--thm-white);
    max-width: calc(100% - 2vh);
-   margin: 25vh auto;
+   margin: 22vh auto;
    padding: 20px 20px 20px;
+   border-radius: 18px;
 }
 #newsLetter-popup .mfp-close {
    font-size: 40px;
@@ -98,42 +120,25 @@
 }
 .newsLetter-popup__subscrib-form {
    width: 100%;
+   margin-top: 40px;
 }
 .newsLetter-popup__subscrib-form .input_box {
    background: var(--thm-white);
-   display: -webkit-box;
-   display: -ms-flexbox;
    display: flex;
-   -webkit-box-pack: justify;
-       -ms-flex-pack: justify;
-           justify-content: space-between;
-   -webkit-box-align: center;
-       -ms-flex-align: center;
-           align-items: center;
+   justify-content: space-between;
+   align-items: center;
    padding: 5px;
    border: 2px solid var(--thm-black);
-   margin: 20px 0px 20px;
+   margin: 5px 0px 20px;
+   border-radius: 8px;
 }
 .newsLetter-popup__subscrib-form .input_box input {
    border: none;
-   -webkit-box-shadow: 0px solid rgba(0, 0, 0, 0);
-           box-shadow: 0px solid rgba(0, 0, 0, 0);
+   box-shadow: 0px solid rgba(0, 0, 0, 0);
    border-radius: 0px;
    color: var(--thm-black);
    font-weight: 500;
    padding: 0px 10px 0px 20px;
-}
-.newsLetter-popup__subscrib-form .input_box input::-webkit-input-placeholder {
-   color: var(--thm-black);
-}
-.newsLetter-popup__subscrib-form .input_box input::-moz-placeholder {
-   color: var(--thm-black);
-}
-.newsLetter-popup__subscrib-form .input_box input:-ms-input-placeholder {
-   color: var(--thm-black);
-}
-.newsLetter-popup__subscrib-form .input_box input::-ms-input-placeholder {
-   color: var(--thm-black);
 }
 .newsLetter-popup__subscrib-form .input_box input::placeholder {
    color: var(--thm-black);
@@ -151,18 +156,26 @@
    font-family: var(--font-heading-family);
    transition: 0.3s;
    border: 2px solid var(--thm-black);
+   border-radius: 9px;
 }
 .newsLetter-popup__subscrib-form .input_box .subscribe_btn:hover {
    background: var(--thm-white);
    color: var(--thm-black);
+}
+.checkbox__container {
+   position: relative;
 }
 .newsLetter-popup__subscrib-form .form-group input {
    padding: 0;
    height: initial;
    width: initial;
    margin-bottom: 0;
-   display: none;
+   display: inline-block;
+   opacity: 0;
    cursor: pointer;
+   position: absolute;
+   left: 3px;
+   top: 8px;
 }
 .newsLetter-popup__subscrib-form .form-group label {
    position: relative;
@@ -178,8 +191,7 @@
    content: "";
    background-color: transparent;
    border: 2px solid var(--thm-base);
-   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
-           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
    padding: 7px;
    display: inline-block;
    position: relative;
@@ -197,7 +209,6 @@
    height: 9px;
    border: solid var(--thm-base);
    border-width: 0 2px 2px 0;
-   -webkit-transform: rotate(45deg);
    transform: rotate(45deg);
 }
 .newsLetter-popup__thumb {
@@ -213,8 +224,8 @@
    max-height: 400px;
 }
 .imgenews img {
-   -o-object-fit: cover;
-      object-fit: cover;
+   object-fit: cover;
+   border-radius: 18px;
 }
 
 @media (min-width: 576px) {
@@ -246,7 +257,7 @@
    }
 
    .newsLetter-popup__subscrib-form .input_box {
-      margin: 30px 0px 30px;
+      margin: 17px 0px 9px;
    }
 
    .newsLetter-popup__content h2 {
@@ -255,7 +266,7 @@
    }
 
    .newsLetter-popup__subscrib-form .input_box .subscribe_btn {
-      padding: 15px 40px 15px;
+      padding: 10px 35px 10px;
       font-size: 12px;
    }
 }

@@ -17,7 +17,7 @@
           <div class="slide contant-box position-relative">
             <img
               class="bg-img hundread-vh"
-              src="../../assets/images/home-three/home-3-bg.jpg"
+              src="../../assets/images/inner-pages/shoes-banner-1.jpg"
               alt="image"
             />
             <div class="content-holder p-0 absolute-content">
@@ -27,7 +27,7 @@
                 >
                   <div class="col-xl-6 col-md-9">
                     <div
-                      class="content-common home3c slideup position-relative"
+                      class="content-common home3c position-relative"
                     >
                       <h6 class="new wow animated fadeInUp">NEW COLLECTION</h6>
                       <h1 class="wow animated fadeInUp" data-wow-delay="0.4s">
@@ -38,11 +38,12 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Vehicula faucibus massa est elit maecenas.
                       </p>
-                      <a
-                        href="shop-grid.html"
+                      <router-link
+                        :to="{ name: 'products.show', params: { id: 1 } }"
                         class="btn--primary button style2 wow animated fadeInUp"
-                        >Shop Collection</a
                       >
+                        See the shoes
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -55,7 +56,7 @@
           <div class="slide contant-box position-relative">
             <img
               class="bg-img hundread-vh"
-              src="../../assets/images/home-three/home-3-bg-2.jpg"
+              src="../../assets/images/inner-pages/shoes-banner-2.jpg"
               alt="image"
             />
 
@@ -66,7 +67,7 @@
                 >
                   <div class="col-xl-6 col-md-9">
                     <div
-                      class="content-common slidedown home3c position-relative text-center"
+                      class="content-common slideup home3c position-relative text-center"
                     >
                       <h6 class="new wow animated fadeInUp">NEW COLLECTION</h6>
                       <h1 class="wow animated fadeInUp" data-wow-delay="0.4s">
@@ -77,11 +78,12 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Vehicula faucibus massa est elit maecenas.
                       </p>
-                      <a
-                        href="shop-grid.html"
+                      <router-link
+                        :to="{ name: 'products.show', params: { id: 2 } }"
                         class="btn--primary button style2 wow animated fadeInUp"
-                        >Shop Collection</a
                       >
+                        See the shoes
+                      </router-link>
                     </div>
                   </div>
                 </div>
