@@ -32,14 +32,23 @@ export const updateUserPassword = async (id, password, newPassword) => {
    }
 };
 
-export const updateUserSubscription = async (id) => {
+export const subscribeToNewsletter = async (email) => {
    try {
-      const res = await axios.patch(`${BASE_API_URL}/user/update/subscription/${id}`);
+      const res = await axios.post(`${BASE_API_URL}/user/subscribe`, { email });
       return handleResponse(res);
    } catch (err) {
       return handleError(err);
    }
-};
+} 
+
+export const unSubscribeToNewsletter = async (id) => {
+   try {
+      const res = await axios.delete(`${BASE_API_URL}/user/subscribe/${id}`);
+      return handleResponse(res);
+   } catch (err) {
+      return handleError(err);
+   }
+} 
 
 export const deleteUserAccount = async (id, password) => {
    try {

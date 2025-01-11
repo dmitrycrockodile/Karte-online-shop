@@ -404,7 +404,7 @@ import { mapGetters, mapActions } from "vuex";
 import { areObjectsEqual } from "@/utils/helpers";
 import { useToast } from "vue-toastification";
 
-import { updateUserData, updateUserEmail, updateUserPassword, updateUserSubscription, deleteUserAccount } from "@/services/userService";
+import { updateUserData, updateUserEmail, updateUserPassword, unSubscribeToNewsletter, subscribeToNewsletter, deleteUserAccount } from "@/services/userService";
 
 import SizesRadioGroup from "@/components/common/radios/SizesRadioGroup.vue";
 import ContactForm from "@/components/common/ContactForm.vue";
@@ -517,18 +517,32 @@ export default {
             .then(() => this.$router.push({name: 'login.index'}))
       }, 
       async toggleSubscribtion() {
-         const res = await updateUserSubscription(this.userDataForm.id);  
-
-         if (res.success) {
-            // Updates the subscription data
-            this.userDataForm.isSubscribed = res.is_subscribed;
-            this.$store.commit('auth/SET_USER', { user: this.userDataForm });
-            // Shows success message
-            this.toast.success(res.message);
+         if (this.userDataForm.is_subscribed) {
+            const res = await unSubscribeToNewsletter(this.userDataForm.id);  
+   
+            if (res.success) {
+               // Updates the subscription data
+               this.userDataForm.is_subscribed = res.is_subscribed;
+               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+               // Shows success message
+               this.toast.success(res.message, { timeout: 2000 });
+            } else {
+               // Shows error message
+               this.toast.error(res.message)
+            } 
          } else {
-            // Shows error message
-            this.toast.error(res.message)
-         } 
+            const res = await subscribeToNewsletter(this.userDataForm.email);
+
+            if (res.success) {
+               // Updates the subscription data
+               this.userDataForm.is_subscribed = res.is_subscribed;
+               this.$store.commit('auth/SET_USER', { user: this.userDataForm });
+                // Shows success message
+               this.toast.success(res.message, { timeout: 2000 });
+            } else {
+               this.toast.error(res.message);
+            }
+         }
       },
       async handleVerificationSend() {
          try {

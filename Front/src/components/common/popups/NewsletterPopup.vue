@@ -50,6 +50,8 @@
    import BasePopup from '@/components/base/BasePopup.vue';
    import { useToast } from "vue-toastification";
 
+   import { subscribeToNewsletter } from "@/services/userService";
+
    export default {
       props: {
          active: Boolean,
@@ -63,12 +65,12 @@
       },
       methods: {
          async subscribe() {
-            try {
-               const response = await this.axios.post('http://localhost:8876/api/user/subscribe', { email: this.email });
-               this.toast.success(response.data.message, { timeout: 2000 });
-            } catch (err) {
-               console.log(err);
-               this.toast.error(err.response?.data?.message || 'An error occurred.', { timeout: 2000 });
+            const res = await subscribeToNewsletter(this.email);
+
+            if (res.success) {
+               this.toast.success(res.message, { timeout: 2000 });
+            } else {
+               this.toast.error(res.message);
             }
 
             this.closePopup();
