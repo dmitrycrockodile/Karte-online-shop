@@ -100,90 +100,30 @@
       <div class="container">
         <div class="row mt--30">
           <div class="col-lg-6 h-100 mt-30">
-            <a href="shop-grid.html" class="catagory-single one home3cat">
-              <img
-                src="../../assets/images/home-three/cat-1.png"
-                alt="#"
-                class="background-img bg-img imgone"
-              />
-              <div class="content">
-                <div class="row w-100 h-100 align-items-center">
-                  <div class="col-xl-7 col-md-9">
-                    <h5 class="wow animated fadeInUp" data-wow-delay="0.2s">
-                      Shop & Save
-                    </h5>
-                    <h3 class="wow animated fadeInUp" data-wow-delay="0.3s">
-                      Exclusive Women Shoes
-                    </h3>
-                    <span
-                      class="link wow animated fadeInUp"
-                      data-wow-delay="0.4s"
-                    >
-                      explore now</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </a>
+            <CategoryCard 
+              categoryId="2" 
+              title="Explore the best women shoes" 
+              keyWord="Order & Enjoy" 
+              fullSize
+              white
+            />
           </div>
           <div class="col-lg-6">
             <div class="row">
               <div class="co-12 mt-30">
-                <a href="shop-grid.html" class="catagory-single home3cat">
-                  <img
-                    src="../../assets/images/home-three/catbg-3.png"
-                    alt=""
-                    class="background-img bg-img"
-                  />
-                  <div class="content">
-                    <div class="row w-100 h-100 align-items-center">
-                      <div class="col-12">
-                        <h5
-                          class="wow animated red fadeInUp"
-                          data-wow-delay="0.2s"
-                        >
-                          20% Off
-                        </h5>
-                        <h3 class="wow animated fadeInUp" data-wow-delay="0.3s">
-                          Men Sneakers
-                        </h3>
-                        <span
-                          class="link wow animated fadeInUp"
-                          data-wow-delay="0.4s"
-                        >
-                          explore now</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </a>
+                <CategoryCard 
+                  categoryId="1" 
+                  title="High quality men shoes" 
+                  keyWord="Up to -20%" 
+                  white
+                />
               </div>
               <div class="col-12 mt-30">
-                <a href="shop-grid.html" class="catagory-single home3cat">
-                  <img
-                    src="../../assets/images/home-three/catbg-2.png"
-                    alt=""
-                    class="background-img bg-img"
-                  />
-                  <div class="content">
-                    <div class="row w-100 h-100 align-items-center">
-                      <div class="col-xxl-6 col-lg-9">
-                        <h5 class="wow animated fadeInUp" data-wow-delay="0.2s">
-                          New Products
-                        </h5>
-                        <h3 class="wow animated fadeInUp" data-wow-delay="0.3s">
-                          Women Sneakers
-                        </h3>
-                        <span
-                          class="link wow animated fadeInUp"
-                          data-wow-delay="0.4s"
-                        >
-                          explore now</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </a>
+                <CategoryCard 
+                  categoryId="3" 
+                  title="Please her with a brand new jewerly" 
+                  keyWord="Up to -20%" 
+                />
               </div>
             </div>
           </div>
@@ -1888,55 +1828,6 @@
     </section>
     <!--End Products Seven-->
 
-    <!-- newsLetter-one style-two Start -->
-    <section
-      class="newsLetter-one border-0 style-two pt-60 pb-60 overflow-hidden"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 col-md-6">
-            <div
-              class="newsLetter-one__content-box d-flex align-items-center justify-content-md-start justify-content-center wow fadeInUp animated"
-              data-wow-delay="0.1s"
-            >
-              <div class="thumb">
-                <img src="../../assets/images/home-two/envalop.png" alt="" />
-              </div>
-              <h3 class="t36"><span>Sign Up For </span> Newsletter</h3>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div
-              class="newsLetter-one__content-box d-flex align-items-center justify-content-md-start justify-content-center wow fadeInUp animated"
-              data-wow-delay="0.2s"
-            >
-              <h6 class="text-md-start text-center">
-                Subscribe to ours weekly newsletter for all the latest updates
-              </h6>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-            <div
-              class="newsLetter-one__content-box three d-flex align-items-center justify-content-md-start justify-content-center wow fadeInUp animated"
-              data-wow-delay="0.3s"
-            >
-              <form action="#0" class="form">
-                <div class="newsLetter-one__subscribe-box">
-                  <input
-                    type="email"
-                    placeholder="Email address"
-                    name="email"
-                  />
-                  <button type="submit" class="subscrib-btn">Subscribe</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- newsLetter-one style-two End -->
-
     <!--Start Categories Two-->
     <section class="categories-three overflow-hidden">
       <div class="auto-container container">
@@ -2254,86 +2145,15 @@
         </div>
       </div>
     </section>
-    <!-- newsLetter-one Start -->
-
-    <!--Start Blog Three-->
-    <section class="blog-three pt-60 pb-120 overflow-hidden">
-      <div class="container">
-        <div class="section-header style3 text-center wow fadeInUp animated">
-          <h2>Latest News</h2>
-          <p>Weekend Updates</p>
-        </div>
-        <div class="row justify-content-center">
-          <!--Start Blog Three Single-->
-          <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-            <div class="blog-three__single mt-30">
-              <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/home-three/blog-v3-1.jpg" alt="" />
-              </a>
-              <div class="blog-three__single-content text-center">
-                <span>Vendora Style</span>
-                <h4>
-                  <a href="blog-single.html"
-                    >A Perfect Style With Our Fashion Shoes</a
-                  >
-                </h4>
-                <div class="btn-box">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--End Blog Three Single-->
-          <!--Start Blog Three Single-->
-          <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-            <div class="blog-three__single mt-30">
-              <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/home-three/blog-v3-2.jpg" alt="" />
-              </a>
-              <div class="blog-three__single-content text-center">
-                <span>Vendora Style</span>
-                <h4>
-                  <a href="blog-single.html"
-                    >2021-2021 fall-winter men's shoe trends.</a
-                  >
-                </h4>
-                <div class="btn-box">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-xl-4 col-lg-4 col-sm-6 wow fadeInUp animated">
-            <div class="blog-three__single mt-30">
-              <a href="blog-single.html" class="blog-three__single-img d-block">
-                <img src="../../assets/images/home-three/blog-v3-3.jpg" alt="" />
-              </a>
-              <div class="blog-three__single-content text-center">
-                <span>Vendora Style</span>
-                <h4>
-                  <a href="blog-single.html"
-                    >What men's shoes will be in fashion in the spring
-                  </a>
-                </h4>
-                <div class="btn-box">
-                  <a href="blog-single.html">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--End Blog Three Single-->
-        </div>
-      </div>
-    </section>
-    <!--End Blog Three-->
   </main>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Pagination, Autoplay } from "swiper/modules";
+
 import NewsletterPopup from "@/components/common/popups/NewsletterPopup.vue";
+import CategoryCard from "@/components/features/home/CategoryCard.vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -2344,7 +2164,8 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    NewsletterPopup
+    NewsletterPopup,
+    CategoryCard
   },
   data() {
     return {
