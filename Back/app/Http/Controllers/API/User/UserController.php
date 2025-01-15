@@ -8,6 +8,7 @@ use App\Http\Requests\API\User\IndexRequest;
 use App\Http\Requests\API\User\EmailUpdateRequest;
 use App\Http\Requests\API\User\PasswordUpdateRequest;
 use App\Http\Requests\API\User\DeleteAccountRequest;
+use App\Http\Requests\API\User\SubscribeRequest;
 use App\Models\User;
 use App\Models\Subscriber;
 use Illuminate\Http\Request;
@@ -67,19 +68,17 @@ class UserController extends Controller
       }
    }
 
-   public function subscribe(Request $request) {
-      $data = $request->validate([
-         'email' => 'required|email|unique:subscribers,email',
-      ]);
+   public function subscribe(SubscribeRequest $request) {
+      $data = $request->validated();
 
       if (User::where('email', $data['email'])->first()) {
          $user = User::where('email', $data['email'])->first();
          if ($user->is_subscribed) {
             return response()->json([
-               'message' => 'You are alredy subscribed!',
-               'success' => true,
+               'message' => 'This email already subscribed!',
+               'success' => false,
                'is_subscribed' => true,
-            ], 200);
+            ], 409);
          } else {
             $user->update(['is_subscribed' => true]);
    
@@ -91,19 +90,12 @@ class UserController extends Controller
          }
       }
 
-      if (!Subscriber::where('email', $data['email'])->exists()) {
-         Subscriber::create(['email' => $data['email']]);
-         return response()->json([
-               'message' => 'Thank you for the subscription!',
-               'success' => true,
-               'is_subscribed' => true,
-         ], 200);
-      }
-
+      Subscriber::create(['email' => $data['email']]);
       return response()->json([
-         'message' => 'Email already subscribed.',
-         'success' => false,
-      ], 409);
+            'message' => 'Thank you for the subscription!',
+            'success' => true,
+            'is_subscribed' => true,
+      ], 200);
    }
 
    public function unsubscribe(User $user) {

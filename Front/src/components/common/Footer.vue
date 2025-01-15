@@ -63,6 +63,26 @@
             <div
               class="col-xl-4 col-lg-6 col-md-6 col-sm-12 mt-30 wow fadeInUp animated"
             >
+            <div class="footer-default__single-box">
+              <div class="footer-title">
+                  <h4> Newsletter </h4>
+              </div>
+              <div class="footer-newsletter">
+                  <p class="text">
+                    Enter your email to receive our latest updates about our products & promotions. 
+                  </p>
+                  <form @submit.prevent="subscribe" class="footer-default__subscrib-form">
+                    <div class="footer-input-box">
+                      <input 
+                        type="email" 
+                        v-model="email"
+                        placeholder="Email address"
+                        name="email" 
+                        required
+                      /> 
+                      <button type="submit" class="subscribe_btn">Subscribe</button> 
+                    </div>
+                  </form>
               <div class="newsletter-bottom d-flex align-items-center">
                 <div class="footer-title-box">
                   <p>Follow Us:</p>
@@ -101,6 +121,8 @@
           </div>
         </div>
       </div>
+      </div>
+    </div>
       <div class="footer_bottom position-relative">
         <div class="container">
           <div class="footer_bottom_content">
@@ -140,7 +162,29 @@
 </template>
 
 <script>
-   export default {
-      name: 'Footer',
-   }
+  import { useToast } from "vue-toastification";
+  import { subscribeToNewsletter } from "@/services/userService";
+
+  export default {
+    name: 'Footer',
+    data() {
+      return {
+        email: '',
+        toast: useToast(),
+      }
+    },
+    methods: {
+      async subscribe() {
+        const res = await subscribeToNewsletter(this.email);
+
+        if (res.success) {
+          this.toast.success(res.message, { timeout: 2000 });
+        } else {
+          this.toast.info(res.message);
+        }
+
+        this.closePopup();
+      },
+    },
+  }
 </script>

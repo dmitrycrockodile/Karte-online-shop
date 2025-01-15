@@ -70,7 +70,7 @@
             if (res.success) {
                this.toast.success(res.message, { timeout: 2000 });
             } else {
-               this.toast.error(res.message);
+               this.toast.info(res.message);
             }
 
             this.closePopup();
