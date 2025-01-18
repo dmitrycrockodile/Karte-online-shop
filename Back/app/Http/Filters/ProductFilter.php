@@ -2,6 +2,7 @@
 
 namespace App\Http\Filters;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductFilter extends AbstractFilter {
@@ -12,6 +13,7 @@ class ProductFilter extends AbstractFilter {
    const TAGS = 'tags';
    const SORTBY = 'sortby';
    const TITLE = 'title';
+   const HIGHRATED = 'highRated';
 
 
    protected function getCallbacks(): array
@@ -23,6 +25,7 @@ class ProductFilter extends AbstractFilter {
          self::TAGS => [$this, 'tags'],
          self::SORTBY => [$this, 'sortby'],
          self::TITLE => [$this, 'title'],
+         self::HIGHRATED => [$this, 'highRated'],
       ];
    }
 
@@ -75,4 +78,12 @@ class ProductFilter extends AbstractFilter {
             break;
       }
    }
+
+   protected function highRated(Builder $builder) {
+      $builder->where(function ($query) {
+         $query->selectRaw('COALESCE(AVG(rating), 0)')
+               ->from('reviews')
+               ->whereColumn('reviews.product_id', 'products.id');
+      }, '>', 4);
+  }
 }

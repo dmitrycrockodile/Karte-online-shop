@@ -1,5 +1,5 @@
 <template>
-   <div v-if="type === 'basic'" class="products-three-single w-100 mt-30" key="product.id">
+   <div v-if="type === 'basic' || type === 'slide'" class="products-three-single w-100 mt-30" key="product.id">
       <div class="products-three-single-img">
         <router-link
           :to="{
@@ -154,8 +154,7 @@
           <ul>
             <li>
               <button 
-                @click.prevent="getPopupProduct(product.id)" 
-                class="popup_link"
+                @click.prevent="getPopupProduct(product.id)"
               >
                 <i class="flaticon-eye"></i>
               </button> 

@@ -853,7 +853,7 @@ export default {
   },
   async created() {
     const res = await getProduct(this.$route.params.id);
-      
+    
     if (res.success) {
       this.product = res.product;
       this.maxProductQuantity = res.product.count;

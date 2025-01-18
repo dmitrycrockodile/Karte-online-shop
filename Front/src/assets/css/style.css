@@ -395,7 +395,7 @@ h6, .h6 {
   cursor: pointer;
   width: 50px;
   height: 50px;
-  background: var(--thm-white) !important;
+  background: #2a2525 !important;
   box-shadow: 1px 5px 15px rgba(167, 180, 226, 0.25) !important;
   border-radius: 50%;
   transition: 0.3s;
@@ -2351,20 +2351,11 @@ categories-tab start
   display: block;
 }
 
-.catagory-slider .arrow-next,
-.catagory-slider-three .arrow-next {
-  top: 45%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  right: calc(0% - 50px);
+.catagory-slider-three .swiper-pagination-horizontal {
+  bottom: -10px !important;
 }
-
-.catagory-slider .arrow-back,
-.catagory-slider-three .arrow-back {
-  top: 45%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  left: calc(0% - 50px);
+.tabs .swiper-horizontal {
+  padding-bottom: 35px;
 }
 
 .catagory-slider > div {
@@ -2694,8 +2685,7 @@ products-grid start
 .products-grid__usefull-links {
   position: absolute;
   top: 20%;
-  -webkit-transform: translateY(-20%);
-          transform: translateY(-20%);
+  transform: translateY(-20%);
   right: 0px;
   opacity: 0;
   visibility: hidden;
@@ -3091,11 +3081,16 @@ products-grid start
   .products-grid__usefull-links {
     position: absolute;
     top: 20%;
-    -webkit-transform: translateY(-20%);
-            transform: translateY(-20%);
+    transform: translateY(-20%);
     right: 0px;
-    -webkit-transition: 0.3s;
     transition: 0.3s;
+  }
+  .products-grid__usefull-links button { 
+    height: 34px;
+    width: 34px;
+  }
+  .products-grid__usefull-links button i {
+    font-size: 13px;
   }
   .products-grid__usefull-links a i {
     line-height: 0px;
@@ -3170,6 +3165,14 @@ products-grid start
   }
 }
 @media (min-width: 1400px) and (min-width: 1400px) {
+  .products-grid__usefull-links button { 
+    height: 43px;
+    width: 43px;
+  }
+
+  .products-grid__usefull-links button i {
+    font-size: 15px;
+  }
   .products-grid__cart-btn {
     padding: 0px 15px 0px;
   }
@@ -4643,26 +4646,17 @@ catagory4
 
 .products-three-single-img .addcart {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
   left: 20px;
   bottom: -20px;
   right: 20px;
   background: var(--thm-black);
   padding: 15px 25px 10px;
-  -webkit-transition: 0.6s;
   transition: 0.6s;
-  -webkit-transition-delay: 0.1s;
-          transition-delay: 0.1s;
-  -webkit-transform-origin: bottom;
-          transform-origin: bottom;
+  transition-delay: 0.1s;
+  transform-origin: bottom;
   z-index: 5;
   font-size: 14px;
   line-height: 24px;
@@ -4791,6 +4785,8 @@ catagory4
 
   .products-three-single:hover .addcart {
     bottom: 30px;
+    padding: 3% 0% 3%;
+    font-size: 12px;
   }
 
   .products-three-single .products-grid__usefull-links {
