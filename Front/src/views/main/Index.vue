@@ -585,81 +585,57 @@
             class="col-xxl-3 col-md-6 mt-30 wow fadeInUp animated"
             data-wow-delay="0.2s"
           >
-            <div class="core-features__box d-flex ms-0">
-              <span class="one"></span> <span class="two"></span>
-              <div class="icon">
-                <img src="../../assets/images/icon/f-icon-1.png" alt="" />
-              </div>
-              <div class="core-features__box-content">
-                <a href="login.html" class="d-block">
-                  <h4>Secure Payment</h4>
-                </a>
-                <p>
-                  Everybody different which the why give offer styles for every
-                  body.
-                </p>
-              </div>
-            </div>
+          <FeatureCard 
+            :icon="FeatureIcon1" 
+            title="Secure Payment" 
+          >
+            <p>
+              Everybody different which the why give offer styles for every
+              body.
+            </p>
+          </FeatureCard>
           </div>
           <div
             class="col-xxl-3 col-md-6 mt-30 wow fadeInUp animated"
             data-wow-delay="0.3s"
           >
-            <div class="core-features__box d-flex">
-              <span class="one"></span> <span class="two"></span>
-              <div class="icon">
-                <img src="../../assets/images/icon/f-icon-2.png" alt="" />
-              </div>
-              <div class="core-features__box-content">
-                <a href="login.html" class="d-block">
-                  <h4>27/7 Fast Delivery</h4>
-                </a>
-                <p>
-                  Everybody different which the why give offer styles for every
-                  body.
-                </p>
-              </div>
-            </div>
+            <FeatureCard 
+              :icon="FeatureIcon2" 
+              title="27/7 Fast Delivery" 
+            >
+              <p>
+                Everybody different which the why give offer styles for every
+                body.
+              </p>
+            </FeatureCard>
           </div>
           <div
             class="col-xxl-3 col-md-6 mt-30 wow fadeInUp animated"
             data-wow-delay="0.4s"
           >
-            <div class="core-features__box d-flex">
-              <span class="one"></span> <span class="two"></span>
-              <div class="icon">
-                <img src="../../assets/images/icon/f-icon-3.png" alt="" />
-              </div>
-              <div class="core-features__box-content">
-                <a href="login.html" class="d-block">
-                  <h4>Return & Refund</h4>
-                </a>
-                <p>
-                  Everybody different which the why give offer styles for every
-                  body.
-                </p>
-              </div>
-            </div>
+            <FeatureCard 
+              :icon="FeatureIcon3" 
+              title="Return & Refund" 
+            >
+              <p>
+                Everybody different which the why give offer styles for every
+                body.
+              </p>
+            </FeatureCard>
           </div>
           <div
             class="col-xxl-3 col-md-6 mt-30 wow fadeInUp animated"
             data-wow-delay="0.5s"
           >
-            <div class="core-features__box d-flex me-0">
-              <span class="one"></span> <span class="two"></span>
-              <div class="icon">
-                <img src="../../assets/images/icon/f-icon-4.png" alt="" />
-              </div>
-              <div class="core-features__box-content">
-                <a href="login.html" class="d-block">
-                  <h4>Quality Support</h4>
-                </a>
-                <p>
-                  Everybody different which the why give offer styles for every
-                  body.
-                </p>
-              </div>
-            </div>
+            <FeatureCard 
+              :icon="FeatureIcon4" 
+              title="Quality Support" 
+            >
+              <p>
+                Everybody different which the why give offer styles for every
+                body.
+              </p>
+            </FeatureCard>
           </div>
         </div>
       </div>
@@ -687,100 +663,56 @@
               :modules="modules"
             >
               <swiper-slide class="review-one__single-review">
-                <div class="review-one__single-content">
-                  <div class="review-one__aurthor">
-                    <div class="thumb">
-                      <img
-                        src="../../assets/images/testimonial/testimonial-v1-1.png"
-                        alt=""
-                      />
-                    </div>
-                    <span class="quate">
-                      <i class="flaticon-right-quotes-symbol"></i>
-                    </span>
-                  </div>
-                  <div class="review-one__review-text">
-                    <p>
-                      “Quickly explot worldwide leadership long-term high-impact
-                      "outside the box thinking. Quickly network synergistic
-                      enterprise customer service”
-                    </p>
-                    <h4><a href="#0">Ana Fleming </a></h4>
-                    <span> Web Developer</span>
-                  </div>
-                </div>
+                <TestimonialCard
+                  :icon="TestimonialIcon1"
+                  name="Ana Fleming"
+                  job="Web Developer"
+                >
+                  <p>
+                    “Quickly explot worldwide leadership long-term high-impact
+                    "outside the box thinking. Quickly network synergistic
+                    enterprise customer service”
+                  </p>
+                </TestimonialCard>
               </swiper-slide>
               <swiper-slide class="review-one__single-review">
-                <div class="review-one__single-content">
-                  <div class="review-one__aurthor">
-                    <div class="thumb">
-                      <img
-                        src="../../assets/images/testimonial/testimonial-v1-2.png"
-                        alt=""
-                      />
-                    </div>
-                    <span class="quate">
-                      <i class="flaticon-right-quotes-symbol"></i>
-                    </span>
-                  </div>
-                  <div class="review-one__review-text">
-                    <p>
-                      “Quickly explot worldwide leadership long-term high-impact
-                      "outside the box thinking. Quickly network synergistic
-                      enterprise customer service”
-                    </p>
-                    <h4><a href="#0">Elaine Hayes</a></h4>
-                    <span>UI/UX Designer </span>
-                  </div>
-                </div>
+                <TestimonialCard
+                  :icon="TestimonialIcon2"
+                  name="Jane Young"
+                  job="Web Engineer"
+                >
+                  <p>
+                    “Quickly explot worldwide leadership long-term high-impact
+                    "outside the box thinking. Quickly network synergistic
+                    enterprise customer service”
+                  </p>
+                </TestimonialCard>
               </swiper-slide>
               <swiper-slide class="review-one__single-review">
-                <div class="review-one__single-content">
-                  <div class="review-one__aurthor">
-                    <div class="thumb">
-                      <img
-                        src="../../assets/images/testimonial/testimonial-v1-3.png"
-                        alt=""
-                      />
-                    </div>
-                    <span class="quate">
-                      <i class="flaticon-right-quotes-symbol"></i>
-                    </span>
-                  </div>
-                  <div class="review-one__review-text">
-                    <p>
-                      “Quickly explot worldwide leadership long-term high-impact
-                      "outside the box thinking. Quickly network synergistic
-                      enterprise customer service”
-                    </p>
-                    <h4><a href="#0">Jane Young </a></h4>
-                    <span>Web Engineer </span>
-                  </div>
-                </div>
+                <TestimonialCard
+                  :icon="TestimonialIcon3"
+                  name="Elaine Hayes"
+                  job="Web Engineer"
+                >
+                  <p>
+                    “Quickly explot worldwide leadership long-term high-impact
+                    "outside the box thinking. Quickly network synergistic
+                    enterprise customer service”
+                  </p>
+                </TestimonialCard>
               </swiper-slide>
               <swiper-slide class="review-one__single-review">
-                <div class="review-one__single-content">
-                  <div class="review-one__aurthor">
-                    <div class="thumb">
-                      <img
-                        src="../../assets/images/testimonial/testimonial-v1-2.png"
-                        alt=""
-                      />
-                    </div>
-                    <span class="quate">
-                      <i class="flaticon-right-quotes-symbol"></i>
-                    </span>
-                  </div>
-                  <div class="review-one__review-text">
-                    <p>
-                      “Quickly explot worldwide leadership long-term high-impact
-                      "outside the box thinking. Quickly network synergistic
-                      enterprise customer service”
-                    </p>
-                    <h4><a href="#0">Kim Douglas </a></h4>
-                    <span>React Developer</span>
-                  </div>
-                </div>
+                <TestimonialCard
+                  :icon="TestimonialIcon4"
+                  name="Kim Douglas"
+                  job="React Developer"
+                >
+                  <p>
+                    “Quickly explot worldwide leadership long-term high-impact
+                    "outside the box thinking. Quickly network synergistic
+                    enterprise customer service”
+                  </p>
+                </TestimonialCard>
               </swiper-slide>
             </swiper>
           </div>
@@ -799,9 +731,20 @@ import { getProducts } from "@/services/productsService";
 import NewsletterPopup from "@/components/common/popups/NewsletterPopup.vue";
 import CategoryCard from "@/components/features/home/CategoryCard.vue";
 import ProductCard from "@/components/features/product/ProductCard.vue";
+import FeatureCard from "@/components/features/home/FeatureCard.vue";
+import TestimonialCard from "@/components/features/home/TestimonialCard.vue";
 
 import HomeDiscountBanner1 from "@/assets/images/home-three/home-discount-banner-1.jpg";
 import HomeDiscountBanner2 from "@/assets/images/home-three/home-discount-banner-2.jpg";
+import FeatureIcon1 from "@/assets/images/icon/f-icon-1.png";
+import FeatureIcon2 from "@/assets/images/icon/f-icon-2.png";
+import FeatureIcon3 from "@/assets/images/icon/f-icon-3.png";
+import FeatureIcon4 from "@/assets/images/icon/f-icon-4.png";
+import TestimonialIcon1 from "@/assets/images/testimonial/testimonial-1.jpg";
+import TestimonialIcon2 from "@/assets/images/testimonial/testimonial-2.jpg";
+import TestimonialIcon3 from "@/assets/images/testimonial/testimonial-3.jpg";
+import TestimonialIcon4 from "@/assets/images/testimonial/testimonial-4.jpg";
+
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -814,7 +757,9 @@ export default {
     SwiperSlide,
     NewsletterPopup,
     CategoryCard,
-    ProductCard
+    ProductCard,
+    FeatureCard,
+    TestimonialCard,
   },
   async mounted() {
     this.bestsellers = await this.fetchProducts({ sortby: 'bestseller', dataPerPage: 6, page: 1});
@@ -831,7 +776,15 @@ export default {
       topRatedProducts: [],
       latestProducts: [],
       HomeDiscountBanner1,
-      HomeDiscountBanner2
+      HomeDiscountBanner2,
+      FeatureIcon1,
+      FeatureIcon2,
+      FeatureIcon3,
+      FeatureIcon4,
+      TestimonialIcon1,
+      TestimonialIcon2,
+      TestimonialIcon3,
+      TestimonialIcon4
     }
   },
   methods: {
