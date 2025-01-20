@@ -354,7 +354,7 @@
           <div class="col-xl-12">
             <swiper
               class="product-slider-main position-relative"
-              :slides-per-view="1"
+              :slides-per-view="3"
               :pagination="{ clickable: true }"
               :modules="modules"
             >
@@ -491,11 +491,12 @@
                     compatible...
                   </p>
                   <div class="btn-box">
-                    <a
-                      href="shop-grid-left-sidebar.html"
+                    <router-link
+                      :to="{ name: 'products.index' }"
                       class="btn--primary style2"
-                      >Discover More</a
                     >
+                      Discover More
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -503,69 +504,18 @@
               <div class="col-xl-8">
                 <div class="row justify-content-center">
                   <div class="col-lg-4 col-sm-6">
-                    <div
-                      class="categories-three__list-item mt-30 wow fadeInUp animated"
-                    >
-                      <div class="categories-three__list-item-inner">
-                        <a href="shop-grid-right-sidebar.html" class="img-box">
-                          <img
-                            src="../../assets/images/home-three/categories-v2-img1.jpg"
-                            alt=""
-                          />
-                          <div class="text"><span>369 Items</span></div>
-                        </a>
-                        <div class="title text-center">
-                          <h4>
-                            <a href="shop-grid-left-sidebar.html"
-                              >Sport’s Shoes</a
-                            >
-                          </h4>
-                        </div>
-                      </div>
+                    <div class="categories-three__list-item mt-30 wow fadeInUp animated">
+                      <CategoryBadge :categoryId="7"/>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6">
-                    <div
-                      class="categories-three__list-item mt-30 wow fadeInUp animated"
-                    >
-                      <div class="categories-three__list-item-inner">
-                        <a href="shop-grid-left-sidebar.html" class="img-box">
-                          <img
-                            src="../../assets/images/home-three/categories-v2-img2.jpg"
-                            alt=""
-                          />
-                          <div class="text"><span>369 Items</span></div>
-                        </a>
-                        <div class="title text-center">
-                          <h4>
-                            <a href="shop-grid-left-sidebar.html"
-                              >Casual Shoes</a
-                            >
-                          </h4>
-                        </div>
-                      </div>
+                    <div class="categories-three__list-item mt-30 wow fadeInUp animated">
+                      <CategoryBadge :categoryId="3"/>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6">
-                    <div
-                      class="categories-three__list-item mt-30 wow fadeInUp animated"
-                    >
-                      <div class="categories-three__list-item-inner">
-                        <a href="shop-grid-left-sidebar.html" class="img-box">
-                          <img
-                            src="../../assets/images/home-three/categories-v2-img3.jpg"
-                            alt=""
-                          />
-                          <div class="text"><span>369 Items</span></div>
-                        </a>
-                        <div class="title text-center">
-                          <h4>
-                            <a href="shop-grid-left-sidebar.html"
-                              >Office Shoes</a
-                            >
-                          </h4>
-                        </div>
-                      </div>
+                    <div class="categories-three__list-item mt-30 wow fadeInUp animated">
+                      <CategoryBadge :categoryId="5"/>
                     </div>
                   </div>
                 </div>
@@ -733,6 +683,7 @@ import CategoryCard from "@/components/features/home/CategoryCard.vue";
 import ProductCard from "@/components/features/product/ProductCard.vue";
 import FeatureCard from "@/components/features/home/FeatureCard.vue";
 import TestimonialCard from "@/components/features/home/TestimonialCard.vue";
+import CategoryBadge from "@/components/features/home/CategoryBadge.vue";
 
 import HomeDiscountBanner1 from "@/assets/images/home-three/home-discount-banner-1.jpg";
 import HomeDiscountBanner2 from "@/assets/images/home-three/home-discount-banner-2.jpg";
@@ -760,6 +711,7 @@ export default {
     ProductCard,
     FeatureCard,
     TestimonialCard,
+    CategoryBadge,
   },
   async mounted() {
     this.bestsellers = await this.fetchProducts({ sortby: 'bestseller', dataPerPage: 6, page: 1});
