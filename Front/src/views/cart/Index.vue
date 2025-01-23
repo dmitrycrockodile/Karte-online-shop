@@ -76,7 +76,13 @@
                         </div>
                       </td>
                       <td class="sub-total">
-                        ${{ (cartItem.price * cartItem.quantity).toFixed(2) }}
+                        <div v-if="(cartItem.price * cartItem.quantity) !== cartItem.total_price">
+                          <del>{{ (cartItem.price * cartItem.quantity).toFixed(2) }}</del>
+                          ${{ (cartItem.total_price).toFixed(2) }}
+                        </div>
+                        <div v-else>
+                          ${{ (cartItem.price * cartItem.quantity).toFixed(2) }}
+                        </div>
                       </td>
                       <td>
                         <button
@@ -209,7 +215,7 @@
                   >Continue Shopping</router-link
                 >
 
-                <button v-if="user" class="btn--primary mt-30" type="submit">
+                <button @click.prevent="checkoutCart" v-if="user" class="btn--primary mt-30" type="submit">
                   Checkout
                 </button>
                 <router-link
@@ -229,11 +235,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
 
 import BasicRadioGroup from "@/components/base/BaseRadioGroup.vue";
 import QuantitySelector from "@/components/base/QuantitySelector.vue";
 import BreadCrumps from "@/components/common/BreadCrumps.vue";
+
+import { BASE_API_URL } from "@/utils/constants";
 
 import {
   FLAT_RATE_PROCENT,
@@ -278,7 +286,7 @@ export default {
     }),
     ...mapState("auth", ["user"]),
     totalPrice() {
-      return Number(this.totalProductsPrice) + Number(this.shippingPrice) - Number(this.couponDiscount);
+      return Number(this.totalProductsPrice) + Number(this.shippingPrice);
     },
     shippingPrice() {
       switch (this.shippingMethod) {
@@ -301,16 +309,20 @@ export default {
       removeFromCart: "cart/removeFromCart",
       increaseQty: "cart/increaseQty",
     }),
+    ...mapMutations({
+      setTotalPrice: "cart/SET_ITEM_TOTAL_PRICE"
+    }),
     setShippingMethod(method) {
       this.shippingMethod = method;
     },
     handleCouponSubmit() {
+      console.log(this.cartItems);
       let couponCheck = this.checkIfCouponMatch(this.usedCoupon);
 
       if (couponCheck) {
         this.isCouponActive = true;
         this.errorMessage = '';    
-        this.couponDiscount = couponCheck;  
+        this.couponDiscount = couponCheck; 
       } else {
         this.errorMessage = 'The coupon title is invalid';
         this.$refs.couponTitle.value = '';
@@ -325,6 +337,8 @@ export default {
         return item.coupons.some(productCoupon => {
           if (coupon === productCoupon.title) {
             result = ((productCoupon.percentage / 100) * item.price).toFixed(2);
+            this.setTotalPrice({ cartItem: item, totalPrice: result, method: 'DEC'});
+
             return true;
           };
           return false;
@@ -350,6 +364,16 @@ export default {
       })
 
       return result;
+    },
+    async checkoutCart() {
+      const res = await this.axios.post(`${BASE_API_URL}/products/checkout`, {
+        products: this.cartItems
+      });
+
+      if (res.status === 200) {
+        console.log(res);
+        window.location.href = res.data.url;
+      }
     }
   },
 };

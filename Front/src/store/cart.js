@@ -36,6 +36,26 @@ const mutations = {
          existingItem.quantity -= 1; 
       }
    },
+   SET_ITEM_TOTAL_PRICE(state, { cartItem, totalPrice, method }) {
+      const existingItem = state.cartItems.find(item => 
+         item.id === cartItem.id && 
+         item.color.id === cartItem.color.id && 
+         item.size.id === cartItem.size.id
+      );
+
+      console.log
+
+      if (existingItem && existingItem.total_price && method === 'INC') { 
+         existingItem.total_price += totalPrice;
+         return existingItem.total_price;
+      } else if (existingItem && existingItem.total_price && method === 'DEC') {
+         existingItem.total_price -= totalPrice;
+         return existingItem.total_price;
+      } else if (existingItem && !existingItem.total_price) {
+         existingItem.total_price = totalPrice;
+         return existingItem.total_price;
+      }
+   },
    REMOVE_FROM_CART(state, cartItem) {
       state.cartItems = state.cartItems.filter(item => 
          !(item.id === cartItem.id && 
@@ -53,11 +73,14 @@ const actions = {
             'quantity': choosenProductOptions.selectedQuantity,
             'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize},
          })
+         const itemToAdd = response.data.cartItem;
          
-         if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity) {
-            commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
+         if (itemToAdd.quantity !== choosenProductOptions.selectedQuantity) {
+            dispatch('setItemTotalPrice', { cartItem: itemToAdd, quantity: choosenProductOptions.selectedQuantity, method: 'INC' });
+            commit('INCREASE_QTY', { cartItem: itemToAdd, quantity: choosenProductOptions.selectedQuantity })
          } else {
-            commit('ADD_TO_CART', response.data.cartItem);
+            dispatch('setItemTotalPrice', { cartItem: itemToAdd, quantity: itemToAdd.quantity, method: 'INC' });
+            commit('ADD_TO_CART', itemToAdd);
          }
 
          toast.success(response.data.message, { timeout: 2000 });
@@ -87,6 +110,8 @@ const actions = {
          });
 
          if (response.status === 200) {
+            dispatch('setItemTotalPrice', { cartItem, quantity: 1, method: 'DEC' });
+
             commit('DECREASE_QTY', cartItem);
             dispatch('updateStorage');
          }
@@ -103,12 +128,19 @@ const actions = {
          });
 
          if (response.status === 200) {
+            dispatch('setItemTotalPrice', { cartItem, quantity, method: 'INC' });
+
             commit('INCREASE_QTY', { cartItem, quantity });
             dispatch('updateStorage');
          }
       } catch (error) {
          console.error(error)
       } 
+   },
+   setItemTotalPrice({ commit }, { cartItem, quantity = 1, method = 'INC' }) {
+      let totalPrice = Number((cartItem.price * quantity).toFixed(2));
+
+      commit('SET_ITEM_TOTAL_PRICE', { cartItem, totalPrice, method });
    },
    async fetchCartItems({ commit, dispatch }) {
       try {
@@ -146,7 +178,7 @@ const getters = {
    cartItems: state => state.cartItems,
    totalProductsPrice: state => {
       const total = state.cartItems.reduce((total, item) => {
-         return total + item.price * item.quantity;
+         return total + item.total_price;
       }, 0);
 
       return total.toFixed(2);

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
+use App\Http\Controllers\API\Product\CheckoutController;
 use App\Http\Controllers\API\Question\QuestionController;
 use App\Http\Controllers\API\Review\ReviewController;
 use App\Http\Controllers\API\User\UserController;
@@ -25,9 +26,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/products', 'App\Http\Controllers\API\Product\IndexController');
 Route::get('/products/filters', 'App\Http\Controllers\API\Product\FilterListController');
 Route::get('/products/{product}', 'App\Http\Controllers\API\Product\ShowController');
+Route::post('/products', 'App\Http\Controllers\API\Product\IndexController');
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/products/checkout', 'App\Http\Controllers\API\Product\CheckoutController');
+});
 
 Route::get('/categories', 'App\Http\Controllers\API\Category\CategoryController@index');
 Route::get('/categories/{category}', 'App\Http\Controllers\API\Category\CategoryController@show');

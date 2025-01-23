@@ -35,7 +35,6 @@
 
          if (res.success) {
             this.category = res.category;
-            console.log(this.category);
          }
       },
    }

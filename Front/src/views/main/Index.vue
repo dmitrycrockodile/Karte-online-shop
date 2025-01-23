@@ -1,7 +1,7 @@
 <template>
   <main class="overflow-hidden">
     <!-- NewsletterPopup -->
-    <!-- <NewsletterPopup :active="isPopupActive" :closePopup="closePopup" /> -->
+    <NewsletterPopup :active="isPopupActive" :closePopup="closePopup" />
 
     <!-- Start Main Slider -->
     <section class="banner overflow-hidden">
@@ -592,7 +592,7 @@
     </section>
 
     <!-- review-one Start -->
-    <section class="review-one pt-60 pb-60">
+    <section class="review-one pt-60 pb-120">
       <div class="container">
         <div class="row">
           <div class="col-12">
