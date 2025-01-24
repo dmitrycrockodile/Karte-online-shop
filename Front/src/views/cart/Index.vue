@@ -52,9 +52,13 @@
                           </div>
                         </div>
                       </td>
-                      <td>${{ cartItem.price.toFixed(2) }}</td>
+                      <td>
+                        <div v-if="!cartItem.withCoupon">
+                          ${{ cartItem.price.toFixed(2) }}
+                        </div>
+                      </td>
                       <td class="qty">
-                        <div class="qtySelector text-center">
+                        <div v-if="!cartItem.withCoupon" class="qtySelector text-center">
                           <button
                             @click.prevent="cartItem.quantity > 1 ? decreaseQty(cartItem) : removeFromCart(cartItem)"
                             class="decreaseQty"
@@ -76,9 +80,9 @@
                         </div>
                       </td>
                       <td class="sub-total">
-                        <div v-if="(cartItem.price * cartItem.quantity) !== cartItem.total_price">
-                          <del>{{ (cartItem.price * cartItem.quantity).toFixed(2) }}</del>
-                          ${{ (cartItem.total_price).toFixed(2) }}
+                        <div v-if="cartItem.withCoupon" class="container">
+                          <del>${{ (cartItem.price * cartItem.quantity).toFixed(2) }}</del>
+                          <span>${{ (cartItem.priceWithCoupon * cartItem.quantity).toFixed(2) }}</span>
                         </div>
                         <div v-else>
                           ${{ (cartItem.price * cartItem.quantity).toFixed(2) }}
@@ -166,11 +170,11 @@
                 </li>
                 <li>
                   <div class="left">
-                    <p>Coupon</p>
+                    <p>Coupons</p>
                   </div>
                   <div class="right">
                     <p>
-                      <span>Coupon discount:</span> ${{ couponDiscount }}
+                      <span>Coupons discount:</span> ${{ totalCouponDiscount }}
                     </p>
                   </div>
                 </li>
@@ -190,13 +194,12 @@
           <div class="col-xl-12">
             <div class="cart-button-box">
               <div class="coupon__box">
-                <form v-show="!isCouponActive" class="apply-coupon wow fadeInUp animated" method="post" @submit.prevent="handleCouponSubmit">
+                <form class="apply-coupon wow fadeInUp animated" method="post" @submit.prevent="handleCouponSubmit">
                   <div class="apply-coupon-input-box mt-30">
                     <input
                       type="text"
-                      v-model.trim.lazy="usedCoupon"
+                      v-model.trim="usedCoupon"
                       placeholder="Coupon title"
-                      ref="couponTitle"
                     />
                   </div>
                   <div class="apply-coupon-button mt-30">
@@ -205,8 +208,6 @@
                     </button>
                   </div>
                 </form>
-                <p v-if="isCouponActive" class="success">Your coupon was activated!</p>
-                <p v-if="errorMessage" class="error">Invalid coupon!</p>
               </div>
               <div class="cart-button-box-right wow fadeInUp animated">
                 <router-link
@@ -235,7 +236,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
+import { useToast } from "vue-toastification";
 
 import BasicRadioGroup from "@/components/base/BaseRadioGroup.vue";
 import QuantitySelector from "@/components/base/QuantitySelector.vue";
@@ -271,9 +273,8 @@ export default {
       ],
       backgroundImage,
       usedCoupon: '',
-      isCouponActive: false,
-      couponDiscount: 0,
       errorMessage: '',
+      toast: useToast(),
     };
   },
   mounted() {
@@ -283,15 +284,16 @@ export default {
     ...mapGetters({
       cartItems: "cart/cartItems",
       totalProductsPrice: "cart/totalProductsPrice",
+      totalCouponDiscount: "cart/totalCouponDiscount"
     }),
     ...mapState("auth", ["user"]),
     totalPrice() {
-      return Number(this.totalProductsPrice) + Number(this.shippingPrice);
+      return (Number(this.totalProductsPrice) + Number(this.shippingPrice)).toFixed(2);
     },
     shippingPrice() {
       switch (this.shippingMethod) {
         case FLAT_RATE:
-          return (this.totalProductsPrice * FLAT_RATE_PROCENT) / 100;
+          return ((this.totalProductsPrice * FLAT_RATE_PROCENT) / 100).toFixed(2);
         case SHIPPING:
           if (this.totalProductsPrice > TOTAL_PRICE_FOR_FREE_SHIPPING) {
             return 0;
@@ -308,71 +310,73 @@ export default {
       decreaseQty: "cart/decreaseQty",
       removeFromCart: "cart/removeFromCart",
       increaseQty: "cart/increaseQty",
-    }),
-    ...mapMutations({
-      setTotalPrice: "cart/SET_ITEM_TOTAL_PRICE"
+      activateCoupon: "cart/activateCoupon"
     }),
     setShippingMethod(method) {
       this.shippingMethod = method;
     },
     handleCouponSubmit() {
-      console.log(this.cartItems);
-      let couponCheck = this.checkIfCouponMatch(this.usedCoupon);
+      let couponMatch = this.findCouponMatch(this.usedCoupon);
 
-      if (couponCheck) {
-        this.isCouponActive = true;
-        this.errorMessage = '';    
-        this.couponDiscount = couponCheck; 
-      } else {
-        this.errorMessage = 'The coupon title is invalid';
-        this.$refs.couponTitle.value = '';
+      if (couponMatch) {  
+        this.activateCoupon(couponMatch);
         this.usedCoupon = '';
+        this.toast.success('Your coupon was activated!', { timeout: 2000 });
+      } else {
+        this.usedCoupon = '';
+        this.toast.error('Invalid coupon!', { timeout: 2000 });
       }
     },
-    checkIfCouponMatch(coupon) {
-      let result;
-
-      // Check product coupons
-      this.cartItems.some(item => {
-        return item.coupons.some(productCoupon => {
+    findCouponMatch(coupon) {
+      // Check product-level coupons
+      const productCouponMatch = this.cartItems.find((cartItem) =>
+        cartItem.coupons.some((productCoupon) => {
           if (coupon === productCoupon.title) {
-            result = ((productCoupon.percentage / 100) * item.price).toFixed(2);
-            this.setTotalPrice({ cartItem: item, totalPrice: result, method: 'DEC'});
-
-            return true;
-          };
-          return false;
-        })
-      });
-
-      if (result) return result;
-
-      // Check category coupons
-      this.cartItems.some(item => {
-        return item.category.coupons.some(categoryCoupon => {
-          if (coupon === categoryCoupon.title) {
-            let singleDiscount = ((categoryCoupon.percentage / 100) * item.price).toFixed(2);
-            let categoriedItems = this.cartItems.filter(filteredItem => filteredItem.category.title === item.category.title);
-            let categoriedItemsQuantity = categoriedItems.reduce((total, current) => total + current.quantity, 0);
-            
-            result = singleDiscount * categoriedItemsQuantity;
-            
-            return true;
+            const newPrice = ((productCoupon.percentage / 100) * cartItem.price).toFixed(2);
+            return (cartItem.coupon = { newPrice, id: cartItem.id });
           }
           return false;
         })
-      })
+      );
 
-      return result;
+      if (productCouponMatch) {
+        return productCouponMatch.coupon;
+      }
+
+      // Check category-level coupons
+      const categoryCouponMatch = this.cartItems.find((item) =>
+        item.category.coupons.some((categoryCoupon) => {
+          if (coupon === categoryCoupon.title) {
+            const singleDiscount = ((categoryCoupon.percentage / 100) * item.price).toFixed(2);
+            const categoriedItems = this.cartItems.filter(
+              (filteredItem) => filteredItem.category.title === item.category.title
+            );
+            const totalCategoryDiscount = categoriedItems.reduce(
+              (total, current) => total + singleDiscount * current.quantity,
+              0
+            );
+
+            return (item.category.coupon = { totalCategoryDiscount });
+          }
+          return false;
+        })
+      );
+
+      return categoryCouponMatch ? categoryCouponMatch.category.coupon : null;
     },
     async checkoutCart() {
-      const res = await this.axios.post(`${BASE_API_URL}/products/checkout`, {
-        products: this.cartItems
-      });
+      try {
+        const res = await this.axios.post(`${BASE_API_URL}/products/checkout`, {
+          products: this.cartItems,
+          shippingPrice: this.shippingPrice,
+        });
 
-      if (res.status === 200) {
-        console.log(res);
-        window.location.href = res.data.url;
+        if (res.status === 200 && res.data.url) {
+          window.location.href = res.data.url;
+        }
+      } catch (error) {
+        this.toast.error("An error occurred during checkout. Please try again.");
+        console.error("Checkout error:", error);
       }
     }
   },
@@ -416,5 +420,20 @@ export default {
 
   .coupon__box .success {
     color: #16c216;
+  }
+
+  .sub-total .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .sub-total .container del {
+    font-size: 14px;
+  }
+
+  .sub-total .container span { 
+    color: var(--thm-base);
   }
 </style>

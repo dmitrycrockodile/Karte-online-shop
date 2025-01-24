@@ -25,6 +25,7 @@ class IndexRequest extends FormRequest
          'product_id' => 'required|exists:products,id',
          'quantity' => 'required|integer',
          'attributes' => 'nullable|array',
+         'withCoupon' => 'nullable|boolean',
       ];
    }
 

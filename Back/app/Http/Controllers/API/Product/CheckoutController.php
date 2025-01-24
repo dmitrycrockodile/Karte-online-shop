@@ -22,11 +22,21 @@ class CheckoutController extends Controller {
                   'name' => $product['title'],
                   'images' => [ $product['image'] ]
                ],
-               'unit_amount' => intval($product['total_price'] * 100)
+               'unit_amount' => intval((isset($product['priceWithCoupon']) ? $product['priceWithCoupon'] : $product['price']) * 100),
             ],
             'quantity' => $product['quantity'],
          ];
       }
+      $lineItems[] = [
+         'price_data' => [
+            'currency' => 'usd',
+            'product_data' => [
+               'name' => 'Shipping Fee',
+            ],
+            'unit_amount' => intval($data['shippingPrice'] * 100), // Shipping price in cents (e.g., $70.00 = 7000 cents)
+         ],
+         'quantity' => 1,
+      ];
 
       $checkout_session = \Stripe\Checkout\Session::create([
          'line_items' => $lineItems,

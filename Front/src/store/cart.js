@@ -36,26 +36,6 @@ const mutations = {
          existingItem.quantity -= 1; 
       }
    },
-   SET_ITEM_TOTAL_PRICE(state, { cartItem, totalPrice, method }) {
-      const existingItem = state.cartItems.find(item => 
-         item.id === cartItem.id && 
-         item.color.id === cartItem.color.id && 
-         item.size.id === cartItem.size.id
-      );
-
-      console.log
-
-      if (existingItem && existingItem.total_price && method === 'INC') { 
-         existingItem.total_price += totalPrice;
-         return existingItem.total_price;
-      } else if (existingItem && existingItem.total_price && method === 'DEC') {
-         existingItem.total_price -= totalPrice;
-         return existingItem.total_price;
-      } else if (existingItem && !existingItem.total_price) {
-         existingItem.total_price = totalPrice;
-         return existingItem.total_price;
-      }
-   },
    REMOVE_FROM_CART(state, cartItem) {
       state.cartItems = state.cartItems.filter(item => 
          !(item.id === cartItem.id && 
@@ -66,21 +46,25 @@ const mutations = {
 };
 
 const actions = {
-   async addToCart({ commit, dispatch }, {product, choosenProductOptions}) {
+   async addToCart({ commit, dispatch }, {product, choosenProductOptions, withCoupon = false, couponPrice = 0}) {
       try {
          const response = await axios.post('http://localhost:8876/api/cart', {
             'product_id': product.id,
             'quantity': choosenProductOptions.selectedQuantity,
-            'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize},
+            'attributes': { color: choosenProductOptions.selectedColor, size: choosenProductOptions.selectedSize },
+            'withCoupon': withCoupon
          })
-         const itemToAdd = response.data.cartItem;
          
-         if (itemToAdd.quantity !== choosenProductOptions.selectedQuantity) {
-            dispatch('setItemTotalPrice', { cartItem: itemToAdd, quantity: choosenProductOptions.selectedQuantity, method: 'INC' });
-            commit('INCREASE_QTY', { cartItem: itemToAdd, quantity: choosenProductOptions.selectedQuantity })
+         if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity && !withCoupon) {
+            commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
          } else {
-            dispatch('setItemTotalPrice', { cartItem: itemToAdd, quantity: itemToAdd.quantity, method: 'INC' });
-            commit('ADD_TO_CART', itemToAdd);
+            if (withCoupon) {
+               response.data.cartItem.priceWithCoupon = (response.data.cartItem.price - couponPrice).toFixed(2);
+               response.data.cartItem.withCoupon = withCoupon;
+               response.data.cartItem.quantity = 1;               
+            }
+
+            commit('ADD_TO_CART', response.data.cartItem);
          }
 
          toast.success(response.data.message, { timeout: 2000 });
@@ -110,8 +94,6 @@ const actions = {
          });
 
          if (response.status === 200) {
-            dispatch('setItemTotalPrice', { cartItem, quantity: 1, method: 'DEC' });
-
             commit('DECREASE_QTY', cartItem);
             dispatch('updateStorage');
          }
@@ -128,19 +110,12 @@ const actions = {
          });
 
          if (response.status === 200) {
-            dispatch('setItemTotalPrice', { cartItem, quantity, method: 'INC' });
-
             commit('INCREASE_QTY', { cartItem, quantity });
             dispatch('updateStorage');
          }
       } catch (error) {
          console.error(error)
       } 
-   },
-   setItemTotalPrice({ commit }, { cartItem, quantity = 1, method = 'INC' }) {
-      let totalPrice = Number((cartItem.price * quantity).toFixed(2));
-
-      commit('SET_ITEM_TOTAL_PRICE', { cartItem, totalPrice, method });
    },
    async fetchCartItems({ commit, dispatch }) {
       try {
@@ -154,6 +129,16 @@ const actions = {
       } catch (error) {
          console.error(error);
       }
+   },
+   async activateCoupon({ state, dispatch }, payload) {
+      const activatedItem = state.cartItems.find(item => item.id === payload.id);
+
+      if (activatedItem) {
+         await dispatch('addToCart', { product: { id: activatedItem.product_id }, choosenProductOptions: { selectedColor: activatedItem.color, selectedSize: activatedItem.size, selectedQuantity: 1 }, withCoupon: true, couponPrice: payload.newPrice })
+         await dispatch('decreaseQty', activatedItem)
+      }
+
+      dispatch('updateStorage');
    },
    clearLocalCart({ commit }) {
       commit('SET_CART_ITEMS', []);
@@ -178,11 +163,26 @@ const getters = {
    cartItems: state => state.cartItems,
    totalProductsPrice: state => {
       const total = state.cartItems.reduce((total, item) => {
-         return total + item.total_price;
+         if (item.priceWithCoupon) {
+            return total + item.priceWithCoupon * item.quantity;
+         } else {
+            return total + item.price * item.quantity;
+         }
       }, 0);
 
       return total.toFixed(2);
    },
+   totalCouponDiscount: state => {
+      const total = state.cartItems.reduce((total, item) => {
+         if (item.priceWithCoupon) {
+            return total + item.priceWithCoupon * item.quantity;
+         } else {
+            return total;
+         }
+      }, 0);
+
+      return total.toFixed(2);
+   }
 };
 
 export default {

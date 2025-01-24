@@ -23,6 +23,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'products' => 'required|array',
+            'shippingPrice' => 'required|numeric',
         ];
     }
 }

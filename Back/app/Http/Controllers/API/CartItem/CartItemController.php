@@ -28,9 +28,9 @@ class CartItemController extends Controller {
                            ->where('product_id', $data['product_id'])
                            ->get()
                            ->filter(function ($item) use ($data) {
-                              return json_decode($item->attributes, true) == $data['attributes'];
+                              return json_decode($item->attributes, true) == $data['attributes'] && !isset($data['withCoupon']);
                            })
-                           ->first();
+                           ->first();        
 
       if ($cartItem) {
          return $this->update($request, $cartItem);
