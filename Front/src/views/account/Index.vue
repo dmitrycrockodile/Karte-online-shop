@@ -434,6 +434,7 @@ export default {
             password: '',
          },
          accountBGImage,
+         isProductAdded: false,
          toast: useToast(),
       };
    },
@@ -449,6 +450,15 @@ export default {
    },
    mounted() {
       this.userDataForm = JSON.parse(JSON.stringify(this.userData));
+
+      const queryParams = new URLSearchParams(window.location.search);
+      this.isProductAdded = queryParams.get('success');
+
+      if (this.isProductAdded) {
+         this.toast.success('Thank you for the order!', { timeout: 2000 });
+      }
+
+      console.log(this.isProductAdded);
    },
    methods: {
       async handleUserDataChange() {

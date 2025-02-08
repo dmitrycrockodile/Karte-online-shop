@@ -369,6 +369,7 @@ export default {
         const res = await this.axios.post(`${BASE_API_URL}/products/checkout`, {
           products: this.cartItems,
           shippingPrice: this.shippingPrice,
+          totalPrice: this.totalPrice,
         });
 
         if (res.status === 200 && res.data.url) {

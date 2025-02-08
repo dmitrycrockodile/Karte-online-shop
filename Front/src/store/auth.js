@@ -36,7 +36,7 @@ const actions = {
    async register({ commit, dispatch }, payload) {
       try {
          const res = await axios.post('http://localhost:8876/api/register', payload);
-
+         console.log(res)
          if (!res.data.verified) {
             toast.info('Please check your email box and verify your email');
          }

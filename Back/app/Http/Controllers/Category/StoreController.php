@@ -2,31 +2,25 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
-use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
-class StoreController extends Controller
+class StoreController extends BaseController
 {
     public function __invoke(StoreRequest $request)
     {
         $data = $request->validated();
 
-        $data['preview_image'] = Storage::disk('public')->put('/images/categories', $data['preview_image']);
-        $data['banner'] = Storage::disk('public')->put('/images/categories', $data['banner']);
-
-        if (isset($data['coupons'])) {
-            $couponsIds = $data['coupons'];
-            unset($data['coupons']);
-        } else {
-            $couponsIds = [];
+        if (!$this->service->store($data)) {
+            return redirect()->route('category.index')->with(
+                'error', 
+                trans("notifications.failed_to_create", ['type' => 'category'])
+            );
         }
-
-        $category = Category::firstOrCreate($data);
         
-        $category->coupons()->attach($couponsIds);
-        
-        return redirect()->route('category.index')->with('success', trans("notifications.created", ['type' => 'Category', 'title' => $data['title']]));
+        return redirect()->route('category.index')->with(
+            'success', 
+            trans("notifications.created", ['type' => 'Category', 'title' => $data['title']])
+        );
     }
 }

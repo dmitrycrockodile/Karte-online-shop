@@ -9,7 +9,9 @@
    </x-navigation.breadcrumps>
 
    @if(session('success'))
-      <x-info-message>{{ session('success') }}</x-info-message>
+      <x-info-message status="success">{{ session('success') }}</x-info-message>
+   @elseif (session('error'))
+      <x-info-message status="error">{{ session('error') }}</x-info-message>
    @endif
    
    <section class="content">

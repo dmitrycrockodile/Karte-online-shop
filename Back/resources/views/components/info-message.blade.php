@@ -1,4 +1,15 @@
-<div id="success-message" class="vertical-center bg-info mb-4">
+@props([
+   'status' => 'success'
+])
+
+@php
+   $bgColor = match ($status) {
+      'success' => 'bg-info',
+      'error' => 'bg-danger',
+   }
+@endphp
+
+<div id="info-message" class="vertical-center {{ $bgColor }} mb-4">
    <p>{{ $slot }}</p>
 </div>
 
@@ -20,7 +31,7 @@
 <script>
    document.addEventListener('DOMContentLoaded', function() {
        setTimeout(function() {
-           const message = document.getElementById('success-message');
+           const message = document.getElementById('info-message');
            if (message) {
                message.style.display = 'none';
            }

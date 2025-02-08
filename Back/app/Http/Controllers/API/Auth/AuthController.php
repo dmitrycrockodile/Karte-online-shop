@@ -10,29 +10,31 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Register;
 use App\Mail\CustomVerifyEmail;
+use App\Service\AuthService;
 use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+    protected AuthService $authService;
+
+    public function __construct(AuthService $authService) {
+        $this->authService = $authService;
+    }
+
     public function register(StoreRequest $request) {
-        $data = $request->validated();
-
-        Mail::to($data['email'])->send(new CustomVerifyEmail($data['name'], $data['email']));
+        if (!$this->authService->register($request->validated())) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to register, please try again!',
+            ], 400);
+        }
         
-        $user = User::firstOrCreate([
-            'email' => $data['email']
-        ], [
-            ...$data,
-            'password' => Hash::make($data['password'])
-        ]);
-
         return response()->json([
             'success' => true,
-            'verified' => $user->email_verified_at,
+            'verified' => false,
         ], 200);
     }
 

@@ -6,49 +6,42 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Illuminate\Support\Facades\Log;
 
 class ProductService {
-
-   public function store($data) {
+   /**
+    * Method tries to store the data into the products table
+    *
+    * @param Array $data
+    * @return bool
+   */
+   public function store(Array $data): bool {
       try {
          DB::beginTransaction();
          
+         // Storing the preview image
          $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
  
-         if (!isset($data['is_published'])) {
-            $data['is_published'] = false;
-         } else {
-            $data['is_published'] = true;
-         }
+          // Set the is_published value
+         $data['is_published'] = isset($data['is_published']) ? true : false;
 
-         if (isset($data['tags'])) {
-            $tagsIds = $data['tags'];
-            unset($data['tags']);
-         } else {
-            $tagsIds = [];
-         }
+         // Extracting and remowing 'tags' from data
+         $tagsIds = $data['tags'] ?? [];
+         unset($data['tags']);
 
-         if (isset($data['sizes'])) {
-            $sizesIds = $data['sizes'];
-            unset($data['sizes']);
-         } else {
-            $sizesIds = [];
-         }
+         // Extracting and remowing 'sizes' from data
+         $sizesIds = $data['sizes'] ?? [];
+         unset($data['sizes']);
 
-         if (isset($data['colors'])) {
-            $colorsIds = $data['colors'];
-            unset($data['colors']);
-         } else {
-            $colorsIds = [];
-         }
+         // Extracting and remowing 'coupons' from data
+         $couponsIds = $data['coupons'] ?? [];
+         unset($data['coupons']);
 
-         if (isset($data['coupons'])) {
-            $couponsIds = $data['coupons'];
-            unset($data['coupons']);
-         } else {
-            $couponsIds = [];
-         }
+         // Extracting and remowing 'colors' from data
+         $colorsIds = $data['colors'] ?? [];
+         unset($data['colors']);
 
+         // Check if the images exist and set to the product
          if (isset($data['images'])) {
             $images = $data['images'];
             unset($data['images']);
@@ -76,75 +69,82 @@ class ProductService {
             ], $data);
          }
 
+         // Attach the data based on extracted ids
          $product->tags()->attach($tagsIds);
          $product->sizes()->attach($sizesIds);
          $product->colors()->attach($colorsIds);
          $product->coupons()->attach($couponsIds);
-         
+
          DB::commit();
-     } catch (\Exception $exception) {
+
+         return true;
+      } catch (\Exception $exception) {
          DB::rollBack();
-         dd($exception);
-         abort(500);
+         
+         Log::error("ProductService Store Error: " . $exception->getMessage(), [
+            'trace' => $exception->getTraceAsString()
+         ]);
+
+         return false;
      }
    } 
 
-   public function update($data, $product) {
+   /**
+    * Method tries to update the product data in the products table
+    *
+    * @param Array $data
+    * @param Product $product
+    * @return bool
+   */
+   public function update(Array $data, Product $product): bool {
       try {
          DB::beginTransaction();
 
+          // Check if the preview image exist
          if (isset($data['preview_image'])) {
             $data['preview_image'] = Storage::disk('public')->put('/images', $data['preview_image']);
          } else {
             $data['preview_image'] = $product['preview_image'];
          }
 
-         if (!isset($data['is_published'])) {
-            $data['is_published'] = false;
-         } else {
-            $data['is_published'] = true;
-         }
+         // Set the is_published value
+         $data['is_published'] = isset($data['is_published']) ? true : false;
 
-         if (isset($data['tags'])) {
-            $tagsIds = $data['tags'];
-            unset($data['tags']);
-         } else {
-            $tagsIds = [];
-         }
+         // Extracting and remowing 'tags' from data
+         $tagsIds = $data['tags'] ?? [];
+         unset($data['tags']);
 
-         if (isset($data['sizes'])) {
-            $sizesIds = $data['sizes'];
-            unset($data['sizes']);
-         } else {
-            $sizesIds = [];
-         }
+         // Extracting and remowing 'sizes' from data
+         $sizesIds = $data['sizes'] ?? [];
+         unset($data['sizes']);
 
-         if (isset($data['coupons'])) {
-            $couponsIds = $data['coupons'];
-            unset($data['coupons']);
-         } else {
-            $couponsIds = [];
-         }
+         // Extracting and remowing 'coupons' from data
+         $couponsIds = $data['coupons'] ?? [];
+         unset($data['coupons']);
 
-         if (isset($data['colors'])) {
-            $colorsIds = $data['colors'];
-            unset($data['colors']);
-         } else {
-            $colorsIds = [];
-         }
+         // Extracting and remowing 'colors' from data
+         $colorsIds = $data['colors'] ?? [];
+         unset($data['colors']);
 
          $product->update($data);
+
+         // Sync the data based on extracted ids
          $product->tags()->sync($tagsIds);
          $product->sizes()->sync($sizesIds);
          $product->colors()->sync($colorsIds);
          $product->coupons()->sync($couponsIds);
 
-
          DB::commit();
+
+         return true;
       } catch (\Exception $exception) {
          DB::rollBack();
-         dd($exception);
-         abort(500);
+         
+         Log::error("ProductService Update Error: " . $exception->getMessage(), [
+            'trace' => $exception->getTraceAsString()
+         ]);
+
+         return false;
       }
    }
 }

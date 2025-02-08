@@ -14,7 +14,6 @@
 
    <section class="content">
       <a class="btn btn-primary" href="{{ route('user.create') }}">Create</a>
-      <a class="btn btn-danger" href="{{ route('user.trashed') }}">Deleted users</a>
 
       <div class="card w-50 mt-3">
          <div class="card-body table-responsive p-0">

@@ -2,40 +2,26 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
-class UpdateController extends Controller
+class UpdateController extends BaseController
 {
     public function __invoke(UpdateRequest $request, Category $category)
     {
         $data = $request->validated();
 
-        if (isset($data['preview_image'])) {
-            $data['preview_image'] = Storage::disk('public')->put('/images/categories', $data['preview_image']);
-        } else {
-            $data['preview_image'] = $category['preview_image'];
+        if (!$this->service->update($data, $category)) {
+            return redirect()->route('category.index')->with(
+                'error', 
+                trans("notifications.failed_to_update", ['type' => 'category', 'title' => $category['title']])
+            );
         }
 
-        if (isset($data['banner'])) {
-            $data['banner'] = Storage::disk('public')->put('/images/categories', $data['banner']);
-        } else {
-            $data['banner'] = $category['banner'];
-        }
-
-        if (isset($data['coupons'])) {
-            $couponsIds = $data['coupons'];
-            unset($data['coupons']);
-        } else {
-            $couponsIds = [];
-        }
-
-        $category->update($data);
-
-        $category->coupons()->sync($couponsIds);
-
-        return redirect()->route('category.index')->with('success', trans("notifications.edited", ['type' => 'Category', 'title' => $category['title']]));
+        return redirect()->route('category.index')->with(
+            'success', 
+            trans("notifications.edited", ['type' => 'Category', 'title' => $category['title']])
+        );
     }
 }

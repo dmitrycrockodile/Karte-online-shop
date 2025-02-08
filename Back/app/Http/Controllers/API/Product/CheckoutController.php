@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Product\OrderRequest;
+use App\Models\Order;
 
 class CheckoutController extends Controller {
    
@@ -44,6 +45,12 @@ class CheckoutController extends Controller {
          'success_url' => env('FRONTEND_URL') . '/account?success=true',
          'cancel_url' => env('FRONTEND_URL') . '/cart?success=false',
       ]);
+
+      // $order = new Order();
+      // $order->status = 'unpaid';
+      // $order->total_price = $data['totalPrice'];
+      // $order->session_id = $checkout_session->id;
+      // $order->save();
 
       return response()->json([
          'url' => $checkout_session->url,

@@ -13,20 +13,11 @@ class StoreController extends Controller
     {
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
-        $user = User::withTrashed()->where('email', $data['email'])->first();
 
-        if ($user) {
-            if ($user->trashed()) {
-                $user['email_verified_at'] = false;
-                $user->restore();
-                $user->update($data);
-            }
-        } else {
-            User::firstOrCreate([
-                'email' => $data['email']
-            ], $data);
-        }
-        
+        User::firstOrCreate([
+            'email' => $data['email']
+        ], $data);
+    
         return redirect()->route('user.index')->with('success', trans("notifications.created", ['type' => 'User', 'title' => $data['name']]));
     }
 }
