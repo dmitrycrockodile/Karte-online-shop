@@ -372,8 +372,8 @@
                            <h2 class="mb-2">Verify email</h2>
                            <div class="row mb-2 mt-2">
                               <div class="col-md-6">
-                                 <button @click.prevent="sendVerificationMessage({email: userDataForm.email, name: userDataForm.name})" :disabled="userDataForm.email_verified_at" type="submit" class="btn btn-dark w-100">
-                                    {{ userDataForm.email_verified_at ? 'Verified' : 'Send verification' }}
+                                 <button @click.prevent="sendVerificationMessage({email: userDataForm.email, name: userDataForm.name})" :disabled="isUserVerified" type="submit" class="btn btn-dark w-100">
+                                    {{ isUserVerified ? 'Verified' : 'Send verification' }}
                                  </button>
                               </div>
                            </div>
@@ -446,19 +446,20 @@ export default {
       },
       ...mapGetters({
          userData: "auth/getUserData",
+         isUserVerified: "auth/isUserVerified"
       }),
    },
    mounted() {
       this.userDataForm = JSON.parse(JSON.stringify(this.userData));
 
-      const queryParams = new URLSearchParams(window.location.search);
-      this.isProductAdded = queryParams.get('success');
+      // const queryParams = new URLSearchParams(window.location.search);
+      // this.isProductAdded = queryParams.get('success');
 
-      if (this.isProductAdded) {
-         this.toast.success('Thank you for the order!', { timeout: 2000 });
-      }
+      // if (this.isProductAdded) {
+      //    this.toast.success('Thank you for the order!', { timeout: 2000 });
+      // }
 
-      console.log(this.isProductAdded);
+      // console.log(this.isProductAdded);
    },
    methods: {
       async handleUserDataChange() {

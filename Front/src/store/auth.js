@@ -61,10 +61,11 @@ const actions = {
             commit('AUTH_SUCCESS', { token });
             commit('SET_USER', { user });
 
-            await dispatch('cart/fetchCartItems', null, { root: true });
             if (user.email_verified_at) {
                await dispatch('wishlist/fetchWishlistItems', null, { root: true });
             }
+
+            await dispatch('cart/fetchCartItems', null, { root: true });
 
             return res;
          }
@@ -94,7 +95,7 @@ const actions = {
          return err;
       }
    },
-   async sendVerificationMessage({ commit, dispatch }, { name, email }) {
+   async sendVerificationMessage({ dispatch }, { name, email }) {
       try {
          const res = await axios.post('http://localhost:8876/api/verify-email', {
             email: email,
@@ -103,6 +104,7 @@ const actions = {
 
          if (res.status === 200 && res.data.success) {
             toast.info(res.data.message);
+            await dispatch('logout');
          }
       } catch (err) {
          toast.error(err.response.data.message);
@@ -121,7 +123,9 @@ const actions = {
 
 const getters = {
    isAuthenticated: () => !!state.token,
-   isUserVerified: () => state.user.email_verified_at !== null,
+   isUserVerified: (state) => {
+      return state.user && state.user.email_verified_at !== null;
+   },
    getUserData: (state) => state.user,
 }
 

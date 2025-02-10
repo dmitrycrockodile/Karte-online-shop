@@ -49,7 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'date_of_birth', 
         'phone_number', 
         'is_subscribed',
-        'password'
+        'password',
+        'email_verified_at'
     ];
 
     static function getSexes() {

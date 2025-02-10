@@ -6,15 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\IndexRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Resources\User\UserResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\Register;
 use App\Mail\CustomVerifyEmail;
 use App\Service\AuthService;
-use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -24,7 +21,7 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
-    public function register(StoreRequest $request) {
+    public function register(StoreRequest $request): JsonResponse {
         if (!$this->authService->register($request->validated())) {
             return response()->json([
                 'success' => false,
@@ -38,75 +35,47 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function login(IndexRequest $request) {
-        $data = $request->validated();
+    public function login(IndexRequest $request): JsonResponse {
+        $response = $this->authService->login($request->validated());
 
-        $user = User::whereEmail($data['email'])->first();
-
-        if (!$user) {
+        if (!$response['success']) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please write correct email address',
-            ], 404);
+                'message' => $response['message']
+            ], $response['message'] === 'Incorrect password.' ? 400 : 404);
         }
-        
-        if (Hash::check($data['password'], $user->password)) {
-            $token = $user->createToken('auth_token')->plainTextToken;
 
-            $user->remember_token = $token;
-            $user->save();
-
-            Auth::login($user);
-
-            return response()->json([
-                'success' => true,
-                'user' => new UserResource($user),
-                'remember_token' => $token,
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Incorrect password.',
-            ], 400);
-        }
+        return response()->json([
+            'success' => true,
+            'user' => new UserResource($response['user']),
+            'remember_token' => $response['token']
+        ], 200);
     }
 
-    public function logout(Request $request) {   
-        $user = $request->user();
-
-        if ($user) {
-            $user->tokens()->delete();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            
-            return response()->json([
-                'success' => true,
-                'message' => 'Logged out successfully.',
-            ], 200);
-        } else {
+    public function logout(Request $request): JsonResponse {   
+        if (!$this->authService->logout($request)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.',
             ], 401);
         }
+            
+        return response()->json([
+            'success' => true,
+            'message' => 'Logged out successfully.',
+        ], 200);
     }
 
-    public function verifyEmail($email) {
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            $user->email_verified_at = Carbon::now();
-            $user->save();
-
-            Mail::to($user->email)->send(new Register($user->name));
-
-            return redirect()->away('http://localhost:5173/account');
+    public function verifyEmail(string $email): JsonResponse|RedirectResponse {
+        if (!$this->authService->verifyEmail($email)) {
+            return response()->json(['message' => 'Invalid verification link.'], 400);
         }
-
-        return response()->json(['message' => 'Invalid verification link.'], 400);
+       
+        $this->logout(request());
+        return redirect()->away('http://localhost:5173/login');
     }
 
-    public function sendNewVerificationMessage(Request $request) {
+    public function sendNewVerificationMessage(Request $request): JsonResponse {
         Mail::to($request['email'])->send(new CustomVerifyEmail($request['name'], $request['email']));
 
         return response()->json([
