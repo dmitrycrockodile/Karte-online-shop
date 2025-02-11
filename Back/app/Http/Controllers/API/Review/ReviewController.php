@@ -5,58 +5,51 @@ namespace App\Http\Controllers\API\Review;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Review\StoreRequest;
 use App\Http\Resources\Review\ReviewResource;
-use App\Models\Product;
-use App\Models\ReviewHelpfulness;
 use App\Models\Review;
+use App\Service\ReviewService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-   public function store(StoreRequest $request) {
+   protected ReviewService $reviewService;
+
+   public function __construct(ReviewService $reviewService) {
+      $this->reviewService = $reviewService;
+   }
+
+   public function store(StoreRequest $request): JsonResponse {
       $data = $request->validated();
-      $user_id = Auth::id(); 
+      $response = $this->reviewService->store($data);
 
-      $review = Review::create([
-         'user_id' => $user_id,
-         ...$data,
-      ]);
-
-      $product = Product::where('id', $data['product_id'])->first();
+      if (!$response['success']) {
+         return response()->json([
+            'success' => false,
+            'message' => $response['error']
+         ], $response['status']);
+      }
 
       return response()->json([
-         'review' => new ReviewResource($review),
-         'average_rating' => $product->averageRating,
+         'review' => new ReviewResource($response['review']),
+         'average_rating' => $response['average_rating'],
          'message' => 'Review successfully added!',
          'success' => true,
       ], 200);
    }
 
-   public function markHelpfulness(Request $request, Review $review) {
+   public function markHelpfulness(Request $request, Review $review): JsonResponse {
       $request->validate([
          'isHelpful' => 'required|boolean',
       ]);
-      
-      $user_id = auth()->id();
+      $response = $this->reviewService->markHelpfulness($review, $request['isHelpful']);
 
-      $existingVote = ReviewHelpfulness::where('user_id', $user_id)
-                                        ->where('review_id', $review->id)
-                                        ->first();
-  
-      if ($existingVote) {
+      if (!$response['success']) {
          return response()->json([
-            'message' => 'You have already voted on this review',
             'success' => false,
-         ], 400);
+            'message' => $response['error']
+         ], $response['status']);
       }
-  
-      ReviewHelpfulness::create([
-         'user_id' => $user_id,
-         'review_id' => $review->id,
-         'is_helpful' => $request['isHelpful'],
-      ]);
-
-      $review->update();
   
       return response()->json([
          'message' => 'Thank you for your feedback', 
@@ -65,7 +58,7 @@ class ReviewController extends Controller
       ], 200);
    }
 
-   public function report(Review $review) {
+   public function report(Review $review): JsonResponse {
       $review->reported = true;
       $review->save();
   
@@ -76,7 +69,7 @@ class ReviewController extends Controller
       ], 200);
    }
 
-   public function destroy(Review $review) {
+   public function destroy(Review $review): JsonResponse {
       if ($review->user_id !== Auth::id()) {
          return response()->json(['error' => 'You can delete only your review.', 401]);
       }

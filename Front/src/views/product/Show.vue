@@ -930,7 +930,7 @@ export default {
         this.product.average_rating = res.average_rating;
         
         // Shows success message
-        this.toast.success('Thank you for your review!', { timeout: 2000 })
+        this.toast.success(res.message, { timeout: 2000 })
       } else {
         // Shows error message
         this.toast.error(res.message, { timeout: 2000 });
