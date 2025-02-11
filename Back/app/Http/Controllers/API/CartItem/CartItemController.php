@@ -6,75 +6,72 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CartItem\IndexRequest;
 use App\Http\Resources\CartItem\CartItemResource;
 use App\Models\CartItem;
+use App\Service\CartItemService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class CartItemController extends Controller {
-   public function index() {
+   protected CartItemService $cartItemService;
+
+   public function __construct(CartItemService $cartItemService) {
+      $this->cartItemService = $cartItemService;
+   }
+
+   public function index(): JsonResponse {
       if (Auth::check()) {
          $cartItems = Auth::user()->cartItems()->with('product')->get();
          
-         return CartItemResource::collection($cartItems);
+         return response()->json([
+            'success' => true,
+            'data' => CartItemResource::collection($cartItems)
+         ], 200);
       } else {
          $cartItems = session()->get('cart', []);
-         return response()->json($cartItems, 401);
-      }
-   }
-
-   public function store(IndexRequest $request) {
-      $data = $request->validated();
-      $userId = Auth::id();
-
-      $cartItem = CartItem::where('user_id', $userId)
-                           ->where('product_id', $data['product_id'])
-                           ->get()
-                           ->filter(function ($item) use ($data) {
-                              return json_decode($item->attributes, true) == $data['attributes'] && !isset($data['withCoupon']);
-                           })
-                           ->first();        
-
-      if ($cartItem) {
-         return $this->update($request, $cartItem);
-      } else {
-         $cartItem = CartItem::create([
-            'product_id' => $data['product_id'],
-            'user_id' => $userId,
-            'quantity' => $data['quantity'],
-            'attributes' => json_encode($data['attributes']) ?? null,
-         ]);
-
-         $cartItemWithProduct = CartItem::where('id', $cartItem->id)
-                                         ->with('product')
-                                         ->first();
-
          return response()->json([
-            'message' => 'Product added to cart',
-            'cartItem' => new CartItemResource($cartItemWithProduct)
-         ], 201);
+            'success' => false,
+            'message' => 'Unauthorized user data.',
+            'data' => $cartItems
+         ], 401);
       }
    }
 
-   public function update(IndexRequest $request, CartItem $cartItem) {
+   public function store(IndexRequest $request): JsonResponse {
       $data = $request->validated();
-     
-      if ($cartItem->user_id !== Auth::id()) {
-         return response()->json(['error' => 'Unauthorized.'], 401);
+      $response = $this->cartItemService->store($data);
+
+      if (!$response['success']) {
+         return response()->json([
+            'success' => false,
+            'message' => $response['error']
+         ], $response['status']);
       }
-
-      $cartItem->update([
-         'quantity' => $cartItem->quantity + $data['quantity']
-      ]);
-
-      $cartItemWithProduct = CartItem::where('id', $cartItem->id)
-                                       ->with('product')
-                                       ->first();
 
       return response()->json([
-         'message' => 'Product added to the cart',
-         'cartItem' => new CartItemResource($cartItemWithProduct)
+         'success' => true,
+         'message' => 'Product added to cart.',
+         'cartItem' => new CartItemResource($response['cartItem'])
+      ], 201);
+   }
+
+   public function update(IndexRequest $request, CartItem $cartItem): JsonResponse {
+      $data = $request->validated();
+      $response = $this->cartItemService->update($data, $cartItem);
+
+      if (!$response['success']) {
+         return response()->json([
+            'success' => false,
+            'error' => $response['error']
+         ], $response['status']);
+      }
+
+      return response()->json([
+         'success' => true,
+         'message' => 'Product added to the cart.',
+         'cartItem' => new CartItemResource($response['cartItem']),
       ], 200);
    }
 
-   public function destroy(CartItem $cartItem) {
+   public function destroy(CartItem $cartItem): JsonResponse {
       if ($cartItem->user_id !== Auth::id()) {
          return response()->json(['error' => 'Unauthorized.', 401]);
       }
@@ -83,7 +80,7 @@ class CartItemController extends Controller {
       return response()->json(['message' => 'Product removed from cart']);
    }
 
-   public function clearCart() {
+   public function clearCart(): JsonResponse {
       $userId = Auth::id();
 
       if (!$userId) {

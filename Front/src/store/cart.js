@@ -120,8 +120,9 @@ const actions = {
    async fetchCartItems({ commit, dispatch }) {
       try {
          const cartItems = await axios.get('http://localhost:8876/api/cart');
+         console.log(cartItems);
          
-         if (cartItems.status === 200) {
+         if (cartItems.status === 200 && cartItems.data.success) {
             commit('SET_CART_ITEMS', cartItems.data.data);
 
             dispatch('updateStorage');
@@ -146,7 +147,7 @@ const actions = {
    },
    async clearGlobalCart({ dispatch }) {
       try {
-         const res = await axios.delete('http://localhost:8876/api/cart/clear');
+         await axios.delete('http://localhost:8876/api/cart/clear');
 
          dispatch('clearLocalCart');
          dispatch('updateStorage');
