@@ -6,33 +6,32 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Wishlist\StoreRequest;
 use App\Http\Resources\Wishlist\WishlistResource;
 use App\Models\Wishlist;
+use App\Service\WishlistService;
 use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
+   protected WishlistService $wishlistService;
+
+   public function __construct(WishlistService $wishlistService) {
+      $this->wishlistService = $wishlistService;
+   }
+
    public function store(StoreRequest $request) {
       $data = $request->validated();
+      $response = $this->wishlistService->store($data);
 
-      $existing_item = Wishlist::where('user_id', $data['user_id'])
-                               ->where('product_id', $data['product_id'])
-                               ->first();
-      
-      if ($existing_item) {
+      if (!$response['success']) {
          return response()->json([
-            'message' => 'Item with this id is already in wishlist',
             'success' => false,
-         ], 400);
+            'message' => $response['error']
+         ], $response['status']);
       }
 
-      $wished_item = Wishlist::create([
-         'user_id' => $data['user_id'],
-         'product_id' => $data['product_id'],
-      ]);
-
       return response()->json([
-         'item' => new WishlistResource($wished_item),
-         'message' => 'Product was successfully added to the wishlist',
          'success' => true,
+         'item' => new WishlistResource($response['item']),
+         'message' => 'Product was successfully added to the wishlist.',
       ], 201);
    }
 
