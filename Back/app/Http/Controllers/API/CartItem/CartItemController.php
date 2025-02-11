@@ -9,6 +9,7 @@ use App\Models\CartItem;
 use App\Service\CartItemService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CartItemController extends Controller {
    protected CartItemService $cartItemService;
@@ -55,6 +56,15 @@ class CartItemController extends Controller {
 
    public function update(IndexRequest $request, CartItem $cartItem): JsonResponse {
       $data = $request->validated();
+      
+      // Permissions check
+      if (Gate::denies('update', $cartItem)) {
+         return response()->json([
+            'success' => false, 
+            'error' => 'Unauthorized.',
+         ], 401);
+      }
+
       $response = $this->cartItemService->update($data, $cartItem);
 
       if (!$response['success']) {
@@ -72,8 +82,12 @@ class CartItemController extends Controller {
    }
 
    public function destroy(CartItem $cartItem): JsonResponse {
-      if ($cartItem->user_id !== Auth::id()) {
-         return response()->json(['error' => 'Unauthorized.', 401]);
+      // Permissions check
+      if (Gate::denies('delete', $cartItem)) {
+         return response()->json([
+            'success' => false, 
+            'error' => 'Unauthorized.',
+         ], 401);
       }
 
       $cartItem->delete();

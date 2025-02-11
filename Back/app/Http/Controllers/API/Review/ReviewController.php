@@ -8,8 +8,8 @@ use App\Http\Resources\Review\ReviewResource;
 use App\Models\Review;
 use App\Service\ReviewService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends Controller
 {
@@ -70,8 +70,12 @@ class ReviewController extends Controller
    }
 
    public function destroy(Review $review): JsonResponse {
-      if ($review->user_id !== Auth::id()) {
-         return response()->json(['error' => 'You can delete only your review.', 401]);
+      // Permissions check
+      if (Gate::denies('delete', $review)) {
+         return response()->json([
+            'success' => false, 
+            'error' => 'You can delete only your review.',
+         ], 401);
       }
 
       $review->delete();

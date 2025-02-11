@@ -82,14 +82,6 @@ class CartItemService {
    */
    public function update(array $data, CartItem $cartItem): array {
       try {
-         if ($cartItem->user_id !== Auth::id()) {
-            return [
-               'success' => false, 
-               'error' => 'Unauthorized.',
-               'status' => 401,
-            ];
-         }
-   
          $cartItem->update([
             'quantity' => $cartItem->quantity + $data['quantity']
          ]);

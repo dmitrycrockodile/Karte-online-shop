@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\CartItem\CartItemController;
-use App\Http\Controllers\API\Product\CheckoutController;
 use App\Http\Controllers\API\Question\QuestionController;
 use App\Http\Controllers\API\Review\ReviewController;
 use App\Http\Controllers\API\User\UserController;
