@@ -10,12 +10,19 @@ use App\Http\Requests\API\User\PasswordUpdateRequest;
 use App\Http\Requests\API\User\DeleteAccountRequest;
 use App\Http\Requests\API\User\SubscribeRequest;
 use App\Models\User;
-use App\Models\Subscriber;
+use App\Service\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-   public function updateGeneral(IndexRequest $request, User $user) {
+   protected UserService $userService;
+
+   public function __construct(UserService $userService) {
+      $this->userService = $userService;
+   }
+
+   public function updateGeneral(IndexRequest $request, User $user): JsonResponse {
       $data = $request->validated();
       $data['sex'] = User::getSexValue($data['sex']);
 
@@ -28,7 +35,7 @@ class UserController extends Controller
       ], 200);
    }
 
-   public function updateEmail(EmailUpdateRequest $request, User $user) {
+   public function updateEmail(EmailUpdateRequest $request, User $user): JsonResponse {
       $data = $request->validated();
 
       if (Hash::check($data['password'], $user->password)) {
@@ -48,7 +55,7 @@ class UserController extends Controller
       }
    }
 
-   public function updatePassword(PasswordUpdateRequest $request, User $user) {
+   public function updatePassword(PasswordUpdateRequest $request, User $user): JsonResponse {
       $data = $request->validated();
 
       if (Hash::check($data['password'], $user->password)) {
@@ -67,37 +74,26 @@ class UserController extends Controller
       }
    }
 
-   public function subscribe(SubscribeRequest $request) {
+   public function subscribe(SubscribeRequest $request): JsonResponse {
       $data = $request->validated();
+      $response = $this->userService->subscribe($data);
 
-      if (User::where('email', $data['email'])->first()) {
-         $user = User::where('email', $data['email'])->first();
-         if ($user->is_subscribed) {
-            return response()->json([
-               'message' => 'This email already subscribed!',
-               'success' => false,
-               'is_subscribed' => true,
-            ], 409);
-         } else {
-            $user->update(['is_subscribed' => true]);
-   
-            return response()->json([
-               'message' => 'Thank you for the subscription!',
-               'success' => true,
-               'is_subscribed' => true,
-            ], 200);
-         }
+      if (!$response['success']) {
+         return response()->json([
+            'success' => false,
+            'message' => $response['error'],
+            'is_subscribed' => $response['is_subscribed'] || false,
+         ], $response['status']);
       }
 
-      Subscriber::create(['email' => $data['email']]);
       return response()->json([
-            'message' => 'Thank you for the subscription!',
-            'success' => true,
-            'is_subscribed' => true,
+         'message' => 'Thank you for the subscription!',
+         'success' => true,
+         'is_subscribed' => true,
       ], 200);
    }
 
-   public function unsubscribe(User $user) {
+   public function unsubscribe(User $user): JsonResponse {
       if ($user->is_subscribed) {
          $user->is_subscribed = false;
          $user->save();
@@ -116,7 +112,7 @@ class UserController extends Controller
       }
    }
  
-   public function destroy(DeleteAccountRequest $request, User $user) {
+   public function destroy(DeleteAccountRequest $request, User $user): JsonResponse {
       $data = $request->validated();
    
       if (Hash::check($data['password'], $user->password)) {

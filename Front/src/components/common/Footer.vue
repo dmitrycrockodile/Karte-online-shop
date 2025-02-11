@@ -182,8 +182,6 @@
         } else {
           this.toast.info(res.message);
         }
-
-        this.closePopup();
       },
     },
   }

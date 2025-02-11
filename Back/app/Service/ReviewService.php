@@ -15,7 +15,7 @@ class ReviewService {
     * @param array $data
     * @return array
    */
-   public function store(array $data) {
+   public function store(array $data): array {
       try {
          $userId = Auth::id(); 
          if (!$userId) {
@@ -53,10 +53,11 @@ class ReviewService {
    /**
     * Method tries to mark the review as helpful or not heplful
     *
-    * @param array $data
+    * @param Review $review
+    * @param bool $isHelpful
     * @return array
    */
-   public function markHelpfulness(Review $review, bool $isHelpful) {
+   public function markHelpfulness(Review $review, bool $isHelpful): array {
       try {
          $userId = Auth::id();
          if (!$userId) {
@@ -96,7 +97,7 @@ class ReviewService {
 
          return [
             'success' => false,
-            'error' => 'Failed to update cart item, please try again.',
+            'error' => 'Failed to mark, please try again.',
             'status' => 500,
          ];
       }
