@@ -6,6 +6,7 @@ use App\Models\CartItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 class CartItemService {
    /**
@@ -22,7 +23,7 @@ class CartItemService {
             return [
                'success' => false, 
                'error' => 'Unauthorized.',
-               'status' => 401,
+               'status' => Response::HTTP_UNAUTHORIZED,
             ];
          }
 

@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateController extends BaseController
 {
-    public function __invoke(UpdateRequest $request, Category $category)
+    public function __invoke(UpdateRequest $request, Category $category): RedirectResponse
     {
         $data = $request->validated();
 

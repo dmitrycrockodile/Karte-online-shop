@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Response;
 
 class ShowController extends Controller
 {
@@ -13,6 +14,6 @@ class ShowController extends Controller
       return response()->json([
          'success' => true,
          'product' => new ProductResource($product),
-      ], 200);
+      ], Response::HTTP_OK);
    }  
 }

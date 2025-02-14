@@ -12,6 +12,7 @@ use App\Mail\CustomVerifyEmail;
 use App\Service\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
@@ -21,20 +22,38 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
+    /**
+     * Handles user registration.
+     * 
+     * This method processes a registration request by validating user input 
+     * and attempting to register a new account via the authentication service.
+     * 
+     * @param StoreRequest $request The validated registration request.
+     * @return JsonResponse A JSON response indicating success or failure.
+    */
     public function register(StoreRequest $request): JsonResponse {
         if (!$this->authService->register($request->validated())) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to register, please try again!',
-            ], 400);
+            ], Response::HTTP_BAD_REQUEST);
         }
         
         return response()->json([
             'success' => true,
             'verified' => false,
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
+    /**
+     * Handles user authorization.
+     * 
+     * This method processes a authorization request by validating user input 
+     * and attempting to login via the authentication service.
+     * 
+     * @param IndexRequest $request The validated authorization request.
+     * @return JsonResponse A JSON response indicating success or failure and token
+    */
     public function login(IndexRequest $request): JsonResponse {
         $response = $this->authService->login($request->validated());
 
@@ -42,45 +61,71 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $response['message']
-            ], $response['message'] === 'Incorrect password.' ? 400 : 404);
+            ], $response['message'] === 'Incorrect password.' ? Response::HTTP_BAD_REQUEST : Response::HTTP_NOT_FOUND);
         }
 
         return response()->json([
             'success' => true,
             'user' => new UserResource($response['user']),
             'remember_token' => $response['token']
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
+    /**
+     * Handles user unauthorization.
+     * 
+     * This method processes a unauthorization request by user input 
+     * and attempting to logout via the authentication service.
+     * 
+     * @param Request $request The unauthorization request.
+     * @return JsonResponse A JSON response indicating success or failure.
+    */
     public function logout(Request $request): JsonResponse {   
         if (!$this->authService->logout($request)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Unauthorized.',
-            ], 401);
+            ], Response::HTTP_UNAUTHORIZED);
         }
             
         return response()->json([
             'success' => true,
             'message' => 'Logged out successfully.',
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
+    /**
+     * Handles email verification.
+     * 
+     * This method gets an email and verifies the newly created account
+     * 
+     * @param string $email The email to verify.
+     * @return JsonResponse|RedirectResponse A JSON response indicating failure or redirect on success.
+    */
     public function verifyEmail(string $email): JsonResponse|RedirectResponse {
         if (!$this->authService->verifyEmail($email)) {
-            return response()->json(['message' => 'Invalid verification link.'], 400);
+            return response()->json(['message' => 'Invalid verification link.'], Response::HTTP_BAD_REQUEST);
         }
        
         $this->logout(request());
         return redirect()->away('http://localhost:5173/login');
     }
 
+    /**
+     * Sends the verification message.
+     * 
+     * This method gets an email and sends the verification message
+     * using custom mailer.
+     * 
+     * @param Request $request The validated verification request.
+     * @return JsonResponse A JSON response indicating success or failure.
+    */
     public function sendNewVerificationMessage(Request $request): JsonResponse {
         Mail::to($request['email'])->send(new CustomVerifyEmail($request['name'], $request['email']));
 
         return response()->json([
             'message' => 'Message sent, check your email and re-login after the verification', 
             'success' => true
-        ], 200);
+        ], Response::HTTP_OK);
     }
 }

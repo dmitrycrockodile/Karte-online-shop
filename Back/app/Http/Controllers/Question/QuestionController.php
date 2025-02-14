@@ -4,23 +4,25 @@ namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
 use App\Models\Question;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class QuestionController extends Controller
 {
-   public function index() {
+   public function index(): View {
       $questions = $this->getOrderedQuestions();
 
       return view('questions.index', compact('questions'));
    }
 
-   public function show(Question $question) {
+   public function show(Question $question): View {
       $question->status = 'In Progress';
       $question->save();
 
       return view('questions.show', compact('question'));
    }
 
-   public function update(Question $question) {
+   public function update(Question $question): RedirectResponse {
       if ($question->status == 'In Progress' || $question->status == 'Pending') {
          $question->status = 'Resolved';
       } elseif ($question->status == 'Resolved') {
@@ -31,7 +33,7 @@ class QuestionController extends Controller
       return redirect()->route('question.index');
    }
 
-   private function getOrderedQuestions() {
+   private function getOrderedQuestions(): array {
       $questions = Question::orderByRaw("
          CASE 
             WHEN status = 'Resolved' THEN 2

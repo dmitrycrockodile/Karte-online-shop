@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Product\OrderRequest;
 use App\Models\Order;
+use Illuminate\Http\Response;
 
 class CheckoutController extends Controller {
    
@@ -56,6 +57,6 @@ class CheckoutController extends Controller {
          'url' => $checkout_session->url,
          'products' => $products,
          'success' => true
-      ], 200);
+      ], Response::HTTP_OK);
    }
 }

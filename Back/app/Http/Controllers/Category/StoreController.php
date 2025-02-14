@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Requests\Category\StoreRequest;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
 
 class StoreController extends BaseController
 {
-    public function __invoke(StoreRequest $request)
+    public function __invoke(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
 

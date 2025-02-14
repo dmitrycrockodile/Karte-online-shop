@@ -10,6 +10,7 @@ use App\Models\Tag;
 use App\Http\Resources\Category\CategoryResource;
 use App\Http\Resources\Color\ColorResource;
 use App\Http\Resources\Tag\TagResource;
+use Illuminate\Http\Response;
 
 class FilterListController extends Controller
 {
@@ -26,6 +27,6 @@ class FilterListController extends Controller
             ],
          ],
          'success' => true
-      ], 200);
+      ], Response::HTTP_OK);
    }
 }

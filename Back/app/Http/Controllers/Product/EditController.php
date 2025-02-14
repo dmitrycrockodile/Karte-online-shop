@@ -8,10 +8,11 @@ use App\Models\Color;
 use App\Models\Category;
 use App\Models\Size;
 use App\Models\Coupon;
+use Illuminate\View\View;
 
 class EditController extends BaseController
 {
-    public function __invoke(Product $product)
+    public function __invoke(Product $product): View
     {   
         $colors = Color::all();
         $tags = Tag::all();

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Color;
 
 use App\Http\Controllers\Controller;
 use App\Models\Color;
+use Illuminate\Http\RedirectResponse;
 
 class DeleteController extends Controller
 {
-    public function __invoke(Color $color)
+    public function __invoke(Color $color): RedirectResponse
     {
         $color->delete();
 

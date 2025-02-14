@@ -12,8 +12,10 @@ class CartItemPolicy
      * 
      * @param User $user The user performing the action
      * @param CartItem $cartItem The item user's trying to update
+     * 
+     * @return bool Returns true if the user is the owner of the cart item, false otherwise
     */
-    public function update(User $user, CartItem $cartItem) {
+    public function update(User $user, CartItem $cartItem): bool {
         return $user->id === $cartItem->user_id;
     }
 
@@ -22,8 +24,10 @@ class CartItemPolicy
      * 
      * @param User $user The user performing the action
      * @param CartItem $cartItem The item user's trying to delete
+     * 
+     * @return bool Returns true if the user is the owner of the cart item, false otherwise
     */
-    public function delete(User $user, CartItem $cartItem) {
+    public function delete(User $user, CartItem $cartItem): bool {
         return $user->id === $cartItem->user_id;
     }
 }

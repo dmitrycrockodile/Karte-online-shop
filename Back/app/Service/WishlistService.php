@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Wishlist;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 class WishlistService {
    /**
@@ -21,7 +22,7 @@ class WishlistService {
             return [
                'success' => false,
                'error' => 'Item with this id is already in wishlist',
-               'status' => 400,
+               'status' => Response::HTTP_BAD_REQUEST,
             ];
          }
 

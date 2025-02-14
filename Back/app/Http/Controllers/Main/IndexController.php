@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
+use Illuminate\View\View;
 
 class IndexController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): View
     {
         $productsCount = Product::all()->count();
         $usersCount = User::all()->count();

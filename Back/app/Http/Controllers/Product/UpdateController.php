@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Requests\Product\UpdateRequest;
-use Illuminate\Support\Facades\Log;
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateController extends BaseController
 {
-    public function __invoke(UpdateRequest $request, Product $product)
+    public function __invoke(UpdateRequest $request, Product $product): RedirectResponse
     {
         $data = $request->validated();
 

@@ -7,6 +7,7 @@ use App\Http\Filters\ProductFilter;
 use App\Http\Requests\API\Product\IndexRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Response;
 
 class IndexController extends Controller
 {
@@ -32,14 +33,14 @@ class IndexController extends Controller
                     'total' => $paginatedProducts->total(),
                     'links' => $paginatedProducts->toArray()['links'],
                 ],
-            ], 200);
+            ], Response::HTTP_OK);
         } else {
             $products = ProductResource::collection($query->get());
 
             return response()->json([
                 'success' => true,
                 'products' => $products,
-            ], 200);
+            ], Response::HTTP_OK);
         }
     }
 }

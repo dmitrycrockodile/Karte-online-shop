@@ -7,6 +7,7 @@ use App\Models\Review;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use App\Models\ReviewHelpfulness;
+use Illuminate\Http\Response;
 
 class ReviewService {
    /**
@@ -22,7 +23,7 @@ class ReviewService {
             return [
                'success' => false, 
                'error' => 'Unauthorized.',
-               'status' => 401,
+               'status' => Response::HTTP_UNAUTHORIZED,
             ];
          }
 
@@ -64,7 +65,7 @@ class ReviewService {
             return [
                'success' => false, 
                'error' => 'Unauthorized.',
-               'status' => 401,
+               'status' => Response::HTTP_UNAUTHORIZED,
             ];
          }
 
@@ -75,7 +76,7 @@ class ReviewService {
             return [
                'success' => false,
                'error' => 'You have already voted for this review.',
-               'status' => 400
+               'status' => Response::HTTP_BAD_REQUEST
             ];
          }
    

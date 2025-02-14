@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Models\User;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 class UserService {
    /**
@@ -21,7 +22,7 @@ class UserService {
                return [
                   'success' => false,
                   'error' => 'This email already subscribed!',
-                  'status' => 409,
+                  'status' => Response::HTTP_CONFLICT,
                ];
             } else {
                $user->update(['is_subscribed' => true]);

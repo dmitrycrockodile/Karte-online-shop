@@ -7,10 +7,11 @@ use App\Models\Color;
 use App\Models\Size;
 use App\Models\Tag;
 use App\Models\Coupon;
+use Illuminate\View\View;
 
 class CreateController extends BaseController
 {
-    public function __invoke()
+    public function __invoke(): View
     {       
         $colors = Color::all();
         $tags = Tag::all();
