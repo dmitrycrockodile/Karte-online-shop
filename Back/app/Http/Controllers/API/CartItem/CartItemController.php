@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\CartItem;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\Api\CartItem\IndexRequest;
 use App\Http\Resources\CartItem\CartItemResource;
 use App\Models\CartItem;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
 
-class CartItemController extends Controller {
+class CartItemController extends BaseApiController {
    protected CartItemService $cartItemService;
 
    public function __construct(CartItemService $cartItemService) {
@@ -32,17 +32,10 @@ class CartItemController extends Controller {
       if (Auth::check()) {
          $cartItems = Auth::user()->cartItems()->with('product')->get();
          
-         return response()->json([
-            'success' => true,
-            'data' => CartItemResource::collection($cartItems)
-         ], Response::HTTP_OK);
+         return $this->successResponse(CartItemResource::collection($cartItems));
       } else {
          $cartItems = session()->get('cart', []);
-         return response()->json([
-            'success' => false,
-            'message' => 'Unauthorized user data.',
-            'data' => $cartItems
-         ], Response::HTTP_UNAUTHORIZED);
+         return $this->successResponse($cartItems, 'Unauthorized user data.');
       }
    }
 
@@ -60,17 +53,10 @@ class CartItemController extends Controller {
       $response = $this->cartItemService->store($data);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'message' => $response['error']
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
 
-      return response()->json([
-         'success' => true,
-         'message' => 'Product added to cart.',
-         'cartItem' => new CartItemResource($response['cartItem'])
-      ], Response::HTTP_CREATED);
+      return $this->successResponse([ 'cartItem' => new CartItemResource($response['cartItem'])], 'Product added to cart.', Response::HTTP_CREATED);
    }
 
    /**
@@ -88,26 +74,16 @@ class CartItemController extends Controller {
       $data = $request->validated();
       // Permissions check
       if (Gate::denies('update', $cartItem)) {
-         return response()->json([
-            'success' => false, 
-            'error' => 'Unauthorized.',
-         ], Response::HTTP_UNAUTHORIZED);
+         return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
       }
 
       $response = $this->cartItemService->update($data, $cartItem);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'error' => $response['error']
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
 
-      return response()->json([
-         'success' => true,
-         'message' => 'Product added to the cart.',
-         'cartItem' => new CartItemResource($response['cartItem']),
-      ], Response::HTTP_OK);
+      return $this->successResponse([ 'cartItem' => new CartItemResource($response['cartItem']) ], 'Product added to the cart.');
    }
 
    /**
@@ -123,17 +99,12 @@ class CartItemController extends Controller {
    public function destroy(CartItem $cartItem): JsonResponse {
       // Permissions check
       if (Gate::denies('delete', $cartItem)) {
-         return response()->json([
-            'success' => false, 
-            'error' => 'Unauthorized.',
-         ], Response::HTTP_UNAUTHORIZED);
+         return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
       }
 
       $cartItem->delete();
-      return response()->json([
-         'success' => true,
-         'message' => 'Product removed from cart'
-      ], Response::HTTP_OK);
+
+      return $this->successResponse([], 'Product removed from cart');
    }
 
    /**
@@ -148,17 +119,11 @@ class CartItemController extends Controller {
       $userId = Auth::id();
 
       if (!$userId) {
-         return response()->json([
-            'message' => 'Unauthorized',
-            'success' => false,
-         ], Response::HTTP_UNAUTHORIZED);
+         return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
       }
 
       CartItem::where('user_id', $userId)->delete();
 
-      return response()->json([
-         'message' => 'User cart cleared successfully',
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse([], 'User cart cleared successfully');
    }
 }

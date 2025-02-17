@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API\Question;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\API\Question\StoreRequest;
 use App\Models\Question;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 
-class QuestionController extends Controller
+class QuestionController extends BaseApiController
 {
    /**
      * Stores a new question.
@@ -23,10 +22,7 @@ class QuestionController extends Controller
       $data = $request->validated();
 
       Question::create($data);
-   
-      return response()->json([
-         'message' => 'Thank you, we recieved your question!',
-         'success' => true,
-      ], Response::HTTP_OK);
+
+      return $this->successResponse([], 'Thank you, we recieved your question!');
    }
 }

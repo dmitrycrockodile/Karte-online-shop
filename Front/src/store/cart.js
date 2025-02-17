@@ -55,22 +55,22 @@ const actions = {
             'withCoupon': withCoupon
          })
          
-         if (response.data.cartItem.quantity !== choosenProductOptions.selectedQuantity && !withCoupon) {
-            commit('INCREASE_QTY', { cartItem: response.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
+         if (response.data.data.cartItem.quantity !== choosenProductOptions.selectedQuantity && !withCoupon) {
+            commit('INCREASE_QTY', { cartItem: response.data.data.cartItem, quantity: choosenProductOptions.selectedQuantity })
          } else {
             if (withCoupon) {
-               response.data.cartItem.priceWithCoupon = (response.data.cartItem.price - couponPrice).toFixed(2);
-               response.data.cartItem.withCoupon = withCoupon;
-               response.data.cartItem.quantity = 1;               
+               response.data.data.cartItem.priceWithCoupon = (response.data.data.cartItem.price - couponPrice).toFixed(2);
+               response.data.data.cartItem.withCoupon = withCoupon;
+               response.data.data.cartItem.quantity = 1;               
             }
 
-            commit('ADD_TO_CART', response.data.cartItem);
+            commit('ADD_TO_CART', response.data.data.cartItem);
          }
 
          toast.success(response.data.message, { timeout: 2000 });
          dispatch('updateStorage');
-      } catch (error) {
-         toast.error(error.response.data.message, { timeout: 2000 })
+      } catch (err) {
+         toast.error('Failed to add to the cart, please try again later.', { timeout: 2000 })
       }   
    },
    async removeFromCart({ commit, dispatch }, cartItem) {
@@ -82,7 +82,7 @@ const actions = {
 
          dispatch('updateStorage');
       } catch (err) {
-         toast.error(err.response.data.message, { timeout: 2000 })
+         toast.error(err.response?.data?.message || err.message, { timeout: 2000 })
       }
    },
    async decreaseQty({ commit, dispatch }, cartItem) {
@@ -120,7 +120,6 @@ const actions = {
    async fetchCartItems({ commit, dispatch }) {
       try {
          const cartItems = await axios.get('http://localhost:8876/api/cart');
-         console.log(cartItems);
          
          if (cartItems.status === 200 && cartItems.data.success) {
             commit('SET_CART_ITEMS', cartItems.data.data);

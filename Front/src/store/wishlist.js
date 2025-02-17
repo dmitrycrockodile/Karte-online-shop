@@ -36,7 +36,7 @@ const actions = {
                'product_id': productId,
                'user_id': userId,
             })
-            commit('ADD_TO_WISHLIST', res.data.item);
+            commit('ADD_TO_WISHLIST', res.data.data.item);
          } catch (error) {
             console.error(error)
          }   
@@ -60,7 +60,7 @@ const actions = {
          const wishedItems = await axios.get('http://localhost:8876/api/wishlist');
          
          if (wishedItems.status === 200) {
-            commit('SET_WISHLIST_ITEMS', wishedItems.data.wishlist);
+            commit('SET_WISHLIST_ITEMS', wishedItems.data.data.wishlist);
 
             dispatch('updateStorage');
          }

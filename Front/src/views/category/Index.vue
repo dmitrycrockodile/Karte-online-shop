@@ -182,8 +182,8 @@
         });
 
         if (res.success) {
-          this.products = res.products;
-          this.pagination = res.meta;
+          this.products = res.data.products;
+          this.pagination = res.data.meta;
         }
         this.isProductsLoading = false;
       },
@@ -198,7 +198,7 @@
       const res = await getCategory(this.$route.params.id);
 
       if (res.success) {
-        this.category = res.category;
+        this.category = res.data.category;
         this.fetchProductsByCategory();
         this.isPageLoading = false;
 

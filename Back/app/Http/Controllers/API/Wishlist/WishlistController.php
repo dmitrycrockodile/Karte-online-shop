@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Wishlist;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\Api\Wishlist\StoreRequest;
 use App\Http\Resources\Wishlist\WishlistResource;
 use App\Models\Wishlist;
@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
-class WishlistController extends Controller {
+class WishlistController extends BaseApiController {
    protected WishlistService $wishlistService;
 
    public function __construct(WishlistService $wishlistService) {
@@ -32,17 +32,14 @@ class WishlistController extends Controller {
       $response = $this->wishlistService->store($data);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'message' => $response['error']
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
 
-      return response()->json([
-         'success' => true,
-         'item' => new WishlistResource($response['item']),
-         'message' => 'Product was successfully added to the wishlist.',
-      ], Response::HTTP_CREATED);
+      return $this->successResponse(
+         [ 'item' => new WishlistResource($response['item']) ],
+         'Product was successfully added to the wishlist.',
+         Response::HTTP_CREATED
+      );
    }
 
    /**
@@ -57,11 +54,10 @@ class WishlistController extends Controller {
       $userId = Auth::id();
       $wishlist_items = Wishlist::where('user_id', $userId)->with('product')->get();
 
-      return response()->json([
-         'wishlist' => WishlistResource::collection($wishlist_items),
-         'message' => 'Wish list products',
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse(
+         [ 'wishlist' => WishlistResource::collection($wishlist_items) ],
+         'Wish list products',
+      );
    }
 
    /**
@@ -75,14 +71,11 @@ class WishlistController extends Controller {
    */
    public function destroy(Wishlist $wishlist): JsonResponse {
       if ($wishlist->user_id !== Auth::id()) {
-         return response()->json(['error' => 'Unauthorized.', Response::HTTP_UNAUTHORIZED]);
+         return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
       }
 
       $wishlist->delete();
 
-      return response()->json([
-         'message' => 'Product removed from wishlist successfully.',
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse([], 'Product removed from wishlist successfully.');
    }
 }

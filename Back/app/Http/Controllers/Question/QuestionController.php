@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Database\Eloquent\Collection;
 
 class QuestionController extends Controller
 {
@@ -33,7 +34,7 @@ class QuestionController extends Controller
       return redirect()->route('question.index');
    }
 
-   private function getOrderedQuestions(): array {
+   private function getOrderedQuestions(): Collection {
       $questions = Question::orderByRaw("
          CASE 
             WHEN status = 'Resolved' THEN 2

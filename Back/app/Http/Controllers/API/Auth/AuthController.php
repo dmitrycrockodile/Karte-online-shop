@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\API\Auth\IndexRequest;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Resources\User\UserResource;
@@ -14,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
-class AuthController extends Controller
+class AuthController extends BaseApiController
 {
     protected AuthService $authService;
 
@@ -33,16 +33,13 @@ class AuthController extends Controller
     */
     public function register(StoreRequest $request): JsonResponse {
         if (!$this->authService->register($request->validated())) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to register, please try again!',
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->errorResponse(
+                'Failed to register, please try again!',
+                Response::HTTP_BAD_REQUEST
+            );
         }
         
-        return response()->json([
-            'success' => true,
-            'verified' => false,
-        ], Response::HTTP_OK);
+        return $this->successResponse([ 'verified' => false ], Response::HTTP_OK);
     }
 
     /**
@@ -58,17 +55,14 @@ class AuthController extends Controller
         $response = $this->authService->login($request->validated());
 
         if (!$response['success']) {
-            return response()->json([
-                'success' => false,
-                'message' => $response['message']
-            ], $response['message'] === 'Incorrect password.' ? Response::HTTP_BAD_REQUEST : Response::HTTP_NOT_FOUND);
+            $statusCode = $response['message'] === 'Incorrect password.' ? Response::HTTP_BAD_REQUEST : Response::HTTP_NOT_FOUND;
+            return $this->errorResponse($response['message'], $statusCode);
         }
 
-        return response()->json([
-            'success' => true,
+        return $this->successResponse([ 
             'user' => new UserResource($response['user']),
             'remember_token' => $response['token']
-        ], Response::HTTP_OK);
+        ]);
     }
 
     /**
@@ -82,16 +76,10 @@ class AuthController extends Controller
     */
     public function logout(Request $request): JsonResponse {   
         if (!$this->authService->logout($request)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized.',
-            ], Response::HTTP_UNAUTHORIZED);
+            return $this->errorResponse('Unauthorized.', Response::HTTP_UNAUTHORIZED);
         }
-            
-        return response()->json([
-            'success' => true,
-            'message' => 'Logged out successfully.',
-        ], Response::HTTP_OK);
+
+        return $this->successResponse([], 'Logged out successfully.');
     }
 
     /**
@@ -104,7 +92,7 @@ class AuthController extends Controller
     */
     public function verifyEmail(string $email): JsonResponse|RedirectResponse {
         if (!$this->authService->verifyEmail($email)) {
-            return response()->json(['message' => 'Invalid verification link.'], Response::HTTP_BAD_REQUEST);
+            return $this->errorResponse('Invalid verification link.', Response::HTTP_BAD_REQUEST);
         }
        
         $this->logout(request());
@@ -123,9 +111,6 @@ class AuthController extends Controller
     public function sendNewVerificationMessage(Request $request): JsonResponse {
         Mail::to($request['email'])->send(new CustomVerifyEmail($request['name'], $request['email']));
 
-        return response()->json([
-            'message' => 'Message sent, check your email and re-login after the verification', 
-            'success' => true
-        ], Response::HTTP_OK);
+        return $this->successResponse([], 'Message sent, check your email and re-login after the verification');
     }
 }

@@ -34,7 +34,7 @@
          const res = await getCategory(this.categoryId);
 
          if (res.success) {
-            this.category = res.category;
+            this.category = res.data.category;
          }
       },
    }

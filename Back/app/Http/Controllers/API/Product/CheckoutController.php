@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API\Product;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\API\Product\OrderRequest;
 use App\Models\Order;
 use Illuminate\Http\Response;
 
-class CheckoutController extends Controller {
+class CheckoutController extends BaseApiController {
    
    public function __invoke(OrderRequest $request) {
       $data = $request->validated();
@@ -53,6 +53,8 @@ class CheckoutController extends Controller {
       // $order->session_id = $checkout_session->id;
       // $order->save();
 
+
+      // Change to $this->successResponse when done
       return response()->json([
          'url' => $checkout_session->url,
          'products' => $products,

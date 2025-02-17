@@ -305,7 +305,7 @@ export default {
     const res = await getProductFilters();
 
     if (res.success) {
-      this.productFilters = res.filters;
+      this.productFilters = res.data;
       this.prices.minPrice = this.productFilters.prices.minPrice;
       this.prices.maxPrice = this.productFilters.prices.maxPrice;
     }
@@ -384,8 +384,8 @@ export default {
       });
 
       if (res.success) {
-        this.products = res.products;
-        this.pagination = res.meta;
+        this.products = res.data.products;
+        this.pagination = res.data.meta;
       }
 
       this.isPageLoading = false;

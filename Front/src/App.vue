@@ -70,7 +70,7 @@ export default {
     const res = await getCategories();
 
     if (res.success) {
-      this.setCategories(res.categories);
+      this.setCategories(res.data.categories);
     }
   },
   beforeDestroy() {

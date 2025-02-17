@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Review;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Requests\Api\Review\StoreRequest;
 use App\Http\Resources\Review\ReviewResource;
 use App\Models\Review;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
 
-class ReviewController extends Controller
+class ReviewController extends BaseApiController
 {
    protected ReviewService $reviewService;
 
@@ -34,18 +34,13 @@ class ReviewController extends Controller
       $response = $this->reviewService->store($data);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'message' => $response['error']
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
 
-      return response()->json([
+      return $this->successResponse([
          'review' => new ReviewResource($response['review']),
-         'average_rating' => $response['average_rating'],
-         'message' => 'Review successfully added!',
-         'success' => true,
-      ], Response::HTTP_OK);
+         'average_rating' => $response['average_rating']
+      ], 'Review successfully added!');
    }
 
    /**
@@ -65,17 +60,10 @@ class ReviewController extends Controller
       $response = $this->reviewService->markHelpfulness($review, $request['isHelpful']);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'message' => $response['error']
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
   
-      return response()->json([
-         'message' => 'Thank you for your feedback', 
-         'success' => true,
-         'review' => new ReviewResource($review),
-      ], Response::HTTP_OK);
+      return $this->successResponse([ 'review' => new ReviewResource($review) ]);
    }
 
    /**
@@ -90,11 +78,10 @@ class ReviewController extends Controller
       $review->reported = true;
       $review->save();
   
-      return response()->json([
-         'message' => 'Thank you for the report.', 
-         'success' => true,
-         'review' => new ReviewResource($review),
-      ], Response::HTTP_OK);
+      return $this->successResponse(
+         [ 'review' => new ReviewResource($review) ], 
+         'Thank you for the report.'
+      );
    }
 
    /**
@@ -109,17 +96,11 @@ class ReviewController extends Controller
    public function destroy(Review $review): JsonResponse {
       // Permissions check
       if (Gate::denies('delete', $review)) {
-         return response()->json([
-            'success' => false, 
-            'error' => 'You can delete only your review.',
-         ], Response::HTTP_UNAUTHORIZED);
+         return $this->errorResponse('You can delete only your review.', Response::HTTP_UNAUTHORIZED);
       }
 
       $review->delete();
 
-      return response()->json([
-         'message' => 'You deleted your review.',
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse([], 'You deleted your review.');
    }
 }

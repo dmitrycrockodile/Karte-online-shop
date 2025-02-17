@@ -855,15 +855,15 @@ export default {
     const res = await getProduct(this.$route.params.id);
     
     if (res.success) {
-      this.product = res.product;
-      this.maxProductQuantity = res.product.count;
+      this.product = res.data.product;
+      this.maxProductQuantity = res.data.product.count;
     }
   },
   async mounted() {
     const res = await getRecentProducts();
     
     if (res.success) {
-      this.recentProducts = res.products;
+      this.recentProducts = res.data.products;
       this.isLoading = false;
       
       document.title = `Karte | ${this.product.title}`
@@ -918,7 +918,6 @@ export default {
     },
     async handleReviewSubmit() {
       const res = await addReview(this.reviewFormData, this.product.id);
-
       if (res.success) {
         this.reviewFormData = {
           rating: null,
@@ -926,8 +925,8 @@ export default {
           body: '',
         }
 
-        this.product.reviews.push(res.review);
-        this.product.average_rating = res.average_rating;
+        this.product.reviews.push(res.data.review);
+        this.product.average_rating = res.data.average_rating;
         
         // Shows success message
         this.toast.success(res.message, { timeout: 2000 })
@@ -938,10 +937,10 @@ export default {
     },
     async handleHelpfulVote(id, isHelpful) {
       const res = await markHelpful(id, isHelpful);
-      
+
       if (res.success) {
         // Updates reported review
-        this.updateReviewList(res.review);
+        this.updateReviewList(res.data.review);
         // Shows success message
         this.toast.success(res.message, { timeout: 2000 })
       } else {
@@ -956,7 +955,7 @@ export default {
         // Shows success message
         this.toast.success(res.message, { timeout: 2000 })
         // Updates reported review
-        this.updateReviewList(res.review);
+        this.updateReviewList(res.data.review);
       } else {
         // Shows error message
         this.toast.error(res.message, { timeout: 2000 });

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\User;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Resources\User\UserResource;
 use App\Http\Requests\API\User\IndexRequest;
 use App\Http\Requests\API\User\EmailUpdateRequest;
@@ -15,7 +15,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserController extends BaseApiController
 {
    protected UserService $userService;
 
@@ -38,11 +38,10 @@ class UserController extends Controller
 
       $user->update($data);
 
-      return response()->json([
-         'new_user' => new UserResource($user),
-         'message' => 'Your data was successfully updated',
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse(
+         [ 'new_user' => new UserResource($user) ],
+         'Your data was successfully updated'
+      );
    }
 
    /**
@@ -62,16 +61,12 @@ class UserController extends Controller
          $user->email = $data['email'];
          $user->save();
 
-         return response()->json([
-            'new_email' => $user->email,
-            'message' => 'Email successfully changed!',
-            'success' => true,
-         ], Response::HTTP_OK);
+         return $this->successResponse(
+            [ 'new_email' => $user->email ],
+            'Email successfully changed!'
+         );
       } else {
-         return response()->json([
-            'message' => 'Invalid password',
-            'success' => false,
-         ], Response::HTTP_CONFLICT);
+         return $this->errorResponse('Invalid password', Response::HTTP_CONFLICT);
       }
    }
 
@@ -92,15 +87,9 @@ class UserController extends Controller
          $user->password = Hash::make($data['new_password']);
          $user->save();
 
-         return response()->json([
-            'message' => 'Password successfully changed!',
-            'success' => true,
-         ], Response::HTTP_OK);
+         return $this->successResponse([], 'Password successfully changed!');
       } else {
-         return response()->json([
-            'message' => 'Invalid password',
-            'success' => false,
-         ], Response::HTTP_CONFLICT);
+         return $this->errorResponse('Invalid password', Response::HTTP_CONFLICT);
       }
    }
 
@@ -118,18 +107,13 @@ class UserController extends Controller
       $response = $this->userService->subscribe($data);
 
       if (!$response['success']) {
-         return response()->json([
-            'success' => false,
-            'message' => $response['error'],
-            'is_subscribed' => $response['is_subscribed'] || false,
-         ], $response['status']);
+         return $this->errorResponse($response['error'], $response['status']);
       }
 
-      return response()->json([
-         'message' => 'Thank you for the subscription!',
-         'success' => true,
-         'is_subscribed' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse(
+         [ 'is_subscribed' => true ],
+         'Thank you for the subscription!'
+      );
    }
 
    /**
@@ -146,17 +130,12 @@ class UserController extends Controller
          $user->is_subscribed = false;
          $user->save();
 
-         return response()->json([
-            'message' => 'You have unsubscribed from out newsletter.',
-            'success' => true,
-            'is_subscribed' => false,
-         ], Response::HTTP_OK);
+         return $this->successResponse(
+            [ 'is_subscribed' => false ],
+            'You have unsubscribed from out newsletter.'
+         );
       } else {
-         return response()->json([
-            'message' => 'You are not subscribed.',
-            'success' => false,
-            'is_subscribed' => false,
-         ], Response::HTTP_CONFLICT);
+         return $this->errorResponse('You are not subscribed.', Response::HTTP_CONFLICT);
       }
    }
  
@@ -176,15 +155,9 @@ class UserController extends Controller
       if (Hash::check($data['password'], $user->password)) {
          $user->delete();
    
-         return response()->json([
-            'message' => 'Your account was deleted!',
-            'success' => true,
-         ], Response::HTTP_OK);
+         return $this->successResponse([], 'Your account was deleted!');
       } else {
-         return response()->json([
-            'message' => 'Invalid password.',
-            'success' => false,
-         ], Response::HTTP_CONFLICT);
+         return $this->errorResponse('Invalid password.', Response::HTTP_CONFLICT);
       }
    }
 }

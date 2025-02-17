@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\API\Product;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\API\Product\IndexRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Response;
 
-class IndexController extends Controller
+class IndexController extends BaseApiController
 {
     public function __invoke(IndexRequest $request)
     {
@@ -23,8 +23,7 @@ class IndexController extends Controller
             $paginatedProducts = $query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']);
             $products = ProductResource::collection($paginatedProducts);
 
-            return response()->json([
-                'success' => true,
+            return $this->successResponse([
                 'products' => $products,
                 'meta' => [
                     'current_page' => $paginatedProducts->currentPage(),
@@ -32,15 +31,12 @@ class IndexController extends Controller
                     'per_page' => $paginatedProducts->perPage(), 
                     'total' => $paginatedProducts->total(),
                     'links' => $paginatedProducts->toArray()['links'],
-                ],
-            ], Response::HTTP_OK);
+                ]
+            ]);
         } else {
             $products = ProductResource::collection($query->get());
 
-            return response()->json([
-                'success' => true,
-                'products' => $products,
-            ], Response::HTTP_OK);
+            return $this->successResponse([ 'products' => $products ]);
         }
     }
 }

@@ -36,8 +36,8 @@ const actions = {
    async register({ commit, dispatch }, payload) {
       try {
          const res = await axios.post('http://localhost:8876/api/register', payload);
-         console.log(res)
-         if (!res.data.verified) {
+
+         if (!res.data.data.verified) {
             toast.info('Please check your email box and verify your email');
          }
 
@@ -46,7 +46,7 @@ const actions = {
          return res;         
       } catch (err) {
          commit('AUTH_ERROR');
-         toast.error(err.response.data.message, { timeout: 2000 });
+         toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
          return Promise.reject(err);
       }
    },
@@ -55,8 +55,8 @@ const actions = {
          const res = await axios.post("http://localhost:8876/api/login", payload);
 
          if (res.status === 200) {
-            const user = res.data.user;
-            const token = res.data.remember_token;
+            const user = res.data.data.user;
+            const token = res.data.data.remember_token;
 
             commit('AUTH_SUCCESS', { token });
             commit('SET_USER', { user });
@@ -88,7 +88,7 @@ const actions = {
          toast.info('Logged out successfully');
       } catch(err) {
          if (err.response.status !== 401) {
-            toast.error(err.response?.data?.message, { timeout: 2000 });
+            toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
             return Promise.reject(err);
          } 
 
@@ -107,7 +107,7 @@ const actions = {
             await dispatch('logout');
          }
       } catch (err) {
-         toast.error(err.response.data.message);
+         toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
          return Promise.reject(err);
       }
    },

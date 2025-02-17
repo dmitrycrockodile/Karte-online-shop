@@ -118,8 +118,8 @@ router.beforeEach((to, from, next) => {
       next(); 
     }
   } else if (to.matched.some(record => record.meta.requiresVerification)) {
-    if (authModule.getters.isAuthenticated()) {
-      if (!authModule.getters.isUserVerified()) {
+    if (authModule.getters.isAuthenticated) {
+      if (!authModule.getters.isUserVerified) {
         toast.info('Please verify your email (from your email box) to access this section.');
         next({ name: 'account.index' });
       } else {

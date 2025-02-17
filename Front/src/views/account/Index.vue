@@ -464,10 +464,10 @@ export default {
    methods: {
       async handleUserDataChange() {
          const res = await updateUserData(this.userDataForm.id, this.userDataForm);
-
+      
          if (res.success) {
             // Updates user data
-            this.$store.commit('auth/SET_USER', { user: res.newUser });
+            this.$store.commit('auth/SET_USER', { user: res.data.new_user });
             // Shows success message
             this.toast.success(res.message, { timeout: 2000 });
          } else {
@@ -487,7 +487,7 @@ export default {
             this.toast.success(res.message, { timeout: 2000 });
 
             // Sets the new email
-            this.userDataForm.email = res.new_email;
+            this.userDataForm.email = res.data.new_email;
             this.$store.commit('auth/SET_USER', { user: this.userDataForm });
          } else {
             // Shows error message
@@ -533,7 +533,7 @@ export default {
    
             if (res.success) {
                // Updates the subscription data
-               this.userDataForm.is_subscribed = res.is_subscribed;
+               this.userDataForm.is_subscribed = res.data.is_subscribed;
                this.$store.commit('auth/SET_USER', { user: this.userDataForm });
                // Shows success message
                this.toast.success(res.message, { timeout: 2000 });
@@ -546,7 +546,7 @@ export default {
 
             if (res.success) {
                // Updates the subscription data
-               this.userDataForm.is_subscribed = res.is_subscribed;
+               this.userDataForm.is_subscribed = res.data.is_subscribed;
                this.$store.commit('auth/SET_USER', { user: this.userDataForm });
                 // Shows success message
                this.toast.success(res.message, { timeout: 2000 });

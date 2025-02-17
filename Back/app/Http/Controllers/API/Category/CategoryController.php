@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API\Category;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\BaseApiController;
 use App\Http\Resources\Category\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
-class CategoryController extends Controller {
+class CategoryController extends BaseApiController {
    /**
      * Retrieves the categories.
      * 
@@ -17,10 +17,7 @@ class CategoryController extends Controller {
    public function index(): JsonResponse {
       $categories = Category::all();
 
-      return response()->json([
-         'categories' => CategoryResource::collection($categories),
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse(['categories' => CategoryResource::collection($categories)]);
    }
 
    /**
@@ -33,9 +30,6 @@ class CategoryController extends Controller {
     * @return JsonResponse A JSON response containing the category details.
     */
    public function show(Category $category): JsonResponse {
-      return response()->json([
-         'category' => new CategoryResource($category),
-         'success' => true,
-      ], Response::HTTP_OK);
+      return $this->successResponse(['category' => new CategoryResource($category)]);
    }
 }
