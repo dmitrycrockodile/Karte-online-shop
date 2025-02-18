@@ -38,9 +38,9 @@ class QuestionController extends Controller
    private function getOrderedQuestions(): Collection {
       $questions = Question::orderByRaw("
          CASE 
-               WHEN status = ? THEN 2  -- 'Resolved'
-               WHEN status = ? THEN 1  -- 'Pending'
-               ELSE 0                   -- 'In Progress'
+               WHEN status = ? THEN 2 
+               WHEN status = ? THEN 1  
+               ELSE 0                   
          END ASC", [
          QuestionStatus::RESOLVED->value,
          QuestionStatus::PENDING->value,

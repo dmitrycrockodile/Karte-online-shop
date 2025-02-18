@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Review\DeletedStatus;
+use App\Enums\Review\ReportStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -16,6 +18,10 @@ class Review extends Model
         'body',
         'reported',
         'deleted'
+    ];
+    protected $casts = [
+        'reported' => ReportStatus::class,
+        'deleted' => DeletedStatus::class,
     ];
 
     public function user() {

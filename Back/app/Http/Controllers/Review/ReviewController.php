@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Review;
 
+use App\Enums\Review\DeletedStatus;
+use App\Enums\Review\ReportStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +25,15 @@ class ReviewController extends Controller
    public function index(): View {
       $reviews = Review::orderByRaw("
          CASE 
-            WHEN deleted = true THEN 2
-            WHEN deleted = false AND reported = false THEN 1
+            WHEN deleted = ? THEN 2
+            WHEN deleted = ? AND reported = ? THEN 1
             ELSE 0
          END ASC
-      ")
+      ", [
+         DeletedStatus::DELETED->value,
+         DeletedStatus::ACTIVE->value,
+         ReportStatus::NOT_REPORTED->value,
+      ])
       ->orderBy('created_at', 'DESC')
       ->get();
 
@@ -56,8 +62,8 @@ class ReviewController extends Controller
     * @return RedirectResponse Redirects back to the reviews index page.
    */
    public function resolveReport(Review $review): RedirectResponse {
-      if ($review->reported == true) {
-         $review->reported = false;
+      if ($review->reported === ReportStatus::REPORTED) {
+         $review->reported = ReportStatus::NOT_REPORTED;
 
          $this->sendReviewResolvedEmail($review);
       } 
@@ -76,10 +82,10 @@ class ReviewController extends Controller
     * @return RedirectResponse Redirects back to the reviews index page.
    */
    public function delete(Review $review): RedirectResponse {
-      $review->deleted = true;
+      $review->deleted = DeletedStatus::DELETED;
       $review->save();
 
-      if ($review->reported == true) {
+      if ($review->reported === ReportStatus::REPORTED) {
          $content = $review->body ? $review->body : $review->title;
          Mail::to($review->user->email)->send(new ResolvedReview($review->user->name, $content));
       } 
@@ -97,7 +103,7 @@ class ReviewController extends Controller
     * @return RedirectResponse Redirects back to the reviews index page.
    */
    public function restore(Review $review): RedirectResponse {
-      $review->deleted = false;
+      $review->deleted = DeletedStatus::ACTIVE;
       $review->save();
 
       $this->sendReviewRestoredEmail($review);
@@ -119,7 +125,7 @@ class ReviewController extends Controller
     * Sends a restoration email to the user when their review is restored.
     *
     * @param Review $review The restored review.
-   */
+    */
    private function sendReviewRestoredEmail(Review $review): void {
       $content = $review->body ? $review->body : $review->title;
       Mail::to($review->user->email)->send(new RestoredReview($review->user->name, $content));

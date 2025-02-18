@@ -36,8 +36,8 @@
                         <td>-{{ $review->notHelpfulCount }}</td>
                      </tr>
                      <tr>
-                        <th>Reported</th>
-                        <td>{{ $review->reported ? 'Yes' : 'No' }}</td>
+                        <th>Reports</th>
+                        <td>{{ $review->reported->text() }}</td>
                      </tr>
                      <tr>
                         <th>User name</th>
@@ -62,7 +62,7 @@
                </table>
             </div>
          </div>
-         @if (!$review->deleted)    
+         @if (!$review->deleted->value)    
          <form action="{{ route('review.delete', $review->id) }}" method="POST" class="d-inline">
             @csrf
             @method('DELETE')
@@ -79,7 +79,7 @@
             </button>
          </form>
          @endif
-         @if ($review->reported)
+         @if ($review->reported->value)
          <form action="{{ route('review.resolve', $review->id) }}" method="POST" class="d-inline">
             @csrf
             @method('PATCH')

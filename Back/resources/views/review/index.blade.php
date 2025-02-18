@@ -14,11 +14,11 @@
             <div class="card-body">
                <ul class="todo-list ui-sortable" data-widget="todo-list">
                   @foreach ($reviews as $review)
-                     <li class="{{ $review->deleted ? 'done' : '' }}">
+                     <li class="{{ $review->deleted->value ? 'done' : '' }}">
                         <span class="text">{{ $review->title }}</span>
                         <span class="text">on</span>
                         <a href="{{ route('product.show', $review->product->id) }}" class="text">{{ $review->product->title }}</a>
-                        @if ($review->reported)    
+                        @if ($review->reported->value)    
                            <small class="badge badge-warning">
                               <i class="far fa-clock"></i>
                               Reported
