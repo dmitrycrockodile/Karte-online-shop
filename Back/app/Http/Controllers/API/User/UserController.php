@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\User;
 
+use App\Enums\UserSubscriptionStatus;
 use App\Http\Controllers\API\BaseApiController;
 use App\Http\Resources\User\UserResource;
 use App\Http\Requests\API\User\IndexRequest;
@@ -126,9 +127,8 @@ class UserController extends BaseApiController
      * @return JsonResponse The response indicating the success or failure of the operation.
    */
    public function unsubscribe(User $user): JsonResponse {
-      if ($user->is_subscribed) {
-         $user->is_subscribed = false;
-         $user->save();
+      if ($user->is_subscribed->value) {
+         $user->update(['is_subscribed' => UserSubscriptionStatus::NOT_SUBSCRIBED]);
 
          return $this->successResponse(
             [ 'is_subscribed' => false ],

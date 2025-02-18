@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Enums\UserSubscriptionStatus;
 use App\Models\User;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Log;
@@ -18,14 +19,14 @@ class UserService {
       try {
          if (User::where('email', $data['email'])->first()) {
             $user = User::where('email', $data['email'])->first();
-            if ($user->is_subscribed) {
+            if ($user->is_subscribed->value) {
                return [
                   'success' => false,
                   'error' => 'This email already subscribed!',
                   'status' => Response::HTTP_CONFLICT,
                ];
             } else {
-               $user->update(['is_subscribed' => true]);
+               $user->update(['is_subscribed' => UserSubscriptionStatus::SUBSCRIBED]);
       
                return [ 'success' => true ];
             }

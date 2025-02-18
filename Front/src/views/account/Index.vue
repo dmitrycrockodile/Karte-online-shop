@@ -530,7 +530,7 @@ export default {
       async toggleSubscribtion() {
          if (this.userDataForm.is_subscribed) {
             const res = await unSubscribeToNewsletter(this.userDataForm.id);  
-   
+            
             if (res.success) {
                // Updates the subscription data
                this.userDataForm.is_subscribed = res.data.is_subscribed;
@@ -543,7 +543,7 @@ export default {
             } 
          } else {
             const res = await subscribeToNewsletter(this.userDataForm.email);
-
+            
             if (res.success) {
                // Updates the subscription data
                this.userDataForm.is_subscribed = res.data.is_subscribed;

@@ -83,7 +83,8 @@
                   </tr>
                   <tr>
                      <th>Subscription</th>
-                     <td>{{ $user->is_subscribed ? 'Subscribed' : 'Not subscribed' }}</td>
+
+                     <td>{{ $user->is_subscribed->text() }}</td>
                   </tr>
                </tbody>
             </table>
