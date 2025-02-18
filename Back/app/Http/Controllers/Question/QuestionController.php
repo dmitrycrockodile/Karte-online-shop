@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Question;
 
+use App\Enums\QuestionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Illuminate\Http\RedirectResponse;
@@ -17,17 +18,17 @@ class QuestionController extends Controller
    }
 
    public function show(Question $question): View {
-      $question->status = 'In Progress';
+      $question->status = QuestionStatus::IN_PROGRESS;
       $question->save();
 
       return view('questions.show', compact('question'));
    }
 
    public function update(Question $question): RedirectResponse {
-      if ($question->status == 'In Progress' || $question->status == 'Pending') {
-         $question->status = 'Resolved';
-      } elseif ($question->status == 'Resolved') {
-         $question->status = 'Pending';
+      if ($question->status === QuestionStatus::IN_PROGRESS || $question->status === QuestionStatus::PENDING) {
+         $question->status = QuestionStatus::RESOLVED;
+      } elseif ($question->status === QuestionStatus::RESOLVED) {
+         $question->status = QuestionStatus::PENDING;
       }
       $question->save();
       
@@ -37,11 +38,13 @@ class QuestionController extends Controller
    private function getOrderedQuestions(): Collection {
       $questions = Question::orderByRaw("
          CASE 
-            WHEN status = 'Resolved' THEN 2
-            WHEN status = 'Pending' THEN 1
-            ELSE 0
-         END ASC
-      ")
+               WHEN status = ? THEN 2  -- 'Resolved'
+               WHEN status = ? THEN 1  -- 'Pending'
+               ELSE 0                   -- 'In Progress'
+         END ASC", [
+         QuestionStatus::RESOLVED->value,
+         QuestionStatus::PENDING->value,
+      ])
       ->orderBy('created_at', 'DESC')
       ->get();
 

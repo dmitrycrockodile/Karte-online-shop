@@ -51,7 +51,7 @@ export function handleResponse(res) {
 export function handleError(err) {
    console.error(err)
    return { 
-      message: err.response?.data?.error || 'An error occured', 
+      message: err.response?.data?.message || 'An error occured', 
       success: err.response?.data?.success || false 
    };
 }

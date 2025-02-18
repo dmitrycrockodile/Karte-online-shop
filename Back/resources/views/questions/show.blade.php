@@ -21,7 +21,7 @@
                      </tr>
                      <tr>
                         <th>Status</th>
-                        <td>{{ $question->status }}</td>
+                        <td>{{ $question->status->text() }}</td>
                      </tr>
                      <tr>
                         <th>User name</th>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\QuestionStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,9 @@ class Question extends Model
         'question',
         'message',
         'status'
+    ];
+    protected $casts = [
+        'status' => QuestionStatus::class
     ];
 
     public function getDaysOldAttribute() {
