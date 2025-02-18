@@ -176,7 +176,7 @@
                     <div class="form-check mb-3 ml-1">
                         <x-forms.checkbox
                             name="is_published" 
-                            :isChecked="old('is_published') ?? $product->is_published"
+                            :isChecked="old('is_published') ?? $product->is_published->value"
                             placeholder="Published"
                         />
                     </div>

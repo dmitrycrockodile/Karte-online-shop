@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Product;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\API\BaseApiController;
 use App\Http\Filters\ProductFilter;
 use App\Http\Requests\API\Product\IndexRequest;
@@ -17,7 +18,7 @@ class IndexController extends BaseApiController
 
         $filter = app()->make(ProductFilter::class, ['queryParams' => array_filter($data)]);
         
-        $query = Product::filter($filter);
+        $query = Product::where('is_published', ProductStatus::PUBLISHED)->filter($filter);
 
         if (isset($data['dataPerPage'])) {
             $paginatedProducts = $query->paginate($data['dataPerPage'], ['*'], 'page', $data['page']);

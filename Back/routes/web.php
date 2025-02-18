@@ -87,6 +87,7 @@ Route::group(['prefix' => 'products', 'namespace' => 'App\Http\Controllers\Produ
     Route::get('/{product}/edit', 'EditController')->name('product.edit');
     Route::get('/{product}', 'ShowController')->name('product.show');
     Route::patch('/{product}', 'UpdateController')->name('product.update');
+    Route::patch('/{product}/publish', 'PublishController')->name('product.publish');
     Route::delete('/{product}', 'DeleteController')->name('product.delete');
 });
 

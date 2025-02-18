@@ -30,7 +30,6 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'old_price' => $this->old_price,
             'count' => $this->count,
-            'is_published' => $this->is_published,
             'category' => new CategoryResource($this->category),
             'tags' => TagResource::collection($this->tags),
             'sizes' => SizeResource::collection($this->sizes),

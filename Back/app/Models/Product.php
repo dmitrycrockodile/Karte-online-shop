@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatus;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,9 @@ class Product extends Model
         'is_published',
         'category_id',
         'old_price'
+    ];
+    protected $casts = [
+        'is_published' => ProductStatus::class
     ];
 
     public function tags() {

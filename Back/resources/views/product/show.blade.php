@@ -19,6 +19,13 @@
                Delete
             </button>
          </form>
+         <form action="{{ route('product.publish', $product->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('PATCH')
+            <button type="submit" class="btn btn-{{$product->is_published->value ? 'warning' : 'info'}}">
+               {{ $product->is_published->value ? 'Archive' : 'Publish' }}
+            </button>
+         </form>
          <div class="card w-50 mt-3">
          <div class="card-body table-responsive p-0">
             <table class="table table-hover">
@@ -66,8 +73,8 @@
                      <td>{{ $product->count }}</td>
                   </tr>
                   <tr>
-                     <th>Published</th>
-                     <td>{{ $product->is_published ? 'Yes' : 'No' }}</td>
+                     <th>Status</th>
+                     <td>{{ $product->is_published->text() }}</td>
                   </tr>
                   <tr>
                      <th>Category</th>
