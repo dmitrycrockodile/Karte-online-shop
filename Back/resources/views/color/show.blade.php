@@ -24,18 +24,18 @@
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $color->id }}</td>
+                     <th class="border-0 w-25">ID</th>
+                     <td class="border-left">{{ $color->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <th>Color title</th>
-                     <td>{{ $color->title }}</td>
+                     <th class="w-25">Color title</th>
+                     <td class="border-left">{{ $color->title }}</td>
                   </tr>
                   <tr>
-                     <th>Color</th>
-                     <td><i class="fas fa-square ml-2"  style="color:{{ $color->title }}"></i></td>
+                     <th class="w-25">Color</th>
+                     <td class="border-left"><i class="fas fa-square ml-2"  style="color:{{ $color->title }}"></i></td>
                   </tr>
                </tbody>
             </table>

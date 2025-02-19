@@ -31,58 +31,58 @@
             <table class="table table-hover">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $product->id }}</td>
+                     <th class="border-0">ID</th>
+                     <td class="border-left">{{ $product->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
                      <th>Title</th>
-                     <td>{{ $product->title }}</td>
+                     <td class="border-left">{{ $product->title }}</td>
                   </tr>
                   <tr>
                      <th>Description</th>
-                     <td>{{ $product->description }}</td>
+                     <td class="border-left">{{ $product->description }}</td>
                   </tr>
                   <tr>
                      <th>Content</th>
-                     <td>{{ $product->content }}</td>
+                     <td class="border-left">{{ $product->content }}</td>
                   </tr>
                   <tr>
                      <th>Preview image</th>
-                     <td><img style="height: 350px;" src="{{ $product->previewImageUrl }}" alt="{{ $product->title }} preview"></td>
+                     <td class="border-left"><img style="height: 350px;" src="{{ $product->previewImageUrl }}" alt="{{ $product->title }} preview"></td>
                   </tr>
                   @foreach ($product->images as $key => $image)
                   <tr>
                      <th>Image №{{++$key}}</th>
-                     <td><img style="height: 350px;" src="{{ $image->imageUrl }}" alt="{{ $product->title }}"></td>
+                     <td class="border-left"><img style="height: 350px;" src="{{ $image->imageUrl }}" alt="{{ $product->title }}"></td>
                   </tr>
                   @endforeach
                   <tr>
                      <th>Price</th>
-                     <td>{{ $product->price }}</td>
+                     <td class="border-left">{{ $product->price }}</td>
                   </tr>
                   @if ($product->old_price)
                      <tr>
                         <th>Old price</th>
-                        <td>{{ $product->old_price }}</td>
+                        <td class="border-left">{{ $product->old_price }}</td>
                      </tr>
                   @endif
                   <tr>
                      <th>Count</th>
-                     <td>{{ $product->count }}</td>
+                     <td class="border-left">{{ $product->count }}</td>
                   </tr>
                   <tr>
                      <th>Status</th>
-                     <td>{{ $product->is_published->text() }}</td>
+                     <td class="border-left">{{ $product->is_published->text() }}</td>
                   </tr>
                   <tr>
                      <th>Category</th>
-                     <td>{{ $product->category->title }}</td>
+                     <td class="border-left">{{ $product->category->title }}</td>
                   </tr>
                   <tr>
                      <th>Colors</th>
-                     <td>
+                     <td class="border-left">
                         @foreach ($product->colors as $color)
                            <span class="mr-3">{{ $color->title }}</span>
                         @endforeach
@@ -90,7 +90,7 @@
                   </tr>
                   <tr>
                      <th>Tags</th>
-                     <td>
+                     <td class="border-left">
                         @foreach ($product->tags as $tag)
                            <span class="mr-3">{{ $tag->title }}</span>
                         @endforeach
@@ -98,7 +98,7 @@
                   </tr>
                   <tr>
                      <th>Sizes</th>
-                     <td>
+                     <td class="border-left">
                         @foreach ($product->sizes as $size)
                            <span class="mr-3">{{ $size->title }}</span>
                         @endforeach
@@ -106,7 +106,7 @@
                   </tr>
                   <tr>
                      <th>Coupons</th>
-                     <td>
+                     <td class="border-left">
                         @foreach ($product->coupons as $coupon)
                            <span class="mr-3">{{ $coupon->title }}</span>
                         @endforeach

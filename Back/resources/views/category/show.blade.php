@@ -24,36 +24,36 @@
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $category->id }}</td>
+                     <th class="border-0 w-25">ID</th>
+                     <td class="text-center w-75 border-left">{{ $category->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <th>Title</th>
-                     <td>{{ $category->title }}</td>
+                     <th class="w-25">Title</th>
+                     <td class="text-center w-75 border-left">{{ $category->title }}</td>
                   </tr>
                   @if (count($category->coupons))
                   <tr>
-                     <th>Coupons</th>
-                     @foreach ($category->coupons as $coupon)
-                        <td>
-                           {{ $coupon->title }}
-                        </td>
-                     @endforeach
+                     <th class="w-25">Coupons</th>
+                     <td class="text-center w-75 border-left">
+                        @foreach ($category->coupons as $coupon)
+                        {{ $coupon->title }} <br>
+                        @endforeach
+                     </td>
                   </tr>
                   @endif
                   <tr>
-                     <th>Preview image</th>
-                     <td>
+                     <th class="w-25">Preview image</th>
+                     <td class="text-center w-75 border-left">
                         @if ($category->preview_image)
                         <img class="w-75" src="{{ $category->previewImageUrl }}" alt="{{ $category->title }} preview">
                         @endif
                      </td>
                   </tr>
                   <tr>
-                     <th>Banner image</th>
-                     <td>
+                     <th class="w-25">Banner image</th>
+                     <td class="text-center w-75 border-left">
                         @if ($category->banner)
                         <img class="w-100" src="{{ $category->bannerUrl }}" alt="{{ $category->title }} banner">
                         @endif

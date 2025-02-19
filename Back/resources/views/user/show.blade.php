@@ -24,67 +24,67 @@
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $user->id }}</td>
+                     <th class="w-25 border-0" class="border-0">ID</th>
+                     <td class="border-left">{{ $user->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <th>e-Mail</th>
-                     <td>{{ $user->email }}</td>
+                     <th class="w-25">e-Mail</th>
+                     <td class="border-left">{{ $user->email }}</td>
                   </tr>
                   <tr>
-                     <th>Verified</th>
-                     <td>{{ $user->email_verified_at ? 'Yes' : 'No' }}</td>
+                     <th class="w-25">Verified</th>
+                     <td class="border-left">{{ $user->email_verified_at ? 'Yes' : 'No' }}</td>
                   </tr>
                   <tr>
-                     <th>Username</th>
-                     <td>{{ $user->name }}</td>
+                     <th class="w-25">Username</th>
+                     <td class="border-left">{{ $user->name }}</td>
                   </tr>
                   <tr>
-                     <th>Surname</th>
-                     <td>{{ $user->surname }}</td>
+                     <th class="w-25">Surname</th>
+                     <td class="border-left">{{ $user->surname }}</td>
                   </tr>
                   <tr>
-                     <th>Patronymic</th>
-                     <td>{{ $user->patronymic }}</td>
+                     <th class="w-25">Patronymic</th>
+                     <td class="border-left">{{ $user->patronymic }}</td>
                   </tr>
                   <tr>
-                     <th>Sex</th>
-                     <td>{{ $user->sexTitle }}</td>
+                     <th class="w-25">Sex</th>
+                     <td class="border-left">{{ $user->sexTitle }}</td>
                   </tr>
                   <tr>
-                     <th>Address</th>
-                     <td>{{ $user->address }}</td>
+                     <th class="w-25">Address</th>
+                     <td class="border-left">{{ $user->address }}</td>
                   </tr>
                   <tr>
-                     <th>Postal Code</th>
-                     <td>{{ $user->postal_code }}</td>
+                     <th class="w-25">Postal Code</th>
+                     <td class="border-left">{{ $user->postal_code }}</td>
                   </tr>
                   <tr>
-                     <th>City</th>
-                     <td>{{ $user->city }}</td>
+                     <th class="w-25">City</th>
+                     <td class="border-left">{{ $user->city }}</td>
                   </tr>
                   <tr>
-                     <th>Country</th>
-                     <td>{{ $user->country }}</td>
+                     <th class="w-25">Country</th>
+                     <td class="border-left">{{ $user->country }}</td>
                   </tr>
                   <tr>
-                     <th>Date of birth</th>
-                     <td>{{ $user->date_of_birth }}</td>
+                     <th class="w-25">Date of birth</th>
+                     <td class="border-left">{{ $user->date_of_birth }}</td>
                   </tr>
                   <tr>
-                     <th>Age</th>
-                     <td>{{ $user->age }}</td>
+                     <th class="w-25">Age</th>
+                     <td class="border-left">{{ $user->age }}</td>
                   </tr>
                   <tr>
-                     <th>Phone number</th>
-                     <td>{{ $user->phone_number }}</td>
+                     <th class="w-25">Phone number</th>
+                     <td class="border-left">{{ $user->phone_number }}</td>
                   </tr>
                   <tr>
-                     <th>Subscription</th>
+                     <th class="w-25">Subscription</th>
 
-                     <td>{{ $user->is_subscribed->text() }}</td>
+                     <td class="border-left">{{ $user->is_subscribed->text() }}</td>
                   </tr>
                </tbody>
             </table>

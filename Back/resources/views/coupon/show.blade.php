@@ -24,18 +24,18 @@
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $coupon->id }}</td>
+                     <th class="border-0 w-25">ID</th>
+                     <td class="border-left">{{ $coupon->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <th>Title</th>
-                     <td>{{ $coupon->title }}</td>
+                     <th class="w-25">Title</th>
+                     <td class="border-left">{{ $coupon->title }}</td>
                   </tr>
                   <tr>
-                     <th>Percentage</th>
-                     <td>{{ $coupon->percentage }}</td>
+                     <th class="w-25">Percentage</th>
+                     <td class="border-left">{{ $coupon->percentage }}</td>
                   </tr>
                </tbody>
             </table>

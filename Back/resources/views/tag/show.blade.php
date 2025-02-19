@@ -24,14 +24,14 @@
             <table class="table table-hover text-nowrap">
                <thead>
                   <tr>
-                     <th>ID</th>
-                     <td>{{ $tag->id }}</td>
+                     <th class="border-0 w-25">ID</th>
+                     <td class="border-left">{{ $tag->id }}</td>
                   </tr>
                </thead>
                <tbody>
                   <tr>
-                     <th>Title</th>
-                     <td>{{ $tag->title }}</td>
+                     <th class="w-25">Title</th>
+                     <td class="border-left">{{ $tag->title }}</td>
                   </tr>
                </tbody>
             </table>
