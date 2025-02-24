@@ -72,7 +72,8 @@ const actions = {
       } catch (err) {
          console.error(err)
          commit('AUTH_ERROR');
-         toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
+
+         toast.error(err.response?.data?.message || 'An error occured, please try again.', { timeout: 2000 });
          return Promise.reject(err);
       }
    },
@@ -88,7 +89,9 @@ const actions = {
          toast.info('Logged out successfully');
       } catch(err) {
          if (err.response.status !== 401) {
-            toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
+            console.error(err);
+
+            toast.error(err.response?.data?.message || 'An error occured, please try again.', { timeout: 2000 });
             return Promise.reject(err);
          } 
 
@@ -107,7 +110,9 @@ const actions = {
             await dispatch('logout');
          }
       } catch (err) {
-         toast.error(err.response?.data?.message || err.message, { timeout: 2000 });
+         console.error(err);
+
+         toast.error(err.response?.data?.message || 'An error occured, please try again.', { timeout: 2000 });
          return Promise.reject(err);
       }
    },

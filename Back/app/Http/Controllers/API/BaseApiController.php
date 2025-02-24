@@ -42,7 +42,7 @@ class BaseApiController extends Controller {
    ): JsonResponse {
       return response()->json([
          'success' => false,
-         'error' => $errorMessage
+         'message' => $errorMessage
       ], $statusCode);
    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\API\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class IndexRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class IndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required|string',
         ];
     }
@@ -32,6 +34,7 @@ class IndexRequest extends FormRequest
         return [
             'email.required' => 'Please fill the "email" field',
             'email.email' => 'Please enter a valid email address',
+            'email.exists' => 'Please write correct email address',
             'password.required' => 'Please enter your password',
             'password.string' => '"Password" field must be a string',
         ];

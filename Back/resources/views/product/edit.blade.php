@@ -12,7 +12,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <form class="w-50" action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                <form class="w-50 pb-4" action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="form-group">

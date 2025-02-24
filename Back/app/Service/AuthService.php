@@ -50,19 +50,12 @@ class AuthService {
       try {
          $user = User::whereEmail($data['email'])->first();
 
-         if (!$user) {
-            return [
-               'success' => false,
-               'message' => 'Please write correct email address.',
-            ];
-         }
-
          if (!Hash::check($data['password'], $user->password)) {
             return [
                'success' => false,
                'message' => 'Incorrect password.',
             ];
-        }
+         }
         
          $token = $user->createToken('auth_token')->plainTextToken;
          $user->remember_token = $token;

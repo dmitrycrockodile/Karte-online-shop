@@ -13,7 +13,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <form action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
+                <form class="pb-4" action="{{ route('category.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
