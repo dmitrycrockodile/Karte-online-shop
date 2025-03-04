@@ -8,7 +8,6 @@ use App\Http\Filters\ProductFilter;
 use App\Http\Requests\API\Product\IndexRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Response;
 
 class IndexController extends BaseApiController
 {

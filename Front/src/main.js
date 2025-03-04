@@ -26,6 +26,8 @@ axios.interceptors.response.use(
       if (err.response && err.response.status === 401) {
          store.dispatch('auth/clearExpiredSession');
          router.push({ name: 'login.index' });
+      } else if (err.response && err.response.status === 403) {
+         router.push({ name: 'forbidden' });
       }
       return Promise.reject(err);
    }

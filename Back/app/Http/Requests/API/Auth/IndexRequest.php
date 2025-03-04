@@ -3,8 +3,7 @@
 namespace App\Http\Requests\API\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\RateLimiter; // Сделать
 
 class IndexRequest extends FormRequest
 {

@@ -32,7 +32,7 @@ class AuthService {
 
          return true;
       } catch (\Exception $e) {
-         Log::error("CategoryService Store Error: " . $e->getMessage(), [
+         Log::error("Auth service register error: " . $e->getMessage(), [
             'trace' => $e->getTraceAsString()
          ]);
          
@@ -69,7 +69,7 @@ class AuthService {
             'token' => $token,
          ];
       } catch (\Exception $e) {
-         Log::error("CategoryService Store Error: " . $e->getMessage(), [
+         Log::error("Auth service login Error: " . $e->getMessage(), [
             'trace' => $e->getTraceAsString()
          ]);
          
@@ -100,7 +100,7 @@ class AuthService {
 
          return true;
       } catch (\Exception $e) {
-         Log::error("CategoryService Store Error: " . $e->getMessage(), [
+         Log::error("Auth service logout Error: " . $e->getMessage(), [
             'trace' => $e->getTraceAsString()
          ]);
 

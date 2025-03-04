@@ -29,6 +29,7 @@ export const getRecentProducts = async () => {
 export const getProducts = async (args) => {
    try {
       const res = await axios.post(`${BASE_API_URL}/products`, args);
+      console.log(res)
       return handleResponse(res);
    } catch (err) {
       return handleError(err);

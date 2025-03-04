@@ -91,6 +91,12 @@ const router = createRouter({
       component: () => import("../views/notFound/Index.vue"),
       meta: { title: 'Karte | Page Not Found' },
     },
+    {
+      path: '/forbidden',
+      name: 'forbidden',
+      component: () => import("../views/forbidden/Index.vue"),
+      meta: { title: 'Karte | Forbidden access' },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
