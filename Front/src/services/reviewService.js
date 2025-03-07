@@ -2,13 +2,14 @@ import axios from "axios";
 import { handleResponse, handleError } from "../utils/helpers";
 import { BASE_API_URL } from "../utils/constants";
 
-export const addReview = async (formData, productId) => {
+export const addReview = async (formData) => {
    try {
       const res = await axios.post(`${BASE_API_URL}/review`, {
          rating: formData.rating,
          title: formData.title,
          body: formData.body,
-         product_id: productId,
+         model: formData.model,
+         id: formData.id,
       });
       return handleResponse(res);
    } catch (err) {

@@ -5,6 +5,7 @@ namespace App\Http\Resources\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Enums\Review\ReportStatus;
 
 class ReviewResource extends JsonResource
 {
@@ -20,13 +21,12 @@ class ReviewResource extends JsonResource
             'title' => $this->title,
             'user_id' => $this->user_id,
             'username' => "{$this->user->name} {$this->user->surname}",
-            'product_id' => $this->product_id,
             'rating' => $this->rating,
             'helpful_count' => $this->helpfulCount,
             'not_helpful_count' => $this->notHelpfulCount,
             'body' => $this->body,
             'date' => Carbon::parse($this->created_at)->format('F j, Y'),
-            'reported' => $this->reported || false,
+            'reported' => $this->reported === ReportStatus::REPORTED || false,
         ];
     }
 }

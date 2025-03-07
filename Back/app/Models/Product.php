@@ -51,7 +51,7 @@ class Product extends Model
     }
 
     public function reviews() {
-        return $this->hasMany(Review::class, 'product_id', 'id')->where('deleted', false);
+        return $this->morphMany(Review::class, 'reviewable')->where('deleted', false);
     }
 
     public function getAverageRatingAttribute() {

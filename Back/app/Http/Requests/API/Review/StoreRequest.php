@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Api\Review;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class StoreRequest extends FormRequest
 {
@@ -24,8 +26,9 @@ class StoreRequest extends FormRequest
       return [
          'rating' => 'required|integer',
          'title' => 'required|string',
-         'product_id' => 'required|exists:products,id',
          'body' => 'nullable|string',
+         'model' => 'required|string',
+         'id' => 'required|integer',
       ];
    }
 
@@ -34,8 +37,23 @@ class StoreRequest extends FormRequest
       return [
          'rating.required' => 'Please choose the product rating',
          'title.required' => 'Please enter the title',
-         'product_id.required' => 'Please add the product id',
-         'product_id.exists' => 'There is no product with this id',
+         'id.required' => 'Please add the product id',
+         'id.integer' => 'Please add a valid id',
       ];
+   }
+
+   public function checkCommentable() {
+      $reviewable = config('reviewable');
+      
+      if (!isset($reviewable[$this->input('model')])) {
+         Log::alert('Someone try to add review to unreviewable model!');
+
+         throw ValidationException::withMessages([
+            'model' => $this->input('model')
+         ]);
+      }
+
+      $model = $reviewable[$this->input('model')]::findOrFail($this->input('id'));
+      return $model;
    }
 }

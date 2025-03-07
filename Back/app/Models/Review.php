@@ -12,12 +12,13 @@ class Review extends Model
     protected $table = 'reviews';
     protected $fillable = [
         'user_id',
-        'product_id',
         'rating',
         'title',
         'body',
         'reported',
-        'deleted'
+        'deleted',
+        'reviewable_type',
+        'reviewable_id',
     ];
     protected $casts = [
         'reported' => ReportStatus::class,
@@ -28,8 +29,8 @@ class Review extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function product() {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+    public function reviewable() {
+        return $this->morphTo();
     }
 
     public function helpfulness() {

@@ -30,8 +30,9 @@ class ReviewController extends BaseApiController
      * @return JsonResponse A JSON response with the newly created review and average rating.
    */
    public function store(StoreRequest $request): JsonResponse {
+      $model = $request->checkCommentable();
       $data = $request->validated();
-      $response = $this->reviewService->store($data);
+      $response = $this->reviewService->store($data, $model);
 
       if (!$response['success']) {
          return $this->errorResponse($response['error'], $response['status']);

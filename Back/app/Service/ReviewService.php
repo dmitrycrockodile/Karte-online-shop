@@ -4,7 +4,6 @@ namespace App\Service;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Review;
-use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use App\Models\ReviewHelpfulness;
 use Illuminate\Http\Response;
@@ -14,11 +13,13 @@ class ReviewService {
     * Method tries to store the review data into the 'reviews' table
     *
     * @param array $data
+    * @param $model 
     * @return array
    */
-   public function store(array $data): array {
+   public function store(array $data, $model): array {
       try {
          $userId = Auth::id(); 
+         
          if (!$userId) {
             return [
                'success' => false, 
@@ -27,16 +28,19 @@ class ReviewService {
             ];
          }
 
-         $review = Review::create([
+         $review = $model->reviews()->save(Review::make([
             'user_id' => $userId,
-            ...$data,
-         ]);
-         $product = Product::where('id', $data['product_id'])->first();
+            ...$data
+         ]));
+
+         $modelItem = $model::where('id', $data['id'])->first();
+         $averageRating = $modelItem->averageRating;
+         
 
          return [
             'success' => true,
             'review' => $review,
-            'average_rating' => $product->averageRating
+            'average_rating' => $averageRating
          ];
       } catch (\Exception $e) {
          Log::error('Failed to update the review: ' . $e->getMessage(), [
@@ -45,7 +49,7 @@ class ReviewService {
 
          return [
             'success' => false,
-            'error' => 'Failed to create the review, please try again.',
+            'error' => $e->getMessage(),
             'status' => 500,
          ];
       }

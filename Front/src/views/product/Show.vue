@@ -737,6 +737,8 @@
                         
                       </div>
                       <div class="col-lg-4">
+                        <input type="hidden" name="model" v-model="reviewFormData.model" value="product">
+                        <input type="hidden" name="id" v-model="reviewFormData.id" value="12313123">
                         <div class="form-group">
                           <label for="title"> REVIEW TITLE</label>
                           <input
@@ -754,7 +756,7 @@
                           <textarea
                             id="body"
                             placeholder="Write Your Comments Here"
-                            v-model.trim="reviewFormData.body"
+                            v-model.trim.lazy="reviewFormData.body"
                           ></textarea>
                         </div>
                       </div>
@@ -864,6 +866,7 @@ export default {
     
     if (res.success) {
       this.recentProducts = res.data.products;
+      this.reviewFormData.id = this.product.id;
       this.isLoading = false;
       
       document.title = `Karte | ${this.product.title}`
@@ -885,6 +888,8 @@ export default {
         rating: null,
         title: '',
         body: '',
+        model: 'product',
+        id: null
       },
       TOTAL_PRICE_FOR_FREE_SHIPPING,
       toast: useToast(),
@@ -917,13 +922,11 @@ export default {
       return this.userVotes.includes(reviewId);
     },
     async handleReviewSubmit() {
-      const res = await addReview(this.reviewFormData, this.product.id);
+      const res = await addReview(this.reviewFormData);
       if (res.success) {
-        this.reviewFormData = {
-          rating: null,
-          title: '',
-          body: '',
-        }
+        this.reviewFormData.rating = null;
+        this.reviewFormData.title = '';
+        this.reviewFormData.body = '';
 
         this.product.reviews.push(res.data.review);
         this.product.average_rating = res.data.average_rating;
@@ -980,8 +983,9 @@ export default {
       // No reviews, average rating is 0
       if (this.product.reviews.length === 0) { 
         this.product.average_rating = 0; 
+        return true;
       }
-
+      
       const sum = this.product.reviews.reduce((total, review) => total + review.rating, 0); 
       this.product.average_rating = sum / this.product.reviews.length;
     },
@@ -1058,6 +1062,7 @@ export default {
   color: #ccc; 
   font-size: 24px;
   cursor: pointer;
+  padding: 0;
 }
 .ratting label:is(:hover, :has(~ :hover)) i {
 	color: #f69c63;

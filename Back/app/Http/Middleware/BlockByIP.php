@@ -24,7 +24,7 @@ class BlockByIP
         if ($request->isMethod('post') && $request->routeIs('questions.store')) {
             return $next($request); 
         }
-
+                
         if (in_array($request->getClientIp(), $this->blocked)) {
             abort(403);
         }
